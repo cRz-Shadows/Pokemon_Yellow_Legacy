@@ -1,0 +1,15 @@
+SafariZoneCenterRestHouse_Script:
+	jp EnableAutoTextBoxDrawing
+
+SafariZoneCenterRestHouse_TextPointers:
+	def_text_pointers
+	dw_const SafariZoneCenterRestHouseGirlText,      TEXT_SAFARIZONECENTERRESTHOUSE_GIRL
+	dw_const SafariZoneCenterRestHouseScientistText, TEXT_SAFARIZONECENTERRESTHOUSE_SCIENTIST
+
+SafariZoneCenterRestHouseGirlText:
+	text_far _SafariZoneCenterRestHouseGirlText
+	text_end
+
+SafariZoneCenterRestHouseScientistText:
+	text_far _SafariZoneCenterRestHouseScientistText
+	text_end

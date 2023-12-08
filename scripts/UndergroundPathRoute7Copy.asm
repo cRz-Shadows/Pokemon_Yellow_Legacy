@@ -1,0 +1,25 @@
+UndergroundPathRoute7Copy_Script:
+	ld a, ROUTE_7
+	ld [wLastMap], a
+	ret
+
+UndergroundPathRoute7Copy_TextPointers:
+	def_text_pointers
+	dw_const UndergroundPathRoute7CopyUnusedGirlText,          TEXT_UNDERGROUNDPATHROUTE7COPY_UNUSED_GIRL
+	dw_const UndergroundPathRoute7CopyUnusedMiddleAgedManText, TEXT_UNDERGROUNDPATHROUTE7COPY_UNUSED_MIDDLE_AGED_MAN
+
+UndergroundPathRoute7CopyUnusedGirlText:
+	text_far _UndergroundPathRoute7CopyUnusedGirlText
+	text_end
+
+UndergroundPathRoute7CopyUnusedTeamRocketHadAHideoutText:
+	text_far _UndergroundPathRoute7CopyUnusedTeamRocketHadAHideoutText
+	text_end
+
+UndergroundPathRoute7CopyUnusedMiddleAgedManText:
+	text_far _UndergroundPathRoute7CopyUnusedMiddleAgedManText
+	text_end
+
+UndergroundPathRoute7CopyUnusedGoesUnderSaffronText:
+	text_far _UndergroundPathRoute7CopyUnusedGoesUnderSaffronText
+	text_end

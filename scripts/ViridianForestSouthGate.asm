@@ -1,0 +1,16 @@
+ViridianForestSouthGate_Script:
+	call EnableAutoTextBoxDrawing
+	ret
+
+ViridianForestSouthGate_TextPointers:
+	def_text_pointers
+	dw_const ViridianForestSouthGateGirlText,       TEXT_VIRIDIANFORESTSOUTHGATE_GIRL
+	dw_const ViridianForestSouthGateLittleGirlText, TEXT_VIRIDIANFORESTSOUTHGATE_LITTLE_GIRL
+
+ViridianForestSouthGateGirlText:
+	text_far _ViridianForestSouthGateGirlText
+	text_end
+
+ViridianForestSouthGateLittleGirlText:
+	text_far _ViridianForestSouthGateLittleGirlText
+	text_end

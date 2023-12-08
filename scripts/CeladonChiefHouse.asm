@@ -1,0 +1,21 @@
+CeladonChiefHouse_Script:
+	call EnableAutoTextBoxDrawing
+	ret
+
+CeladonChiefHouse_TextPointers:
+	def_text_pointers
+	dw_const CeladonChiefHouseChiefText,  TEXT_CELADONCHIEFHOUSE_CHIEF
+	dw_const CeladonChiefHouseRocketText, TEXT_CELADONCHIEFHOUSE_ROCKET
+	dw_const CeladonChiefHouseSailorText, TEXT_CELADONCHIEFHOUSE_SAILOR
+
+CeladonChiefHouseChiefText:
+	text_far _CeladonChiefHouseChiefText
+	text_end
+
+CeladonChiefHouseRocketText:
+	text_far _CeladonChiefHouseRocketText
+	text_end
+
+CeladonChiefHouseSailorText:
+	text_far _CeladonChiefHouseSailorText
+	text_end

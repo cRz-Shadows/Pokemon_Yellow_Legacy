@@ -1,0 +1,21 @@
+SafariZoneEastRestHouse_Script:
+	call EnableAutoTextBoxDrawing
+	ret
+
+SafariZoneEastRestHouse_TextPointers:
+	def_text_pointers
+	dw_const SafariZoneEastRestHouseScientistText,    TEXT_SAFARIZONEEASTRESTHOUSE_SCIENTIST
+	dw_const SafariZoneEastRestHouseRockerText,       TEXT_SAFARIZONEEASTRESTHOUSE_ROCKER
+	dw_const SafariZoneEastRestHouseSilphWorkerMText, TEXT_SAFARIZONEEASTRESTHOUSE_SILPH_WORKER_M
+
+SafariZoneEastRestHouseScientistText:
+	text_far _SafariZoneEastRestHouseScientistText
+	text_end
+
+SafariZoneEastRestHouseRockerText:
+	text_far _SafariZoneEastRestHouseRockerText
+	text_end
+
+SafariZoneEastRestHouseSilphWorkerMText:
+	text_far _SafariZoneEastRestHouseSilphWorkerMText
+	text_end

@@ -1,0 +1,20 @@
+	object_const_def
+	const_export SAFARIZONEEASTRESTHOUSE_SCIENTIST
+	const_export SAFARIZONEEASTRESTHOUSE_ROCKER
+	const_export SAFARIZONEEASTRESTHOUSE_SILPH_WORKER_M
+
+SafariZoneEastRestHouse_Object:
+	db $a ; border block
+
+	def_warp_events
+	warp_event  2,  7, SAFARI_ZONE_EAST, 5
+	warp_event  3,  7, SAFARI_ZONE_EAST, 5
+
+	def_bg_events
+
+	def_object_events
+	object_event  1,  3, SPRITE_SCIENTIST, WALK, UP_DOWN, TEXT_SAFARIZONEEASTRESTHOUSE_SCIENTIST
+	object_event  4,  2, SPRITE_ROCKER, STAY, NONE, TEXT_SAFARIZONEEASTRESTHOUSE_ROCKER
+	object_event  5,  2, SPRITE_SILPH_WORKER_M, STAY, NONE, TEXT_SAFARIZONEEASTRESTHOUSE_SILPH_WORKER_M
+
+	def_warps_to SAFARI_ZONE_EAST_REST_HOUSE
