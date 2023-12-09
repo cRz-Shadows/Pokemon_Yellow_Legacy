@@ -1,0 +1,34 @@
+# compiled objects
+*.o
+
+# compiled graphics
+*.1bpp
+*.2bpp
+*.pic
+
+# compiled audio
+*.pcm
+
+# compiled roms
+*.gbc
+*.gb
+*.patch
+
+# rgbds extras
+*.map
+*.sym
+
+# tool binaries
+*.exe
+
+# precompiled python
+*.pyc
+*$py.class
+
+# save game files
+*.sgm
+*.sav
+*.rtc
+*.sn*
+*.sa*
+*.sg1
