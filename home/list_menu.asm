@@ -50,7 +50,7 @@ DisplayListMenuID::
 	ld [wTopMenuItemY], a
 	ld a, 5
 	ld [wTopMenuItemX], a
-	ld a, A_BUTTON | B_BUTTON | SELECT
+	ld a, A_BUTTON | B_BUTTON | SELECT | START
 	ld [wMenuWatchedKeys], a
 	ld c, 10
 	call DelayFrames
@@ -172,6 +172,8 @@ DisplayListMenuIDLoop::
 	jp nz, ExitListMenu ; if so, exit the menu
 	bit BIT_SELECT, a
 	jp nz, HandleItemListSwapping ; if so, allow the player to swap menu entries
+	bit 3,a ; was the start button pressed?
+	jp nz,.sortItems ; if so, allow the player to swap menu entries
 	ld b, a
 	bit BIT_D_DOWN, b
 	ld hl, wListScrollOffset
@@ -191,6 +193,10 @@ DisplayListMenuIDLoop::
 	jp z, DisplayListMenuIDLoop
 	dec [hl]
 	jp DisplayListMenuIDLoop
+.sortItems
+	rra ; Sets the zero flag to 0 so the sorting function will happen
+	rla
+	jp BankswitchBack
 
 DisplayChooseQuantityMenu::
 ; text box dimensions/coordinates for just quantity
