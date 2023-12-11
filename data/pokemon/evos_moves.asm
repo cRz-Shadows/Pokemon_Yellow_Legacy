@@ -303,7 +303,8 @@ IvysaurEvosMoves:
 	db 0
 ; Learnset
 	db 7, LEECH_SEED
-	db 13, VINE_WHIP
+	db 9, VINE_WHIP
+	db 16, ACID
 	db 22, POISONPOWDER
 	db 30, RAZOR_LEAF
 	db 38, GROWTH
@@ -359,8 +360,10 @@ GengarEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 29, HYPNOSIS
-	db 38, DREAM_EATER
+	db 25, HYPNOSIS
+	db 32, CONFUSE_RAY
+	db 39, NIGHT_SHADE
+	db 46, DREAM_EATER
 	db 0
 
 NidoranFEvosMoves:
@@ -484,8 +487,10 @@ GastlyEvosMoves:
 	db EVOLVE_LEVEL, 25, HAUNTER
 	db 0
 ; Learnset
-	db 27, HYPNOSIS
-	db 35, DREAM_EATER
+	db 25, HYPNOSIS
+	db 32, BITE
+	db 38, NIGHT_SHADE
+	db 46, DREAM_EATER
 	db 0
 
 ScytherEvosMoves:
@@ -1720,11 +1725,13 @@ MissingNo92EvosMoves:
 
 HaunterEvosMoves:
 ; Evolutions
-	db EVOLVE_TRADE, 1, GENGAR
+	db EVOLVE_LEVEL, 42, GENGAR
 	db 0
 ; Learnset
-	db 29, HYPNOSIS
-	db 38, DREAM_EATER
+	db 25, HYPNOSIS
+	db 32, BITE
+	db 38, NIGHT_SHADE
+	db 46, DREAM_EATER
 	db 0
 
 AbraEvosMoves:
@@ -1783,12 +1790,12 @@ BulbasaurEvosMoves:
 	db 0
 ; Learnset
 	db 7, LEECH_SEED
-	db 13, VINE_WHIP
-	db 20, POISONPOWDER
-	db 27, RAZOR_LEAF
-	db 34, GROWTH
-	db 41, SLEEP_POWDER
-	db 48, SOLARBEAM
+	db 9, VINE_WHIP
+	db 22, POISONPOWDER
+	db 29, RAZOR_LEAF
+	db 38, GROWTH
+	db 46, SLEEP_POWDER
+	db 54, SOLARBEAM
 	db 0
 
 VenusaurEvosMoves:
@@ -1796,12 +1803,14 @@ VenusaurEvosMoves:
 	db 0
 ; Learnset
 	db 7, LEECH_SEED
-	db 13, VINE_WHIP
+	db 9, VINE_WHIP
+	db 16, ACID
 	db 22, POISONPOWDER
-	db 30, RAZOR_LEAF
-	db 43, GROWTH
-	db 55, SLEEP_POWDER
-	db 65, SOLARBEAM
+	db 29, RAZOR_LEAF
+	db 36, SLUDGE
+	db 38, GROWTH
+	db 46, SLEEP_POWDER
+	db 54, SOLARBEAM
 	db 0
 
 TentacruelEvosMoves:
@@ -2016,8 +2025,9 @@ CharmanderEvosMoves:
 ; Learnset
 	db 9, EMBER
 	db 15, LEER
-	db 22, RAGE
-	db 30, SLASH
+	db 21, RAGE
+	db 27, FIRE_PUNCH
+	db 33, SLASH
 	db 38, FLAMETHROWER
 	db 46, FIRE_SPIN
 	db 0
@@ -2028,11 +2038,12 @@ SquirtleEvosMoves:
 	db 0
 ; Learnset
 	db 8, BUBBLE
-	db 15, WATER_GUN
-	db 22, BITE
-	db 28, WITHDRAW
-	db 35, SKULL_BASH
-	db 42, HYDRO_PUMP
+	db 14, WATER_GUN
+	db 22, BUBBLEBEAM
+	db 27, BITE
+	db 31, WITHDRAW
+	db 42, SKULL_BASH
+	db 52, HYDRO_PUMP
 	db 0
 
 CharmeleonEvosMoves:
@@ -2042,7 +2053,8 @@ CharmeleonEvosMoves:
 ; Learnset
 	db 9, EMBER
 	db 15, LEER
-	db 24, RAGE
+	db 21, RAGE
+	db 27, FIRE_PUNCH
 	db 33, SLASH
 	db 42, FLAMETHROWER
 	db 56, FIRE_SPIN
@@ -2054,11 +2066,12 @@ WartortleEvosMoves:
 	db 0
 ; Learnset
 	db 8, BUBBLE
-	db 15, WATER_GUN
-	db 24, BITE
+	db 14, WATER_GUN
+	db 22, BUBBLEBEAM
+	db 27, BITE
 	db 31, WITHDRAW
-	db 39, SKULL_BASH
-	db 47, HYDRO_PUMP
+	db 42, SKULL_BASH
+	db 52, HYDRO_PUMP
 	db 0
 
 CharizardEvosMoves:
@@ -2067,8 +2080,10 @@ CharizardEvosMoves:
 ; Learnset
 	db 9, EMBER
 	db 15, LEER
-	db 24, RAGE
-	db 36, SLASH
+	db 21, RAGE
+	db 27, FIRE_PUNCH
+	db 33, SLASH
+	db 36, WING_ATTACK
 	db 46, FLAMETHROWER
 	db 55, FIRE_SPIN
 	db 0
