@@ -19,3 +19,6 @@ CeladonMart4FYoungsterText:
 CeladonMart4FCurrentFloorSignText:
 	text_far _CeladonMart4FCurrentFloorSignText
 	text_end
+
+CeladonMart4FClerkText::
+	script_mart POKE_DOLL, FIRE_STONE, THUNDER_STONE, WATER_STONE, LEAF_STONE

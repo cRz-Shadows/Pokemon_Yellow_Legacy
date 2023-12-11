@@ -146,11 +146,16 @@ GainExperience:
 	ld a, [wWhichPokemon]
 	ld hl, wPartyMonNicks
 	call GetPartyMonName
-	ld hl, GainedText
+	ld a, [wBoostExpByExpAll] ; get using ExpAll flag
+	and a ; check the flag
+	jr nz, .skipExpText ; if there's EXP. all, skip showing any text
+	ld hl, GainedText ;there's no EXP. all, load the text to show
 	call PrintText
+.skipExpText
 	xor a ; PLAYER_PARTY_DATA
 	ld [wMonDataLocation], a
 	call LoadMonData
+	call AnimateEXPBar
 	pop hl
 	ld bc, wPartyMon1Level - wPartyMon1Exp
 	add hl, bc
@@ -160,6 +165,7 @@ GainExperience:
 	ld a, [hl] ; current level
 	cp d
 	jp z, .nextMon ; if level didn't change, go to next mon
+	call KeepEXPBarFull
 	ld a, [wCurEnemyLVL]
 	push af
 	push hl
@@ -380,3 +386,71 @@ GrewLevelText:
 	text_far _GrewLevelText
 	sound_level_up
 	text_end
+
+AnimateEXPBarAgain:
+	call IsCurrentMonBattleMon
+	ret nz
+	xor a
+	ld [wEXPBarPixelLength], a
+	coord hl, 17, 11
+	ld a, $c0
+	ld c, $08
+.loop
+	ld [hld], a
+	dec c
+	jr nz, .loop
+AnimateEXPBar:
+	call IsCurrentMonBattleMon
+	ret nz
+	ld a, SFX_HEAL_HP
+	call PlaySoundWaitForCurrent
+	ld hl, CalcEXPBarPixelLength
+	ld b, BANK(CalcEXPBarPixelLength)
+	call Bankswitch
+	ld hl, wEXPBarPixelLength
+	ld a, [hl]
+	ld b, a
+	ld a, [hQuotient + 3]
+	ld [hl], a
+	sub b
+	jr z, .done
+	ld b, a
+	ld c, $08
+	coord hl, 17, 11
+.loop1
+	ld a, [hl]
+	cp $c8
+	jr nz, .loop2
+	dec hl
+	dec c
+	jr z, .done
+	jr .loop1
+.loop2
+	inc a
+	ld [hl], a
+	call DelayFrame
+	dec b
+	jr z, .done
+	jr .loop1
+.done
+	ld bc, $08
+	coord hl, 10, 11
+	ld de, wTileMapBackup + 10 + 11 * 20
+	call CopyData
+	ld c, $20
+	jp DelayFrames
+
+KeepEXPBarFull:
+	call IsCurrentMonBattleMon
+	ret nz
+	ld a, [wEXPBarKeepFullFlag]
+	set 0, a
+	ld [wEXPBarKeepFullFlag], a
+	ret
+
+IsCurrentMonBattleMon:
+	ld a, [wPlayerMonNumber]
+	ld b, a
+	ld a, [wWhichPokemon]
+	cp b
+	ret
