@@ -126,3 +126,13 @@ _BoxIsFullText::
 	para "Change the BOX at"
 	line "a #MON CENTER!"
 	done
+
+_BoxIsFullReminderText::
+	text "The #MON BOX"
+	line "is now full."
+	cont "It won't hold"
+	cont "more #MON."
+
+	para "Change the BOX at"
+	line "a #MON CENTER!"
+	prompt
