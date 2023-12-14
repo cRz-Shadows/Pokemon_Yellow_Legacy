@@ -246,12 +246,13 @@ ClefairyEvosMoves:
 	db EVOLVE_ITEM, MOON_STONE, 1, CLEFABLE
 	db 0
 ; Learnset
-	db 13, SING
-	db 18, DOUBLESLAP
-	db 24, MINIMIZE
-	db 31, METRONOME
-	db 39, DEFENSE_CURL
-	db 48, LIGHT_SCREEN
+	db 8, SING
+	db 13, DOUBLESLAP
+	db 19, MINIMIZE
+	db 26, DEFENSE_CURL
+	db 30, METRONOME
+	db 35, BODY_SLAM
+	db 43, LIGHT_SCREEN
 	db 0
 
 SpearowEvosMoves:
@@ -273,10 +274,13 @@ VoltorbEvosMoves:
 	db 0
 ; Learnset
 	db 17, SONICBOOM
+	db 19, THUNDERSHOCK
 	db 22, SELFDESTRUCT
-	db 29, LIGHT_SCREEN
-	db 36, SWIFT
-	db 43, EXPLOSION
+	db 26, SWIFT
+	db 30, LIGHT_SCREEN
+	db 35, THUNDERBOLT
+	db 44, EXPLOSION
+	db 50, THUNDER
 	db 0
 
 NidokingEvosMoves:
@@ -1297,10 +1301,10 @@ JigglypuffEvosMoves:
 	db EVOLVE_ITEM, MOON_STONE, 1, WIGGLYTUFF
 	db 0
 ; Learnset
-	db 9, POUND
+	db 3, POUND
+	db 5, DEFENSE_CURL
 	db 14, DISABLE
-	db 19, DEFENSE_CURL
-	db 24, DOUBLESLAP
+	db 16, DOUBLESLAP
 	db 29, REST
 	db 34, BODY_SLAM
 	db 39, DOUBLE_EDGE
@@ -1310,6 +1314,13 @@ WigglytuffEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
+	db 3, POUND
+	db 5, DEFENSE_CURL
+	db 14, DISABLE
+	db 16, DOUBLESLAP
+	db 29, REST
+	db 34, BODY_SLAM
+	db 39, DOUBLE_EDGE
 	db 0
 
 EeveeEvosMoves:
@@ -1388,11 +1399,14 @@ ZubatEvosMoves:
 	db EVOLVE_LEVEL, 22, GOLBAT
 	db 0
 ; Learnset
-	db 10, SUPERSONIC
-	db 15, BITE
-	db 21, CONFUSE_RAY
-	db 28, WING_ATTACK
-	db 36, HAZE
+	db 5, SUPERSONIC
+	db 7, GUST
+	db 12, BITE
+	db 19, CONFUSE_RAY
+	db 23, WING_ATTACK
+	db 27, ACID
+	db 36, SLUDGE
+	db 46, HAZE
 	db 0
 
 EkansEvosMoves:
@@ -1631,11 +1645,14 @@ GolbatEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 10, SUPERSONIC
-	db 15, BITE
-	db 21, CONFUSE_RAY
-	db 32, WING_ATTACK
-	db 43, HAZE
+	db 5, SUPERSONIC
+	db 7, GUST
+	db 12, BITE
+	db 19, CONFUSE_RAY
+	db 22, WING_ATTACK
+	db 27, ACID
+	db 36, SLUDGE
+	db 46, HAZE
 	db 0
 
 MewtwoEvosMoves:
@@ -1726,16 +1743,26 @@ ElectrodeEvosMoves:
 	db 0
 ; Learnset
 	db 17, SONICBOOM
+	db 19, THUNDERSHOCK
 	db 22, SELFDESTRUCT
-	db 29, LIGHT_SCREEN
-	db 40, SWIFT
-	db 50, EXPLOSION
+	db 26, SWIFT
+	db 30, LIGHT_SCREEN
+	db 35, THUNDERBOLT
+	db 44, EXPLOSION
+	db 50, THUNDER
 	db 0
 
 ClefableEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
+	db 8, SING
+	db 13, DOUBLESLAP
+	db 19, MINIMIZE
+	db 26, DEFENSE_CURL
+	db 30, METRONOME
+	db 35, BODY_SLAM
+	db 43, LIGHT_SCREEN
 	db 0
 
 WeezingEvosMoves:
