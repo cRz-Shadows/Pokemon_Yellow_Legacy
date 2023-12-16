@@ -6809,8 +6809,12 @@ ApplyBadgeStatBoosts:
 	rr e
 	srl d
 	rr e
+    ld a, [wBattleMonSpecies] ; Check if the species is Pikachu
+    cp PIKACHU
+    jr nz, .continue ; times by 1.25 if its Pikachu
 	srl d
 	rr e
+.continue
 	ld a, [hl]
 	add e
 	ld [hld], a
