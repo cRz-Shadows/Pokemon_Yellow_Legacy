@@ -3,14 +3,14 @@ _FileDataDestroyedText::
 	line "destroyed!"
 	prompt
 
-_WouldYouLikeToSaveText::
-	text "Would you like to"
-	line "SAVE the game?"
-	done
+; _WouldYouLikeToSaveText::
+; 	text "Would you like to"
+; 	line "SAVE the game?"
+; 	done
 
-_SavingText::
-	text "Saving..."
-	done
+; _SavingText::
+; 	text "Saving..."
+; 	done
 
 _GameSavedText::
 	text "<PLAYER> saved"
