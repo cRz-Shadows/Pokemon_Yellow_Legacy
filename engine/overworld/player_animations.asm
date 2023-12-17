@@ -493,7 +493,7 @@ RedFishingTiles:
 	fishing_gfx RedFishingTilesFront, 2, $02
 	fishing_gfx RedFishingTilesBack,  2, $06
 	fishing_gfx RedFishingTilesSide,  2, $0a
-	fishing_gfx RedFishingRodTiles,   3, $fd
+	fishing_gfx RedFishingRodTiles,   2, $fd
 
 _HandleMidJump::
 	ld a, [wPlayerJumpingYScreenCoordsIndex]
