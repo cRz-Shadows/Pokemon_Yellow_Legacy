@@ -564,7 +564,7 @@ StaryuEvosMoves:
 	db 24, BUBBLEBEAM
 	db 27, RECOVER
 	db 37, MINIMIZE
-	db 40, PSYCHIC
+	db 40, PSYCHIC_M
 	db 42, LIGHT_SCREEN
 	db 47, HYDRO_PUMP
 	db 0
@@ -733,7 +733,7 @@ ChanseyEvosMoves:
 
 MachokeEvosMoves:
 ; Evolutions
-	db EVOLVE_TRADE, 38, MACHAMP
+	db EVOLVE_LEVEL, 38, MACHAMP
 	db 0
 ; Learnset
 	db 5, LEER
@@ -799,7 +799,7 @@ ParasectEvosMoves:
 	db 6, STUN_SPORE
 	db 8, ABSORB
 	db 10, LEECH_LIFE
-	db 13, POISON_POWDER
+	db 13, POISONPOWDER
 	db 24, SPORE
 	db 27, MEGA_DRAIN
 	db 30, SLASH
@@ -1502,7 +1502,7 @@ ParasEvosMoves:
 	db 6, STUN_SPORE
 	db 8, ABSORB
 	db 10, LEECH_LIFE
-	db 13, POISON_POWDER
+	db 13, POISONPOWDER
 	db 24, SPORE
 	db 27, MEGA_DRAIN
 	db 30, SLASH
@@ -1679,7 +1679,7 @@ ButterfreeEvosMoves:
 	db 24, GUST
 	db 24, PSYBEAM
 	db 28, WHIRLWIND
-	db 32, PSYCHIC
+	db 32, PSYCHIC_M
 	db 0
 
 MachampEvosMoves:
@@ -1980,7 +1980,7 @@ StarmieEvosMoves:
 	db 24, BUBBLEBEAM
 	db 27, RECOVER
 	db 37, MINIMIZE
-	db 40, PSYCHIC
+	db 40, PSYCHIC_M
 	db 42, LIGHT_SCREEN
 	db 47, HYDRO_PUMP
 	db 0

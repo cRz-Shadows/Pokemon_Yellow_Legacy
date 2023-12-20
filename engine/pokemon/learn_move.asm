@@ -168,16 +168,16 @@ TryingToLearn:
 	pop bc
 	pop de
 	ld a, d
-	jr c, .hm
+	; jr c, .hm ; Don't prevent hm deletion
 	pop hl
 	add hl, bc
 	and a
 	ret
-.hm
-	ld hl, HMCantDeleteText
-	call PrintText
-	pop hl
-	jr .loop
+; .hm
+; 	ld hl, HMCantDeleteText
+; 	call PrintText
+; 	pop hl
+; 	jr .loop
 .cancel
 	scf
 	ret

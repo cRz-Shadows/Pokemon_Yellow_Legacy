@@ -70,8 +70,48 @@ UpdatePlayerSprite:
 	ld a, [wd736]
 	bit 7, a ; is the player sprite spinning due to a spin tile?
 	jr nz, .skipSpriteAnim
-	call Func_5274
-	call Func_4e32
+	; call Func_5274
+	; call Func_4e32
+	ld a, [hCurrentSpriteOffset]
+	add $7
+	ld l, a
+	ld a, [hl]
+	inc a
+	ld [hl], a
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - If B is being held to go faster and full joypad is enabled (i.e. not in a cutscene),
+;Then increase player animation speed by 25%
+	push bc
+	ld c, 4
+	ld b, a
+	ld a, [wJoyIgnore]
+	and a
+	jr nz, .doneSpeed
+	ld a, [hJoyHeld]
+	and B_BUTTON
+	jr z, .doneSpeed
+	ld c, 3
+.doneSpeed
+	ld a, b
+	cp c
+	pop bc
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;	cp 4
+;	jr nz, .calcImageIndex
+	jr c, .calcImageIndex	;joenote - prevents interframe counter from increasing forever
+	xor a
+	ld [hl], a
+	inc hl
+	ld a, [hl]
+	inc a
+	and $3
+	ld [hl], a
+.calcImageIndex
+	ld a, [wSpriteStateData1 + 8]
+	ld b, a
+	ld a, [wSpriteStateData1 + 9]
+	add b
+	ld [wSpriteStateData1 + 2], a
 .skipSpriteAnim
 ; If the player is standing on a grass tile, make the player's sprite have
 ; lower priority than the background so that it's partially obscured by the

@@ -131,7 +131,7 @@ INCLUDE "engine/pokemon/bills_pc.asm"
 SECTION "Battle Engine 3", ROMX
 
 INCLUDE "engine/battle/print_type.asm"
-INCLUDE "engine/battle/save_trainer_name.asm"
+; INCLUDE "engine/battle/save_trainer_name.asm"
 
 
 SECTION "Battle Engine 4", ROMX

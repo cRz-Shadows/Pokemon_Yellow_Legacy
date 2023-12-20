@@ -185,6 +185,11 @@ _PokemonFightingFitText::
 	cont "fighting fit!"
 	prompt
 
+; _PokemonFightingFitShortText::
+; 	text "Your #MON are"
+; 	line "fighting fit!"
+; 	done
+
 _PokemonCenterFarewellText::
 	text "We hope to see"
 	line "you again!"

@@ -3,7 +3,8 @@
 ; Pallet Town events
 	const_def
 	const EVENT_FOLLOWED_OAK_INTO_LAB
-	const_skip 2
+	const EVENT_FIRST_POKECENTER
+	const_skip 1
 	const EVENT_HALL_OF_FAME_DEX_RATING
 	const_skip
 	const EVENT_PLAYER_AT_RIGHT_EXIT_TO_PALLET_TOWN
