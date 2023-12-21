@@ -288,6 +288,11 @@ _TooImportantToTossText::
 	line "tant to toss!"
 	prompt
 
+_TooImportantToDepositText::
+	text "That's too impor-"
+	line "tant to deposit!"
+	prompt
+
 _AlreadyKnowsText::
 	text_ram wcd6d
 	text " knows"

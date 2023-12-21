@@ -106,6 +106,9 @@ PlayerPCDeposit:
 	ld [wListMenuID], a
 	call DisplayListMenuID
 	jp c, PlayerPCMenu
+	ld a, [wcf91]
+	call IsItemHM
+	jr c, .CantDeposit
 	call IsKeyItem
 	ld a, 1
 	ld [wItemQuantity], a
@@ -133,6 +136,10 @@ PlayerPCDeposit:
 	call PlaySound
 	call WaitForSoundToFinish
 	ld hl, ItemWasStoredText
+	call PrintText
+	jp .loop
+.CantDeposit
+	ld hl, TooImportantToDepositText
 	call PrintText
 	jp .loop
 
@@ -244,6 +251,10 @@ PlayersPCMenuEntries:
 	next "DEPOSIT ITEM"
 	next "TOSS ITEM"
 	next "LOG OFF@"
+
+TooImportantToDepositText:
+	text_far _TooImportantToDepositText
+	text_end
 
 TurnedOnPC2Text:
 	text_far _TurnedOnPC2Text
