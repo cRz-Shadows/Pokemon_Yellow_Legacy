@@ -7,7 +7,7 @@ RockTunnelB1FWildMons:
 	db 22, ZUBAT
 	db 21, GEODUDE
 	db 20, MACHOP
-	db 14, ONIX
+	db 17, ONIX
 	db 18, ONIX
 	db 22, ONIX
 	end_grass_wildmons

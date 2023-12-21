@@ -1,6 +1,6 @@
 Route7WildMons:
 	def_grass_wildmons 15 ; encounter rate
-	db 20, PIDGEY
+	db 20, VULPIX
 	db 22, PIDGEY
 	db 20, RATTATA
 	db 15, ABRA

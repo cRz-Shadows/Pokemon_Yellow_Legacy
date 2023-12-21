@@ -3,8 +3,8 @@ Route2WildMons:
 	db  3, RATTATA
 	db  3, PIDGEY
 	db  4, RATTATA
-	db  4, POLIWAG
-	db  5, POLIWAG
+	db  4, MANKEY
+	db  5, MANKEY
 	db  5, PIDGEY
 	db  6, NIDORAN_M
 	db  6, NIDORAN_F
