@@ -4113,6 +4113,18 @@ CheckForDisobedience:
 	ld a, 14 ; Onix's level
 	jp .next
 .NormalMode2
+	ld hl, wPartyMon1OTID
+	ld bc, wPartyMon2 - wPartyMon1
+	ld a, [wPlayerMonNumber]
+	call AddNTimes
+	ld a, [wPlayerID]
+	cp [hl]
+	jr nz, .monIsTraded
+	inc hl
+	ld a, [wPlayerID + 1]
+	cp [hl]
+	jp z, .canUseMove ; on normal mode non traded pokemon will always obey
+
 	ld hl, wObtainedBadges
 	bit BIT_EARTHBADGE, [hl]
 	ld a, 101
