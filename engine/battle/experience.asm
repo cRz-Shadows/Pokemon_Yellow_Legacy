@@ -117,6 +117,41 @@ GainExperience:
 	ld [wd0b5], a
 	call GetMonHeader
 	ld d, MAX_LEVEL
+
+	ld a, [wDifficulty] ; Check if player is on hard mode
+	and a
+	jr z, .next1 ; no level caps if not on hard mode
+
+	CheckEvent EVENT_BEAT_CHAMPION_RIVAL
+	ld d, 100
+	jr nz, .next1
+	ld hl, wObtainedBadges
+	bit BIT_EARTHBADGE, [hl]
+	ld d, 65 ; Venasaur/Charizard/Blastoise's level
+	jr nz, .next1
+	bit BIT_VOLCANOBADGE, [hl]
+	ld d, 50 ; Rhydon's level
+	jr nz, .next1
+	bit BIT_MARSHBADGE, [hl]
+	ld d, 47 ; Arcanine's level
+	jr nz, .next1
+	bit BIT_SOULBADGE, [hl]
+	ld d, 43 ; Alakazam's level
+	jr nz, .next1
+    bit BIT_RAINBOWBADGE, [hl]
+	ld d, 43 ; Weezing's level
+	jr nz, .next1
+	bit BIT_THUNDERBADGE, [hl]
+	ld d, 29 ; Vileplume's level
+	jr nz, .next1
+	bit BIT_CASCADEBADGE, [hl]
+    ld d, 24 ; Raichu's level
+	jr nz, .next1
+	bit BIT_BOULDERBADGE, [hl]
+	ld d, 21 ; Starmie's level
+	jr nz, .next1
+	ld d, 14 ; Onix's level
+.next1
 	callfar CalcExperience ; get max exp
 ; compare max exp with current exp
 	ldh a, [hExperience]

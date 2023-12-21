@@ -1411,6 +1411,11 @@ EnemySendOutFirstMon:
 	cp LINK_STATE_BATTLING
 	jr z, .next4
 	ld a, [wOptions]
+	ld a, [wDifficulty] ; Check if player is on hard mode
+	and a
+	jr z, .DontForceSetMode
+	jr .next4 ; skip switch request on hard mode
+.DontForceSetMode
 	bit BIT_BATTLE_SHIFT, a
 	jr nz, .next4
 	ld hl, TrainerAboutToUseText
@@ -2303,6 +2308,19 @@ BagWasSelected:
 	jr z, .simulatedInputBattle
 	cp BATTLE_TYPE_PIKACHU ; is it the prof oak battle with pikachu?
 	jr z, .simulatedInputBattle
+
+	ld a, [wDifficulty] ; Check if player is on hard mode
+	and a
+	jr z, .NormalMode
+
+	ld a, [wIsInBattle] ; Check if this is a wild battle or trainer battle
+	dec a
+	jr z, .NormalMode ; Not a trainer battle
+
+	ld hl, ItemsCantBeUsedHereText ; items can't be used during trainer battles in hard mode
+	call PrintText
+	jp DisplayBattleMenu
+.NormalMode
 	jr DisplayPlayerBag
 .simulatedInputBattle
 	ld hl, SimulatedInputBattleItemList
@@ -4058,14 +4076,43 @@ CheckForDisobedience:
 	call AddNTimes
 	ld a, [wPlayerID]
 	cp [hl]
-	jr nz, .monIsTraded
-	inc hl
-	ld a, [wPlayerID + 1]
-	cp [hl]
-	jp z, .canUseMove
 ; it was traded
 .monIsTraded
+	ld a, [wDifficulty] ; Check if player is on hard mode
+	and a
+	jr z, .NormalMode2
 ; what level might disobey?
+	CheckEvent EVENT_BEAT_CHAMPION_RIVAL
+	ld a, 101
+	jr nz, .next
+	ld hl, wObtainedBadges
+	bit BIT_EARTHBADGE, [hl]
+	ld a, 65 ; Venasaur/Charizard/Blastoise's level
+	jr nz, .next
+	bit BIT_VOLCANOBADGE, [hl]
+	ld a, 50 ; Rhydon's level
+	jr nz, .next
+	bit BIT_MARSHBADGE, [hl]
+	ld a, 47 ; Arcanine's level
+	jr nz, .next
+	bit BIT_SOULBADGE, [hl]
+	ld a, 43 ; Alakazam's level
+	jr nz, .next
+	bit BIT_RAINBOWBADGE, [hl]
+	ld a, 43 ; Weezing's level
+	jr nz, .next
+	bit BIT_THUNDERBADGE, [hl]
+	ld a, 29 ; Vileplume's level
+	jr nz, .next
+	bit BIT_CASCADEBADGE, [hl]
+	ld a, 24 ; Raichu's level
+	jr nz, .next
+	bit BIT_BOULDERBADGE, [hl]
+	ld a, 21 ; Starmie's level
+	jr nz, .next
+	ld a, 14 ; Onix's level
+	jp .next
+.NormalMode2
 	ld hl, wObtainedBadges
 	bit BIT_EARTHBADGE, [hl]
 	ld a, 101

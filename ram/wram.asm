@@ -2304,7 +2304,12 @@ wRoute18Gate1FCurScript:: db
 	; ds 78
 wGameProgressFlagsEnd::
 
-	ds 56
+wDifficulty::
+	; $00 = normal
+	; $01 = hard
+		ds 1
+	
+	ds 55 ; unused
 
 wObtainedHiddenItemsFlags:: flag_array 112
 

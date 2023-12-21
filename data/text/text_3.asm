@@ -442,6 +442,16 @@ _OakSpeechText1::
 	cont "the #MON PROF!"
 	prompt
 
+_NormalModeText::
+	text "Classic #MON."
+	done
+
+_HardModeText::
+	text "Set mode, no"
+	line "items in battle,"
+	cont "gym level caps."
+	done
+
 _OakSpeechText2A::
 	text "This world is"
 	line "inhabited by"

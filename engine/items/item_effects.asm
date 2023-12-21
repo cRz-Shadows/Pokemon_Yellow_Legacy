@@ -1473,8 +1473,44 @@ ItemUseMedicine:
 	push hl
 	ld bc, wPartyMon1Level - wPartyMon1
 	add hl, bc ; hl now points to level
+	ld d, MAX_LEVEL
+
+	ld a, [wDifficulty] ; Check if player is on hard mode
+	and a
+	jr z, .next1 ; no level caps if not on hard mode
+
+	CheckEvent EVENT_BEAT_CHAMPION_RIVAL
+	jr nz, .next1
+	ld hl, wObtainedBadges
+	bit BIT_EARTHBADGE, [hl]
+	ld d, 65 ; Venasaur/Charizard/Blastoise's level
+	jr nz, .next1
+	bit BIT_VOLCANOBADGE, [hl]
+	ld d, 50 ; Rhydon's level
+	jr nz, .next1
+	bit BIT_MARSHBADGE, [hl]
+	ld d, 47 ; Arcanine's level
+	jr nz, .next1
+	bit BIT_SOULBADGE, [hl]
+	ld d, 43 ; Alakazam's level
+	jr nz, .next1
+    bit BIT_RAINBOWBADGE, [hl]
+	ld d, 43 ; Weezing's level
+	jr nz, .next1
+	bit BIT_THUNDERBADGE, [hl]
+	ld d, 29 ; Vileplume's level
+	jr nz, .next1
+	bit BIT_CASCADEBADGE, [hl]
+    ld d, 24 ; Raichu's level
+	jr nz, .next1
+	bit BIT_BOULDERBADGE, [hl]
+	ld d, 21 ; Starmie's level
+	jr nz, .next1
+	ld d, 14 ; Onix's level
+.next1
+
 	ld a, [hl] ; a = level
-	cp MAX_LEVEL
+	cp d ; MAX_LEVEL on normal mode, level cap on hard mode
 	jr z, .vitaminNoEffect ; can't raise level above 100
 	inc a
 	ld [hl], a ; store incremented level

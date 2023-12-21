@@ -226,13 +226,39 @@ HoFLoadMonPlayerPicTileIDs:
 HoFDisplayPlayerStats:
 	SetEvent EVENT_HALL_OF_FAME_DEX_RATING
 	predef DisplayDexRating
+
+	hlcoord 11, 0 ; Legacy Text Box
+	lb bc, 2, 7
+	call TextBoxBorder
+
+	ld a, [wDifficulty] ; Check if player is on hard mode
+	and a
+	jr z, .NormalModeText
+
+	hlcoord 12, 1
+	ld de, LegacyText
+	call PlaceString
+	hlcoord 12, 2
+	ld de, HardText
+	call PlaceString
+	jp .Next1
+
+.NormalModeText
+	hlcoord 12, 1
+	ld de, YellowText
+	call PlaceString
+	hlcoord 12, 2
+	ld de, LegacyText
+	call PlaceString
+.Next1
+
 	hlcoord 0, 4
 	lb bc, 6, 10
 	call TextBoxBorder
-	hlcoord 5, 0
+	hlcoord 0, 0
 	lb bc, 2, 9
 	call TextBoxBorder
-	hlcoord 7, 2
+	hlcoord 1, 2
 	ld de, wPlayerName
 	call PlaceString
 	hlcoord 1, 6
@@ -264,6 +290,15 @@ HoFPrintTextAndDelay:
 	call PrintText
 	ld c, 120
 	jp DelayFrames
+
+YellowText:
+	db "YELLOW@"
+
+LegacyText:
+	db "LEGACY@"
+
+HardText:
+	db "HARD@"
 
 HoFPlayTimeText:
 	db "PLAY TIME@"

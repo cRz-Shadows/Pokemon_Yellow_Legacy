@@ -42,6 +42,7 @@ DEF PC_ITEM_CAPACITY  EQU 50
 	const TRADE_CANCEL_MENU ; 5
 	const HEAL_CANCEL_MENU  ; 6
 	const NO_YES_MENU       ; 7
+	const DIFFICULTY_SELECTION_MENU ; 8
 DEF NUM_TWO_OPTION_MENUS EQU const_value
 
 ; menu exit method constants for list menus and the buy/sell/quit menu
