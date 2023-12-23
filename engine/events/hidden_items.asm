@@ -19,6 +19,7 @@ HiddenItems:
 	tx_pre_jump FoundHiddenItemText
 
 .itemAlreadyFound
+	predef TryFieldMove
 	ld a, $ff
 	ldh [hItemAlreadyFound], a
 	ret

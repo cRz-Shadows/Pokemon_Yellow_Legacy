@@ -98,7 +98,12 @@ OverworldLoopLessDelay::
 	call Func_0ffe
 	ldh a, [hSpriteIndexOrTextID]
 	and a
+
+	jr nz, .displayDialogue
+	predef TryFieldMove
+	jp OverworldLoop
 	jp z, OverworldLoop
+
 .displayDialogue
 	predef GetTileAndCoordsInFrontOfPlayer
 	call UpdateSprites
