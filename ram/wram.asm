@@ -2308,8 +2308,13 @@ wDifficulty::
 	; $00 = normal
 	; $01 = hard
 		ds 1
+
+wPlayerGender::
+	; $00 = male
+	; $01 = female
+		ds 1
 	
-	ds 55 ; unused
+	ds 54 ; unused
 
 wObtainedHiddenItemsFlags:: flag_array 112
 
