@@ -72,7 +72,7 @@ OakSpeech:
 	ld a, [wd732]
 	bit BIT_DEBUG_MODE, a
 	jp nz, .skipSpeech
-.MenuCursorLoop
+.MenuCursorLoop ; difficulty menu
 	ld hl, DifficultyText
   	call PrintText
   	call DifficultyChoice
@@ -98,6 +98,15 @@ OakSpeech:
 	jp .MenuCursorLoop ; If player says no, back to difficulty selection
 .doneLoop
    	call ClearScreen ; clear the screen before resuming normal intro
+
+	; Gender Menu
+	ld hl, BoyGirlText  ; added to the same file as the other oak text
+	call PrintText     ; show this text
+	call BoyGirlChoice ; added routine at the end of this file
+	ld a, [wCurrentMenuItem]
+	ld [wPlayerGender], a ; store player's gender. 00 for boy, 01 for girl
+	call ClearScreen ; clear the screen before resuming normal intro
+
 	ld de, ProfOakPic
 	lb bc, BANK(ProfOakPic), $00
 	call IntroDisplayPicCenteredOrUpperRight
@@ -119,6 +128,12 @@ OakSpeech:
 	call ClearScreen
 	ld de, RedPicFront
 	lb bc, BANK(RedPicFront), $00
+	ld a, [wPlayerGender] 	; check gender
+	and a      				; check gender
+	jr z, .NotGreen1
+	ld de, GreenPicFront
+	lb bc, BANK(GreenPicFront), $00
+.NotGreen1:
 	call IntroDisplayPicCenteredOrUpperRight
 	call MovePicLeft
 	ld hl, IntroducePlayerText
@@ -138,6 +153,12 @@ OakSpeech:
 	call ClearScreen
 	ld de, RedPicFront
 	lb bc, BANK(RedPicFront), $00
+	ld a, [wPlayerGender] ; check gender
+	and a      ; check gender
+	jr z, .NotGreen2
+	ld de, GreenPicFront
+	lb bc, Bank(GreenPicFront), $00
+.NotGreen2:
 	call IntroDisplayPicCenteredOrUpperRight
 	call GBFadeInFromWhite
 	ld a, [wd72d]
@@ -158,6 +179,17 @@ OakSpeech:
 	ld de, RedSprite
 	ld b, BANK(RedSprite)
 	ld c, $0C
+	; call CopyVideoData
+	; ld de, ShrinkPic1
+	; lb bc, BANK(ShrinkPic1), $00
+	; call IntroDisplayPicCenteredOrUpperRight
+	ld a, [wPlayerGender] ; check gender
+	and a      ; check gender
+	jr z, .NotGreen3
+	ld de,GreenSprite
+	lb bc, BANK(GreenSprite), $0C
+.NotGreen3:
+	ld hl, vSprites
 	call CopyVideoData
 	ld de, ShrinkPic1
 	lb bc, BANK(ShrinkPic1), $00
@@ -221,6 +253,9 @@ DifficultyText:
 YesNoNormalHardText:
 	text_far _AreYouSureText
 	text_end
+BoyGirlText:
+    text_far _BoyGirlText
+    text_end
 
 FadeInIntroPic:
 	ld hl, IntroFadePalettes
@@ -326,3 +361,22 @@ DisplayYesNoNormalHardChoice::
 	ld [wTextBoxID], a
 	call DisplayTextBoxID
 	jp LoadScreenTilesFromBuffer1
+
+; displays boy/girl choice
+BoyGirlChoice::
+	call SaveScreenTilesToBuffer1
+	call InitBoyGirlTextBoxParameters
+	jr DisplayBoyGirlChoice
+
+InitBoyGirlTextBoxParameters::
+   ld a, $1 ; loads the value for the unused North/West choice, that was changed to say Boy/Girl
+	ld [wTwoOptionMenuID], a
+	coord hl, 6, 5 
+	ld bc, $607
+	ret
+	
+DisplayBoyGirlChoice::
+	  ld a, $14
+	  ld [wTextBoxID], a
+	  call DisplayTextBoxID
+	  jp LoadScreenTilesFromBuffer1

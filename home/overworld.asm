@@ -1782,6 +1782,11 @@ LoadWalkingPlayerSpriteGraphics::
 	ld [wd473], a
 	ld b, BANK(RedSprite)
 	ld de, RedSprite
+	ld a, [wPlayerGender]
+	and a
+	jr z, .AreGuy1
+	ld de, GreenSprite
+.AreGuy1
 	jr LoadPlayerSpriteGraphicsCommon
 
 LoadSurfingPlayerSpriteGraphics2::
@@ -1809,6 +1814,10 @@ LoadSurfingPlayerSpriteGraphics::
 LoadBikePlayerSpriteGraphics::
 	ld b, BANK(RedBikeSprite)
 	ld de, RedBikeSprite
+	ld a, [wPlayerGender]
+	and a
+	jr z, LoadPlayerSpriteGraphicsCommon
+	ld de, GreenBikeSprite
 
 LoadPlayerSpriteGraphicsCommon::
 	ld hl, vNPCSprites

@@ -278,6 +278,7 @@ INCLUDE "engine/gfx/mon_icons.asm"
 INCLUDE "engine/events/in_game_trades.asm"
 INCLUDE "engine/gfx/palettes.asm"
 INCLUDE "engine/menus/save.asm"
+INCLUDE "engine/items/tm_prices.asm"
 
 
 SECTION "Itemfinder 1", ROMX
@@ -398,7 +399,6 @@ INCLUDE "engine/battle/move_effects/mist.asm"
 INCLUDE "engine/battle/move_effects/one_hit_ko.asm"
 INCLUDE "engine/battle/move_effects/pay_day.asm"
 INCLUDE "engine/battle/move_effects/paralyze.asm"
-INCLUDE "engine/items/tm_prices.asm"
 INCLUDE "engine/math/multiply_divide.asm"
 INCLUDE "engine/events/give_pokemon.asm"
 INCLUDE "engine/battle/get_trainer_name.asm"
