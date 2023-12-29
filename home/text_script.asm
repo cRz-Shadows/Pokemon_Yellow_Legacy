@@ -211,12 +211,62 @@ PlayerBlackedOutText::
 	text_end
 
 DisplayRepelWoreOffText::
+	; is there another repel we can use?
+	ld a, [wRepelType]
+	ld [wd11e], a
+	ld b, a
+	call IsItemInBag
+	jr z, .NoRepelsInBag ; skip reuse if no repels in bag
+
+	; use another repel text
+	call GetItemName
+	call CopyToStringBuffer
+	ld hl, RepelWoreOffUseAnotherText
+	call PrintText
+	call YesNoChoice
+	ld a, [wCurrentMenuItem]
+	and a
+	jr nz, .FinishRepelReuse ; skip reuse if No was chosen
+
+	; remove item from bag
+	ld hl, wBagItems
+	ld bc, 0
+	ld a, [wRepelType]
+	ld d, a
+.RepelLoop
+	ld a, [hli]
+	cp $ff
+	jr z, .FinishRepelReuse ; couldn't find repel type in bag
+	cp d
+	jr z, .foundItem
+	inc hl
+	inc c
+	jr .RepelLoop
+.foundItem
+	ld hl, wNumBagItems
+	ld a, c
+	ld [wWhichPokemon], a
+	ld a, 1
+	ld [wItemQuantity], a
+	call RemoveItemFromInventory
+
+	; set repel steps
+	ld a, [wRepelTypeSteps]
+	ld [wRepelRemainingSteps], a
+	jp .FinishRepelReuse
+.NoRepelsInBag
 	ld hl, RepelWoreOffText
 	call PrintText
 	jp AfterDisplayingTextID
+.FinishRepelReuse
+	jp CloseTextDisplay
 
 RepelWoreOffText::
 	text_far _RepelWoreOffText
+	text_end
+
+RepelWoreOffUseAnotherText::
+	text_far _RepelWoreOffUseAnotherText
 	text_end
 
 DisplayPikachuEmotion::
