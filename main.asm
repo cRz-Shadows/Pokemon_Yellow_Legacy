@@ -281,6 +281,11 @@ INCLUDE "engine/menus/save.asm"
 INCLUDE "engine/items/tm_prices.asm"
 
 
+SECTION "Engine Spillover", ROMX
+
+INCLUDE "engine/menus/item_descriptions.asm"
+
+
 SECTION "Itemfinder 1", ROMX
 
 INCLUDE "engine/items/itemfinder.asm"
