@@ -1473,6 +1473,7 @@ ItemUseMedicine:
 	push hl
 	ld bc, wPartyMon1Level - wPartyMon1
 	add hl, bc ; hl now points to level
+	push hl
 	ld d, MAX_LEVEL
 
 	ld a, [wDifficulty] ; Check if player is on hard mode
@@ -1509,6 +1510,7 @@ ItemUseMedicine:
 	ld d, 14 ; Onix's level
 .next1
 
+	pop hl
 	ld a, [hl] ; a = level
 	cp d ; MAX_LEVEL on normal mode, level cap on hard mode
 	jr z, .vitaminNoEffect ; can't raise level above 100
