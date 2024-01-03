@@ -1063,9 +1063,9 @@ PoliwagEvosMoves:
 	db EVOLVE_LEVEL, 25, POLIWHIRL
 	db 0
 ; Learnset
-	db 5,  MIST
-	db 10, WATER_GUN
-	db 14, DOUBLESLAP
+	db 6,  MIST
+	db 10, DOUBLESLAP
+	db 14, WATER_GUN
 	db 19, BUBBLEBEAM
 	db 22, HYPNOSIS
 	db 35, BODY_SLAM
@@ -1198,10 +1198,11 @@ PikachuEvosMoves:
 	db EVOLVE_ITEM, THUNDER_STONE, 1, RAICHU
 	db 0
 ; Learnset
-	db 6, TAIL_WHIP
+	db 6, QUICK_ATTACK
 	db 8, THUNDER_WAVE
-	db 11, QUICK_ATTACK
+	db 11, TAIL_WHIP
 	db 15, DOUBLE_TEAM
+	db 18, THUNDERPUNCH
 	db 20, SLAM
 	db 26, THUNDERBOLT
 	db 33, AGILITY
@@ -1514,9 +1515,9 @@ PoliwhirlEvosMoves:
 	db EVOLVE_ITEM, WATER_STONE, 1, POLIWRATH
 	db 0
 ; Learnset
-	db 5,  MIST
-	db 10, WATER_GUN
-	db 14, DOUBLESLAP
+	db 6,  MIST
+	db 10, DOUBLESLAP
+	db 14, WATER_GUN
 	db 19, BUBBLEBEAM
 	db 22, HYPNOSIS
 	db 25, KARATE_CHOP
@@ -1529,9 +1530,9 @@ PoliwrathEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 5,  MIST
-	db 10, WATER_GUN
-	db 14, DOUBLESLAP
+	db 6,  MIST
+	db 10, DOUBLESLAP
+	db 14, WATER_GUN
 	db 19, BUBBLEBEAM
 	db 22, HYPNOSIS
 	db 25, KARATE_CHOP
@@ -2336,8 +2337,8 @@ OddishEvosMoves:
 	db EVOLVE_LEVEL, 21, GLOOM
 	db 0
 ; Learnset
-	db 14, POISONPOWDER
-	db 16, STUN_SPORE
+	db 10, POISONPOWDER
+	db 14, STUN_SPORE
 	db 18, SLEEP_POWDER
 	db 21, MEGA_DRAIN
 	db 24, ACID
@@ -2352,8 +2353,8 @@ GloomEvosMoves:
 	db EVOLVE_ITEM, LEAF_STONE, 1, VILEPLUME
 	db 0
 ; Learnset
-	db 14, POISONPOWDER
-	db 16, STUN_SPORE
+	db 10, POISONPOWDER
+	db 14, STUN_SPORE
 	db 18, SLEEP_POWDER
 	db 21, MEGA_DRAIN
 	db 24, ACID
@@ -2367,8 +2368,8 @@ VileplumeEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 14, POISONPOWDER
-	db 16, STUN_SPORE
+	db 10, POISONPOWDER
+	db 14, STUN_SPORE
 	db 18, SLEEP_POWDER
 	db 21, MEGA_DRAIN
 	db 24, ACID
