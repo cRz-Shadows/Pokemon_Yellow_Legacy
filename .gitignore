@@ -15,7 +15,7 @@
 *.patch
 
 # rgbds extras
-*.map
+# *.map
 *.sym
 
 # tool binaries
