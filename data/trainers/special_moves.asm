@@ -19,7 +19,7 @@ SpecialTrainerMoves:
 	db 0
 
 	db MISTY, 1
-	db 2, 1, TACKLE
+	db 2, 1, SWIFT
 	db 2, 2, HARDEN
 	db 2, 3, CONFUSION
 	db 2, 4, BUBBLEBEAM
