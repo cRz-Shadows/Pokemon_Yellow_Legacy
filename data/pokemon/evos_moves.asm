@@ -1063,11 +1063,11 @@ PoliwagEvosMoves:
 	db EVOLVE_LEVEL, 25, POLIWHIRL
 	db 0
 ; Learnset
-	db 6,  MIST
-	db 10, DOUBLESLAP
-	db 14, WATER_GUN
-	db 19, BUBBLEBEAM
-	db 22, HYPNOSIS
+	db 6, MIST
+	db 9, BUBBLE
+	db 15, WATER_GUN
+	db 23, BUBBLEBEAM
+	db 27, HYPNOSIS
 	db 35, BODY_SLAM
 	db 43, AMNESIA
 	db 51, HYDRO_PUMP

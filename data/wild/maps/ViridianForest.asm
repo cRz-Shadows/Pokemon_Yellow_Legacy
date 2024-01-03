@@ -2,10 +2,10 @@ ViridianForestWildMons:
 	def_grass_wildmons 25 ; encounter rate
 	db  4, CATERPIE
 	db  4, WEEDLE
-	db  7, METAPOD
-	db  4, ODDISH
-	db  5, ODDISH
-	db  6, PIDGEY
+	db  7, PIDGEY
+	db  4, KAKUNA
+	db  5, METAPOD
+	db  6, METAPOD
 	db  6, CATERPIE
 	db  7, KAKUNA
 	db  8, PIDGEY
