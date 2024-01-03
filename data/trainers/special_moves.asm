@@ -14,8 +14,7 @@ SpecialTrainerMoves:
 	db 0
 
 	db BROCK, 1
-	db 2, 1, ROCK_THROW
-	db 2, 3, BIND
+	db 2, 3, ROCK_THROW
 	db 2, 4, BIDE
 	db 0
 
