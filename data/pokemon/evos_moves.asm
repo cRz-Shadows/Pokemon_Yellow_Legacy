@@ -2337,8 +2337,10 @@ OddishEvosMoves:
 	db EVOLVE_LEVEL, 21, GLOOM
 	db 0
 ; Learnset
-	db 10, POISONPOWDER
-	db 14, STUN_SPORE
+	db 5, POISONPOWDER
+	db 8, LEECH_SEED
+	db 13, ABSORB
+	db 16, STUN_SPORE
 	db 18, SLEEP_POWDER
 	db 21, MEGA_DRAIN
 	db 24, ACID
