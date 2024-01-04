@@ -364,16 +364,20 @@ CooltrainerFAI:
 	jp AISwitchIfEnoughMons
 
 BrockAI:
-; if his active monster has a status condition, use a full heal
-	ld a, [wEnemyMonStatus]
 	and a
-	ret z
-	jp AIUseFullHeal
+	ret
+; ; if his active monster has a status condition, use a full heal
+; 	ld a, [wEnemyMonStatus]
+; 	and a
+; 	ret z
+; 	jp AIUseFullHeal
 
 MistyAI:
-	cp 25 percent + 1
-	ret nc
-	jp AIUseXDefend
+	and a
+	ret
+	; cp 25 percent + 1
+	; ret nc
+	; jp AIUseXDefend
 
 LtSurgeAI:
 	cp 25 percent + 1

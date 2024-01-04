@@ -20,10 +20,18 @@ SpecialTrainerMoves:
 	db 0
 
 	db MISTY, 1
-	db 2, 1, SWIFT
-	db 2, 2, HARDEN
-	db 2, 3, CONFUSION
+	db 1, 1, SCRATCH
+	db 1, 2, DISABLE
+	db 1, 3, CONFUSION
+	db 1, 4, BUBBLEBEAM
+	db 2, 1, PECK
+	db 2, 2, HORN_ATTACK
+	db 2, 3, SUPERSONIC
 	db 2, 4, BUBBLEBEAM
+	db 3, 1, SWIFT
+	db 3, 2, HARDEN
+	db 3, 3, CONFUSION
+	db 3, 4, BUBBLEBEAM
 	db 0
 
 	db LT_SURGE, 1
