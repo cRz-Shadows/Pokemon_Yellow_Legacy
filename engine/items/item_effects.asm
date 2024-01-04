@@ -1474,7 +1474,7 @@ ItemUseMedicine:
 	ld bc, wPartyMon1Level - wPartyMon1
 	add hl, bc ; hl now points to level
 	push hl
-	ld d, MAX_LEVEL
+	ld b, MAX_LEVEL
 
 	ld a, [wDifficulty] ; Check if player is on hard mode
 	and a
@@ -1484,35 +1484,35 @@ ItemUseMedicine:
 	jr nz, .next1
 	ld hl, wObtainedBadges
 	bit BIT_EARTHBADGE, [hl]
-	ld d, 65 ; Venasaur/Charizard/Blastoise's level
+	ld b, 65 ; Venasaur/Charizard/Blastoise's level
 	jr nz, .next1
 	bit BIT_VOLCANOBADGE, [hl]
-	ld d, 50 ; Rhydon's level
+	ld b, 50 ; Rhydon's level
 	jr nz, .next1
 	bit BIT_MARSHBADGE, [hl]
-	ld d, 47 ; Arcanine's level
+	ld b, 47 ; Arcanine's level
 	jr nz, .next1
 	bit BIT_SOULBADGE, [hl]
-	ld d, 43 ; Alakazam's level
+	ld b, 43 ; Alakazam's level
 	jr nz, .next1
     bit BIT_RAINBOWBADGE, [hl]
-	ld d, 43 ; Weezing's level
+	ld b, 43 ; Weezing's level
 	jr nz, .next1
 	bit BIT_THUNDERBADGE, [hl]
-	ld d, 29 ; Vileplume's level
+	ld b, 29 ; Vileplume's level
 	jr nz, .next1
 	bit BIT_CASCADEBADGE, [hl]
-    ld d, 24 ; Raichu's level
+    ld b, 24 ; Raichu's level
 	jr nz, .next1
 	bit BIT_BOULDERBADGE, [hl]
-	ld d, 21 ; Starmie's level
+	ld b, 21 ; Starmie's level
 	jr nz, .next1
-	ld d, 14 ; Onix's level
+	ld b, 14 ; Onix's level
 .next1
 
 	pop hl
 	ld a, [hl] ; a = level
-	cp d ; MAX_LEVEL on normal mode, level cap on hard mode
+	cp b ; MAX_LEVEL on normal mode, level cap on hard mode
 	jr z, .vitaminNoEffect ; can't raise level above 100
 	inc a
 	ld [hl], a ; store incremented level
