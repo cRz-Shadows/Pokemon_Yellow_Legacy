@@ -281,6 +281,22 @@ PalletTownGirlText:
 	text_end
 
 PalletTownFisherText:
+	; text_far _PalletTownFisherText
+	; text_end
+	text_asm
+	lb bc, RARE_CANDY, 99
+	call GiveItem
+	jr nc, .BagFull
+	jr .finish
+.BagFull
+	ld a, TEXT_FUCHSIAGYM_KOGA_TM06_NO_ROOM
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+.finish
+	ld hl, .PalletTownFisherTextTemp
+	call PrintText
+	jp TextScriptEnd
+.PalletTownFisherTextTemp:
 	text_far _PalletTownFisherText
 	text_end
 
