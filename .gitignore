@@ -16,6 +16,9 @@
 
 # rgbds extras
 # *.map
+pokeyellow.map
+pokeyellow_debug.map
+
 *.sym
 
 # tool binaries
