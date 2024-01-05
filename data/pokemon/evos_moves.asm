@@ -343,7 +343,7 @@ ExeggutorEvosMoves:
 	db 28, STOMP
 	db 32, STUN_SPORE
 	db 40, EGG_BOMB
-	db 45, PSYCHIC
+	db 45, PSYCHIC_M
 	db 48, SLEEP_POWDER
 	db 0
 
@@ -775,7 +775,7 @@ MrMimeEvosMoves:
 	db 27, DOUBLESLAP
 	db 31, PSYBEAM
 	db 39, MEDITATE
-	db 43, PSYCHIC
+	db 43, PSYCHIC_M
 	db 47, SUBSTITUTE
 	db 50, BARRIER
 	db 0
@@ -844,7 +844,7 @@ PsyduckEvosMoves:
 	db 17, BUBBLEBEAM
 	db 23, SCREECH
 	db 40, FURY_SWIPES
-	db 42, PSYCHIC
+	db 42, PSYCHIC_M
 	db 45, AMNESIA
 	db 50, HYDRO_PUMP
 	db 0
@@ -1147,7 +1147,7 @@ ArticunoEvosMoves:
 	db 0
 ; Learnset
 	db 40, AGILITY
-	db 45, ICEBEAM
+	db 45, ICE_BEAM
 	db 51, BLIZZARD
 	db 55, DRILL_PECK
 	db 60, MIST
@@ -1790,7 +1790,7 @@ GolduckEvosMoves:
 	db 17, BUBBLEBEAM
 	db 23, SCREECH
 	db 40, FURY_SWIPES
-	db 42, PSYCHIC
+	db 42, PSYCHIC_M
 	db 45, AMNESIA
 	db 50, HYDRO_PUMP
 	db 0
