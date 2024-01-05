@@ -373,7 +373,7 @@ ExeggcuteEvosMoves:
 	db 25, REFLECT
 	db 32, STUN_SPORE
 	db 40, EGG_BOMB
-	db 45, PSYCHIC
+	db 45, PSYCHIC_M
 	db 48, SLEEP_POWDER
 	db 0
 
