@@ -86,7 +86,7 @@ BugCatcherData:
 ; Viridian Forest
 	db 7, CATERPIE, WEEDLE, CATERPIE, 0
 	db 6, METAPOD, CATERPIE, KAKUNA, 0
-	db $FF, 5, PINSIR, 9, METAPOD, 0
+	db $FF, 8, PINSIR, 9, METAPOD, 0
 ; Route 3
 	db 10, CATERPIE, WEEDLE, CATERPIE, 0
 	db 9, WEEDLE, KAKUNA, CATERPIE, METAPOD, 0
@@ -174,7 +174,7 @@ JrTrainerMData:
 
 JrTrainerFData:
 ; Cerulean Gym
-	db 19, GOLDEEN, 0
+	db 19, SEEL, 0
 ; Unused
 	db 16, ODDISH, BELLSPROUT, 0
 ; Route 6
