@@ -353,7 +353,7 @@ LickitungEvosMoves:
 ; Learnset
 	db 7, STOMP
 	db 15, DISABLE
-	db 19, SLAM
+	db 19, HEADBUTT
 	db 23, DEFENSE_CURL
 	db 28, DISABLE
 	db 32, BODY_SLAM
@@ -623,7 +623,7 @@ TangelaEvosMoves:
 	db 23, STUN_SPORE
 	db 25, SLEEP_POWDER
 	db 32, MEGA_DRAIN
-	db 42, SLAM
+	db 42, BODY_SLAM
 	db 45, GROWTH
 	db 48, BIND
 	db 0
@@ -1255,7 +1255,7 @@ PikachuEvosMoves:
 	db 11, TAIL_WHIP
 	db 15, DOUBLE_TEAM
 	db 18, THUNDERPUNCH
-	db 20, SLAM
+	db 20, HEADBUTT
 	db 26, THUNDERBOLT
 	db 33, AGILITY
 	db 41, THUNDER
@@ -2483,8 +2483,8 @@ BellsproutEvosMoves:
 	db EVOLVE_LEVEL, 21, WEEPINBELL
 	db 0
 ; Learnset
-	db 13, SLAM
-	db 15, POISONPOWDER
+	db 13, POISONPOWDER
+	db 15, HEADBUTT
 	db 18, SLEEP_POWDER
 	db 21, STUN_SPORE
 	db 25, ACID
@@ -2498,8 +2498,8 @@ WeepinbellEvosMoves:
 	db EVOLVE_ITEM, LEAF_STONE, 1, VICTREEBEL
 	db 0
 ; Learnset
-	db 13, SLAM
-	db 15, POISONPOWDER
+	db 13, POISONPOWDER
+	db 15, HEADBUTT
 	db 18, SLEEP_POWDER
 	db 21, STUN_SPORE
 	db 25, ACID
@@ -2512,8 +2512,8 @@ VictreebelEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 13, SLAM
-	db 15, POISONPOWDER
+	db 13, POISONPOWDER
+	db 15, HEADBUTT
 	db 18, SLEEP_POWDER
 	db 21, STUN_SPORE
 	db 25, ACID

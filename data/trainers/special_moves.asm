@@ -82,27 +82,34 @@ SpecialTrainerMoves:
 	db BLAINE, 1
 	db 1, 1, FLAMETHROWER
 	db 1, 4, CONFUSE_RAY
-	db 3, 1, FLAMETHROWER
-	db 3, 2, FIRE_BLAST
-	db 3, 3, REFLECT
+	db 4, 1, FLAMETHROWER
+	db 4, 2, FIRE_BLAST
+	db 4, 3, REFLECT
 	db 0
 
 	db SABRINA, 1
 	db 1, 1, FLASH
-	db 2, 1, KINESIS
-	db 2, 4, PSYWAVE
-	db 3, 1, PSYWAVE
+	db 3, 1, KINESIS
+	db 3, 4, PSYWAVE
 	db 0
 
 	db GIOVANNI, 3
+	db 1, 1, EARTHQUAKE
+	db 1, 2, SLASH
 	db 1, 3, FISSURE
+	db 1, 4, NO_MOVE
 	db 2, 2, DOUBLE_TEAM
 	db 3, 1, EARTHQUAKE
-	db 3, 3, THUNDER
+	db 3, 3, ICE_BEAM
+	db 3, 3, THUNDERBOLT
+	db 3, 4, BODY_SLAM
 	db 4, 1, EARTHQUAKE
-	db 4, 2, LEER
+	db 4, 2, BLIZZARD
 	db 4, 3, THUNDER
+	db 4, 4, SLUDGE
 	db 5, 1, ROCK_SLIDE
+	db 5, 2, SURF
+	db 5, 3, SURF
 	db 5, 4, EARTHQUAKE
 	db 0
 
