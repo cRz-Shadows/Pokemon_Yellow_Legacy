@@ -605,10 +605,10 @@ RocketData:
 ; Unused
 	db 32, CUBONE, DROWZEE, MAROWAK, 0
 ; Jessie & James
-	db 14, EKANS, MEOWTH, KOFFING, 0 ; Mt. Moon B2F
-	db 25, KOFFING, MEOWTH, EKANS, 0 ; Rocket Hideout B4F
-	db 27, MEOWTH, ARBOK, WEEZING, 0 ; Pokémon Tower 7F
-	db 31, WEEZING, ARBOK, MEOWTH, 0 ; Silph Co. 11F
+	db $FF, 15, EKANS, 16, MEOWTH, 16, KOFFING, 0 ; Mt. Moon B2F
+	db $FF, 25, KOFFING, 28, MEOWTH, 25, EKANS, 0 ; Rocket Hideout B4F
+	db $FF, 30, MEOWTH, 27,ARBOK, 26, LICKITUNG, 27, WEEZING, 0 ; Pokémon Tower 7F
+	db $FF, 35, WEEZING, 33, LICKITUNG, 35, ARBOK, 38, MEOWTH, 33, VICTREEBEL, 0 ; Silph Co. 11F
 ; Unused
 	db 16, KOFFING, 0
 	db 27, KOFFING, 0
@@ -661,7 +661,7 @@ LtSurgeData:
 	db $FF, 28, RAICHU, 0
 
 ErikaData:
-	db $FF, 30, TANGELA, 32, WEEPINBELL, 32, GLOOM, 0
+	db $FF, 33, TANGELA, 34, VICTREEBEL, 31, IVYSAUR, 34, VILEPLUME, 0
 
 KogaData:
 	db $FF, 44, VENONAT, 46, VENONAT, 48, VENONAT, 50, VENOMOTH, 0

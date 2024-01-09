@@ -38,13 +38,26 @@ SpecialTrainerMoves:
 	db 1, 1, THUNDERBOLT
 	db 1, 2, BODY_SLAM
 	db 1, 3, SURF
-	db 1, 4, CUT
+	db 1, 4, THUNDER_WAVE
 	db 0
 
 	db ERIKA, 1
+	db 1, 1, BIND
+	db 1, 2, SLEEP_POWDER
 	db 1, 3, MEGA_DRAIN
-	db 2, 1, RAZOR_LEAF
-	db 3, 1, PETAL_DANCE
+	db 1, 4, NO_MOVE
+	db 2, 1, MEGA_DRAIN
+	db 2, 2, RAZOR_LEAF
+	db 2, 3, STUN_SPORE
+	db 2, 4, SLEEP_POWDER
+	db 3, 1, RAZOR_LEAF
+	db 3, 2, ACID
+	db 3, 3, LEECH_SEED
+	db 3, 4, NO_MOVE
+	db 4, 1, ACID
+	db 4, 2, SOLARBEAM
+	db 4, 3, STUN_SPORE
+	db 4, 4, SLEEP_POWDER
 	db 0
 
 	db KOGA, 1
