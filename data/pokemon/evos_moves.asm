@@ -2060,8 +2060,8 @@ StarmieEvosMoves:
 	db 7, WATER_GUN
 	db 10, CONFUSION
 	db 15, SWIFT
-	db 22, HARDEN
-	db 24, BUBBLEBEAM
+	db 18, HARDEN
+	db 20, BUBBLEBEAM
 	db 27, RECOVER
 	db 37, MINIMIZE
 	db 40, PSYCHIC_M
@@ -2125,7 +2125,6 @@ GoldeenEvosMoves:
 	db EVOLVE_LEVEL, 33, SEAKING
 	db 0
 ; Learnset
-	db 5, WATER_GUN
 	db 10, SUPERSONIC
 	db 12, HORN_ATTACK
 	db 15, WATERFALL
