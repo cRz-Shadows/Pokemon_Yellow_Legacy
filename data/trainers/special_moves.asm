@@ -67,8 +67,8 @@ SpecialTrainerMoves:
 	db 1, 4, NO_MOVE
 	db 2, 1, TOXIC
 	db 2, 2, CONFUSE_RAY
-	db 2, 3, WING_ATTACK
-	db 2, 4, ACID
+	db 2, 3, FLY
+	db 2, 4, NO_MOVE
 	db 3, 1, TOXIC
 	db 3, 2, SLUDGE
 	db 3, 3, ACID_ARMOR
@@ -80,37 +80,77 @@ SpecialTrainerMoves:
 	db 0
 
 	db BLAINE, 1
-	db 1, 1, FLAMETHROWER
-	db 1, 4, CONFUSE_RAY
-	db 4, 1, FLAMETHROWER
-	db 4, 2, FIRE_BLAST
-	db 4, 3, REFLECT
+	db 1, 1, FIRE_SPIN
+	db 1, 2, DOUBLE_KICK
+	db 1, 3, TAKE_DOWN
+	db 1, 4, NO_MOVE
+	db 2, 1, FIRE_BLAST
+	db 2, 2, WING_ATTACK
+	db 2, 3, SLASH
+	db 2, 4, SEISMIC_TOSS
+	db 3, 1, FIRE_SPIN
+	db 3, 2, CONFUSE_RAY
+	db 3, 3, SOLARBEAM
+	db 3, 4, NO_MOVE
+	db 4, 1, FIRE_BLAST 
+	db 4, 2, DOUBLE_EDGE
+	db 4, 3, DIG
+	db 4, 4, NO_MOVE
+	db 5, 1, FIRE_BLAST
+	db 5, 2, PSYCHIC 
+	db 5, 3, CONFUSE_RAY
+	db 5, 4, THUNDERPUNCH
 	db 0
 
+
 	db SABRINA, 1
-	db 1, 1, FLASH
-	db 3, 1, KINESIS
-	db 3, 4, PSYWAVE
+	db 1, 1, PSYCHIC_M
+	db 1, 2, NO_MOVE
+	db 1, 3, NO_MOVE
+	db 1, 4, NO_MOVE
+	db 2, 1, DREAM_EATER
+	db 2, 2, HYPNOSIS
+	db 2, 3, PSYWAVE
+	db 2, 4, NO_MOVE
+	db 3, 1, PSYCHIC
+	db 3, 2, MIMIC
+	db 3, 3, LIGHT_SCREEN
+	db 3, 4, SUBSTITUTE
+	db 4, 1, REFLECT
+	db 4, 2, PSYWAVE
+	db 4, 3, PSYCHIC
+	db 4, 4, RECOVER 
+	db 5, 1, PSYCHIC 
+	db 5, 2, RECOVER 
+	db 5, 3, TRI_ATTACK
+	db 5, 4, NO_MOVE
+	db 0
+
+	db GIOVANNI, 2
+	db 1, 1, EARTHQUAKE
 	db 0
 
 	db GIOVANNI, 3
 	db 1, 1, EARTHQUAKE
 	db 1, 2, SLASH
 	db 1, 3, FISSURE
-	db 1, 4, NO_MOVE
-	db 2, 2, DOUBLE_TEAM
-	db 3, 1, EARTHQUAKE
-	db 3, 3, ICE_BEAM
-	db 3, 3, THUNDERBOLT
-	db 3, 4, BODY_SLAM
+	db 1, 4, ROCK_SLIDE
+	db 2, 1, EARTHQUAKE
+	db 2, 2, ICE_BEAM
+	db 2, 3, THUNDERBOLT
+	db 2, 4, BODY_SLAM
+	db 3, 1, SLASH
+	db 3, 2, HYPER_BEAM
+	db 3, 3, BUBBLEBEAM
+	db 3, 4, THUNDERBOLT
 	db 4, 1, EARTHQUAKE
 	db 4, 2, BLIZZARD
 	db 4, 3, THUNDER
 	db 4, 4, SLUDGE
 	db 5, 1, ROCK_SLIDE
-	db 5, 2, SURF
-	db 5, 3, SURF
-	db 5, 4, EARTHQUAKE
+	db 5, 2, EARTHQUAKE
+	db 5, 3, SUBMISSION
+	db 5, 4, THUNDERBOLT
 	db 0
 
 	db LORELEI, 1
