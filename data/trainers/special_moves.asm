@@ -126,8 +126,42 @@ SpecialTrainerMoves:
 	db 5, 4, NO_MOVE
 	db 0
 
+	db GIOVANNI, 1
+	db 1, 1, ROCK_THROW
+	db 1, 2, DIG
+	db 1, 3, SCREECH
+	db 1, 4, TAKE_DOWN
+	db 2, 1, MEGA_PUNCH
+	db 2, 2, SUBMISSION
+	db 2, 3, NO_MOVE
+	db 2, 4, NO_MOVE
+	db 3, 1, BONE_CLUB
+	db 3, 2, HEADBUTT
+	db 3, 3, CUT
+	db 3, 4, NO_MOVE
+	db 4, 1, TAKE_DOWN
+	db 4, 2, BUBBLEBEAM
+	db 4, 3, THUNDERBOLT
+	db 4, 4, NO_MOVE
+	db 0
+
 	db GIOVANNI, 2
-	db 1, 1, EARTHQUAKE
+	db 1, 1, CRABHAMMER
+	db 1, 2, CUT 
+	db 1, 3, BODY_SLAM
+	db 1, 4, NO_MOVE
+	db 2, 1, ICE_BEAM
+	db 2, 2, SURF 
+	db 2, 3, SELFDESTRUCT
+	db 2, 4, NO_MOVE
+	db 3, 1, EARTHQUAKE
+	db 3, 2, ROCK_SLIDE
+	db 3, 3, EXPLOSION
+	db 3, 4, NO_MOVE
+	db 4, 1, SLASH
+	db 4, 2, BUBBLEBEAM
+	db 4, 3, THUNDERBOLT
+	db 4, 4, NO_MOVE
 	db 0
 
 	db GIOVANNI, 3
