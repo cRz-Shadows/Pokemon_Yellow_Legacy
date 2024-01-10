@@ -19,6 +19,25 @@ SpecialTrainerMoves:
 	db 2, 4, BIDE
 	db 0
 
+	db RIVAL1, 3
+	db 1, 1, FURY_ATTACK
+	db 1, 2, PECK
+	db 1, 3, LEER
+	db 1, 4, NO_MOVE
+	db 2, 1, HYPER_FANG
+	db 2, 2, QUICK_ATTACK
+	db 2, 3, NO_MOVE
+	db 2, 4, NO_MOVE
+	db 3, 1, VINE_WHIP
+	db 3, 2, POISONPOWDER
+	db 3, 3, GROWTH
+	db 3, 4, NO_MOVE
+	db 4, 1, QUICK_ATTACK
+	db 4, 2, SAND_ATTACK
+	db 4, 3, TAIL_WHIP
+	db 4, 4, NO_MOVE
+	db 0
+
 	db MISTY, 1
 	db 1, 1, SCRATCH
 	db 1, 2, DISABLE
