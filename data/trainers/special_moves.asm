@@ -97,7 +97,7 @@ SpecialTrainerMoves:
 	db 4, 3, DIG
 	db 4, 4, NO_MOVE
 	db 5, 1, FIRE_BLAST
-	db 5, 2, PSYCHIC 
+	db 5, 2, PSYCHIC_M
 	db 5, 3, CONFUSE_RAY
 	db 5, 4, THUNDERPUNCH
 	db 0
@@ -112,15 +112,15 @@ SpecialTrainerMoves:
 	db 2, 2, HYPNOSIS
 	db 2, 3, PSYWAVE
 	db 2, 4, NO_MOVE
-	db 3, 1, PSYCHIC
+	db 3, 1, PSYCHIC_M
 	db 3, 2, MIMIC
 	db 3, 3, LIGHT_SCREEN
 	db 3, 4, SUBSTITUTE
 	db 4, 1, REFLECT
 	db 4, 2, PSYWAVE
-	db 4, 3, PSYCHIC
+	db 4, 3, PSYCHIC_M
 	db 4, 4, RECOVER 
-	db 5, 1, PSYCHIC 
+	db 5, 1, PSYCHIC_M
 	db 5, 2, RECOVER 
 	db 5, 3, TRI_ATTACK
 	db 5, 4, NO_MOVE
