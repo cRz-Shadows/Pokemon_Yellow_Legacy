@@ -385,7 +385,7 @@ GamblerData:
 
 BeautyData:
 ; Celadon Gym
-	db 29, TANEGLA, WEEPINBEL, EXEGGCUTE, 0
+	db 29, TANGELA, WEEPINBELL, EXEGGCUTE, 0
 	db 30, TANGELA, IVYSAUR, 0
 	db 32, VICTREEBEL, 0
 ; Route 13
