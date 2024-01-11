@@ -83,7 +83,7 @@ HiddenCoins:
 	cp 20
 	jr z, .bcd20
 	cp 40
-	jr z, .bcd20 ; should be bcd40
+	jr z, .bcd40
 	jr .bcd100
 
 .doNotPickUpCoins
@@ -99,7 +99,7 @@ HiddenCoins:
 	ld a, $20
 	ldh [hCoins + 1], a
 	jr .bcdDone
-.bcd40 ; due to a typo, this is never used
+.bcd40
 	ld a, $40
 	ldh [hCoins + 1], a
 	jr .bcdDone
