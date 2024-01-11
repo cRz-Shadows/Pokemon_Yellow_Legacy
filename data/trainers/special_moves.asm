@@ -13,6 +13,9 @@ SpecialTrainerMoves:
 	db 2, 4, BIDE
 	db 0
 
+	db MISTY, 1
+	db 3, 1, NO_MOVE
+
 	db LT_SURGE, 1
 	db 1, 3, BODY_SLAM
 	db 1, 4, SURF
