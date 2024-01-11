@@ -2057,11 +2057,7 @@ StarmieEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 7, WATER_GUN
-	db 10, CONFUSION
-	db 15, SWIFT
-	db 18, HARDEN
-	db 20, BUBBLEBEAM
+	db 23, HARDEN
 	db 27, RECOVER
 	db 37, MINIMIZE
 	db 40, PSYCHIC_M
