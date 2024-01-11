@@ -262,8 +262,8 @@ SpearowEvosMoves:
 	db EVOLVE_LEVEL, 20, FEAROW
 	db 0
 ; Learnset
-	db 9, LEER
-	db 15, FURY_ATTACK
+	db 7, LEER
+	db 10, FURY_ATTACK
 	db 22, MIRROR_MOVE
 	db 24, WING_ATTACK
 	db 33, DRILL_PECK
@@ -508,6 +508,7 @@ GyaradosEvosMoves:
 	db 32, LEER
 	db 35, THRASH
 	db 41, HYDRO_PUMP
+	db 48, SLAM
 	db 52, HYPER_BEAM
 	db 0
 
@@ -1255,7 +1256,7 @@ PikachuEvosMoves:
 	db 11, TAIL_WHIP
 	db 15, DOUBLE_TEAM
 	db 18, THUNDERPUNCH
-	db 20, HEADBUTT
+	db 21, HEADBUTT
 	db 26, THUNDERBOLT
 	db 33, AGILITY
 	db 41, THUNDER
@@ -1638,7 +1639,7 @@ BeedrillEvosMoves:
 	db 12, RAGE
 	db 15, FOCUS_ENERGY
 	db 18, FURY_ATTACK
-	db 21, TWINEEDLE
+	db 27, TWINEEDLE
 	db 30, SWORDS_DANCE
 	db 40, AGILITY
 	db 0
@@ -2369,6 +2370,7 @@ CharmeleonEvosMoves:
 	db 24, FIRE_PUNCH
 	db 33, SLASH
 	db 42, FLAMETHROWER
+	db 48, SLAM
 	db 56, FIRE_SPIN
 	db 0
 
@@ -2433,13 +2435,13 @@ OddishEvosMoves:
 	db 8, LEECH_SEED
 	db 13, ABSORB
 	db 16, STUN_SPORE
-	db 18, SLEEP_POWDER
-	db 21, MEGA_DRAIN
-	db 24, ACID
-	db 29, PETAL_DANCE
+	db 22, ACID
+	db 27, MEGA_DRAIN
+	db 32, PETAL_DANCE
 	db 36, LEECH_SEED
 	db 40, SLUDGE
 	db 46, SOLARBEAM
+	db 51, SLEEP_POWDER
 	db 0
 
 GloomEvosMoves:
@@ -2447,30 +2449,34 @@ GloomEvosMoves:
 	db EVOLVE_ITEM, LEAF_STONE, 1, VILEPLUME
 	db 0
 ; Learnset
-	db 10, POISONPOWDER
-	db 14, STUN_SPORE
-	db 18, SLEEP_POWDER
-	db 21, MEGA_DRAIN
-	db 24, ACID
-	db 29, PETAL_DANCE
+	db 5, POISONPOWDER
+	db 8, LEECH_SEED
+	db 13, ABSORB
+	db 16, STUN_SPORE
+	db 22, ACID
+	db 27, MEGA_DRAIN
+	db 32, PETAL_DANCE
 	db 36, LEECH_SEED
 	db 40, SLUDGE
 	db 46, SOLARBEAM
+	db 51, SLEEP_POWDER
 	db 0
 
 VileplumeEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 10, POISONPOWDER
-	db 14, STUN_SPORE
-	db 18, SLEEP_POWDER
-	db 21, MEGA_DRAIN
-	db 24, ACID
-	db 29, PETAL_DANCE
+	db 5, POISONPOWDER
+	db 8, LEECH_SEED
+	db 13, ABSORB
+	db 16, STUN_SPORE
+	db 22, ACID
+	db 27, MEGA_DRAIN
+	db 32, PETAL_DANCE
 	db 36, LEECH_SEED
 	db 40, SLUDGE
 	db 46, SOLARBEAM
+	db 51, SLEEP_POWDER
 	db 0
 
 BellsproutEvosMoves:
