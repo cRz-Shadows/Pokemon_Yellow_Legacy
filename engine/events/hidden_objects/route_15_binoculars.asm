@@ -6,7 +6,6 @@ Route15GateLeftBinoculars:
 	tx_pre Route15UpstairsBinocularsText
 	ld a, ARTICUNO
 	ld [wcf91], a
-	call PlayCry
 	call DisplayMonFrontSpriteInBox
 	xor a
 	ldh [hAutoBGTransferEnabled], a
