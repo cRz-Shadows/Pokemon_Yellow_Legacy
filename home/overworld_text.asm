@@ -20,7 +20,7 @@ BoulderText::
 	bit 3, a ; RAINBOW BADGE
 	jr z, .done
 	ld d, STRENGTH
-	call HasPartyMove
+	farcall HasPartyMove
 	ld a, [wWhichTrade]
 	and a
 	jr nz, .done
