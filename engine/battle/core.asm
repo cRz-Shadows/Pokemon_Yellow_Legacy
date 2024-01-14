@@ -782,6 +782,10 @@ FaintEnemyPokemon:
 	hlcoord 0, 0
 	lb bc, 4, 11
 	call ClearScreenArea
+	call AnyPartyAlive
+	ld a, d
+	and a
+	push af
 	ld a, [wIsInBattle]
 	dec a
 	jr z, .wild_win
@@ -800,11 +804,11 @@ FaintEnemyPokemon:
 	jr .sfxplayed
 .wild_win
 	call EndLowHealthAlarm
+	pop af
+	push af
 	ld a, MUSIC_DEFEATED_WILD_MON
-	call PlayBattleVictoryMusic
+	call nz, PlayBattleVictoryMusic
 .sfxplayed
-; bug: win sfx is played for wild battles before checking for player mon HP
-; this can lead to odd scenarios where both player and enemy faint, as the win sfx plays yet the player never won the battle
 	ld hl, wBattleMonHP
 	ld a, [hli]
 	or [hl]
@@ -814,9 +818,7 @@ FaintEnemyPokemon:
 	jr nz, .playermonnotfaint ; if so, don't call RemoveFaintedPlayerMon twice
 	call RemoveFaintedPlayerMon
 .playermonnotfaint
-	call AnyPartyAlive
-	ld a, d
-	and a
+	pop af
 	ret z
 	ld hl, EnemyMonFaintedText
 	call PrintText
@@ -1228,6 +1230,8 @@ SlideDownFaintedMonPic:
 	push de
 	push hl
 	ld b, 6 ; number of rows
+	xor a
+	ld [hAutoBGTransferEnabled], a
 .rowLoop
 	push bc
 	push hl
@@ -1252,6 +1256,8 @@ SlideDownFaintedMonPic:
 	add hl, bc
 	ld de, SevenSpacesText
 	call PlaceString
+	ld a, 1
+	ld [hAutoBGTransferEnabled], a
 	ld c, 2
 	call DelayFrames
 	pop hl
@@ -1277,6 +1283,8 @@ SlideTrainerPicOffScreen:
 	push bc
 	push hl
 	ld b, 7 ; number of rows
+	xor a
+	ld [hAutoBGTransferEnabled], a
 .rowLoop
 	push hl
 	ldh a, [hSlideAmount]
@@ -1302,6 +1310,8 @@ SlideTrainerPicOffScreen:
 	add hl, de
 	dec b
 	jr nz, .rowLoop
+	ld a, 1
+	ld [hAutoBGTransferEnabled], a
 	ld c, 2
 	call DelayFrames
 	pop hl
@@ -3646,8 +3656,8 @@ CheckPlayerStatusConditions:
 .MonHurtItselfOrFullyParalysed
 	ld hl, wPlayerBattleStatus1
 	ld a, [hl]
-	; clear bide, thrashing, charging up, and trapping moves such as warp (already cleared for confusion damage)
-	and ~((1 << STORING_ENERGY) | (1 << THRASHING_ABOUT) | (1 << CHARGING_UP) | (1 << USING_TRAPPING_MOVE))
+	; clear bide, thrashing, charging up, trapping moves such as wrap (already cleared for confusion damage), and invulnerable moves
+	and ~((1 << STORING_ENERGY) | (1 << THRASHING_ABOUT) | (1 << CHARGING_UP) | (1 << USING_TRAPPING_MOVE) | (1 << INVULNERABLE))
 	ld [hl], a
 	ld a, [wPlayerMoveEffect]
 	cp FLY_EFFECT
@@ -4761,7 +4771,6 @@ CriticalHitTest:
 	call GetMonHeader
 	ld a, [wMonHBaseSpeed]
 	ld b, a
-	srl b                        ; (effective (base speed/2))
 	ldh a, [hWhoseTurn]
 	and a
 	ld hl, wPlayerMovePower
@@ -4775,17 +4784,6 @@ CriticalHitTest:
 	ret z                        ; do nothing if zero
 	dec hl
 	ld c, [hl]                   ; read move id
-	ld a, [de]
-	bit GETTING_PUMPED, a        ; test for focus energy
-	jr nz, .focusEnergyUsed      ; bug: using focus energy causes a shift to the right instead of left,
-	                             ; resulting in 1/4 the usual crit chance
-	sla b                        ; (effective (base speed/2)*2)
-	jr nc, .noFocusEnergyUsed
-	ld b, $ff                    ; cap at 255/256
-	jr .noFocusEnergyUsed
-.focusEnergyUsed
-	srl b
-.noFocusEnergyUsed
 	ld hl, HighCriticalMoves     ; table of high critical hit moves
 .Loop
 	ld a, [hli]                  ; read move from move table
@@ -4793,17 +4791,29 @@ CriticalHitTest:
 	jr z, .HighCritical          ; if so, the move about to be used is a high critical hit ratio move
 	inc a                        ; move on to the next move, FF terminates loop
 	jr nz, .Loop                 ; check the next move in HighCriticalMoves
-	srl b                        ; /2 for regular move (effective (base speed / 2))
+	srl b                        ; /2 for regular move
 	jr .SkipHighCritical         ; continue as a normal move
 .HighCritical
 	sla b                        ; *2 for high critical hit moves
 	jr nc, .noCarry
 	ld b, $ff                    ; cap at 255/256
 .noCarry
-	sla b                        ; *4 for high critical move (effective (base speed/2)*8))
+	sla b                        ; *4 for high critical move
 	jr nc, .SkipHighCritical
 	ld b, $ff
 .SkipHighCritical
+	ld a, [de]
+	bit GETTING_PUMPED, a        ; test for focus energy
+	jr z, .noFocusEnergyUsed
+	sla b                        ; (effective (base speed*2))
+	jr nc, .focusEnergyUsed
+	ld b, $ff                    ; cap at 255/256
+	jr .noFocusEnergyUsed
+.focusEnergyUsed
+	sla b                        ; (effective ((base speed*2)*2))
+	jr nc, .noFocusEnergyUsed
+	ld b, $ff                    ; cap at 255/256
+.noFocusEnergyUsed
 	ld a, [wDifficulty] ; Check if player is on hard mode
 	and a
 	jr nz, .NotGuarenteedCrit ; keep 1/256 chance to not crit if on hard mode

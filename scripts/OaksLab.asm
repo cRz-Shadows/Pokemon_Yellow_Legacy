@@ -123,6 +123,7 @@ OaksLabFollowedOakScript:
 	call SetSpriteFacingDirectionAndDelay
 	ld hl, wFlags_D733
 	res 1, [hl]
+	call DelayFrame
 	call PlayDefaultMusic
 
 	ld a, SCRIPT_OAKSLAB_OAK_CHOOSE_MON_SPEECH

@@ -328,6 +328,7 @@ FreezeBurnParalyzeEffect:
 	jp PrintText
 .freeze2
 ; hyper beam bits aren't reseted for opponent's side
+	call ClearHyperBeam
 	ld a, 1 << FRZ
 	ld [wBattleMonStatus], a
 	ld a, SHAKE_SCREEN_ANIM
@@ -580,12 +581,6 @@ StatModifierDownEffect:
 	ld hl, wPlayerMonStatMods
 	ld de, wEnemyMoveEffect
 	ld bc, wPlayerBattleStatus1
-	ld a, [wLinkState]
-	cp LINK_STATE_BATTLING
-	jr z, .statModifierDownEffect
-	call BattleRandom
-	cp 25 percent + 1 ; chance to miss by in regular battle
-	jp c, MoveMissed
 .statModifierDownEffect
 	call CheckTargetSubstitute ; can't hit through substitute
 	jp nz, MoveMissed

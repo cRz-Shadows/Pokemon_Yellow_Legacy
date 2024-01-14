@@ -72,10 +72,6 @@ ReadTrainerHeaderInfo::
 	jr z, .readPointer ; read end battle text
 	cp $a
 	jr nz, .done
-	ld a, [hli]        ; read end battle text (2) but override the result afterwards (XXX why, bug?)
-	ld d, [hl]
-	ld e, a
-	jr .done
 .readPointer
 	ld a, [hli]
 	ld h, [hl]
@@ -93,6 +89,9 @@ TalkToTrainer::
 	call ReadTrainerHeaderInfo     ; read flag's bit
 	ld a, $2
 	call ReadTrainerHeaderInfo     ; read flag's byte ptr
+	ld a, [wPartyCount]
+	and a
+	jr z, .SeNaoTemMonAfterBattleText
 	ld a, [wTrainerHeaderFlagBit]
 	ld c, a
 	ld b, FLAG_TEST
@@ -100,6 +99,7 @@ TalkToTrainer::
 	ld a, c
 	and a
 	jr z, .trainerNotYetFought     ; test trainer's flag
+.SeNaoTemMonAfterBattleText
 	ld a, $6
 	call ReadTrainerHeaderInfo     ; print after battle text
 	jp PrintText
@@ -108,7 +108,7 @@ TalkToTrainer::
 	call ReadTrainerHeaderInfo     ; print before battle text
 	call PrintText
 	ld a, $a
-	call ReadTrainerHeaderInfo     ; (?) does nothing apparently (maybe bug in ReadTrainerHeaderInfo)
+	call ReadTrainerHeaderInfo     ; read end battle text (2)
 	push de
 	ld a, $8
 	call ReadTrainerHeaderInfo     ; read end battle text
@@ -131,13 +131,14 @@ IF DEF(_DEBUG)
 	call DebugPressedOrHeldB
 	jr nz, .trainerNotEngaging
 ENDC
+	ld a, [wPartyCount]
+	and a
+	jp z, .trainerNotEngaging
 	call CheckForEngagingTrainers
 	ld a, [wSpriteIndex]
 	cp $ff
 	jr nz, .trainerEngaging
-IF DEF(_DEBUG)
 .trainerNotEngaging
-ENDC
 	xor a
 	ld [wSpriteIndex], a
 	ld [wTrainerHeaderFlagBit], a

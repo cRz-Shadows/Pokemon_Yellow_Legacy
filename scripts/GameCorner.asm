@@ -13,7 +13,7 @@ GameCornerSelectLuckySlotMachine:
 	ret z
 	call Random
 	ldh a, [hRandomAdd]
-	cp $7
+	cp $8
 	jr nc, .not_max
 	ld a, $8
 .not_max
