@@ -248,11 +248,11 @@ ClefairyEvosMoves:
 	db EVOLVE_ITEM, MOON_STONE, 1, CLEFABLE
 	db 0
 ; Learnset
-	db 8, SING
 	db 13, DOUBLESLAP
 	db 19, MINIMIZE
 	db 26, DEFENSE_CURL
 	db 30, METRONOME
+	db 32, SING
 	db 35, BODY_SLAM
 	db 43, LIGHT_SCREEN
 	db 0
@@ -591,9 +591,10 @@ BlastoiseEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 8, BUBBLE
-	db 15, WATER_GUN
-	db 24, BITE
+	db 5, BUBBLE
+	db 10, WATER_GUN
+	db 21, BUBBLEBEAM
+	db 27, BITE
 	db 31, WITHDRAW
 	db 42, SKULL_BASH
 	db 52, HYDRO_PUMP
@@ -1109,12 +1110,12 @@ PoliwagEvosMoves:
 ; Learnset
 	db 6, MIST
 	db 9, BUBBLE
-	db 15, WATER_GUN
+	db 13, WATER_GUN
 	db 23, BUBBLEBEAM
-	db 27, HYPNOSIS
 	db 35, BODY_SLAM
 	db 43, AMNESIA
-	db 51, HYDRO_PUMP
+	db 48, HYDRO_PUMP
+	db 53, HYPNOSIS
 	db 0
 
 JynxEvosMoves:
@@ -1124,7 +1125,7 @@ JynxEvosMoves:
 	db 18, CONFUSION
 	db 23, DOUBLESLAP
 	db 31, ICE_PUNCH
-	db 35, LOVELY_KISS,
+	db 35, LOVELY_KISS
 	db 39, PSYCHIC_M
 	db 43, ICE_BEAM
 	db 47, BODY_SLAM
@@ -1255,10 +1256,10 @@ PikachuEvosMoves:
 	db 8, THUNDER_WAVE
 	db 11, TAIL_WHIP
 	db 15, DOUBLE_TEAM
-	db 18, THUNDERPUNCH
-	db 21, HEADBUTT
-	db 26, THUNDERBOLT
-	db 33, AGILITY
+	db 20, THUNDERPUNCH
+	db 24, HEADBUTT
+	db 30, THUNDERBOLT
+	db 36, AGILITY
 	db 41, THUNDER
 	db 50, LIGHT_SCREEN
 	db 0
@@ -1447,9 +1448,10 @@ JigglypuffEvosMoves:
 	db 5, DEFENSE_CURL
 	db 14, DISABLE
 	db 16, DOUBLESLAP
-	db 29, REST
-	db 34, BODY_SLAM
-	db 39, DOUBLE_EDGE
+	db 24, REST
+	db 30, BODY_SLAM
+	db 38, LOVELY_KISS,
+	db 43, DOUBLE_EDGE
 	db 0
 
 WigglytuffEvosMoves:
@@ -1460,9 +1462,10 @@ WigglytuffEvosMoves:
 	db 5, DEFENSE_CURL
 	db 14, DISABLE
 	db 16, DOUBLESLAP
-	db 29, REST
-	db 34, BODY_SLAM
-	db 39, DOUBLE_EDGE
+	db 24, REST
+	db 30, BODY_SLAM
+	db 38, LOVELY_KISS,
+	db 43, DOUBLE_EDGE
 	db 0
 
 EeveeEvosMoves:
@@ -1592,13 +1595,13 @@ PoliwhirlEvosMoves:
 ; Learnset
 	db 6,  MIST
 	db 10, DOUBLESLAP
-	db 14, WATER_GUN
+	db 13, WATER_GUN
 	db 19, BUBBLEBEAM
-	db 22, HYPNOSIS
 	db 25, KARATE_CHOP
 	db 35, BODY_SLAM
 	db 43, AMNESIA
-	db 51, HYDRO_PUMP
+	db 48, HYDRO_PUMP
+	db 53, HYPNOSIS
 	db 0
 
 PoliwrathEvosMoves:
@@ -1607,20 +1610,20 @@ PoliwrathEvosMoves:
 ; Learnset
 	db 6,  MIST
 	db 10, DOUBLESLAP
-	db 14, WATER_GUN
+	db 13, WATER_GUN
 	db 19, BUBBLEBEAM
-	db 22, HYPNOSIS
 	db 25, KARATE_CHOP
 	db 35, BODY_SLAM
 	db 35, SUBMISSION
 	db 43, AMNESIA
-	db 51, HYDRO_PUMP
+	db 48, HYDRO_PUMP
+	db 53, HYPNOSIS
 	db 0
 
 WeedleEvosMoves:
 ; Evolutions
 	db EVOLVE_LEVEL, 7, KAKUNA
-	db 0
+	db 0And so
 ; Learnset
 	db 0
 
@@ -1640,7 +1643,7 @@ BeedrillEvosMoves:
 	db 15, FOCUS_ENERGY
 	db 18, FURY_ATTACK
 	db 27, TWINEEDLE
-	db 30, SWORDS_DANCE
+	db 35, SWORDS_DANCE
 	db 40, AGILITY
 	db 0
 
@@ -1939,13 +1942,13 @@ ClefableEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 8, SING
 	db 13, DOUBLESLAP
 	db 19, MINIMIZE
 	db 26, DEFENSE_CURL
 	db 30, METRONOME
 	db 35, BODY_SLAM
 	db 43, LIGHT_SCREEN
+	db 48, SING
 	db 0
 
 WeezingEvosMoves:
@@ -2233,8 +2236,8 @@ NidorinoEvosMoves:
 	db 8, HORN_ATTACK
 	db 12, DOUBLE_KICK
 	db 19, POISON_STING
-	db 22, BITE
-	db 24, PIN_MISSILE
+	db 21, BITE
+	db 24, DIG
 	db 27, FOCUS_ENERGY
 	db 32, SLUDGE
 	db 36, FURY_ATTACK
@@ -2248,10 +2251,10 @@ NidorinaEvosMoves:
 	db 0
 ; Learnset
 	db 6, POISON_STING
-	db 8, HEADBUTT
+	db 8, BITE
 	db 12, DOUBLE_KICK
-	db 22, BITE
-	db 24, PIN_MISSILE
+	db 21, HEADBUTT
+	db 24, DIG
 	db 27, TAIL_WHIP
 	db 36, FURY_SWIPES
 	db 0
@@ -2350,9 +2353,9 @@ SquirtleEvosMoves:
 	db EVOLVE_LEVEL, 16, WARTORTLE
 	db 0
 ; Learnset
-	db 8, BUBBLE
-	db 14, WATER_GUN
-	db 22, BUBBLEBEAM
+	db 5, BUBBLE
+	db 10, WATER_GUN
+	db 21, BUBBLEBEAM
 	db 27, BITE
 	db 31, WITHDRAW
 	db 42, SKULL_BASH
@@ -2379,9 +2382,9 @@ WartortleEvosMoves:
 	db EVOLVE_LEVEL, 36, BLASTOISE
 	db 0
 ; Learnset
-	db 8, BUBBLE
-	db 14, WATER_GUN
-	db 22, BUBBLEBEAM
+	db 5, BUBBLE
+	db 10, WATER_GUN
+	db 21, BUBBLEBEAM
 	db 27, BITE
 	db 31, WITHDRAW
 	db 42, SKULL_BASH
