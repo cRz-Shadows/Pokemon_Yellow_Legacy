@@ -472,6 +472,7 @@ LaprasEvosMoves:
 	db 38, ICE_BEAM
 	db 46, SING
 	db 51, HYDRO_PUMP
+	db 55, BLIZZARD
 	db 0
 
 ArcanineEvosMoves:
@@ -1113,9 +1114,9 @@ PoliwagEvosMoves:
 	db 13, WATER_GUN
 	db 23, BUBBLEBEAM
 	db 35, BODY_SLAM
-	db 43, AMNESIA
-	db 48, HYDRO_PUMP
-	db 53, HYPNOSIS
+	db 43, HYPNOSIS
+	db 48, AMNESIA
+	db 53, HYDRO_PUMP
 	db 0
 
 JynxEvosMoves:
@@ -1599,9 +1600,9 @@ PoliwhirlEvosMoves:
 	db 19, BUBBLEBEAM
 	db 25, KARATE_CHOP
 	db 35, BODY_SLAM
-	db 43, AMNESIA
-	db 48, HYDRO_PUMP
-	db 53, HYPNOSIS
+	db 43, HYPNOSIS
+	db 48, AMNESIA
+	db 53, HYDRO_PUMP
 	db 0
 
 PoliwrathEvosMoves:
@@ -1615,9 +1616,9 @@ PoliwrathEvosMoves:
 	db 25, KARATE_CHOP
 	db 35, BODY_SLAM
 	db 35, SUBMISSION
-	db 43, AMNESIA
-	db 48, HYDRO_PUMP
-	db 53, HYPNOSIS
+	db 43, HYPNOSIS
+	db 48, AMNESIA
+	db 53, HYDRO_PUMP
 	db 0
 
 WeedleEvosMoves:
@@ -1988,7 +1989,7 @@ MarowakEvosMoves:
 	db 25, FOCUS_ENERGY
 	db 31, BONEMERANG
 	db 38, THRASH
-	db 46, RAGE
+	db 46, EARTHQUAKE
 	db 0
 
 MissingNo92EvosMoves:
