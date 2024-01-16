@@ -145,7 +145,7 @@ SpecialTrainerMoves:
 	db 2, 3, EXPLOSION
 	db 3, 1, EARTHQUAKE
 	db 3, 2, BLIZZARD
-	db 4, 2, BUBBLBEAM
+	db 4, 2, BUBBLEBEAM
 	db 4, 3, LOVELY_KISS
 	db 5, 1, THUNDERBOLT
 	db 5, 3, SURF
