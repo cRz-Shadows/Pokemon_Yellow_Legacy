@@ -8,8 +8,8 @@ Route11WildMons:
 	db 17, DROWZEE
 	db 18, PIDGEOTTO
 	db 20, PIDGEOTTO
-	db 17, SCYTHER
-	db 19, SCYTHER
+	db 19, DROWZEE
+	db 19, DROWZEE
 	end_grass_wildmons
 
 	def_water_wildmons 0 ; encounter rate
