@@ -526,6 +526,7 @@ ShellderEvosMoves:
 	db 35, ICE_BEAM
 	db 43, CLAMP
 	db 50, BLIZZARD
+	db 55, EXPLOSION
 	db 0
 
 TentacoolEvosMoves:
@@ -763,7 +764,7 @@ MachokeEvosMoves:
 	db 7, FOCUS_ENERGY
 	db 19, SEISMIC_TOSS
 	db 28, KARATE_CHOP
-	db 33, TAKE_DOWN
+	db 33, BODY_SLAM
 	db 37, COUNTER
 	db 41, SUBMISSION
 	db 0

@@ -189,34 +189,43 @@ SpecialTrainerMoves:
 	db 0
 
 	db RIVAL3, 1
-	db 1, 3, EARTHQUAKE
-	db 2, 4, KINESIS
-	db 3, 4, LEECH_SEED
-	db 4, 1, ICE_BEAM
-	db 5, 1, CONFUSE_RAY
-	db 5, 4, FIRE_SPIN
-	db 6, 3, QUICK_ATTACK
+	db 1, 1, DIG
+	db 1, 4, HYPER_BEAM
+	db 2, 1, SKY_ATTACK
+	db 2, 4, HYPER_BEAM
+	db 3, 1, THUNDER_WAVE
+	db 4, 1, ROCK_SLIDE
+	db 5, 3, SURF
+	db 6, 3, DIG
 	db 0
 
 	db RIVAL3, 2
-	db 1, 3, EARTHQUAKE
-	db 2, 4, KINESIS
-	db 3, 4, LEECH_SEED
-	db 4, 1, THUNDERBOLT
-	db 5, 1, ICE_BEAM
+	db 1, 1, THUNDER_WAVE
+	db 2, 3, THUNDERBOLT
+	db 2, 4, BODYSLAM
+	db 3, 1, FLY
+	db 3, 2, BLIZZARD
+	db 3, 4, SURF
+	db 4, 1, THUNDER_WAVE
+	db 4, 3, REFLECT
+	db 4, 3, REFLECT
+	db 5, 1, SOFTBOILED
 	db 6, 2, REFLECT
 	db 6, 3, QUICK_ATTACK
 	db 0
 
 	db RIVAL3, 3
-	db 1, 3, EARTHQUAKE
-	db 2, 4, KINESIS
-	db 3, 4, LEECH_SEED
-	db 4, 1, CONFUSE_RAY
-	db 4, 4, FIRE_SPIN
-	db 5, 1, THUNDERBOLT
-	db 6, 1, AURORA_BEAM
-	db 6, 3, QUICK_ATTACK
+	db 1, 1, EARTHQUAKE
+	db 1, 2, ROCK_SLIDE
+	db 2, 1, DOUBLE_EDGE
+	db 2, 2, HYPER_BEAM
+	db 2, 4, DOUBLE_TEAM
+	db 4, 1, SLEEP_POWDER
+	db 5, 1, THUNDER_WAVE
+	db 6, 1, SURF
+	db 6, 2, TOXIC
+	db 6, 3, ICE_BEAM
+	db 6, 4, REST
 	db 0
 
 	db -1 ; end
