@@ -202,7 +202,7 @@ SpecialTrainerMoves:
 	db RIVAL3, 2
 	db 1, 1, THUNDER_WAVE
 	db 2, 3, THUNDERBOLT
-	db 2, 4, BODYSLAM
+	db 2, 4, BODY_SLAM
 	db 3, 1, FLY
 	db 3, 2, BLIZZARD
 	db 3, 4, SURF
