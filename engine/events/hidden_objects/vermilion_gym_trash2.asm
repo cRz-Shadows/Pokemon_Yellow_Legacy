@@ -28,16 +28,22 @@ TrashCanRandom:
 	and $1
 	ret
 
-.three ; should return to a, instead returns to b
+.three
 	call Random
 	swap a
 	cp 1 * $ff / 3
-	ld b, 0
-	ret c
+	jr c, .setZero
 	cp 2 * $ff / 3
-	ld b, 1
-	ret c
+	jr c, .setOne
 	ld b, 2
+	ret
+
+.setZero:
+	ld b, 0
+	ret
+
+.setOne:
+	ld b, 1
 	ret
 
 .four
@@ -70,12 +76,6 @@ Yellow_SampleSecondTrashCan:
 GymTrashCans3c:
 ; First byte: number of trashcan entries
 ; Following four byte pairs: indices for the second trash can.
-; BUG: Rows that have 3 trashcan entries are sampled incorrectly.
-; The sampling occurs by taking a random number and seeing which
-; third of the range 0-255 the number falls in.  However, it returns
-; that value to the wrong register, so the result is never used.
-; Instead of using an offset in [0,1,2], the offset is instead
-; in the full range 0-255.  This results in truly random behavior.
 	db 4
 	db  1,3,   3,1,   1,-1,  3,-1
 	db 3

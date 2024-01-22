@@ -1420,12 +1420,12 @@ EnemySendOutFirstMon:
 	ld a, [wLinkState]
 	cp LINK_STATE_BATTLING
 	jr z, .next4
-	ld a, [wOptions]
 	ld a, [wDifficulty] ; Check if player is on hard mode
 	and a
 	jr z, .DontForceSetMode
 	jr .next4 ; skip switch request on hard mode
 .DontForceSetMode
+	ld a, [wOptions]
 	bit BIT_BATTLE_SHIFT, a
 	jr nz, .next4
 	ld hl, TrainerAboutToUseText
