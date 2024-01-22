@@ -1107,13 +1107,13 @@ DoduoEvosMoves:
 
 PoliwagEvosMoves:
 ; Evolutions
-	db EVOLVE_LEVEL, 25, POLIWHIRL
+	db EVOLVE_LEVEL, 18, POLIWHIRL
 	db 0
 ; Learnset
 	db 6, MIST
 	db 9, BUBBLE
 	db 13, WATER_GUN
-	db 23, BUBBLEBEAM
+	db 19, BUBBLEBEAM
 	db 35, BODY_SLAM
 	db 43, HYPNOSIS
 	db 48, AMNESIA
@@ -1600,6 +1600,7 @@ PoliwhirlEvosMoves:
 	db 13, WATER_GUN
 	db 19, BUBBLEBEAM
 	db 25, KARATE_CHOP
+	db 30, ICE_PUNCH
 	db 35, BODY_SLAM
 	db 43, HYPNOSIS
 	db 48, AMNESIA
@@ -1615,8 +1616,8 @@ PoliwrathEvosMoves:
 	db 13, WATER_GUN
 	db 19, BUBBLEBEAM
 	db 25, KARATE_CHOP
+	db 30, ICE_PUNCH
 	db 35, BODY_SLAM
-	db 35, SUBMISSION
 	db 43, HYPNOSIS
 	db 48, AMNESIA
 	db 53, HYDRO_PUMP

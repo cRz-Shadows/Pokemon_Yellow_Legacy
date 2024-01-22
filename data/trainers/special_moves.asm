@@ -31,7 +31,6 @@ SpecialTrainerMoves:
 	db 0
 
 	db KOGA, 1
-	db 1, 1, EXPLOSION
 	db 1, 2, TOXIC
 	db 1, 3, SLUDGE
 	db 2, 1, TOXIC
@@ -55,7 +54,7 @@ SpecialTrainerMoves:
 	db 2, 2, WING_ATTACK
 	db 2, 3, SLASH
 	db 2, 4, SEISMIC_TOSS
-	db 3, 1, FIRE_SPIN
+	db 3, 1, FIRE_BLAST
 	db 3, 2, CONFUSE_RAY
 	db 3, 3, SOLARBEAM
 	db 4, 1, FIRE_BLAST 
