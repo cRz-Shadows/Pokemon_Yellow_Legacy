@@ -3,7 +3,7 @@ CeruleanCave1FWildMons:
 	db 64, RHYDON
 	db 63, GRAVELER
 	db 62, ELECTRODE
-	db 61, LICKTUNG
+	db 61, LICKImakeTUNG
 	db 65, CHANSEY
 	db 60, DITTO
 	db 64, VILEPLUME

@@ -1,15 +1,15 @@
 SafariZoneCenterWildMons:
 	def_grass_wildmons 30 ; encounter rate
-	db 14, NIDORAN_M
-	db 36, NIDORAN_F
-	db 24, EXEGGCUTE
-	db 20, RHYHORN
-	db 23, NIDORINO
-	db 27, PARASECT
-	db 27, PARAS
-	db 32, PARASECT
-	db 22, TANGELA
-	db  7, CHANSEY
+	db 32, NIDORINO
+	db 32, NIDORINA
+	db 35, EXEGGCUTE
+	db 34, RHYHORN
+	db 36, NIDOKING
+	db 36, NIDOQUEEN
+	db 36, WEEPINBELL
+	db 37, WEEPINBELL
+	db 35, TANGELA
+	db 32, CHANSEY
 	end_grass_wildmons
 
 	def_water_wildmons 0 ; encounter rate
