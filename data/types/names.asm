@@ -7,14 +7,14 @@ TypeNames:
 	dw .Poison
 	dw .Ground
 	dw .Rock
-	dw .Bird
+	dw .Normal
 	dw .Bug
-	dw .Ghost
 
 REPT UNUSED_TYPES_END - UNUSED_TYPES
 	dw .Normal
 ENDR
 
+	dw .Ghost
 	dw .Fire
 	dw .Water
 	dw .Grass
