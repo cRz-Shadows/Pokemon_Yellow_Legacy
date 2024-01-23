@@ -4,7 +4,7 @@ Route6WildMons:
 	db 14, RATTATA
 	db 14, ABRA
 	db 16, PIDGEY
-	db 16, RATTATA
+	db 16, LICKITUNG
 	db 15, PSYDUCK
 	db 17, PIDGEOTTO
 	db 13, MAGNEMITE

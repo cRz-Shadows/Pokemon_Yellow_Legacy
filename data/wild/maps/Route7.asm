@@ -3,8 +3,8 @@ Route7WildMons:
 	db 20, VULPIX
 	db 22, PIDGEY
 	db 20, RATTATA
-	db 15, ABRA
-	db 19, ABRA
+	db 22, KOFFING
+	db 23, KOFFING
 	db 24, PIDGEOTTO
 	db 26, ABRA
 	db 19, JIGGLYPUFF
