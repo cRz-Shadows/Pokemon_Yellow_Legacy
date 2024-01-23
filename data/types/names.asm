@@ -7,7 +7,7 @@ TypeNames:
 	dw .Poison
 	dw .Ground
 	dw .Rock
-	dw .Bird
+	dw .Normal
 	dw .Bug
 
 REPT UNUSED_TYPES_END - UNUSED_TYPES
