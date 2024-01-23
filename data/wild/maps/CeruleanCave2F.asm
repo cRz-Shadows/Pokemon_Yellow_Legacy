@@ -1,6 +1,6 @@
 CeruleanCave2FWildMons:
 	def_grass_wildmons 15 ; encounter rate
-	db 64, GRAVELER
+	db 64, GOLEM
 	db 63, SANDSLASH
 	db 62, WIGGLYTUFF
 	db 61, MAROWAK
