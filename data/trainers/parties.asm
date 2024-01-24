@@ -105,7 +105,7 @@ BugCatcherData:
 	db 19, BEEDRILL, BEEDRILL, 0
 	db 20, BUTTERFREE, BEEDRILL, VENONAT, 0
 ; Viridian Forest
-	db $FF, 6, CATERPIE, METAPOD, 0
+	db 6, CATERPIE, METAPOD, 0
 
 LassData:
 ; Route 3
