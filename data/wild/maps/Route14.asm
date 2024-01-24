@@ -9,7 +9,7 @@ Route14WildMons:
 	db 30, GLOOM
 	db 28, VENONAT
 	db 27, VENONAT
-	db 30, VENOMOTH
+	db 33, VENOMOTH
 	end_grass_wildmons
 
 	def_water_wildmons 0 ; encounter rate

@@ -9,7 +9,7 @@ Route17WildMons:
 	db 29, FEAROW
 	db 28, DODUO
 	db 32, PONYTA
-	db 29, DODRIO
+	db 31, DODRIO
 	end_grass_wildmons
 
 	def_water_wildmons 0 ; encounter rate

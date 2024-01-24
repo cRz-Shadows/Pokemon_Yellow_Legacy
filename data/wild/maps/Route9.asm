@@ -5,11 +5,11 @@ Route9WildMons:
 	db 18, RATTATA
 	db 18, LICKITUNG
 	db 18, NIDORINA
-	db 17, NIDORINO
+	db 18, NIDORINO
 	db 18, SPEAROW
 	db 20, FEAROW
-	db 19, PINSIR
-	db 20, PINSIR
+	db 21, PINSIR
+	db 23, PINSIR
 	end_grass_wildmons
 
 	def_water_wildmons 0 ; encounter rate

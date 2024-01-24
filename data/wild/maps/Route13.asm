@@ -9,7 +9,7 @@ Route13WildMons:
 	db 29, WEEPINBELL
 	db 29, WEEPINBELL
 	db 26, FARFETCHD
-	db 31, FARFETCHD
+	db 33, FARFETCHD
 	end_grass_wildmons
 
 	def_water_wildmons 3 ; encounter rate

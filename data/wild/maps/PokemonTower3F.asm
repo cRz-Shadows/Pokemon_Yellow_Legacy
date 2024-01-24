@@ -8,7 +8,7 @@ PokemonTower3FWildMons:
 	db 19, GASTLY
 	db 18, GASTLY
 	db 25, GASTLY
-	db 20, HAUNTER
+	db 25, HAUNTER
 	db 25, HAUNTER
 	end_grass_wildmons
 

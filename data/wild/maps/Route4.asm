@@ -8,8 +8,8 @@ Route4WildMons:
 	db 10, RATTATA
 	db 10, SANDSHREW
 	db 11, PSYDUCK
-	db 12, PSYDUCK
-	db 12, PSYDUCK
+	db 13, PSYDUCK
+	db 14, PSYDUCK
 	end_grass_wildmons
 
 	def_water_wildmons 0 ; encounter rate
