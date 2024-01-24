@@ -138,12 +138,12 @@ SpecialTrainerMoves:
 	db 0
 
 	db LORELEI, 1
-	db 1, 1, SURF
-	db 1, 2, REST
+	db 1, 1, EARTHQUAKE
+	db 1, 2, BLIZZARD
 	db 2, 1, SURF
 	db 2, 3, EXPLOSION
-	db 3, 1, EARTHQUAKE
-	db 3, 2, BLIZZARD
+	db 3, 1, SURF
+	db 3, 2, REST
 	db 4, 2, BUBBLEBEAM
 	db 4, 3, LOVELY_KISS
 	db 5, 1, THUNDERBOLT
@@ -174,11 +174,11 @@ SpecialTrainerMoves:
 	db 0
 
 	db LANCE, 1
-	db 1, 1, FLY
-	db 1, 2, SURF
-	db 1, 3, SLAM
-	db 2, 1, WRAP
-	db 2, 3, THUNDER_WAVE
+	db 1, 1, WRAP
+	db 1, 3, THUNDER_WAVE
+	db 2, 1, FLY
+	db 2, 2, SURF
+	db 2, 3, SLAM
 	db 3, 2, HYPER_BEAM
 	db 3, 4, EARTHQUAKE
 	db 4, 3, EARTHQUAKE
