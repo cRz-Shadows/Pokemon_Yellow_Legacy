@@ -736,7 +736,7 @@ ChannelerData:
 	db 24, GASTLY, 0
 ; Pokémon Tower 5F
 	db 30, GASTLY, NINETALES, 0
-	db 30, MRMIME, GASTLY, 0
+	db 30, MR_MIME, GASTLY, 0
 	db 28, VULPIX, HAUNTER, 0
 ; Pokémon Tower 6F
 	db 32, GASTLY, CHANSEY, HAUNTER, 0
