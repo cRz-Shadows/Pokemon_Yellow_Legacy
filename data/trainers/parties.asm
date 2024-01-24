@@ -486,7 +486,7 @@ BlackbeltData:
 	db 53, MACHOKE, HITMONLEE, 0
 	db 51, HITMONLEE, HITMONCHAN, MACHOKE, 0
 ; Victory Road 2F
-	db 52, POLIWRATH, DODRIO, PINSIR, HITMONCHAN 0
+	db 52, POLIWRATH, DODRIO, PINSIR, HITMONCHAN, 0
 
 Rival1Data:
 ; Oak's Lab
@@ -638,7 +638,7 @@ CooltrainerFData:
 	db 29, WEEPINBELL, GLOOM, IVYSAUR, 0
 ; Victory Road 3F
 	db 53, BELLSPROUT, WEEPINBELL, VICTREEBEL, 0
-	db 52, WIGGLYTUFF, CLEFABLE, CHANSEY, EEVEE 0
+	db 52, WIGGLYTUFF, CLEFABLE, CHANSEY, EEVEE, 0
 ; Unused
 	db 46, VILEPLUME, BUTTERFREE, 0
 ; Victory Road 1F
@@ -722,7 +722,7 @@ ChannelerData:
 ; Pokémon Tower 3F
 	db 27, GASTLY, 0
 ; Pokémon Tower 4F
-	db 27, GASTLY, CHANSEY 0
+	db 27, GASTLY, CHANSEY, 0
 	db 28, GASTLY, DROWZEE, 0
 ; Unused
 	db 24, GASTLY, 0
@@ -735,7 +735,7 @@ ChannelerData:
 ; Unused
 	db 24, GASTLY, 0
 ; Pokémon Tower 5F
-	db 30, GASTLY, NINETALES 0
+	db 30, GASTLY, NINETALES, 0
 	db 30, MRMIME, GASTLY, 0
 	db 28, VULPIX, HAUNTER, 0
 ; Pokémon Tower 6F
