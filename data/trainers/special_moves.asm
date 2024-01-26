@@ -68,9 +68,7 @@ SpecialTrainerMoves:
 
 	db SABRINA, 1
 	db 1, 1, PSYCHIC_M
-	db 2, 1, DREAM_EATER
-	db 2, 2, HYPNOSIS
-	db 2, 3, PSYWAVE
+	db 2, 2, PSYWAVE
 	db 3, 1, PSYCHIC_M
 	db 3, 2, MIMIC
 	db 3, 3, LIGHT_SCREEN
