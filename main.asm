@@ -162,7 +162,7 @@ INCLUDE "data/moves/moves.asm"
 INCLUDE "data/pokemon/base_stats.asm"
 INCLUDE "data/pokemon/cries.asm"
 INCLUDE "engine/battle/trainer_ai.asm"
-INCLUDE "engine/battle/draw_hud_pokeball_gfx.asm"
+INCLUDE "engine/pokemon/evos_moves.asm"
 
 
 SECTION "Battle Core", ROMX
@@ -203,7 +203,7 @@ INCLUDE "engine/events/hidden_objects/indigo_plateau_hq.asm"
 SECTION "Battle Engine 7", ROMX
 
 INCLUDE "gfx/trade.asm"
-INCLUDE "engine/pokemon/evos_moves.asm"
+INCLUDE "engine/battle/draw_hud_pokeball_gfx.asm"
 INCLUDE "engine/battle/experience.asm"
 
 
