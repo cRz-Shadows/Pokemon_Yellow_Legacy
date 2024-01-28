@@ -1484,30 +1484,30 @@ ItemUseMedicine:
 	jr nz, .next1
 	ld hl, wObtainedBadges
 	bit BIT_EARTHBADGE, [hl]
-	ld b, 65 ; Venasaur/Charizard/Blastoise's level
+	ld b, 65 ; Jolteon/Flareon/Vaporeon's level
 	jr nz, .next1
 	bit BIT_VOLCANOBADGE, [hl]
-	ld b, 50 ; Rhydon's level
+	ld b, 58 ; Rhydon's level
 	jr nz, .next1
 	bit BIT_MARSHBADGE, [hl]
-	ld b, 47 ; Arcanine's level
+	ld b, 55 ; Magmar's level
 	jr nz, .next1
 	bit BIT_SOULBADGE, [hl]
-	ld b, 43 ; Alakazam's level
+	ld b, 50 ; Alakazam's level
 	jr nz, .next1
     bit BIT_RAINBOWBADGE, [hl]
-	ld b, 43 ; Weezing's level
+	ld b, 45 ; Venomoth's level
 	jr nz, .next1
 	bit BIT_THUNDERBADGE, [hl]
-	ld b, 29 ; Vileplume's level
+	ld b, 35 ; Vileplume's level
 	jr nz, .next1
 	bit BIT_CASCADEBADGE, [hl]
     ld b, 24 ; Raichu's level
 	jr nz, .next1
 	bit BIT_BOULDERBADGE, [hl]
-	ld b, 21 ; Starmie's level
+	ld b, 20 ; Starmie's level
 	jr nz, .next1
-	ld b, 14 ; Onix's level
+	ld b, 12 ; Onix's level
 .next1
 
 	pop hl
