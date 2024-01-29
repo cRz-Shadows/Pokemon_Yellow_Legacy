@@ -127,30 +127,30 @@ GainExperience:
 	jr nz, .next1
 	ld hl, wObtainedBadges
 	bit BIT_EARTHBADGE, [hl]
-	ld d, 65 ; Venasaur/Charizard/Blastoise's level
+	ld d, 65 ; Jolteon/Flareon/Vaporeon's level
 	jr nz, .next1
 	bit BIT_VOLCANOBADGE, [hl]
-	ld d, 50 ; Rhydon's level
+	ld d, 58 ; Rhydon's level
 	jr nz, .next1
 	bit BIT_MARSHBADGE, [hl]
-	ld d, 47 ; Arcanine's level
+	ld d, 55 ; Magmar's level
 	jr nz, .next1
 	bit BIT_SOULBADGE, [hl]
-	ld d, 43 ; Alakazam's level
+	ld d, 50 ; Alakazam's level
 	jr nz, .next1
     bit BIT_RAINBOWBADGE, [hl]
-	ld d, 43 ; Weezing's level
+	ld d, 45 ; Venomoth's level
 	jr nz, .next1
 	bit BIT_THUNDERBADGE, [hl]
-	ld d, 29 ; Vileplume's level
+	ld d, 35 ; Vileplume's level
 	jr nz, .next1
 	bit BIT_CASCADEBADGE, [hl]
     ld d, 24 ; Raichu's level
 	jr nz, .next1
 	bit BIT_BOULDERBADGE, [hl]
-	ld d, 21 ; Starmie's level
+	ld d, 20 ; Starmie's level
 	jr nz, .next1
-	ld d, 14 ; Onix's level
+	ld d, 12 ; Onix's level
 .next1
 	callfar CalcExperience ; get max exp
 ; compare max exp with current exp

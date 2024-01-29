@@ -157,7 +157,7 @@ StatusAilmentMoveEffects:
 ; that fall in-between
 AIMoveChoiceModification2:
 	ld a, [wAILayer2Encouragement]
-	cp $1
+	and a ;cp $1
 	ret nz
 	ld hl, wBuffer - 1 ; temp move selection array (-1 byte offset)
 	ld de, wEnemyMonMoves ; enemy moves
@@ -341,9 +341,11 @@ BlackbeltAI:
 	jp AIUseXAttack
 
 GiovanniAI:
-	cp 25 percent + 1
-	ret nc
-	jp AIUseGuardSpec
+	and a
+	ret
+	; cp 25 percent + 1
+	; ret nc
+	; jp AIUseGuardSpec
 
 CooltrainerMAI:
 	cp 25 percent + 1
@@ -380,82 +382,104 @@ MistyAI:
 	; jp AIUseXDefend
 
 LtSurgeAI:
-	cp 25 percent + 1
-	ret nc
-	jp AIUseXSpeed
+	and a
+	ret
+	; cp 25 percent + 1
+	; ret nc
+	; jp AIUseXSpeed
 
 ErikaAI:
-	cp 50 percent + 1
-	ret nc
-	ld a, 10
-	call AICheckIfHPBelowFraction
-	ret nc
-	jp AIUseSuperPotion
+	and a
+	ret
+	; cp 50 percent + 1
+	; ret nc
+	; ld a, 10
+	; call AICheckIfHPBelowFraction
+	; ret nc
+	; jp AIUseSuperPotion
 
 KogaAI:
-	cp 13 percent - 1
-	ret nc
-	jp AIUseXAttack
+	and a
+	ret
+	; cp 13 percent - 1
+	; ret nc
+	; jp AIUseXAttack
 
 BlaineAI:
-	cp 25 percent + 1
-	ret nc
-	ld a, 10
-	call AICheckIfHPBelowFraction
-	ret nc
-	jp AIUseSuperPotion
+	and a
+	ret
+	; cp 25 percent + 1
+	; ret nc
+	; ld a, 10
+	; call AICheckIfHPBelowFraction
+	; ret nc
+	; jp AIUseSuperPotion
 
 SabrinaAI:
-	cp 25 percent + 1
-	ret nc
-	jp AIUseXDefend
+	and a
+	ret
+	; cp 25 percent + 1
+	; ret nc
+	; jp AIUseXDefend
 
 Rival2AI:
-	cp 13 percent - 1
-	ret nc
-	ld a, 5
-	call AICheckIfHPBelowFraction
-	ret nc
-	jp AIUsePotion
+	and a
+	ret
+	; cp 13 percent - 1
+	; ret nc
+	; ld a, 5
+	; call AICheckIfHPBelowFraction
+	; ret nc
+	; jp AIUsePotion
 
 Rival3AI:
-	cp 13 percent - 1
-	ret nc
-	ld a, 5
-	call AICheckIfHPBelowFraction
-	ret nc
-	jp AIUseFullRestore
+	and a
+	ret
+	; cp 13 percent - 1
+	; ret nc
+	; ld a, 5
+	; call AICheckIfHPBelowFraction
+	; ret nc
+	; jp AIUseFullRestore
 
 LoreleiAI:
-	cp 50 percent + 1
-	ret nc
-	ld a, 5
-	call AICheckIfHPBelowFraction
-	ret nc
-	jp AIUseSuperPotion
+	and a
+	ret
+	; cp 50 percent + 1
+	; ret nc
+	; ld a, 5
+	; call AICheckIfHPBelowFraction
+	; ret nc
+	; jp AIUseSuperPotion
 
 BrunoAI:
-	cp 25 percent + 1
-	ret nc
-	jp AIUseXDefend
+	and a
+	ret
+	; cp 25 percent + 1
+	; ret nc
+	; jp AIUseXDefend
 
 AgathaAI:
-	cp 8 percent
-	jp c, AISwitchIfEnoughMons
-	cp 50 percent + 1
-	ret nc
-	ld a, 4
-	call AICheckIfHPBelowFraction
-	ret nc
-	jp AIUseSuperPotion
+	and a
+	ret
+	; cp 8 percent
+	; jp c, AISwitchIfEnoughMons
+	; cp 50 percent + 1
+	; ret nc
+	; ld a, 4
+	; call AICheckIfHPBelowFraction
+	; ret nc
+	; jp AIUseSuperPotion
 
 LanceAI:
-	cp 50 percent + 1
-	ret nc
-	ld a, 5
-	call AICheckIfHPBelowFraction
-	ret nc
-	jp AIUseHyperPotion
+	and a
+	ret
+	; cp 50 percent + 1
+	; ret nc
+	; ld a, 5
+	; call AICheckIfHPBelowFraction
+	; ret nc
+	; jp AIUseHyperPotion
 
 GenericAI:
 	and a ; clear carry

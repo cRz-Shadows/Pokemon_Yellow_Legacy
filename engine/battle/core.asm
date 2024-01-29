@@ -1969,6 +1969,28 @@ DrawEnemyHUDAndHPBar:
 	lb bc, 4, 12
 	call ClearScreenArea
 	callfar PlaceEnemyHUDTiles
+	push hl
+	ld a, [wIsInBattle]
+	cp 2
+	jr z, .notOwned
+	ld a, [wEnemyMonSpecies2]
+	ld [wd11e], a
+	ld hl, IndexToPokedex
+	ld b, BANK(IndexToPokedex)
+	call Bankswitch
+	ld a, [wd11e]
+	dec a
+	ld c, a
+	ld b, FLAG_TEST
+	ld hl, wPokedexOwned
+	predef FlagActionPredef
+	ld a, c
+	and a
+	jr z, .notOwned
+	coord hl, 1, 1;horizontal/vertical
+	ld [hl], $D0 ;replace this with your Poké Ball icon or other character
+.notOwned
+	pop hl
 	ld de, wEnemyMonNick
 	hlcoord 1, 0
 	call CenterMonName
@@ -4097,30 +4119,30 @@ CheckForDisobedience:
 	jr nz, .next
 	ld hl, wObtainedBadges
 	bit BIT_EARTHBADGE, [hl]
-	ld a, 65 ; Venasaur/Charizard/Blastoise's level
+	ld a, 65 ; Jolteon/Flareon/Vaporeon's level
 	jr nz, .next
 	bit BIT_VOLCANOBADGE, [hl]
-	ld a, 50 ; Rhydon's level
+	ld a, 58 ; Rhydon's level
 	jr nz, .next
 	bit BIT_MARSHBADGE, [hl]
-	ld a, 47 ; Arcanine's level
+	ld a, 55 ; Magmar's level
 	jr nz, .next
 	bit BIT_SOULBADGE, [hl]
-	ld a, 43 ; Alakazam's level
+	ld a, 50 ; Alakazam's level
 	jr nz, .next
 	bit BIT_RAINBOWBADGE, [hl]
-	ld a, 43 ; Weezing's level
+	ld a, 45 ; Venomoth's level
 	jr nz, .next
 	bit BIT_THUNDERBADGE, [hl]
-	ld a, 29 ; Vileplume's level
+	ld a, 35 ; Vileplume's level
 	jr nz, .next
 	bit BIT_CASCADEBADGE, [hl]
 	ld a, 24 ; Raichu's level
 	jr nz, .next
 	bit BIT_BOULDERBADGE, [hl]
-	ld a, 21 ; Starmie's level
+	ld a, 20 ; Starmie's level
 	jr nz, .next
-	ld a, 14 ; Onix's level
+	ld a, 12 ; Onix's level
 	jp .next
 .NormalMode2
 	ld hl, wPartyMon1OTID
