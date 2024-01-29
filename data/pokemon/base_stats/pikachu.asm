@@ -1,6 +1,6 @@
 	db DEX_PIKACHU ; pokedex id
 
-	db  45,  55,  50,  90,  70
+	db  55,  55,  50,  90,  70
 	;   hp  atk  def  spd  spc
 
 	db ELECTRIC, ELECTRIC ; type

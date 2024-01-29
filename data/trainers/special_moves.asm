@@ -31,19 +31,18 @@ SpecialTrainerMoves:
 	db 0
 
 	db KOGA, 1
-	db 1, 2, TOXIC
-	db 1, 3, SLUDGE
+	db 1, 1, TOXIC
+	db 1, 2, CONFUSE_RAY
+	db 1, 4, BITE
 	db 2, 1, TOXIC
-	db 2, 2, CONFUSE_RAY
-	db 2, 3, FLY
-	db 3, 1, TOXIC
-	db 3, 2, SLUDGE
-	db 3, 3, ACID_ARMOR
-	db 3, 4, MEGA_DRAIN
-	db 4, 1, LEECH_LIFE
+	db 2, 2, SLUDGE
+	db 2, 3, ACID_ARMOR
+	db 2, 4, MEGA_DRAIN
+	db 3, 2, SURF
+	db 3, 4, ICE_BEAM
+	db 4, 1, SOLARBEAM
 	db 4, 2, DOUBLE_TEAM
-	db 4, 3, PSYCHIC_M
-	db 4, 4, TOXIC
+	db 4, 3, TOXIC
 	db 0
 
 	db BLAINE, 1

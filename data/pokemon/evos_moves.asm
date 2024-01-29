@@ -328,6 +328,7 @@ IvysaurEvosMoves:
 	db 22, POISONPOWDER
 	db 30, RAZOR_LEAF
 	db 38, GROWTH
+	db 42, BODY_SLAM
 	db 46, SLEEP_POWDER
 	db 54, SOLARBEAM
 	db 0
@@ -596,10 +597,12 @@ BlastoiseEvosMoves:
 ; Learnset
 	db 5, BUBBLE
 	db 10, WATER_GUN
+	db 15, BITE
 	db 21, BUBBLEBEAM
-	db 27, BITE
+	db 27, BODY_SLAM
 	db 31, WITHDRAW
 	db 42, SKULL_BASH
+	db 45, ICE_BEAM
 	db 52, HYDRO_PUMP
 	db 0
 
@@ -2083,6 +2086,7 @@ BulbasaurEvosMoves:
 	db 22, POISONPOWDER
 	db 29, RAZOR_LEAF
 	db 38, GROWTH
+	db 42, BODY_SLAM
 	db 46, SLEEP_POWDER
 	db 54, SOLARBEAM
 	db 0
@@ -2098,6 +2102,7 @@ VenusaurEvosMoves:
 	db 29, RAZOR_LEAF
 	db 36, SLUDGE
 	db 38, GROWTH
+	db 42, BODY_SLAM
 	db 46, SLEEP_POWDER
 	db 54, SOLARBEAM
 	db 0
@@ -2350,6 +2355,7 @@ CharmanderEvosMoves:
 	db 33, SLASH
 	db 38, FLAMETHROWER
 	db 46, FIRE_SPIN
+	db 50, SLAM
 	db 0
 
 SquirtleEvosMoves:
@@ -2359,10 +2365,12 @@ SquirtleEvosMoves:
 ; Learnset
 	db 5, BUBBLE
 	db 10, WATER_GUN
+	db 15, BITE
 	db 21, BUBBLEBEAM
-	db 27, BITE
+	db 27, BODY_SLAM
 	db 31, WITHDRAW
 	db 42, SKULL_BASH
+	db 45, ICE_BEAM
 	db 52, HYDRO_PUMP
 	db 0
 
@@ -2388,10 +2396,12 @@ WartortleEvosMoves:
 ; Learnset
 	db 5, BUBBLE
 	db 10, WATER_GUN
+	db 15, BITE
 	db 21, BUBBLEBEAM
-	db 27, BITE
+	db 27, BODY_SLAM
 	db 31, WITHDRAW
 	db 42, SKULL_BASH
+	db 45, ICE_BEAM
 	db 52, HYDRO_PUMP
 	db 0
 
@@ -2404,9 +2414,10 @@ CharizardEvosMoves:
 	db 21, RAGE
 	db 24, FIRE_PUNCH
 	db 33, SLASH
-	db 36, WING_ATTACK
-	db 46, FLAMETHROWER
-	db 55, FIRE_SPIN
+	db 36, WING_ATTCK
+	db 42, FLAMETHROWER
+	db 48, SLAM
+	db 56, FIRE_SPIN
 	db 0
 
 MissingNoB5EvosMoves:
