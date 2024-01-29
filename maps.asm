@@ -1190,6 +1190,10 @@ INCLUDE "scripts/CinnabarLabFossilRoom.asm"
 INCLUDE "data/maps/objects/CinnabarLabFossilRoom.asm"
 CinnabarLabFossilRoom_Blocks: INCBIN "maps/CinnabarLabFossilRoom.blk"
 
+; Mateo's move relearner/deleter files
+INCLUDE "scripts/move_deleter.asm"
+INCLUDE "scripts/move_relearner.asm"
+
 INCLUDE "data/maps/headers/CinnabarPokecenter.asm"
 INCLUDE "scripts/CinnabarPokecenter.asm"
 INCLUDE "data/maps/objects/CinnabarPokecenter.asm"
