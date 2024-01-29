@@ -1,10 +1,8 @@
 TeachingHMsText::
-	text "Once a #MON"
-	line "learns an HM, the"
-	cont "technique can't"
-	cont "be replaced."
+	text "HMs are really"
+	line "important!"
 
-	para "Better think care-"
-	line "fully before you"
-	cont "teach HM moves."
+	para "You should keep"
+	line "then on you at"
+	cont "all times."
 	done

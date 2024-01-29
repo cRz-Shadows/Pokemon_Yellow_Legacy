@@ -22,12 +22,6 @@ _CeladonMart3FGameBoyKid3Text::
 
 	para "I love GRAVELER!"
 	line "I collect them!"
-
-	para "Huh?"
-
-	para "GRAVELER turned"
-	line "into a different"
-	cont "#MON!"
 	done
 
 _CeladonMart3FLittleBoyText::

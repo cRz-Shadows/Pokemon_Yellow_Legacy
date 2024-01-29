@@ -141,10 +141,12 @@ _Route8CooltrainerF4EndBattleText::
 	prompt
 
 _Route8CooltrainerF4AfterBattleText::
-	text "I heard that"
-	line "CLEFAIRY evolves"
-	cont "when it's exposed"
+	text "CLEFAIRY evolves"
+	line "when it's exposed"
 	cont "to a MOON STONE."
+
+	para "It happened to"
+	line "mine!"
 	done
 
 _Route8UndergroundSignText::

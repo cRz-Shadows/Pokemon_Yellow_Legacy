@@ -76,9 +76,9 @@ _SSAnne1FRoomsCooltrainerFAfterBattleText::
 	done
 
 _SSAnne1FRoomsGirl1Text::
-	text "Waiter, I would"
-	line "like a cherry pie"
-	cont "please!"
+	text "Room serive, I"
+	line "would like a"
+	cont "cherry pie please!"
 	done
 
 _SSAnne1FRoomsMiddleAgedManText::
