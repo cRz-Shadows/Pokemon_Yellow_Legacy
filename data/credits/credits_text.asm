@@ -90,7 +90,7 @@ CreditsTextPointers:
 	assert_table_length NUM_CRED_STRINGS
 
 CreditsText_Version:
-	db -6, "YELLOW VERSION"
+	db -6, "YELLOW LEGACY"
 	next   "    STAFF@"
 CreditsText_Tajiri:
 	db -6, "SATOSHI TAJIRI@"
@@ -265,3 +265,114 @@ CreditsText_Yoshimura:
 	db -6, "KAMON YOSHIMURA@"
 CreditsText_Yamazaki:
 	db -6, "SAKAE YAMAZAKI@"
+
+CreditsText_Creator:
+	db -5, "CREATED BY@"
+CreditsText_Developer:
+	db -5, "DEVELOPER@"
+CreditsText_Editor:
+	db -6, "EDITOR@"
+CreditsText_Moderators:
+	db -6, "MODERATORS@"
+CreditsText_Playtesters:
+	db -6, "PLAYTESTERS@"
+CreditsText_SpriteArtists:
+	db -6, "SPRITE ARTISTS@"
+CreditsText_Tutorials:
+	db -6, "TUTORIALS / CODE@"
+CreditsText_Pret:
+	db -1, "THANK YOU TO THE"
+	next " PRET TEAM FOR THE"
+	next "    POKECRYSTAL"
+	next "    DISASSEMBLY@"
+
+CreditsText_SmithPlaysPokemon:
+	db -1, "SMITHPLAYSPOKEMON@"
+
+CreditsText_Smith:
+	db -6, "THE SMITH PLAYS@"
+CreditsText_cRzShadows:
+	db -6, "CRZ SHADOWS@"
+CreditsText_Weebra:
+	db -6, "WEEBRA@"
+
+; Moderators
+CreditsText_Aero:
+	db -6, "AERO@"
+CreditsText_Zach:
+	db -6, "ZACH@"
+CreditsText_Karlos:
+	db -6, "KARLOS@"
+CreditsText_Isona:
+	db -6, "ISONA@"
+CreditsText_Regi:
+	db -6, "REGI@"
+CreditsText_Daily:
+	db -6, "DAILY@"
+CreditsText_Obelisk:
+	db -6, "OBELISK@"
+
+; Playtesters
+CreditsText_Disq:
+	db -6, "DISQ@"
+CreditsText_Sable:
+	db -6, "SABLE@"
+CreditsText_Brice:
+	db -6, "BRICE@"
+
+; Code/Tutorials
+CreditsText_Rangi42:
+	db -6, "RANGI42@"
+CreditsText_Jojobear13:
+	db -6, "JOJOBEAR13@"
+CreditsText_PlagueVonKarma:
+	db -6, "PLAGUEVONKARMA@"
+CreditsText_YakiNeen:
+	db -6, "YAKINEEN@"
+CreditsText_Pgattic:
+	db -6, "PGATTIC@"
+CreditsText_Dannye:
+	db -6, "DANNYE@"
+CreditsText_SoupPotato:
+	db -6, "SOUPPOTATO@"
+CreditsText_Voloved:
+	db -6, "VOLOVED@"
+CreditsText_Veganlies2me:
+	db -6, "VEGANLIES2ME@"
+CreditsText_SatoMew:
+	db -6, "SATOMEW@"
+CreditsText_Xillicis:
+	db -6, "XILLICIS@"
+CreditsText_Idain:
+	db -6, "IDAIN@"
+CreditsText_Nayru62:
+	db -6, "NAYRU62@"
+
+; Sprite Artists
+; Backsprites
+CreditsText_ZuperZach2:
+	db -6, "ZUPERZACH@"
+CreditsText_Isona2:
+	db -6, "ISONA@"
+CreditsText_Karlos2:
+	db -6, "KARLOS@"
+CreditsText_ReaderDragon2:
+	db -6, "READER DRAGON@"
+
+; Leaf Sprite
+CreditsText_Longlostsoul:
+	db -6, "LONGLOSTSOUL@"
+
+; Party Sprites
+CreditsText_Chamber:
+	db -6, "CHAMBER@"
+CreditsText_Soloo993:
+	db -6, "SOLOO993@"
+CreditsText_BlueEmerald:
+	db -6, "BLUE EMERALD@"
+CreditsText_Lake:
+	db -6, "LAKE@"
+CreditsText_Neslug:
+	db -6, "NESLUG@"
+CreditsText_TomWang:
+	db -6, "TOM WANG@"
