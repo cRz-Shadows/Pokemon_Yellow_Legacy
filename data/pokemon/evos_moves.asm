@@ -2414,7 +2414,7 @@ CharizardEvosMoves:
 	db 21, RAGE
 	db 24, FIRE_PUNCH
 	db 33, SLASH
-	db 36, WING_ATTCK
+	db 36, WING_ATTACK
 	db 42, FLAMETHROWER
 	db 48, SLAM
 	db 56, FIRE_SPIN

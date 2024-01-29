@@ -15,7 +15,7 @@ MapHSPointers:
 	dw NoHS
 	dw SaffronCityHS
 	dw NoHS
-	dw NoHS
+	dw Route1HS
 	dw Route2HS
 	dw NoHS
 	dw Route4HS
@@ -294,6 +294,8 @@ SaffronCityHS:
 	db SAFFRON_CITY, SAFFRONCITY_ROCKER,         HIDE
 	db SAFFRON_CITY, SAFFRONCITY_ROCKET8,        SHOW
 	db SAFFRON_CITY, SAFFRONCITY_ROCKET9,        HIDE ; removed in yellow
+Route1HS:
+	db ROUTE_1, $03, SHOW ; PROF OAK fight. To test, change to SHOW. - PvK
 Route2HS:
 	db ROUTE_2, ROUTE2_MOON_STONE, SHOW
 	db ROUTE_2, ROUTE2_HP_UP,      SHOW

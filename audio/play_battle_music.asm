@@ -19,6 +19,8 @@ PlayBattleMusic::
 	cp OPP_LANCE
 	jr nz, .normalTrainerBattle
 	ld a, MUSIC_GYM_LEADER_BATTLE ; lance also plays gym leader theme
+	cp OPP_PROF_OAK ; may as well, right?
+	jr z, .finalBattle 
 	jr .playSong
 .normalTrainerBattle
 	ld a, MUSIC_TRAINER_BATTLE
