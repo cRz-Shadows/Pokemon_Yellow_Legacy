@@ -22,9 +22,8 @@ _PlayerBlackedOutText::
 	prompt
 
 _RepelWoreOffText::
-	text_ram wStringBuffer
-	text "'s"
-	line "effect wore off."
+	text "Repel's effect"
+	line "wore off."
 	done
 
 _RepelWoreOffUseAnotherText::
