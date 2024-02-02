@@ -31,7 +31,7 @@ Moves:
 	move WHIRLWIND,    SWITCH_AND_TELEPORT_EFFECT,   0, BIRD,          85, 20
 	move FLY,          FLY_EFFECT,                  70, FLYING,        95, 15
 	move BIND,         TRAPPING_EFFECT,             15, NORMAL,        85, 20
-	move SLAM,         FLINCH_SIDE_EFFECT1,        80, DRAGON,       100, 20
+	move SLAM,         FLINCH_SIDE_EFFECT1,        80,  DRAGON,       100, 20
 	move VINE_WHIP,    NO_ADDITIONAL_EFFECT,        40, GRASS,        100, 25
 	move STOMP,        FLINCH_SIDE_EFFECT2,         65, NORMAL,       100, 20
 	move DOUBLE_KICK,  ATTACK_TWICE_EFFECT,         30, FIGHTING,     100, 30
@@ -41,7 +41,7 @@ Moves:
 	move SAND_ATTACK,  ACCURACY_DOWN1_EFFECT,        0, BIRD,         100, 15
 	move HEADBUTT,     FLINCH_SIDE_EFFECT2,         70, NORMAL,       100, 15
 	move HORN_ATTACK,  NO_ADDITIONAL_EFFECT,        65, NORMAL,       100, 25
-	move FURY_ATTACK,  TWO_TO_FIVE_ATTACKS_EFFECT,  15, NORMAL,        85, 20
+	move FURY_ATTACK,  TWO_TO_FIVE_ATTACKS_EFFECT,  15, NORMAL,       100, 20
 	move HORN_DRILL,   OHKO_EFFECT,                  1, NORMAL,        30,  5
 	move TACKLE,       NO_ADDITIONAL_EFFECT,        35, NORMAL,        100, 35
 	move BODY_SLAM,    PARALYZE_SIDE_EFFECT2,       85, NORMAL,       100, 15
@@ -151,7 +151,7 @@ Moves:
 	move DREAM_EATER,  DREAM_EATER_EFFECT,         100, PSYCHIC_TYPE, 100, 15
 	move POISON_GAS,   POISON_EFFECT,                0, POISON,        85, 40
 	move BARRAGE,      TWO_TO_FIVE_ATTACKS_EFFECT,  20, NORMAL,       100, 20
-	move LEECH_LIFE,   DRAIN_HP_EFFECT,             50, BUG,          100, 15
+	move LEECH_LIFE,   DRAIN_HP_EFFECT,             50, BUG,          100, 25
 	move LOVELY_KISS,  SLEEP_EFFECT,                 0, BIRD,          75, 10
 	move SKY_ATTACK,   NO_ADDITIONAL_EFFECT,        120, FLYING,       85, 10
 	move TRANSFORM,    TRANSFORM_EFFECT,             0, BIRD,         100, 10

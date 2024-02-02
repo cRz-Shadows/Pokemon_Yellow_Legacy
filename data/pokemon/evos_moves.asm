@@ -264,11 +264,12 @@ SpearowEvosMoves:
 ; Learnset
 	db 7, LEER
 	db 10, FURY_ATTACK
-	db 15, FOCUS_ENERGY
-	db 22, MIRROR_MOVE
-	db 24, WING_ATTACK
-	db 33, DRILL_PECK
-	db 43, AGILITY
+	db 14, FOCUS_ENERGY
+	db 18, SWIFT
+	db 20, MIRROR_MOVE
+	db 24, DRILL_PECK
+	db 30, SHARPEN
+	db 40, AGILITY
 	db 0
 
 VoltorbEvosMoves:
@@ -678,12 +679,14 @@ FearowEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 9, LEER
-	db 15, FURY_ATTACK
-	db 22, MIRROR_MOVE
-	db 24, WING_ATTACK
-	db 33, DRILL_PECK
-	db 43, AGILITY
+	db 7, LEER
+	db 10, FURY_ATTACK
+	db 14, FOCUS_ENERGY
+	db 18, SWIFT
+	db 20, MIRROR_MOVE
+	db 24, DRILL_PECK
+	db 30, SHARPEN
+	db 40, AGILITY
 	db 0
 
 PidgeyEvosMoves:
@@ -910,7 +913,7 @@ MissingNo34EvosMoves:
 	db 0
 ; Learnset
 	db 0
-
+magneton
 ElectabuzzEvosMoves:
 ; Evolutions
 	db 0
@@ -1142,36 +1145,36 @@ MoltresEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 40, AGILITY
+	db 35, AGILITY
+	db 40, DRILL_PECK
 	db 45, FLAMETHROWER
 	db 51, FIRE_BLAST
-	db 55, DRILL_PECK
+	db 55, SKY_ATTACK
 	db 60, FIRE_SPIN
-	db 65, SKY_ATTACK
 	db 0
 
 ArticunoEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 40, AGILITY
+	db 35, AGILITY
+	db 40, DRILL_PECK
 	db 45, ICE_BEAM
 	db 51, BLIZZARD
-	db 55, DRILL_PECK
+	db 55, SKY_ATTACK
 	db 60, MIST
-	db 65, SKY_ATTACK
 	db 0
 
 ZapdosEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 40, AGILITY	
+	db 35, AGILITY
+	db 40, DRILL_PECK
 	db 45, THUNDERBOLT
 	db 51, THUNDER
-	db 55, DRILL_PECK
+	db 55, SKY_ATTACK
 	db 60, LIGHT_SCREEN
-	db 65, SKY_ATTACK
 	db 0
 
 DittoEvosMoves:
@@ -1527,6 +1530,7 @@ VaporeonEvosMoves:
 	db 8, SAND_ATTACK
 	db 16, WATER_GUN
 	db 23, QUICK_ATTACK
+	db 26, BUBBLBEAM
 	db 30, BITE
 	db 36, AURORA_BEAM
 	db 41, ACID_ARMOR
@@ -1779,10 +1783,10 @@ MachampEvosMoves:
 	db 5, LEER
 	db 7, FOCUS_ENERGY
 	db 19, SEISMIC_TOSS
-	db 28, KARATE_CHOP
+	db 28, SUBMISSION
 	db 33, TAKE_DOWN
 	db 37, COUNTER
-	db 41, SUBMISSION
+	db 45, KARATE_CHOP
 	db 0
 
 MissingNo7FEvosMoves:
@@ -1919,8 +1923,8 @@ CloysterEvosMoves:
 	db 17, LEER
 	db 20, AURORA_BEAM
 	db 25, BUBBLEBEAM
-	db 35, ICE_BEAM
-	db 43, CLAMP
+	db 35, CLAMP
+	db 40, ICE_BEAM
 	db 46, SPIKE_CANNON
 	db 50, BLIZZARD
 	db 0
@@ -1981,7 +1985,7 @@ PersianEvosMoves:
 	db 22, SCREECH
 	db 29, TAKE_DOWN
 	db 34, SLASH
-	db 45, HYPER_BEAM
+	db 50, HYPER_BEAM
 	db 0
 
 MarowakEvosMoves:
@@ -2046,7 +2050,6 @@ PidgeottoEvosMoves:
 	db 21, WHIRLWIND
 	db 29, TAKE_DOWN
 	db 39, AGILITY
-	db 45, SKY_ATTACK
 	db 54, MIRROR_MOVE
 	db 0
 
@@ -2504,12 +2507,12 @@ BellsproutEvosMoves:
 ; Learnset
 	db 13, POISONPOWDER
 	db 15, HEADBUTT
-	db 18, SLEEP_POWDER
 	db 21, STUN_SPORE
 	db 25, ACID
 	db 29, RAZOR_LEAF
 	db 36, SLUDGE
 	db 43, WRAP
+	db 48, SLEEP_POWDER
 	db 0
 
 WeepinbellEvosMoves:
@@ -2519,12 +2522,12 @@ WeepinbellEvosMoves:
 ; Learnset
 	db 13, POISONPOWDER
 	db 15, HEADBUTT
-	db 18, SLEEP_POWDER
 	db 21, STUN_SPORE
 	db 25, ACID
 	db 29, RAZOR_LEAF
 	db 36, SLUDGE
 	db 43, WRAP
+	db 48, SLEEP_POWDER
 	db 0
 
 VictreebelEvosMoves:
@@ -2533,10 +2536,10 @@ VictreebelEvosMoves:
 ; Learnset
 	db 13, POISONPOWDER
 	db 15, HEADBUTT
-	db 18, SLEEP_POWDER
 	db 21, STUN_SPORE
 	db 25, ACID
 	db 29, RAZOR_LEAF
 	db 36, SLUDGE
 	db 43, WRAP
+	db 48, SLEEP_POWDER
 	db 0

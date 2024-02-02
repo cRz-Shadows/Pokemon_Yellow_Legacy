@@ -31,18 +31,28 @@ SpecialTrainerMoves:
 	db 0
 
 	db KOGA, 1
-	db 1, 1, TOXIC
-	db 1, 2, CONFUSE_RAY
-	db 1, 4, BITE
-	db 2, 1, TOXIC
-	db 2, 2, SLUDGE
-	db 2, 3, ACID_ARMOR
-	db 2, 4, MEGA_DRAIN
-	db 3, 2, SURF
-	db 3, 4, ICE_BEAM
+	db 1, 2, TOXIC
+	db 1, 3, BITE
+	db 2, 1, ACID_ARMOR
+	db 2, 2, MEGA_DRAIN
+	db 3, 1, SURF
+	db 3, 3, ICE_BEAM
 	db 4, 1, SOLARBEAM
 	db 4, 2, DOUBLE_TEAM
 	db 4, 3, TOXIC
+	db 0
+
+	db KOGA, 2
+	db 1, 1, TOXIC
+	db 1, 2, CONFUSE_RAY
+	db 1, 4, BITE
+	db 2, 3, MEGA_DRAIN
+	db 3, 2, SURF
+	db 4, 2, SLUDGE
+	db 4, 3, THUNDERBOLT
+	db 5, 1, SOLARBEAM
+	db 5, 2, DOUBLE_TEAM
+	db 5, 3, TOXIC
 	db 0
 
 	db BLAINE, 1
@@ -68,17 +78,22 @@ SpecialTrainerMoves:
 	db SABRINA, 1
 	db 1, 1, PSYCHIC_M
 	db 2, 2, PSYWAVE
-	db 3, 1, PSYCHIC_M
+	db 3, 1, LIGHT_SCREEN
 	db 3, 2, MIMIC
-	db 3, 3, LIGHT_SCREEN
-	db 3, 4, SUBSTITUTE
 	db 4, 1, REFLECT
 	db 4, 2, PSYWAVE
 	db 4, 3, PSYCHIC_M
 	db 4, 4, RECOVER 
-	db 5, 1, PSYCHIC_M
-	db 5, 2, RECOVER 
-	db 5, 3, TRI_ATTACK
+	db 5, 1, THUNDER_WAVE
+	db 0
+
+	db SABRINA, 2
+	db 1, 1, PSYCHIC_M
+	db 2, 1, SUBSTITUTE
+	db 2, 2, MIMIC
+	db 2, 3, LIGHT_SCREEN
+	db 3, 1, PSYWAVE
+	db 4, 1, THUNDER_WAVE
 	db 0
 
 	db GIOVANNI, 1
