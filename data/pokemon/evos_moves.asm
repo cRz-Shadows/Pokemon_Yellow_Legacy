@@ -913,7 +913,7 @@ MissingNo34EvosMoves:
 	db 0
 ; Learnset
 	db 0
-magneton
+
 ElectabuzzEvosMoves:
 ; Evolutions
 	db 0
