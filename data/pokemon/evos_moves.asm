@@ -986,7 +986,7 @@ SeelEvosMoves:
 	db 13, WATER_GUN
 	db 16, AURORA_BEAM
 	db 21, REST
-	db 25, BUBBLEBEAM
+	db 25, BUBBLE_BEAM
 	db 32, TAKE_DOWN
 	db 40, ICE_BEAM
 	db 50, BLIZZARD
