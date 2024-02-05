@@ -359,9 +359,11 @@ CreditsText_Karlos2:
 CreditsText_ReaderDragon2:
 	db -6, "READER DRAGON@"
 
-; Leaf Sprite
+; Green Sprite
 CreditsText_Longlostsoul:
-	db -6, "LONGLOSTSOUL@"
+	db -6, "MADAME FROG@"
+CreditsText_GhostMissingNo:
+	db -6, "GHOST-MISSINGNO@"
 
 ; Party Sprites
 CreditsText_Chamber:
