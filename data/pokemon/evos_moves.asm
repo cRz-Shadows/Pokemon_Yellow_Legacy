@@ -2353,8 +2353,8 @@ CharmanderEvosMoves:
 ; Learnset
 	db 9, EMBER
 	db 15, LEER
-	db 21, RAGE
-	db 24, FIRE_PUNCH
+	db 19, FIRE_PUNCH
+	db 25, RAGE
 	db 33, SLASH
 	db 38, FLAMETHROWER
 	db 46, FIRE_SPIN
@@ -2384,10 +2384,10 @@ CharmeleonEvosMoves:
 ; Learnset
 	db 9, EMBER
 	db 15, LEER
-	db 21, RAGE
-	db 24, FIRE_PUNCH
+	db 19, FIRE_PUNCH
+	db 25, RAGE
 	db 33, SLASH
-	db 42, FLAMETHROWER
+	db 40, FLAMETHROWER
 	db 48, SLAM
 	db 56, FIRE_SPIN
 	db 0
@@ -2414,8 +2414,8 @@ CharizardEvosMoves:
 ; Learnset
 	db 9, EMBER
 	db 15, LEER
-	db 21, RAGE
-	db 24, FIRE_PUNCH
+	db 19, FIRE_PUNCH
+	db 25, RAGE
 	db 33, SLASH
 	db 36, WING_ATTACK
 	db 42, FLAMETHROWER
