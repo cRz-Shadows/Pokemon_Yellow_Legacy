@@ -126,10 +126,24 @@ SaffronGymSabrinaText:
 	ld hl, .ReceivedMarshBadgeText
 	ld de, .ReceivedMarshBadgeText
 	call SaveEndBattleTextPointers
+	CheckEvent EVENT_BEAT_KOGA
+	jr nz, .sabrinaFirst
+.kogaFirst
+	call Delay3
+	ld a, OPP_SABRINA
+	ld [wCurOpponent], a
+	ld a, 2
+	ld [wTrainerNo], a
+	ld a, $4 ; new script
+	ld [wSaffronGymCurScript], a
+	ld [wCurMapScript], a
+	jr .afterBatttle
+.sabrinaFirst
 	ldh a, [hSpriteIndex]
 	ld [wSpriteIndex], a
 	call EngageMapTrainer
 	call InitBattleEnemyParameters
+.afterBatttle
 	ld a, $6
 	ld [wGymLeaderNo], a
 	ld a, SCRIPT_SAFFRONGYM_SABRINA_POST_BATTLE

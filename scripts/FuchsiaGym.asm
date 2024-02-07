@@ -125,10 +125,24 @@ FuchsiaGymKogaText:
 	ld hl, .ReceivedSoulBadgeText
 	ld de, .ReceivedSoulBadgeText
 	call SaveEndBattleTextPointers
+	CheckEvent EVENT_BEAT_SABRINA
+	jr z, .kogaFirst
+.sabrinaFirst
+	call Delay3
+	ld a, OPP_KOGA
+	ld [wCurOpponent], a
+	ld a, 2
+	ld [wTrainerNo], a
+	ld a, $4 ; new script
+	ld [wFuchsiaGymCurScript], a
+	ld [wCurMapScript], a
+	jr .afterBatttle
+.kogaFirst
 	ldh a, [hSpriteIndex]
 	ld [wSpriteIndex], a
 	call EngageMapTrainer
 	call InitBattleEnemyParameters
+.afterBatttle
 	ld a, $5
 	ld [wGymLeaderNo], a
 	xor a
