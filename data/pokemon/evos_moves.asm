@@ -401,7 +401,6 @@ GengarEvosMoves:
 ; Learnset
 	db 10, SMOG
 	db 15, PSYWAVE
-	db 20, POISON_GAS
 	db 35, NIGHT_SHADE
 	db 40, HYPNOSIS
 	db 46, DREAM_EATER
