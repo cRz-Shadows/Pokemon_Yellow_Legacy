@@ -111,4 +111,4 @@ ViridianMartCooltrainerMText:
 	text_end
 
 ViridianMartClerkText::
-	script_mart POKE_BALL, POTION, ANTIDOTE, PARLYZ_HEAL, BURN_HEAL
+	script_mart GREAT_BALL, POTION, SUPER_POTION, REVIVE, SUPER_REPEL, ANTIDOTE, BURN_HEAL, ICE_HEAL, AWAKENING
