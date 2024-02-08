@@ -208,10 +208,13 @@ HoFLoadPlayerPics:
 	ld a, BANK(GreenPicFront)
 .Routine ; resume original routine
 	call UncompressSpriteFromDE
+	ld a, $0
+	call SwitchSRAMBankAndLatchClockData
 	ld hl, sSpriteBuffer1
 	ld de, sSpriteBuffer0
 	ld bc, $310
 	call CopyData
+	call PrepareRTCDataAndDisableSRAM
 	ld de, vFrontPic
 	call InterlaceMergeSpriteBuffers
 	ld a, [wPlayerGender] ; new gender check
