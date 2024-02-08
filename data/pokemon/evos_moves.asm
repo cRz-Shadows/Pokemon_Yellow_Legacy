@@ -2383,7 +2383,7 @@ CharmeleonEvosMoves:
 	db 0
 ; Learnset
 	db 9, EMBER
-	db 15, LEER
+	db 13, LEER
 	db 19, FIRE_PUNCH
 	db 25, RAGE
 	db 33, SLASH
