@@ -44,7 +44,7 @@ MapHSPointers:
 	dw NoHS
 	dw BluesHouseHS
 	dw OaksLabHS
-	dw NoHS
+	dw IndigoPlateauLobbyHS
 	dw NoHS
 	dw NoHS
 	dw NoHS
@@ -330,6 +330,8 @@ OaksLabHS:
 	db OAKS_LAB, OAKSLAB_POKEDEX1,             SHOW
 	db OAKS_LAB, OAKSLAB_POKEDEX2,             SHOW
 	db OAKS_LAB, OAKSLAB_OAK2,                 HIDE
+IndigoPlateauLobbyHS:
+	db INDIGO_PLATEAU_LOBBY, INDIGOPLATEAULOBBY_POST_GAME_CLERK,  HIDE
 ViridianGymHS:
 	db VIRIDIAN_GYM, VIRIDIANGYM_GIOVANNI, SHOW
 	db VIRIDIAN_GYM, VIRIDIANGYM_REVIVE,   SHOW
