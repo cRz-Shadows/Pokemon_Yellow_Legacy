@@ -6463,10 +6463,21 @@ LoadEnemyMonData:
 	inc de
 	ld a, [hl]     ; base exp
 	ld [de], a
+	; TODO fix this for craig not lance
+	; Nickname code
+    ld a, [wCurOpponent]
+    cp OPP_CRAIG
+    jr nz, .loadSpeciesName
+    ld hl, .CraigMonsNicks
+    ld a, [wWhichPokemon]
+    call SkipFixedLengthTextEntries
+    jr .copyNick
+.loadSpeciesName
 	ld a, [wEnemyMonSpecies2]
 	ld [wd11e], a
 	call GetMonName
 	ld hl, wcd6d
+.copyNick
 	ld de, wEnemyMonNick
 	ld bc, NAME_LENGTH
 	call CopyData
@@ -6491,6 +6502,9 @@ LoadEnemyMonData:
 	dec b
 	jr nz, .statModLoop
 	ret
+
+.CraigMonsNicks
+	db "@@@@@@@@@@", "@@@@@@@@@@", "@@@@@@@@@@", "@@@@@@@@@@", "@@@@@@@@@@", "@FURBALL@@@"
 
 ; calls BattleTransition to show the battle transition animation and initializes some battle variables
 DoBattleTransitionAndInitBattleVariables:
