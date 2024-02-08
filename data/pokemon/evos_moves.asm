@@ -401,8 +401,9 @@ GengarEvosMoves:
 ; Learnset
 	db 10, SMOG
 	db 15, PSYWAVE
-	db 25, NIGHT_SHADE
-	db 32, HYPNOSIS
+	db 20, POISON_GAS
+	db 35, NIGHT_SHADE
+	db 40, HYPNOSIS
 	db 46, DREAM_EATER
 	db 0
 
@@ -556,8 +557,9 @@ GastlyEvosMoves:
 ; Learnset
 	db 10, SMOG
 	db 15, PSYWAVE
-	db 25, NIGHT_SHADE
-	db 32, HYPNOSIS
+	db 20, POISON_GAS
+	db 36, NIGHT_SHADE
+	db 45, HYPNOSIS
 	db 46, DREAM_EATER
 	db 0
 
@@ -2015,8 +2017,9 @@ HaunterEvosMoves:
 ; Learnset
 	db 10, SMOG
 	db 15, PSYWAVE
-	db 25, NIGHT_SHADE
-	db 32, HYPNOSIS
+	db 20, POISON_GAS
+	db 36, NIGHT_SHADE
+	db 45, HYPNOSIS
 	db 46, DREAM_EATER
 	db 0
 

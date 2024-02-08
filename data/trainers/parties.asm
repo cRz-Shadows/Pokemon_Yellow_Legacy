@@ -741,7 +741,7 @@ ChannelerData:
 	db 28, VULPIX, HAUNTER, 0
 ; Pokémon Tower 6F
 	db 32, GASTLY, DROWZEE, HAUNTER, 0
-	db 34, GENGAR, 0
+	db 35, HAUNTER, 0
 	db 33, HYPNO, HAUNTER, NINETALES, 0
 ; Saffron Gym
 	db 43, HAUNTER, GENGAR, HAUNTER, 0
