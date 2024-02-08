@@ -337,6 +337,7 @@ LearnMoveFromLevelUp:
 
 ;the move can indeed be learned at this level
 .confirmlearnmove
+	push hl
 	ld d, a ; ID of move to learn
 	ld a, [wMonDataLocation]
 	and a
