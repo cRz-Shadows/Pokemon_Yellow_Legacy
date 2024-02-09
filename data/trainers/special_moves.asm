@@ -115,9 +115,8 @@ SpecialTrainerMoves:
 	db 1, 1, CRABHAMMER
 	db 1, 2, CUT 
 	db 1, 3, BODY_SLAM
-	db 2, 1, ICE_BEAM
-	db 2, 2, SURF 
-	db 2, 3, SELFDESTRUCT
+	db 2, 1, DIG
+	db 2, 3, ROCK_SLIDE
 	db 3, 1, EARTHQUAKE
 	db 3, 2, ROCK_SLIDE
 	db 3, 3, EXPLOSION
