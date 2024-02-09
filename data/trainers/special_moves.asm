@@ -20,7 +20,7 @@ SpecialTrainerMoves:
 
 	db ERIKA, 1
 	db 1, 1, BIND
-	db 2, 3, MEGA_DRAIN
+	db 2, 1, MEGA_DRAIN
 	db 3, 1, RAZOR_LEAF
 	db 3, 2, ACID
 	db 3, 3, LEECH_SEED
@@ -28,6 +28,23 @@ SpecialTrainerMoves:
 	db 4, 2, SOLARBEAM
 	db 4, 3, STUN_SPORE
 	db 4, 4, SLEEP_POWDER
+	db 0
+
+	db ERIKA, 2
+	db 1, 1, BIND
+	db 2, 3, MEGA_DRAIN
+	db 3, 3, LEECH_SEED
+	db 4, 2, SLEEP_POWDER
+	db 0
+
+	db ERIKA, 3
+	db 1, 2, STUN_SPORE
+	db 1, 3, SLEEP_POWDER
+	db 2, 4, STUN_SPORE
+	db 3, 2, RAZOR_LEAF
+	db 3, 3, LEECH_SEED
+	db 4, 1, PSYCHIC_M
+	db 5, 1, PETAL_DANCE
 	db 0
 
 	db KOGA, 1

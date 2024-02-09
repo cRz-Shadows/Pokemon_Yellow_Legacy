@@ -12,7 +12,7 @@ Moves:
 ; Characteristics of each move.
 	table_width MOVE_LENGTH, Moves
 	move POUND,        NO_ADDITIONAL_EFFECT,        40, NORMAL,       100, 35
-	move KARATE_CHOP,  NO_ADDITIONAL_EFFECT,        50, FIGHTING,     100, 25
+	move KARATE_CHOP,  NO_ADDITIONAL_EFFECT,        50, FIGHTING,     95, 25
 	move DOUBLESLAP,   TWO_TO_FIVE_ATTACKS_EFFECT,  20, NORMAL,       100, 35
 	move COMET_PUNCH,  TWO_TO_FIVE_ATTACKS_EFFECT,  20, NORMAL,       100, 15
 	move MEGA_PUNCH,   NO_ADDITIONAL_EFFECT,        80, NORMAL,        85, 20
@@ -52,7 +52,7 @@ Moves:
 	move TAIL_WHIP,    DEFENSE_DOWN1_EFFECT,         0, BIRD,         100, 30
 	move POISON_STING, POISON_SIDE_EFFECT1,         35, POISON,       100, 35
 	move TWINEEDLE,    TWINEEDLE_EFFECT,            40, BUG,          100, 20
-	move PIN_MISSILE,  TWO_TO_FIVE_ATTACKS_EFFECT,  20, BUG,          100, 20
+	move PIN_MISSILE,  TWO_TO_FIVE_ATTACKS_EFFECT,  20, BUG,          100, 30
 	move LEER,         DEFENSE_DOWN1_EFFECT,         0, BIRD,         100, 30
 	move BITE,         FLINCH_SIDE_EFFECT1,         60, NORMAL,       100, 25
 	move GROWL,        ATTACK_DOWN1_EFFECT,          0, BIRD,         100, 40

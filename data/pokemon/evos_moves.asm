@@ -1378,6 +1378,7 @@ SeadraEvosMoves:
 	db 30, AURORA_BEAM
 	db 33, WATERFALL
 	db 37, AGILITY
+	db 41, SLAM
 	db 45, HYDRO_PUMP
 	db 0
 
@@ -1491,7 +1492,7 @@ EeveeEvosMoves:
 	db 10, QUICK_ATTACK
 	db 16, GROWL
 	db 20, BITE
-	db 20, HEADBUTT
+	db 25, HEADBUTT
 	db 36, FOCUS_ENERGY
 	db 42, TAKE_DOWN
 	db 0
@@ -1502,8 +1503,8 @@ FlareonEvosMoves:
 ; Learnset
 	db 8, SAND_ATTACK
 	db 10, LEER
-	db 16, EMBER
 	db 23, QUICK_ATTACK
+	db 26, EMBER
 	db 30, BITE
 	db 36, FLAMETHROWER
 	db 42, SMOG
@@ -1516,7 +1517,7 @@ JolteonEvosMoves:
 	db 0
 ; Learnset
 	db 8, SAND_ATTACK
-	db 16, THUNDERSHOCK
+	db 26, THUNDERSHOCK
 	db 23, QUICK_ATTACK
 	db 30, DOUBLE_KICK
 	db 36, THUNDERBOLT
@@ -2355,9 +2356,10 @@ CharmanderEvosMoves:
 	db 0
 ; Learnset
 	db 9, EMBER
-	db 15, LEER
+	db 13, LEER
+	db 17, RAGE
 	db 19, FIRE_PUNCH
-	db 25, RAGE
+	db 23, BITE
 	db 33, SLASH
 	db 38, FLAMETHROWER
 	db 46, FIRE_SPIN
@@ -2387,8 +2389,9 @@ CharmeleonEvosMoves:
 ; Learnset
 	db 9, EMBER
 	db 13, LEER
+	db 17, RAGE
 	db 19, FIRE_PUNCH
-	db 25, RAGE
+	db 23, BITE
 	db 33, SLASH
 	db 40, FLAMETHROWER
 	db 48, SLAM
@@ -2416,9 +2419,10 @@ CharizardEvosMoves:
 	db 0
 ; Learnset
 	db 9, EMBER
-	db 15, LEER
+	db 13, LEER
+	db 17, RAGE
 	db 19, FIRE_PUNCH
-	db 25, RAGE
+	db 23, BITE
 	db 33, SLASH
 	db 36, WING_ATTACK
 	db 42, FLAMETHROWER
@@ -2499,8 +2503,8 @@ VileplumeEvosMoves:
 	db 32, PETAL_DANCE
 	db 36, LEECH_SEED
 	db 40, SLUDGE
-	db 46, SOLARBEAM
-	db 51, SLEEP_POWDER
+	db 45, SOLARBEAM
+	db 50, SLEEP_POWDER
 	db 0
 
 BellsproutEvosMoves:
