@@ -268,6 +268,7 @@ SpearowEvosMoves:
 	db 18, SWIFT
 	db 20, MIRROR_MOVE
 	db 24, DRILL_PECK
+	db 28, WHIRLWIND
 	db 30, SHARPEN
 	db 40, AGILITY
 	db 0
@@ -401,9 +402,9 @@ GengarEvosMoves:
 ; Learnset
 	db 10, SMOG
 	db 15, PSYWAVE
-	db 35, NIGHT_SHADE
-	db 40, HYPNOSIS
-	db 46, DREAM_EATER
+	db 36, NIGHT_SHADE
+	db 55, HYPNOSIS
+	db 55, DREAM_EATER
 	db 0
 
 NidoranFEvosMoves:
@@ -558,8 +559,8 @@ GastlyEvosMoves:
 	db 15, PSYWAVE
 	db 20, POISON_GAS
 	db 36, NIGHT_SHADE
-	db 45, HYPNOSIS
-	db 46, DREAM_EATER
+	db 55, HYPNOSIS
+	db 55, DREAM_EATER
 	db 0
 
 ScytherEvosMoves:
@@ -686,6 +687,7 @@ FearowEvosMoves:
 	db 18, SWIFT
 	db 20, MIRROR_MOVE
 	db 24, DRILL_PECK
+	db 28, WHIRLWIND
 	db 30, SHARPEN
 	db 40, AGILITY
 	db 0
@@ -771,10 +773,10 @@ MachokeEvosMoves:
 	db 5, LEER
 	db 7, FOCUS_ENERGY
 	db 19, SEISMIC_TOSS
-	db 28, KARATE_CHOP
+	db 28, SUBMISSION
 	db 33, BODY_SLAM
 	db 37, COUNTER
-	db 41, SUBMISSION
+	db 41, KARATE_CHOP
 	db 0
 
 MrMimeEvosMoves:
@@ -2017,8 +2019,8 @@ HaunterEvosMoves:
 	db 10, SMOG
 	db 15, PSYWAVE
 	db 36, NIGHT_SHADE
-	db 45, HYPNOSIS
-	db 46, DREAM_EATER
+	db 55, HYPNOSIS
+	db 55, DREAM_EATER
 	db 0
 
 AbraEvosMoves:
