@@ -196,7 +196,8 @@ StartBattle:
 	and a ; is bait factor 0?
 	jr z, .checkEscapeFactor
 ; bait factor is not 0
-; divide b by 4 (making the mon less likely to run)
+; divide b by 8 (making the mon less likely to run)
+	srl b
 	srl b
 	srl b
 .checkEscapeFactor
@@ -204,8 +205,13 @@ StartBattle:
 	and a ; is escape factor 0?
 	jr z, .compareWithRandomValue
 ; escape factor is not 0
-; multiply b by 2 (making the mon more likely to run)
-	sla b
+; OG: multiply b by 2 (making the mon more likely to run)
+	;sla b
+; KEP: multiply b by 1.5x and add to a, making it more likely to run, but not as much as vanilla.
+	ld a, b ; load b into a - need this so add will work, add is for a only.
+	srl b ; divide b by 2
+	add a, b ; add b to a
+	ld b, a ; load a into b again to go to compareWithRandomValue
 	jr nc, .compareWithRandomValue
 ; cap b at 255
 	ld b, $ff
