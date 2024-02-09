@@ -1,3 +1,8 @@
+; wUnusedD726 = wDVCalcVar
+; wUnusedD722 = wDVCalcVar2
+; hFlags_0xFFF6 = hUILayoutFlags
+; hTilesetType = hTilesetAnimations
+
 DrawHP:
 ; Draws the HP bar in the stats screen
 	call GetPredefRegisters
@@ -40,7 +45,7 @@ DrawHP_:
 	push hl
 	call DrawHPBar
 	pop hl
-	ldh a, [hUILayoutFlags]
+	ld a, [hUILayoutFlags]
 	bit 0, a
 	jr z, .printFractionBelowBar
 	ld bc, $9 ; right of bar
@@ -80,28 +85,28 @@ StatusScreen:
 	ld hl, wd72c
 	set 1, [hl]
 	ld a, $33
-	ldh [rNR50], a ; Reduce the volume
+	ld [rNR50], a ; Reduce the volume
 	call GBPalWhiteOutWithDelay3
 	call ClearScreen
 	call UpdateSprites
 	call LoadHpBarAndStatusTilePatterns
 	ld de, BattleHudTiles1  ; source
-	ld hl, vChars2 tile $6d ; dest
-	lb bc, BANK(BattleHudTiles1), 3
+	ld hl, vChars2 + $6d0 ; dest
+	lb bc, BANK(BattleHudTiles1), $03
 	call CopyVideoDataDouble ; ·│ :L and halfarrow line end
 	ld de, BattleHudTiles2
-	ld hl, vChars2 tile $78
-	lb bc, BANK(BattleHudTiles2), 1
+	ld hl, vChars2 + $780
+	lb bc, BANK(BattleHudTiles2), $01
 	call CopyVideoDataDouble ; │
 	ld de, BattleHudTiles3
-	ld hl, vChars2 tile $76
-	lb bc, BANK(BattleHudTiles3), 2
-	call CopyVideoDataDouble ; ─ ┘
+	ld hl, vChars2 + $760
+	lb bc, BANK(BattleHudTiles3), $02
+	call CopyVideoDataDouble ; ─┘
 	ldh a, [hTileAnimations]
 	push af
 	xor a
-	ldh [hTileAnimations], a
-	hlcoord 19, 1
+	ld [hTileAnimations], a
+	coord hl, 19, 1
 	lb bc, 6, 10
 	call DrawLineBox ; Draws the box around name, HP and status
 	ld de, -6
@@ -109,54 +114,93 @@ StatusScreen:
 	ld [hl], "<DOT>"
 	dec hl
 	ld [hl], "№"
-	hlcoord 19, 9
+	coord hl, 19, 9
 	lb bc, 8, 6
 	call DrawLineBox ; Draws the box around types, ID No. and OT
-	hlcoord 10, 9
+	coord hl, 10, 9
 	ld de, Type1Text
 	call PlaceString ; "TYPE1/"
-	hlcoord 11, 3
+	coord hl, 11, 3
 	predef DrawHP
+
+	;joenote - print stat exp if select is held
+	;parse dv stats here so they can be grabbed later
+	push de
+	ld bc, SCREEN_WIDTH + 1
+	add hl, bc
+	call DVParse
+	call Joypad
+	
+	ld a, [hJoyHeld]
+	and SELECT | START
+	jr z, .noblank
+	push hl
+	ld a, " "
+	ld [hli], a
+	ld [hli], a
+	ld [hli], a
+	ld [hli], a
+	ld [hli], a
+	ld [hli], a
+	ld [hli], a
+	pop hl
+.noblank
+	
+	ld a, [hJoyHeld]
+	bit BIT_SELECT, a
+	jr z, .checkstart
+	ld de, wLoadedMonHPExp
+	lb bc, 2, 5
+	jr .printnum
+.checkstart	;print DVs if start is held
+	bit BIT_START, a
+	jr z, .doregular
+	ld de, wDVCalcVar2
+	lb bc, 1, 2
+.printnum
+	call PrintNumber
+.doregular
+	pop de
 	ld hl, wStatusScreenHPBarColor
 	call GetHealthBarColor
 	ld b, SET_PAL_STATUS_SCREEN
 	call RunPaletteCommand
-	hlcoord 16, 6
+	coord hl, 16, 6
 	ld de, wLoadedMonStatus
 	call PrintStatusCondition
 	jr nz, .StatusWritten
-	hlcoord 16, 6
+	coord hl, 16, 6
 	ld de, OKText
 	call PlaceString ; "OK"
 .StatusWritten
-	hlcoord 9, 6
+	coord hl, 9, 6
 	ld de, StatusText
 	call PlaceString ; "STATUS/"
-	hlcoord 14, 2
+	coord hl, 14, 2
 	call PrintLevel ; Pokémon level
 	ld a, [wMonHIndex]
 	ld [wd11e], a
 	ld [wd0b5], a
 	predef IndexToPokedex
-	hlcoord 3, 7
+	coord hl, 3, 7
 	ld de, wd11e
 	lb bc, LEADING_ZEROES | 1, 3
 	call PrintNumber ; Pokémon no.
-	hlcoord 11, 10
+	coord hl, 11, 10
 	predef PrintMonType
 	ld hl, NamePointers2
 	call .GetStringPointer
 	ld d, h
 	ld e, l
-	hlcoord 9, 1
+	coord hl, 9, 1
 	call PlaceString ; Pokémon name
 	ld hl, OTPointers
 	call .GetStringPointer
 	ld d, h
 	ld e, l
-	hlcoord 12, 16
+	coord hl, 12, 16
 	call PlaceString ; OT
-	hlcoord 12, 14
+	coord hl, 12, 14
 	ld de, wLoadedMonOTID
 	lb bc, LEADING_ZEROES | 2, 5
 	call PrintNumber ; ID Number
@@ -164,7 +208,7 @@ StatusScreen:
 	call PrintStatsBox
 	call Delay3
 	call GBPalNormal
-	hlcoord 1, 0
+	coord hl, 1, 0
 	call LoadFlippedFrontSpriteByMonIndex ; draw Pokémon picture
 	ld a, [wMonDataLocation]
 	cp ENEMY_PARTY_DATA
@@ -187,7 +231,7 @@ StatusScreen:
 .continue
 	call WaitForTextScrollButtonPress ; wait for button
 	pop af
-	ldh [hTileAnimations], a
+	ld [hTileAnimations], a
 	ret
 
 .GetStringPointer
@@ -281,6 +325,36 @@ PrintStatsBox:
 	pop hl
 	pop bc
 	add hl, bc
+	; New Stat Exp / DVs display functionality, from shin pokered.
+	;joenote - print stat exp if select is held
+	call Joypad
+	ld a, [hJoyHeld]
+	bit 2, a
+	jr z, .checkstart
+	dec l	;shift alignment 2 tiles to the left
+	dec l
+	ld de, wLoadedMonAttackExp
+	lb bc, 2, 5
+	call PrintStat
+	ld de, wLoadedMonDefenseExp
+	call PrintStat
+	ld de, wLoadedMonSpeedExp
+	call PrintStat
+	ld de, wLoadedMonSpecialExp
+	jp PrintNumber
+.checkstart	;joenote - print DVs if start is held
+	bit 3, a
+	jr z, .doregular
+	ld de, wDVCalcVar2 + 4
+	lb bc, 1, 2
+	call PrintStat
+	ld de, wDVCalcVar2 + 1
+	call PrintStat
+	ld de, wDVCalcVar2 + 2
+	call PrintStat
+	ld de, wDVCalcVar2 + 3
+	jp PrintNumber
+.doregular
 	ld de, wLoadedMonAttack
 	lb bc, 2, 3
 	call PrintStat
@@ -487,4 +561,59 @@ StatusScreen_PrintPP:
 	add hl, de
 	dec c
 	jr nz, StatusScreen_PrintPP
+	ret
+
+; DV parsing from shin pokered
+;joenote - parse DV scores
+DVParse:
+	push hl
+	push bc
+	ld hl, wDVCalcVar2
+	ld b, $00
+
+	ld a, [wLoadedMonDVs]	;get attack dv
+	swap a
+	and $0F
+	ld [hl], a
+	inc hl
+	and $01
+	sla a
+	sla a
+	sla a
+	or b
+	ld b, a
+	
+	
+	ld a, [wLoadedMonDVs]	;get defense dv
+	and $0F
+	ld [hl], a
+	inc hl
+	and $01
+	sla a
+	sla a
+	or b
+	ld b, a
+	
+	ld a, [wLoadedMonDVs + 1]	;get speed dv
+	swap a
+	and $0F
+	ld [hl], a
+	inc hl
+	and $01
+	sla a
+	or b
+	ld b, a
+	
+	ld a, [wLoadedMonDVs + 1]	;get special dv
+	and $0F
+	ld [hl], a
+	inc hl
+	and $01
+	or b
+	ld b, a
+
+	ld [hl], b	;load hp dv
+	
+	pop bc
+	pop hl
 	ret

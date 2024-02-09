@@ -295,7 +295,7 @@ RocketHideoutB4F_TextPointers:
 	dw_const RocketHideoutB4FJessieJamesText,             TEXT_ROCKETHIDEOUTB4F_JESSIE
 	dw_const RocketHideoutB4FRocketText,                  TEXT_ROCKETHIDEOUTB4F_ROCKET
 	dw_const PickUpItemText,                              TEXT_ROCKETHIDEOUTB4F_HP_UP
-	dw_const PickUpItemText,                              TEXT_ROCKETHIDEOUTB4F_TM_RAZOR_WIND
+	dw_const PickUpItemText,                              TEXT_ROCKETHIDEOUTB4F_TM_FLAMETHROWER
 	dw_const PickUpItemText,                              TEXT_ROCKETHIDEOUTB4F_IRON
 	dw_const PickUpItemText,                              TEXT_ROCKETHIDEOUTB4F_SILPH_SCOPE
 	dw_const PickUpItemText,                              TEXT_ROCKETHIDEOUTB4F_LIFT_KEY

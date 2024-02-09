@@ -17,7 +17,7 @@ Route4_TextPointers:
 	def_text_pointers
 	dw_const Route4CooltrainerF1Text, TEXT_ROUTE4_COOLTRAINER_F1
 	dw_const Route4CooltrainerF2Text, TEXT_ROUTE4_COOLTRAINER_F2
-	dw_const PickUpItemText,          TEXT_ROUTE4_TM_WHIRLWIND
+	dw_const PickUpItemText,          TEXT_ROUTE4_TM_RAZOR_WIND
 	dw_const PokeCenterSignText,      TEXT_ROUTE4_POKECENTER_SIGN
 	dw_const Route4MtMoonSignText,    TEXT_ROUTE4_MT_MOON_SIGN
 	dw_const Route4SignText,          TEXT_ROUTE4_SIGN

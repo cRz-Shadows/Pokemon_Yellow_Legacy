@@ -160,7 +160,7 @@ DEF TM01 EQU const_value
 	add_tm MEGA_PUNCH   ; $C9
 	add_tm RAZOR_WIND   ; $CA
 	add_tm SWORDS_DANCE ; $CB
-	add_tm WHIRLWIND    ; $CC
+	add_tm FLAMETHROWER ; $CC
 	add_tm MEGA_KICK    ; $CD
 	add_tm TOXIC        ; $CE
 	add_tm HORN_DRILL   ; $CF

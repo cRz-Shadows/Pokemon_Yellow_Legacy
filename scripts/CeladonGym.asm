@@ -125,10 +125,37 @@ CeladonGymErikaText:
 	ld hl, .ReceivedRainbowBadgeText
 	ld de, .ReceivedRainbowBadgeText
 	call SaveEndBattleTextPointers
+	CheckEvent EVENT_BEAT_SABRINA
+	jr nz, .Erika6thGym
+	CheckEvent EVENT_BEAT_KOGA
+	jr nz, .Erika5thGym
+	jp .Erika4thGym
+.Erika6thGym
+	call Delay3
+	ld a, OPP_ERIKA
+	ld [wCurOpponent], a
+	ld a, 3
+	ld [wTrainerNo], a
+	ld a, $4 ; new script
+	ld [wCeladonGymCurScript], a
+	ld [wCurMapScript], a
+	jr .afterBatttle
+.Erika5thGym
+	call Delay3
+	ld a, OPP_ERIKA
+	ld [wCurOpponent], a
+	ld a, 2
+	ld [wTrainerNo], a
+	ld a, $4 ; new script
+	ld [wCeladonGymCurScript], a
+	ld [wCurMapScript], a
+	jr .afterBatttle
+.Erika4thGym
 	ldh a, [hSpriteIndex]
 	ld [wSpriteIndex], a
 	call EngageMapTrainer
 	call InitBattleEnemyParameters
+.afterBatttle
 	ld a, $4
 	ld [wGymLeaderNo], a
 	ld a, SCRIPT_CELADONGYM_ERIKA_POST_BATTLE

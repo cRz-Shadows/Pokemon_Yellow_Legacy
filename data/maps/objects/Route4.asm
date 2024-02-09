@@ -1,7 +1,7 @@
 	object_const_def
 	const_export ROUTE4_COOLTRAINER_F1
 	const_export ROUTE4_COOLTRAINER_F2
-	const_export ROUTE4_TM_WHIRLWIND
+	const_export ROUTE4_TM_RAZOR_WIND
 
 Route4_Object:
 	db $2c ; border block
@@ -19,6 +19,6 @@ Route4_Object:
 	def_object_events
 	object_event  9,  8, SPRITE_COOLTRAINER_F, WALK, ANY_DIR, TEXT_ROUTE4_COOLTRAINER_F1
 	object_event 63,  3, SPRITE_COOLTRAINER_F, STAY, RIGHT, TEXT_ROUTE4_COOLTRAINER_F2, OPP_LASS, 4
-	object_event 57,  3, SPRITE_POKE_BALL, STAY, NONE, TEXT_ROUTE4_TM_WHIRLWIND, TM_WHIRLWIND
+	object_event 57,  3, SPRITE_POKE_BALL, STAY, NONE, TEXT_ROUTE4_TM_RAZOR_WIND, TM_RAZOR_WIND
 
 	def_warps_to ROUTE_4

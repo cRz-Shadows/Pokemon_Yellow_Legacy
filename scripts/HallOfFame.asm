@@ -104,6 +104,9 @@ HallOfFameOakCongratulationsScript:
 	ld a, HS_ROUTE_1_OAK
 	ld [wMissableObjectIndex], a
 	predef ShowObject
+	ld a, HS_INDIGO_PLATEU_LOBBY_CLERK_HS
+	ld [wMissableObjectIndex], a
+	predef ShowObject
 	ld a, SCRIPT_HALLOFFAME_RESET_EVENTS_AND_SAVE
 	ld [wHallOfFameCurScript], a
 	ret
