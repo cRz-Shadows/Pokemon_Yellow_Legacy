@@ -125,31 +125,31 @@ GainExperience:
 	CheckEvent EVENT_BEAT_CHAMPION_RIVAL
 	ld d, 100
 	jr nz, .next1
-	ld hl, wObtainedBadges
-	bit BIT_EARTHBADGE, [hl]
+	ld a, NUM_BADGES
+	cp 8
 	ld d, 65 ; Jolteon/Flareon/Vaporeon's level
-	jr nz, .next1
-	bit BIT_VOLCANOBADGE, [hl]
+	jr nc, .next1
+	cp 7
 	ld d, 58 ; Rhydon's level
-	jr nz, .next1
-	bit BIT_MARSHBADGE, [hl]
+	jr nc, .next1
+	cp 6
 	ld d, 55 ; Magmar's level
-	jr nz, .next1
-	bit BIT_SOULBADGE, [hl]
+	jr nc, .next1
+	cp 5
 	ld d, 50 ; Alakazam's level
-	jr nz, .next1
-    bit BIT_RAINBOWBADGE, [hl]
+	jr nc, .next1
+    cp 4
 	ld d, 45 ; Venomoth's level
-	jr nz, .next1
-	bit BIT_THUNDERBADGE, [hl]
+	jr nc, .next1
+	cp 3
 	ld d, 35 ; Vileplume's level
-	jr nz, .next1
-	bit BIT_CASCADEBADGE, [hl]
+	jr nc, .next1
+	cp 2
     ld d, 24 ; Raichu's level
-	jr nz, .next1
-	bit BIT_BOULDERBADGE, [hl]
+	jr nc, .next1
+	cp 1
 	ld d, 20 ; Starmie's level
-	jr nz, .next1
+	jr nc, .next1
 	ld d, 12 ; Onix's level
 .next1
 	callfar CalcExperience ; get max exp

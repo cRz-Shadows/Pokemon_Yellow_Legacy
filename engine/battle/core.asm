@@ -4123,31 +4123,31 @@ CheckForDisobedience:
 	CheckEvent EVENT_BEAT_CHAMPION_RIVAL
 	ld a, 101
 	jr nz, .next
-	ld hl, wObtainedBadges
-	bit BIT_EARTHBADGE, [hl]
+	ld a, NUM_BADGES
+	cp 8
 	ld a, 65 ; Jolteon/Flareon/Vaporeon's level
-	jr nz, .next
-	bit BIT_VOLCANOBADGE, [hl]
+	jr nc, .next
+	cp 7
 	ld a, 58 ; Rhydon's level
-	jr nz, .next
-	bit BIT_MARSHBADGE, [hl]
+	jr nc, .next
+	cp 6
 	ld a, 55 ; Magmar's level
-	jr nz, .next
-	bit BIT_SOULBADGE, [hl]
+	jr nc, .next
+	cp 5
 	ld a, 50 ; Alakazam's level
-	jr nz, .next
-	bit BIT_RAINBOWBADGE, [hl]
+	jr nc, .next
+    cp 4
 	ld a, 45 ; Venomoth's level
-	jr nz, .next
-	bit BIT_THUNDERBADGE, [hl]
+	jr nc, .next
+	cp 3
 	ld a, 35 ; Vileplume's level
-	jr nz, .next
-	bit BIT_CASCADEBADGE, [hl]
-	ld a, 24 ; Raichu's level
-	jr nz, .next
-	bit BIT_BOULDERBADGE, [hl]
+	jr nc, .next
+	cp 2
+    ld a, 24 ; Raichu's level
+	jr nc, .next
+	cp 1
 	ld a, 20 ; Starmie's level
-	jr nz, .next
+	jr nc, .next
 	ld a, 12 ; Onix's level
 	jp .next
 .NormalMode2

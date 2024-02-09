@@ -126,9 +126,10 @@ SaffronGymSabrinaText:
 	ld hl, .ReceivedMarshBadgeText
 	ld de, .ReceivedMarshBadgeText
 	call SaveEndBattleTextPointers
-	CheckEvent EVENT_BEAT_KOGA
-	jr nz, .sabrinaFirst
-.kogaFirst
+	ld a, NUM_BADGES
+	cp 5
+	jr nc, .Sabrina6thGym
+.Sabrina5thGym
 	call Delay3
 	ld a, OPP_SABRINA
 	ld [wCurOpponent], a
@@ -138,7 +139,7 @@ SaffronGymSabrinaText:
 	ld [wSaffronGymCurScript], a
 	ld [wCurMapScript], a
 	jr .afterBatttle
-.sabrinaFirst
+.Sabrina6thGym
 	ldh a, [hSpriteIndex]
 	ld [wSpriteIndex], a
 	call EngageMapTrainer

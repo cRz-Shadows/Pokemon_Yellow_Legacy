@@ -125,11 +125,12 @@ CeladonGymErikaText:
 	ld hl, .ReceivedRainbowBadgeText
 	ld de, .ReceivedRainbowBadgeText
 	call SaveEndBattleTextPointers
-	CheckEvent EVENT_BEAT_SABRINA
-	jr nz, .Erika6thGym
-	CheckEvent EVENT_BEAT_KOGA
-	jr nz, .Erika5thGym
-	jp .Erika4thGym
+	ld a, NUM_BADGES
+	cp 5
+	jr nc, .Erika6thGym
+	cp 4
+	jr nc, .Erika5thGym
+	jr .Erika4thGym
 .Erika6thGym
 	call Delay3
 	ld a, OPP_ERIKA

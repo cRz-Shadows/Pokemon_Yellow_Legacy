@@ -1482,31 +1482,31 @@ ItemUseMedicine:
 
 	CheckEvent EVENT_BEAT_CHAMPION_RIVAL
 	jr nz, .next1
-	ld hl, wObtainedBadges
-	bit BIT_EARTHBADGE, [hl]
+	ld a, NUM_BADGES
+	cp 8
 	ld b, 65 ; Jolteon/Flareon/Vaporeon's level
-	jr nz, .next1
-	bit BIT_VOLCANOBADGE, [hl]
+	jr nc, .next1
+	cp 7
 	ld b, 58 ; Rhydon's level
-	jr nz, .next1
-	bit BIT_MARSHBADGE, [hl]
+	jr nc, .next1
+	cp 6
 	ld b, 55 ; Magmar's level
-	jr nz, .next1
-	bit BIT_SOULBADGE, [hl]
+	jr nc, .next1
+	cp 5
 	ld b, 50 ; Alakazam's level
-	jr nz, .next1
-    bit BIT_RAINBOWBADGE, [hl]
+	jr nc, .next1
+    cp 4
 	ld b, 45 ; Venomoth's level
-	jr nz, .next1
-	bit BIT_THUNDERBADGE, [hl]
+	jr nc, .next1
+	cp 3
 	ld b, 35 ; Vileplume's level
-	jr nz, .next1
-	bit BIT_CASCADEBADGE, [hl]
+	jr nc, .next1
+	cp 2
     ld b, 24 ; Raichu's level
-	jr nz, .next1
-	bit BIT_BOULDERBADGE, [hl]
+	jr nc, .next1
+	cp 1
 	ld b, 20 ; Starmie's level
-	jr nz, .next1
+	jr nc, .next1
 	ld b, 12 ; Onix's level
 .next1
 
