@@ -125,7 +125,8 @@ FuchsiaGymKogaText:
 	ld hl, .ReceivedSoulBadgeText
 	ld de, .ReceivedSoulBadgeText
 	call SaveEndBattleTextPointers
-	ld a, NUM_BADGES
+	farcall GetBadgesObtained
+	ld a, [wNumSetBits]
 	cp 5
 	jr nc, .Koga6thGym
 	jr .Koga5thGym

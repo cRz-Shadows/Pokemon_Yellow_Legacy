@@ -125,7 +125,8 @@ CeladonGymErikaText:
 	ld hl, .ReceivedRainbowBadgeText
 	ld de, .ReceivedRainbowBadgeText
 	call SaveEndBattleTextPointers
-	ld a, NUM_BADGES
+	farcall GetBadgesObtained
+	ld a, [wNumSetBits]
 	cp 5
 	jr nc, .Erika6thGym
 	cp 4

@@ -1482,7 +1482,8 @@ ItemUseMedicine:
 
 	CheckEvent EVENT_BEAT_CHAMPION_RIVAL
 	jr nz, .next1
-	ld a, NUM_BADGES
+	farcall GetBadgesObtained
+	ld a, [wNumSetBits]
 	cp 8
 	ld b, 65 ; Jolteon/Flareon/Vaporeon's level
 	jr nc, .next1

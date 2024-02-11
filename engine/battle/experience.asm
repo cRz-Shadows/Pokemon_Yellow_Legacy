@@ -125,7 +125,8 @@ GainExperience:
 	CheckEvent EVENT_BEAT_CHAMPION_RIVAL
 	ld d, 100
 	jr nz, .next1
-	ld a, NUM_BADGES
+	call GetBadgesObtained
+	ld a, [wNumSetBits]
 	cp 8
 	ld d, 65 ; Jolteon/Flareon/Vaporeon's level
 	jr nc, .next1
@@ -488,4 +489,20 @@ IsCurrentMonBattleMon:
 	ld b, a
 	ld a, [wWhichPokemon]
 	cp b
+	ret
+
+; function to count the set bits in wObtainedBadges
+; OUTPUT:
+; a = set bits in wObtainedBadges
+GetBadgesObtained::
+	push hl
+	push bc
+	push de
+	ld hl, wObtainedBadges
+	ld b, $1
+	call CountSetBits
+	pop de
+	pop bc
+	pop hl
+	ld a, [wNumSetBits]
 	ret
