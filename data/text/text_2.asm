@@ -788,7 +788,7 @@ _VermilionGymTrashSuccessText3::
 
 _VermilionGymTrashFailText::
 	text "Nope! There's"
-	line "only trash here."
+	line "only trash here.@"
 	text_end
 
 _FoundHiddenItemText::
