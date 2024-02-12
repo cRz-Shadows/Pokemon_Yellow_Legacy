@@ -126,7 +126,8 @@ SaffronGymSabrinaText:
 	ld hl, .ReceivedMarshBadgeText
 	ld de, .ReceivedMarshBadgeText
 	call SaveEndBattleTextPointers
-	ld a, NUM_BADGES
+	farcall GetBadgesObtained
+	ld a, [wNumSetBits]
 	cp 5
 	jr nc, .Sabrina6thGym
 .Sabrina5thGym

@@ -4123,7 +4123,8 @@ CheckForDisobedience:
 	CheckEvent EVENT_BEAT_CHAMPION_RIVAL
 	ld a, 101
 	jr nz, .next
-	ld a, NUM_BADGES
+	farcall GetBadgesObtained
+	ld a, [wNumSetBits]
 	cp 8
 	ld a, 65 ; Jolteon/Flareon/Vaporeon's level
 	jr nc, .next

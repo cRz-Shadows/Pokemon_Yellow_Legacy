@@ -169,7 +169,7 @@ _Route24DamianText1::
 
 _Route24DamianText2::
 	text "Good luck with"
-	line "that."
+	line "that.@"
 	text_end
 
 _Route24DamianText3::

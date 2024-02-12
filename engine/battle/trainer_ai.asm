@@ -7,6 +7,18 @@ AIEnemyTrainerChooseMoves:
 	ld [hli], a   ; move 2
 	ld [hli], a   ; move 3
 	ld [hl], a    ; move 4
+	
+;;;;;;;;;; shinpokerednote: ADDED: make a backup buffer
+	push hl
+	ld a, $ff
+	inc hl
+	ld [hli], a	;backup 1
+	ld [hli], a	;backup 2
+	ld [hli], a	;backup 3
+	ld [hl], a	;backup 4
+	pop hl
+;;;;;;;;;;
+
 	ld a, [wEnemyDisabledMove] ; forbid disabled move (if any)
 	swap a
 	and $f
@@ -52,6 +64,11 @@ AIEnemyTrainerChooseMoves:
 	ld de, .nextMoveChoiceModification  ; set return address
 	push de
 	jp hl         ; execute modification function
+.loopFindMinimumEntries_backupfirst	;shinpokerednote: ADDED: make a backup of the scores
+	ld hl, wBuffer  ; temp move selection array
+	ld de, wBuffer + NUM_MOVES  ;backup buffer
+	ld bc, NUM_MOVES
+	call CopyData
 .loopFindMinimumEntries ; all entries will be decremented sequentially until one of them is zero
 	ld hl, wBuffer  ; temp move selection array
 	ld de, wEnemyMonMoves  ; enemy moves
@@ -466,10 +483,8 @@ AIMoveChoiceModification3:
 	jr c, .notEffectiveMove
 	;ld a, [wEnemyMoveEffect]
 	; check for reasons not to use a super effective move here
-
 	dec [hl] ; slightly encourage this super effective move
 .checkSpecificEffects ; we'll further encourage certain moves
-	call EncouragePriorityIfSlow
 	call EncourageDrainingMoveIfLowHealth
 	jr .nextMove
 .notEffectiveMove ; discourages non-effective moves if better moves are available
@@ -479,7 +494,7 @@ AIMoveChoiceModification3:
 	ld a, [wEnemyMoveType]
 	ld d, a
 	ld hl, wEnemyMonMoves  ; enemy moves
-	ld b, NUM_MOVES + 1
+	ld bc, NUM_MOVES + 1
 	ld c, $0
 .loopMoves
 	dec b
@@ -543,18 +558,6 @@ CompareSpeed:
 	ret
 ;;;;;;;;;;
 
-; PureRGBnote: ADDED: encourages priority moves if the enemy's pokemon is slower than the player's and the move is neutral or super effective.
-; BUT this effect is only applied after you have the soulbadge to prevent priority moves from being spammed early game.
-; Applies to trainers that use AI subroutine 3
-EncouragePriorityIfSlow:
-	ld a, [wObtainedBadges]
-	bit BIT_SOULBADGE, a
-	ret z
-	call CompareSpeed
-	ret nc
-	dec [hl] ; encourage the move if it's a priority move and the pokemon is slower
-	ret
-
 ; PureRGBnote: ADDED: if the opponent has less than 1/2 health they will prefer healing moves if they use AI subroutine 3
 EncourageDrainingMoveIfLowHealth:
 	ld a, [wEnemyMoveEffect]
@@ -576,11 +579,11 @@ AIMoveChoiceModification4:
 	ld b, NUM_MOVES + 1
 .nextMove
 	dec b
-	jr z, .done ; processed all 4 moves
+	ret z ; processed all 4 moves
 	inc hl
 	ld a, [de]
 	and a
-	jr z, .done ; no more moves in move set
+	ret z ; no more moves in move set
 	inc de
 	call ReadMove
 	ld a, [wEnemyMoveEffect]
@@ -626,8 +629,7 @@ AIMoveChoiceModification4:
 	jr z, .nextMove ; if the AI thinks the player IS NOT asleep before they switch, we shouldn't encourage based on the new mon's status
 	ld a, [wBattleMonStatus]
 	and SLP_MASK
-	jr nz, .preferMoveEvenMore ; heavier favor for dream eater if the opponent is asleep
-	jr .nextMove
+	jr z, .nextMove
 .preferMoveEvenMore
 	dec [hl]
 	jr .preferMove

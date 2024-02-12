@@ -3,6 +3,6 @@ TeachingHMsText::
 	line "important!"
 
 	para "You should keep"
-	line "then on you at"
+	line "them on you at"
 	cont "all times."
 	done
