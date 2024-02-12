@@ -23,7 +23,7 @@ CeladonMart5FCurrentFloorSignText:
 	text_end
 
 CeladonMart5FClerk1Text::
-	script_mart POKE_DOLL, FIRE_STONE, THUNDER_STONE, WATER_STONE, LEAF_STONE
+	script_mart TM_WATER_GUN, TM_THUNDER_WAVE, TM_SWIFT, TM_REST, TM_SEISMIC_TOSS, TM_REST, TM_BIDE, TM_TELEPORT, TM_PAY_DAY 
 
 CeladonMart5FClerk2Text::
 	script_mart HP_UP, PROTEIN, IRON, CARBOS, CALCIUM
