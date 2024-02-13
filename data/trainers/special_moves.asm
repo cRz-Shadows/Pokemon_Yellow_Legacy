@@ -10,7 +10,8 @@ SpecialTrainerMoves:
 
 	db BROCK, 1
 	db 2, 1, CONSTRICT
-	db 2, 4, BIDE
+	db 2, 3, BIDE
+	db 2, 4, CONSTRICT
 	db 0
 
 	db LT_SURGE, 1
