@@ -577,8 +577,7 @@ HandlePoisonBurnLeechSeed_DecreaseOwnHP:
 	rr c
 	srl b
 	rr c
-	srl c
-	srl c         ; c = max HP/16 (assumption: HP < 1024)
+	srl c         ; c = max HP/8 (assumption: HP < 1024)
 	ld a, c
 	and a
 	jr nz, .nonZeroDamage
