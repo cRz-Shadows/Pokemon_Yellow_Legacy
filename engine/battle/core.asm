@@ -5103,6 +5103,7 @@ ApplyAttackToPlayerPokemon:
 ; it's possible for the enemy to do 0 damage with Psywave, but the player always does at least 1 damage
 .loop
 	call BattleRandom
+	add a, 1            ; Increment to ensure we start from 1, adjusting the range to [1, b)
 	cp b
 	jr nc, .loop
 	ld b, a
