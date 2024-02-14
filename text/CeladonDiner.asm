@@ -9,7 +9,7 @@ _CeladonDinerMiddleAgedWomanText::
 	text "My #MON are"
 	line "weak, so I often"
 	cont "have to go to the"
-	cont "DRUG STORE."
+	cont "POWER ZONE."
 	done
 
 _CeladonDinerMiddleAgedManText::

@@ -577,8 +577,7 @@ HandlePoisonBurnLeechSeed_DecreaseOwnHP:
 	rr c
 	srl b
 	rr c
-	srl c
-	srl c         ; c = max HP/16 (assumption: HP < 1024)
+	srl c         ; c = max HP/8 (assumption: HP < 1024)
 	ld a, c
 	and a
 	jr nz, .nonZeroDamage
@@ -5104,6 +5103,7 @@ ApplyAttackToPlayerPokemon:
 ; it's possible for the enemy to do 0 damage with Psywave, but the player always does at least 1 damage
 .loop
 	call BattleRandom
+	add a, 1            ; Increment to ensure we start from 1, adjusting the range to [1, b)
 	cp b
 	jr nc, .loop
 	ld b, a
