@@ -9,10 +9,14 @@ SpecialTrainerMoves:
 	db 0
 
 	db BROCK, 1
+	db 1, 3, ROCK_THROW
 	db 2, 1, CONSTRICT
 	db 2, 3, BIDE
 	db 2, 4, BIND
 	db 0
+
+	db MISTY, 1
+	db 2, 1, TAIL_WHIP
 
 	db LT_SURGE, 1
 	db 1, 3, BODY_SLAM
@@ -74,9 +78,6 @@ SpecialTrainerMoves:
 	db 0
 
 	db BLAINE, 1
-	db 1, 1, FIRE_SPIN
-	db 1, 2, DOUBLE_KICK
-	db 1, 3, TAKE_DOWN
 	db 2, 1, FIRE_BLAST
 	db 2, 2, WING_ATTACK
 	db 2, 3, SLASH
@@ -224,7 +225,8 @@ SpecialTrainerMoves:
 	db 3, 1, THUNDER_WAVE
 	db 4, 1, ROCK_SLIDE
 	db 5, 3, SURF
-	db 6, 3, DIG
+	db 6, 2, HEADBUTT
+	db 6, 4, THUNDERBOLT
 	db 0
 
 	db RIVAL3, 2
@@ -238,8 +240,8 @@ SpecialTrainerMoves:
 	db 4, 3, REFLECT
 	db 4, 3, REFLECT
 	db 5, 1, SOFTBOILED
-	db 6, 2, REFLECT
-	db 6, 3, QUICK_ATTACK
+	db 6, 3, FLAMETHROWER
+	db 6, 4, DOUBLE_KICK
 	db 0
 
 	db RIVAL3, 3
@@ -248,12 +250,10 @@ SpecialTrainerMoves:
 	db 2, 1, DOUBLE_EDGE
 	db 2, 2, HYPER_BEAM
 	db 2, 4, DOUBLE_TEAM
+	db 3, 4, PSYWAVE
 	db 4, 1, SLEEP_POWDER
 	db 5, 1, THUNDER_WAVE
-	db 6, 1, SURF
-	db 6, 2, TOXIC
-	db 6, 3, ICE_BEAM
-	db 6, 4, REST
+	db 6, 1, ICE_BEAM
+	db 6, 4, SURF
 	db 0
-
 	db -1 ; end

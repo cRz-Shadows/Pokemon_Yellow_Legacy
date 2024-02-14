@@ -328,10 +328,10 @@ IvysaurEvosMoves:
 	db 9, VINE_WHIP
 	db 16, ACID
 	db 22, POISONPOWDER
-	db 30, RAZOR_LEAF
+	db 25, SLEEP_POWDER
+	db 29, RAZOR_LEAF
 	db 38, GROWTH
 	db 42, BODY_SLAM
-	db 46, SLEEP_POWDER
 	db 54, SOLARBEAM
 	db 0
 
@@ -1505,9 +1505,10 @@ FlareonEvosMoves:
 	db 10, LEER
 	db 23, QUICK_ATTACK
 	db 26, EMBER
-	db 30, BITE
+	db 30, DOUBLE_KICK
 	db 36, FLAMETHROWER
-	db 42, SMOG
+	db 39, DOUBLE_EDGE
+	db 41, GROWTH
 	db 47, FIRE_SPIN
 	db 52, FIRE_BLAST
 	db 0
@@ -1517,13 +1518,13 @@ JolteonEvosMoves:
 	db 0
 ; Learnset
 	db 8, SAND_ATTACK
-	db 26, THUNDERSHOCK
 	db 23, QUICK_ATTACK
+	db 26, THUNDERSHOCK
 	db 30, DOUBLE_KICK
 	db 36, THUNDERBOLT
 	db 39, PIN_MISSILE
-	db 42, THUNDER_WAVE
-	db 47, AGILITY
+	db 41, AGILITY
+	db 47, THUNDER_WAVE
 	db 52, THUNDER
 	db 0
 
@@ -1537,9 +1538,10 @@ VaporeonEvosMoves:
 	db 26, BUBBLEBEAM
 	db 30, BITE
 	db 36, AURORA_BEAM
+	db 39, MIST
+	db 39, HAZE
 	db 41, ACID_ARMOR
-	db 42, MIST
-	db 47, HAZE
+	db 47, REST
 	db 52, HYDRO_PUMP
 	db 0
 
@@ -2091,11 +2093,11 @@ BulbasaurEvosMoves:
 	db 7, LEECH_SEED
 	db 9, VINE_WHIP
 	db 22, POISONPOWDER
+	db 25, SLEEP_POWDER
 	db 29, RAZOR_LEAF
 	db 38, GROWTH
 	db 42, BODY_SLAM
-	db 46, SLEEP_POWDER
-	db 54, SOLARBEAM
+	db 52, SOLARBEAM
 	db 0
 
 VenusaurEvosMoves:
@@ -2106,11 +2108,11 @@ VenusaurEvosMoves:
 	db 9, VINE_WHIP
 	db 16, ACID
 	db 22, POISONPOWDER
+	db 25, SLEEP_POWDER
 	db 29, RAZOR_LEAF
 	db 36, SLUDGE
 	db 38, GROWTH
 	db 42, BODY_SLAM
-	db 46, SLEEP_POWDER
 	db 54, SOLARBEAM
 	db 0
 
@@ -2160,7 +2162,8 @@ SeakingEvosMoves:
 	db 15, WATERFALL
 	db 24, FURY_ATTACK
 	db 33, DRILL_PECK
-	db 43, HORN_DRILL
+	db 38, SWORDS_DANCE
+	db 45, HORN_DRILL
 	db 48, AGILITY
 	db 0
 
@@ -2210,13 +2213,14 @@ RapidashEvosMoves:
 ; Learnset
 	db 19, STOMP
 	db 25, DOUBLE_KICK
+	db 28, GROWL
 	db 30, TAIL_WHIP
 	db 33, FLAMETHROWER
-	db 35, GROWL
-	db 36, TAKE_DOWN
-	db 43, FIRE_BLAST
-	db 48, FIRE_SPIN
-	db 53, AGILITY
+	db 35, AGILITY
+	db 36, FIRE_SPIN
+	db 40, TAKE_DOWN
+	db 45, FIRE_BLAST
+	db 50, HI_JUMP_KICK
 	db 0
 
 RattataEvosMoves:
@@ -2463,13 +2467,12 @@ OddishEvosMoves:
 	db 8, LEECH_SEED
 	db 13, ABSORB
 	db 16, STUN_SPORE
-	db 22, ACID
-	db 27, MEGA_DRAIN
-	db 32, PETAL_DANCE
-	db 36, LEECH_SEED
+	db 21, ACID
+	db 25, MEGA_DRAIN
+	db 30, SLEEP_POWDER
+	db 35, PETAL_DANCE
 	db 40, SLUDGE
-	db 46, SOLARBEAM
-	db 51, SLEEP_POWDER
+	db 50, SOLARBEAM
 	db 0
 
 GloomEvosMoves:
@@ -2481,13 +2484,12 @@ GloomEvosMoves:
 	db 8, LEECH_SEED
 	db 13, ABSORB
 	db 16, STUN_SPORE
-	db 22, ACID
-	db 27, MEGA_DRAIN
-	db 32, PETAL_DANCE
-	db 36, LEECH_SEED
+	db 21, ACID
+	db 25, MEGA_DRAIN
+	db 30, SLEEP_POWDER
+	db 35, PETAL_DANCE
 	db 40, SLUDGE
-	db 46, SOLARBEAM
-	db 51, SLEEP_POWDER
+	db 50, SOLARBEAM
 	db 0
 
 VileplumeEvosMoves:
@@ -2498,13 +2500,12 @@ VileplumeEvosMoves:
 	db 8, LEECH_SEED
 	db 13, ABSORB
 	db 16, STUN_SPORE
-	db 22, ACID
-	db 27, MEGA_DRAIN
-	db 32, PETAL_DANCE
-	db 36, LEECH_SEED
+	db 21, ACID
+	db 25, MEGA_DRAIN
+	db 30, SLEEP_POWDER
+	db 35, PETAL_DANCE
 	db 40, SLUDGE
-	db 45, SOLARBEAM
-	db 50, SLEEP_POWDER
+	db 50, SOLARBEAM
 	db 0
 
 BellsproutEvosMoves:
