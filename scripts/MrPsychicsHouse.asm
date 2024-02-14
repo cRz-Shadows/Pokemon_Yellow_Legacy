@@ -4,7 +4,7 @@ MrPsychicsHouse_Script:
 MrPsychicsHouse_TextPointers:
 	def_text_pointers
 	dw_const MrPsychicsHouseMrPsychicText, TEXT_MRPSYCHICSHOUSE_MR_PSYCHIC
-	dw_const CeruleanTradeHouseGamblerText, 	  TEXT_CERULEANTRADEHOUSE_GAMBLER
+	; dw_const CeruleanTradeHouseGamblerText, 	  TEXT_CERULEANTRADEHOUSE_GAMBLER
 
 MrPsychicsHouseMrPsychicText:
 	text_asm
