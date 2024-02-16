@@ -1480,7 +1480,8 @@ ItemUseMedicine:
 	and a
 	jr z, .next1 ; no level caps if not on hard mode
 
-	CheckEvent EVENT_BEAT_CHAMPION_RIVAL
+	ld a, [wGameStage] ; Check if player has beat the game
+	and a
 	jr nz, .next1
 	farcall GetBadgesObtained
 	ld a, [wNumSetBits]
