@@ -4,7 +4,6 @@ MrPsychicsHouse_Script:
 MrPsychicsHouse_TextPointers:
 	def_text_pointers
 	dw_const MrPsychicsHouseMrPsychicText, TEXT_MRPSYCHICSHOUSE_MR_PSYCHIC
-	; dw_const CeruleanTradeHouseGamblerText, 	  TEXT_CERULEANTRADEHOUSE_GAMBLER
 
 MrPsychicsHouseMrPsychicText:
 	text_asm
@@ -45,10 +44,3 @@ MrPsychicsHouseMrPsychicText:
 .TM29NoRoomText:
 	text_far _MrPsychicsHouseMrPsychicTM29NoRoomText
 	text_end
-
-CeruleanTradeHouseGamblerText:
-	text_asm
-	ld a, TRADE_FOR_LOLA
-	ld [wWhichTrade], a
-	predef DoInGameTradeDialogue
-	jp TextScriptEnd

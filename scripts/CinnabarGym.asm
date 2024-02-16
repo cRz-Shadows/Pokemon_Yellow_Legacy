@@ -1,9 +1,13 @@
 CinnabarGym_Script:
 	call CinnabarGymSetMapAndTiles
 	call EnableAutoTextBoxDrawing
+	CheckEvent EVENT_CINNABAR_GYM_GATE6_UNLOCKED
+	jr z, .skip
 	ld hl, CinnabarGym_ScriptPointers
 	ld a, [wCinnabarGymCurScript]
 	jp CallFunctionInTable
+.skip
+	ret
 
 CinnabarGymSetMapAndTiles:
 	ld hl, wCurrentMapScriptFlags

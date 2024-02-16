@@ -1,8 +1,13 @@
 Route1_Script:
 	call EnableAutoTextBoxDrawing
+	CheckEvent EVENT_BEAT_ROUTE_1_OAK
+	jr nz, .skip
+	CheckEvent EVENT_BEAT_CHAMPION_RIVAL
+	jr z, .skip
 	ld hl, Route1_ScriptPointers
 	ld a, [wRoute1CurScript]
 	jp CallFunctionInTable
+.skip
 	ret
 
 Route1_ScriptPointers:

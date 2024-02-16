@@ -17,6 +17,7 @@ SpecialTrainerMoves:
 
 	db MISTY, 1
 	db 2, 1, TAIL_WHIP
+	db 0
 
 	db LT_SURGE, 1
 	db 1, 3, BODY_SLAM
