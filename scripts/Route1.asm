@@ -1,19 +1,13 @@
 Route1_Script:
 	call EnableAutoTextBoxDrawing
-	CheckEvent EVENT_BEAT_ROUTE_1_OAK
-	jr nz, .skip
-	CheckEvent EVENT_BEAT_CHAMPION_RIVAL
-	jr z, .skip
 	ld hl, Route1_ScriptPointers
 	ld a, [wRoute1CurScript]
 	jp CallFunctionInTable
-.skip
 	ret
 
 Route1_ScriptPointers:
 	def_script_pointers
-	dw_const CheckFightingMapTrainers,              SCRIPT_ROUTE1_DEFAULT
-	dw_const DisplayEnemyTrainerTextAndStartBattle, SCRIPT_ROUTE1_START_BATTLE
+	dw_const Route1Script0,              			SCRIPT_ROUTE1_DEFAULT
 	dw_const OakPostBattleScript,                   SCRIPT_ROUTE1_POST_BATTLE
 
 Route1_TextPointers:
@@ -22,22 +16,37 @@ Route1_TextPointers:
 	dw_const Route1Youngster2Text, TEXT_ROUTE1_YOUNGSTER2
 	dw_const Route1OakText,		   TEXT_ROUTE1_OAK
 	dw_const Route1SignText,       TEXT_ROUTE1_SIGN
+	dw_const OakPostBattleText,    TEXT_ROUTE1_OAK_POST_BATTLE
+
+Route1Script0:
+	ret ; yeah it's just a switch-off. shush.
 
 OakPostBattleScript:
-	CheckEvent EVENT_BEAT_ROUTE_1_OAK
-	jr z, .notBeat
-	call EndTrainerBattle
-	ld a, HS_OAKS_LAB_OAK_2
+	;joenote - Notice how there is no check to see if the player actually lost.
+	;Let's go ahead and add that real quick.
+	ld a, [wIsInBattle]	;if wIsInBattle is -1, then the battle was lost
+	inc a	;if A holds -1, it will increment to 0 and set the z flag (but not the c flag, dec and inc cannot affect it).
+	jr z, .skip	;Kick out if the player lost.
+
+	ld a, TEXT_ROUTE1_OAK_POST_BATTLE
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+
+	call GBFadeOutToBlack
+	SetEvent EVENT_BEAT_ROUTE_1_OAK
+	ld a, HS_OAKS_LAB_OAK_1
 	ld [wMissableObjectIndex], a
 	predef ShowObject
 	ld a, HS_ROUTE_1_OAK
 	ld [wMissableObjectIndex], a
 	predef HideObject
-	ret
-.notBeat
-	call EndTrainerBattle
-	xor a ; SCRIPT_BRUNOSROOM_DEFAULT
+	call UpdateSprites
+	call Delay3
+	call GBFadeInFromBlack
+.skip
+	ld a, $0
 	ld [wRoute1CurScript], a
+	ld [wCurMapScript], a	;joenote - also set the value for current map script or you will have a bad time
 	ret
 
 Route1Youngster1Text:
@@ -60,7 +69,7 @@ Route1OakText:
 	ld hl, OakBeforeBattleText
 	call PrintText
 
-	call YesNoChoice ; this whole bit doesn't work for some reason
+	call YesNoChoice
 	ld a, [wCurrentMenuItem]
 	and a
 	jr nz, .refused
@@ -80,8 +89,9 @@ Route1OakText:
 	ld a, $1
 	ld [wTrainerNo], a
 
-	ld a, $2
+	ld a, $1
 	ld [wRoute1CurScript], a
+	ld [wCurMapScript], a	;joenote - also set the value for current map script or you will have a bad time
 	
 	ld hl, OakDefeatedText
 	ld de, OakWonText
@@ -109,10 +119,12 @@ OakRefusedBattleText:
 
 OakDefeatedText:
 	text_far _OakDefeatedText
-	text_asm
-	SetEvent EVENT_BEAT_ROUTE_1_OAK
 	text_end
 
 OakWonText:
 	text_far _OakWonText
+	text_end
+
+OakPostBattleText:
+	text_far _OakPostBattleText
 	text_end
