@@ -76,7 +76,7 @@ _SSAnne1FRoomsCooltrainerFAfterBattleText::
 	done
 
 _SSAnne1FRoomsGirl1Text::
-	text "Room serive, I"
+	text "Room service, I"
 	line "would like a"
 	cont "cherry pie please!"
 	done
