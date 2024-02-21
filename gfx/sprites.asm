@@ -90,6 +90,20 @@ JessieSprite::           INCBIN "gfx/sprites/jessie.2bpp"
 JamesSprite::            INCBIN "gfx/sprites/james.2bpp"
 BaldingGuySprite::       INCBIN "gfx/sprites/balding_guy.2bpp"
 
+
+SECTION "NPC Sprites 4", ROMX
+
+BrockSprite::            INCBIN "gfx/sprites/brock.2bpp"
+MistySprite::            INCBIN "gfx/sprites/misty.2bpp"
+SurgeSprite::            INCBIN "gfx/sprites/surge.2bpp"
+ErikaSprite::            INCBIN "gfx/sprites/erika.2bpp"
+SabrinaSprite::          INCBIN "gfx/sprites/sabrina.2bpp"
+BlaineSprite::           INCBIN "gfx/sprites/blaine.2bpp"
+ArticunoSprite::         INCBIN "gfx/sprites/articuno.2bpp"
+MoltresSprite::         INCBIN "gfx/sprites/moltres.2bpp"
+ZapdosSprite::         INCBIN "gfx/sprites/zapdos.2bpp"
+
+
 SECTION "NAMEHERE1", ROMX
 
 MonIcons::

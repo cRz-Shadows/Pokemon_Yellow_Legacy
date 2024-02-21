@@ -44,7 +44,7 @@ MapHSPointers:
 	dw NoHS
 	dw BluesHouseHS
 	dw OaksLabHS
-	dw IndigoPlateauLobbyHS
+	dw NoHS
 	dw NoHS
 	dw NoHS
 	dw NoHS
@@ -177,7 +177,7 @@ MapHSPointers:
 	dw NoHS
 	dw NoHS
 	dw NoHS
-	dw NoHS
+	dw IndigoPlateauLobbyHS
 	dw NoHS
 	dw NoHS
 	dw FightingDojoHS
@@ -295,7 +295,7 @@ SaffronCityHS:
 	db SAFFRON_CITY, SAFFRONCITY_ROCKET8,        SHOW
 	db SAFFRON_CITY, SAFFRONCITY_ROCKET9,        HIDE ; removed in yellow
 Route1HS:
-	db ROUTE_1, $03, HIDE ; PROF OAK fight. To test, change to SHOW. - PvK
+	db ROUTE_1, ROUTE1_OAK, HIDE ; PROF OAK fight. To test, change to SHOW. - PvK
 Route2HS:
 	db ROUTE_2, ROUTE2_MOON_STONE, SHOW
 	db ROUTE_2, ROUTE2_HP_UP,      SHOW
@@ -330,8 +330,6 @@ OaksLabHS:
 	db OAKS_LAB, OAKSLAB_POKEDEX1,             SHOW
 	db OAKS_LAB, OAKSLAB_POKEDEX2,             SHOW
 	db OAKS_LAB, OAKSLAB_OAK2,                 HIDE
-IndigoPlateauLobbyHS:
-	db INDIGO_PLATEAU_LOBBY, INDIGOPLATEAULOBBY_POST_GAME_CLERK,  HIDE
 ViridianGymHS:
 	db VIRIDIAN_GYM, VIRIDIANGYM_GIOVANNI, SHOW
 	db VIRIDIAN_GYM, VIRIDIANGYM_REVIVE,   SHOW
@@ -372,6 +370,8 @@ WardensHouseHS:
 PokemonMansion1FHS:
 	db POKEMON_MANSION_1F, POKEMONMANSION1F_ESCAPE_ROPE, SHOW
 	db POKEMON_MANSION_1F, POKEMONMANSION1F_CARBOS,      SHOW
+IndigoPlateauLobbyHS:
+	db INDIGO_PLATEAU_LOBBY, INDIGOPLATEAULOBBY_POST_GAME_CLERK,  HIDE
 FightingDojoHS:
 	db FIGHTING_DOJO, FIGHTINGDOJO_HITMONLEE_POKE_BALL,  SHOW
 	db FIGHTING_DOJO, FIGHTINGDOJO_HITMONCHAN_POKE_BALL, SHOW

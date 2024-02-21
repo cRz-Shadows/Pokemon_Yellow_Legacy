@@ -98,3 +98,27 @@ _OakWonText::
 	line "I was a serious"
 	cont "TRAINER!"
 	prompt
+
+_OakPostBattleText::
+	text "Well done,"
+	line "<PLAYER>!"
+
+	para "You've certainly"
+	line "proved your"
+	cont "mettle."
+
+	para "It seems I might"
+	line "be getting a bit"
+	cont "rusty in my old"
+	cont "age."
+
+	para "A good trainer"
+	line "always strives"
+	cont "for improvement,"
+	cont "and so shall I."
+
+	para "May your journey"
+	line "continue to be"
+	cont "one of growth"
+	cont "and discovery."
+	done
