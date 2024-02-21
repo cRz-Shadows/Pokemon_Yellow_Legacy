@@ -37,20 +37,22 @@ SpecialTrainerMoves:
 
 	db ERIKA, 2
 	db 1, 1, BIND
-	db 2, 3, MEGA_DRAIN
-	db 3, 3, LEECH_SEED
-	db 4, 2, SLEEP_POWDER
-	db 0
+    db 2, 3, SWORDS_DANCE
+    db 3, 1, RAZOR_LEAF
+    db 3, 2, LEECH_SEED
+    db 3, 3, SLUDGE
+    db 4, 2, SLEEP_POWDER
+    db 0 
 
 	db ERIKA, 3
 	db 1, 2, STUN_SPORE
-	db 1, 3, SLEEP_POWDER
-	db 2, 4, STUN_SPORE
-	db 3, 2, RAZOR_LEAF
-	db 3, 3, LEECH_SEED
-	db 4, 1, PSYCHIC_M
-	db 5, 1, PETAL_DANCE
-	db 0
+    db 1, 3, SOLAR_BEAM
+    db 2, 4, RAZOR_LEAF
+    db 3, 2, SOLAR_BEAM
+    db 3, 3, LEECH_SEED
+    db 4, 1, REFLECT
+    db 5, 1, LEECH SEED
+    db 0
 
 	db KOGA, 1
 	db 1, 2, TOXIC
@@ -256,4 +258,48 @@ SpecialTrainerMoves:
 	db 6, 1, ICE_BEAM
 	db 6, 4, SURF
 	db 0
+
+	db PROFOAK, 1
+    db 1, 1, HYPER_BEAM
+    db 1, 2, EARTHQUAKE
+    db 1, 3, BLIZZARD
+    db 1, 4, THUNDER
+    db 2, 1, FIRE_BLAST
+    db 2, 2, EARTHQUAKE
+    db 2, 3, SLASH
+    db 2, 4, DOUBLE_TEAM
+    db 3, 1, SWORDS_DANCE
+    db 3, 2, EARTHQUAKE
+    db 4, 1, REFLECT
+    db 4, 2, EARTHQUAKE
+    db 5, 2, AMNESIA
+    db 5, 3, PSYCHIC_M
+    db 5, 4, REST
+    db 6, 1, EARTHQUAKE
+    db 6, 2, ROCK_SLIDE
+    db 6, 3, SLUDGE
+    db 6, 4, BLIZZARD
+    db 0
+
+
+db PROFOAK, 2
+    db 1, 1, EARTHQUAKE
+    db 1, 2, ROCK_SLIDE
+    db 1, 3, THUNDER
+    db 1, 4, SLUDGE
+    db 2, 1, AGILITY
+    db 2, 2, SOLAR_BEAM
+    db 3, 1, HYPER_BEAM
+    db 3, 2, EARTHQUAKE
+    db 3, 3, BLIZZARD
+    db 3, 4, THUNDER
+    db 4, 1, BUBBLEBEAM
+    db 4, 2, BLIZZARD
+    db 4, 3, SKY_ATTACK
+    db 4, 4, REFLECT
+    db 5, 2, AMNESIA
+    db 5, 3, REFLECT
+    db 5, 4, REST
+    db 6, 1, THUNDER_WAVE
+    db 0
 	db -1 ; end
