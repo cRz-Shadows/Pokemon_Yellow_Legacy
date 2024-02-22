@@ -137,14 +137,17 @@ SpecialTrainerMoves:
 	db 1, 1, CRABHAMMER
 	db 1, 2, CUT 
 	db 1, 3, BODY_SLAM
-	db 2, 1, DIG
-	db 2, 3, ROCK_SLIDE
-	db 3, 1, EARTHQUAKE
-	db 3, 2, ROCK_SLIDE
-	db 3, 3, EXPLOSION
-	db 4, 1, SLASH
-	db 4, 2, BUBBLEBEAM
-	db 4, 3, THUNDERBOLT
+	db 2, 1, ICE_PUNCH
+	db 2, 2, ROCK_SLIDE
+	db 2, 3, SUBMISSION
+	db 3, 1, DIG
+	db 3, 3, ROCK_SLIDE
+	db 4, 1, EARTHQUAKE
+	db 4, 2, ROCK_SLIDE
+	db 4, 3, EXPLOSION
+	db 5, 1, SLASH
+	db 5, 2, BUBBLEBEAM
+	db 5, 3, THUNDERBOLT
 	db 0
 
 	db GIOVANNI, 3
