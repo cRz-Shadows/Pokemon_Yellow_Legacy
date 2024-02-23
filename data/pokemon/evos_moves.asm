@@ -413,10 +413,10 @@ NidoranFEvosMoves:
 	db 0
 ; Learnset
  	db 6, POISON_STING
-	db 8, HEADBUTT
+	db 8, BITE
 	db 12, DOUBLE_KICK
 	db 23, TAIL_WHIP
-	db 30, BITE
+	db 30, HEADBUTT
 	db 38, FURY_SWIPES
 	db 0
 
