@@ -47,12 +47,12 @@ SpecialTrainerMoves:
 
 	db ERIKA, 3
 	db 1, 2, STUN_SPORE
-    db 1, 3, SOLAR_BEAM
+    db 1, 3, SOLARBEAM
     db 2, 4, RAZOR_LEAF
-    db 3, 2, SOLAR_BEAM
+    db 3, 2, SOLARBEAM
     db 3, 3, LEECH_SEED
     db 4, 1, REFLECT
-    db 5, 1, LEECH SEED
+    db 5, 1, LEECH_SEED
     db 0
 
 	db KOGA, 1
@@ -263,7 +263,7 @@ SpecialTrainerMoves:
 	db 6, 4, SURF
 	db 0
 
-	db PROFOAK, 1
+	db PROF_OAK, 1
     db 1, 1, HYPER_BEAM
     db 1, 2, EARTHQUAKE
     db 1, 3, BLIZZARD
@@ -286,13 +286,13 @@ SpecialTrainerMoves:
     db 0
 
 
-db PROFOAK, 2
+db PROF_OAK, 2
     db 1, 1, EARTHQUAKE
     db 1, 2, ROCK_SLIDE
     db 1, 3, THUNDER
     db 1, 4, SLUDGE
     db 2, 1, AGILITY
-    db 2, 2, SOLAR_BEAM
+    db 2, 2, SOLARBEAM
     db 3, 1, HYPER_BEAM
     db 3, 2, EARTHQUAKE
     db 3, 3, BLIZZARD
