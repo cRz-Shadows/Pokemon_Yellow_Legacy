@@ -89,6 +89,7 @@ SurfingPikachuSprite::   INCBIN "gfx/sprites/surfing_pikachu.2bpp"
 JessieSprite::           INCBIN "gfx/sprites/jessie.2bpp"
 JamesSprite::            INCBIN "gfx/sprites/james.2bpp"
 BaldingGuySprite::       INCBIN "gfx/sprites/balding_guy.2bpp"
+MewtwoSprite::         INCBIN "gfx/sprites/mewtwo.2bpp"
 KrisSprite::             INCBIN "gfx/sprites/kris.2bpp"
 
 
