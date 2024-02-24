@@ -21,7 +21,6 @@ TrainerClassMoveChoiceModifications:
 	move_choices 1       ; BIKER
 	move_choices 1, 3    ; BURGLAR
 	move_choices 1       ; ENGINEER
-	move_choices 1, 2    ; UNUSED_JUGGLER
 	move_choices 1, 3    ; FISHER
 	move_choices 1, 3    ; SWIMMER
 	move_choices 1       ; CUE_BALL
@@ -35,7 +34,8 @@ TrainerClassMoveChoiceModifications:
 	move_choices 1       ; BLACKBELT
 	move_choices 1       ; RIVAL1
 	move_choices 1, 2, 3, 4 ; PROF_OAK
-	move_choices 1, 2    ; CHIEF
+	move_choices 1, 2, 3, 4 ; SMITH
+	move_choices 1, 2, 3, 4 ; CRAIG
 	move_choices 1, 2    ; SCIENTIST
 	move_choices 1, 2, 3 ; GIOVANNI
 	move_choices 1       ; ROCKET
@@ -56,4 +56,5 @@ TrainerClassMoveChoiceModifications:
 	move_choices 1       ; CHANNELER
 	move_choices 1, 2, 3, 4 ; AGATHA
 	move_choices 1, 2, 3, 4 ; LANCE
+	move_choices 1, 2, 3, 4 ; WEEBRA
 	assert_list_length NUM_TRAINERS
