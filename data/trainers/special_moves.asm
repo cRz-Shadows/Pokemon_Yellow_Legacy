@@ -306,4 +306,22 @@ db PROF_OAK, 2
     db 5, 4, REST
     db 6, 1, THUNDER_WAVE
     db 0
+
+db CRAIG, 1
+	db 1, 1, THUNDERBOLT
+	db 1, 3, DIG
+	db 2, 2, SKY_ATTACK
+	db 2, 4, EARTHQUAKE
+	db 3, 1, MEGA_DRAIN
+	db 3, 3, SOFTBOILED
+	db 3, 4, REFLECT
+	db 4, 1, SURF
+	db 4, 2, PSYCHIC_M
+	db 4, 4, AMNESIA
+	db 5, 2, EXPLOSION
+	db 5, 3, REFLECT
+	db 6, 1, HYPER_BEAM
+	db 6, 3, DIG
+	db 6, 4, REFLECT
+	db 0
 	db -1 ; end
