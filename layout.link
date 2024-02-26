@@ -88,6 +88,7 @@ ROMX $F
 	"Battle Core"
 ROMX $10
 	"bank10"
+	"Trainer Pics 2"
 ROMX $11
 	"Maps 5"
 	"Pokédex Rating"
@@ -97,7 +98,7 @@ ROMX $12
 	"Maps 7"
 	"Maps 8"
 ROMX $13
-	"Pics 6"
+	"Trainer Pics 1"
 	"Maps 9"
 ROMX $14
 	"Maps 10"
@@ -209,7 +210,8 @@ ROMX $39
 	"Pikachu Graphics 1"
 ROMX $3A
 	"bank3A"
-; bank $3B is empty
+ROMX $3B
+	"NPC Sprites 3"
 ROMX $3C
 	"Pikachu PCM"
 	"Tilesets 4"
@@ -226,7 +228,6 @@ ROMX $3E
 	"Surfing Minigame"
 ROMX $3F
 	"Overworld Pikachu"
-	"NPC Sprites 3"
 WRAM0
 	"Audio RAM"
 	org $c100

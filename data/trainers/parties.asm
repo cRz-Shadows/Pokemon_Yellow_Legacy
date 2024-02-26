@@ -12,7 +12,7 @@ TrainerDataPointers:
 	dw BikerData
 	dw BurglarData
 	dw EngineerData
-	dw UnusedJugglerData
+	dw SmithData
 	dw FisherData
 	dw SwimmerData
 	dw CueBallData
@@ -26,7 +26,7 @@ TrainerDataPointers:
 	dw BlackbeltData
 	dw Rival1Data
 	dw ProfOakData
-	dw ChiefData
+	dw CraigData
 	dw ScientistData
 	dw GiovanniData
 	dw RocketData
@@ -47,6 +47,7 @@ TrainerDataPointers:
 	dw ChannelerData
 	dw AgathaData
 	dw LanceData
+	dw WeebraData
 	assert_table_length NUM_TRAINERS
 
 ; if first byte != $FF, then
@@ -314,8 +315,8 @@ EngineerData:
 	db 21, MAGNEMITE, 0
 	db 18, MAGNEMITE, MAGNEMITE, MAGNETON, 0
 
-UnusedJugglerData:
-; none
+SmithData:
+    db 50, AERODACTYL, GENGAR, ALAKAZAM, TENTACRUEL, TAUROS, STARMIE, 0
 
 FisherData:
 ; SS Anne 2F Rooms
@@ -501,8 +502,9 @@ ProfOakData:
 	db $FF, 69, TAUROS, 70, CHARIZARD, 70, VENUSAUR, 70, BLASTOISE, 69, SNORLAX, 70, NIDOKING, 0
 	db $FF, 78, TAUROS, 77, ZAPDOS, 77, ARTICUNO, 77, MOLTRES, 78, SNORLAX, 81, NIDOKING, 0
 
-ChiefData:
-; none
+CraigData:
+; Zapdos Fight
+	db 60, JOLTEON, AERODACTYL, EXEGGUTOR, SNORLAX, CLOYSTER, ARCANINE, 0
 
 ScientistData:
 ; Unused
@@ -755,3 +757,6 @@ AgathaData:
 
 LanceData:
 	db $FF, 62, DRAGONITE, 61, GYARADOS, 61, CHARIZARD, 63, AERODACTYL, 64, DRAGONITE, 0
+
+WeebraData:
+	db 60, SNORLAX, GENGAR, CHARIZARD, VAPOREON, ONIX, MACHAMP, 0

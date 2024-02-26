@@ -1,13 +1,9 @@
 CinnabarGym_Script:
 	call CinnabarGymSetMapAndTiles
 	call EnableAutoTextBoxDrawing
-	CheckEvent EVENT_CINNABAR_GYM_GATE6_UNLOCKED
-	jr z, .skip
 	ld hl, CinnabarGym_ScriptPointers
 	ld a, [wCinnabarGymCurScript]
 	jp CallFunctionInTable
-.skip
-	ret
 
 CinnabarGymSetMapAndTiles:
 	ld hl, wCurrentMapScriptFlags
@@ -71,6 +67,20 @@ CinnabarGymDefaultScript:
 	ld de, MovementNpcToLeftAndUp
 	jr .MoveSprite
 .not_super_nerd3
+	cp CINNABARGYM_SUPER_NERD1
+	jr z, .super_nerd
+	cp CINNABARGYM_SUPER_NERD2
+	jr z, .super_nerd
+	cp CINNABARGYM_SUPER_NERD4
+	jr z, .super_nerd
+	cp CINNABARGYM_SUPER_NERD5
+	jr z, .super_nerd
+	cp CINNABARGYM_SUPER_NERD6
+	jr z, .super_nerd
+	cp CINNABARGYM_SUPER_NERD7
+	jr z, .super_nerd
+	ret
+.super_nerd
 	ld a, PLAYER_DIR_RIGHT
 	ld [wPlayerMovingDirection], a
 	ld hl, PikachuMovementData_74f9e

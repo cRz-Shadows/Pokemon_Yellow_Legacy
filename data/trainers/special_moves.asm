@@ -47,12 +47,12 @@ SpecialTrainerMoves:
 
 	db ERIKA, 3
 	db 1, 2, STUN_SPORE
-    db 1, 3, SOLAR_BEAM
+    db 1, 3, SOLARBEAM
     db 2, 4, RAZOR_LEAF
-    db 3, 2, SOLAR_BEAM
+    db 3, 2, SOLARBEAM
     db 3, 3, LEECH_SEED
     db 4, 1, REFLECT
-    db 5, 1, LEECH SEED
+    db 5, 1, LEECH_SEED
     db 0
 
 	db KOGA, 1
@@ -264,7 +264,7 @@ SpecialTrainerMoves:
 	db 6, 4, SURF
 	db 0
 
-	db PROFOAK, 1
+	db PROF_OAK, 1
     db 1, 1, HYPER_BEAM
     db 1, 2, EARTHQUAKE
     db 1, 3, BLIZZARD
@@ -287,13 +287,13 @@ SpecialTrainerMoves:
     db 0
 
 
-db PROFOAK, 2
+db PROF_OAK, 2
     db 1, 1, EARTHQUAKE
     db 1, 2, ROCK_SLIDE
     db 1, 3, THUNDER
     db 1, 4, SLUDGE
     db 2, 1, AGILITY
-    db 2, 2, SOLAR_BEAM
+    db 2, 2, SOLARBEAM
     db 3, 1, HYPER_BEAM
     db 3, 2, EARTHQUAKE
     db 3, 3, BLIZZARD
@@ -307,4 +307,57 @@ db PROFOAK, 2
     db 5, 4, REST
     db 6, 1, THUNDER_WAVE
     db 0
+
+db SMITH, 1
+	db 1, 2, SKY_ATTACK
+	db 1, 4, FIRE_BLAST
+	db 2, 1, MEGA_DRAIN
+	db 2, 2, PSYCHIC_M
+	db 2, 4, THUNDERBOLT
+	db 3, 4, THUNDER_WAVE
+	db 4, 1, SURF
+	db 4, 4, SWORDS_DANCE
+	db 5, 1, BLIZZARD
+	db 5, 2, FIRE_BLAST
+	db 5, 3, HYPER_BEAM
+	db 5, 4, EARTHQUAKE
+	db 6, 1, RECOVER
+	db 6, 2, SURF
+	db 6, 4, THUNDERBOLT
+	db 0
+
+db CRAIG, 1
+	db 1, 1, THUNDERBOLT
+	db 1, 3, DIG
+	db 2, 2, SKY_ATTACK
+	db 2, 4, EARTHQUAKE
+	db 3, 1, MEGA_DRAIN
+	db 3, 3, SOFTBOILED
+	db 3, 4, REFLECT
+	db 4, 1, SURF
+	db 4, 2, PSYCHIC_M
+	db 4, 4, AMNESIA
+	db 5, 2, EXPLOSION
+	db 5, 3, REFLECT
+	db 6, 1, HYPER_BEAM
+	db 6, 3, DIG
+	db 6, 4, REFLECT
+	db 0
+
+db WEEBRA, 1
+	db 1, 1, METRONOME
+	db 1, 2, EARTHQUAKE
+	db 2, 4, PSYCHIC_M
+	db 3, 1, FLY
+	db 3, 2, CUT
+	db 3, 4, HYPER_BEAM
+	db 4, 2, TOXIC
+	db 4, 3, REFLECT
+	db 4, 4, ICE_BEAM
+	db 5, 4, BODY_SLAM
+	db 6, 1, SEISMIC_TOSS
+	db 6, 2, HYPER_BEAM
+	db 6, 3, METRONOME
+	db 6, 4, EARTHQUAKE
+	db 0
 	db -1 ; end

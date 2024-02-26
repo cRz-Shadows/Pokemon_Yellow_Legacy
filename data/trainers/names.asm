@@ -12,7 +12,6 @@ TrainerNames::
 	li "BIKER"
 	li "BURGLAR"
 	li "ENGINEER"
-	li "JUGGLER"
 	li "FISHERMAN"
 	li "SWIMMER"
 	li "CUE BALL"
@@ -26,7 +25,8 @@ TrainerNames::
 	li "BLACKBELT"
 	li "RIVAL1"
 	li "PROF.OAK"
-	li "CHIEF"
+	li "SMITH"
+	li "CRAIG"
 	li "SCIENTIST"
 	li "GIOVANNI"
 	li "ROCKET"
@@ -47,4 +47,5 @@ TrainerNames::
 	li "CHANNELER"
 	li "AGATHA"
 	li "LANCE"
+	li "WEEBRA"
 	assert_list_length NUM_TRAINERS

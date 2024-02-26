@@ -1783,7 +1783,6 @@ ButterfreeEvosMoves:
 
 MachampEvosMoves:
 ; Evolutions
-	db EVOLVE_LEVEL, 38, MACHAMP
 	db 0
 ; Learnset
 	db 5, LEER

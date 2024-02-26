@@ -138,6 +138,7 @@ SeafoamIslandsB4F_TextPointers:
 	dw_const BoulderText,                       TEXT_SEAFOAMISLANDSB4F_BOULDER1
 	dw_const BoulderText,                       TEXT_SEAFOAMISLANDSB4F_BOULDER2
 	dw_const SeafoamIslandsB4FArticunoText,     TEXT_SEAFOAMISLANDSB4F_ARTICUNO
+	dw_const SeafoamIslandsWeebraText1,      	TEXT_SEAFOAM_ISLANDS_WEEBRA
 	dw_const SeafoamIslandsB4FBouldersSignText, TEXT_SEAFOAMISLANDSB4F_BOULDERS_SIGN
 	dw_const SeafoamIslandsB4FDangerSignText,   TEXT_SEAFOAMISLANDSB4F_DANGER_SIGN
 
@@ -147,7 +148,27 @@ SeafoamIslandsB4F_TextPointers:
 	def_trainers 2
 ArticunoTrainerHeader:
 	trainer EVENT_BEAT_ARTICUNO, 0, SeafoamIslandsB4FArticunoBattleText, SeafoamIslandsB4FArticunoBattleText, SeafoamIslandsB4FArticunoBattleText
+WeebraTrainerHeader:
+	trainer EVENT_BEAT_WEEBRA, 5, SeafoamIslandsWeebraBattleText1, SeafoamIslandsWeebraEndBattleText1, SeafoamIslandsWeebraAfterBattleText1
 	db -1 ; end
+
+SeafoamIslandsWeebraText1:
+	text_asm
+	ld hl, WeebraTrainerHeader
+	call TalkToTrainer
+	jp TextScriptEnd
+	
+	SeafoamIslandsWeebraBattleText1:
+	text_far _SeafoamIslandsWeebraBattleText1
+	text_end
+	
+	SeafoamIslandsWeebraEndBattleText1:
+	text_far _SeafoamIslandsWeebraEndBattleText1
+	text_end
+	
+	SeafoamIslandsWeebraAfterBattleText1:
+	text_far _SeafoamIslandsWeebraAfterBattleText1
+	text_end
 
 SeafoamIslandsB4FArticunoText:
 	text_asm

@@ -24,8 +24,9 @@ PowerPlant_TextPointers:
 	dw_const PowerPlantElectrode2Text, TEXT_POWERPLANT_ELECTRODE2
 	dw_const PowerPlantVoltorb6Text,   TEXT_POWERPLANT_VOLTORB6
 	dw_const PowerPlantZapdosText,     TEXT_POWERPLANT_ZAPDOS
+	dw_const PowerPlantCraigText,      TEXT_POWERPLANT_CRAIG
 	dw_const PickUpItemText,           TEXT_POWERPLANT_CARBOS
-	dw_const PickUpItemText,           TEXT_POWERPLANT_HP_UP
+	; dw_const PickUpItemText,           TEXT_POWERPLANT_HP_UP
 	dw_const PickUpItemText,           TEXT_POWERPLANT_RARE_CANDY
 	dw_const PickUpItemText,           TEXT_POWERPLANT_TM_THUNDER
 	dw_const PickUpItemText,           TEXT_POWERPLANT_TM_REFLECT
@@ -50,7 +51,27 @@ Voltorb7TrainerHeader:
 	trainer EVENT_BEAT_POWER_PLANT_VOLTORB_7, 0, PowerPlantVoltorbBattleText, PowerPlantVoltorbBattleText, PowerPlantVoltorbBattleText
 ZapdosTrainerHeader:
 	trainer EVENT_BEAT_ZAPDOS, 0, PowerPlantZapdosBattleText, PowerPlantZapdosBattleText, PowerPlantZapdosBattleText
+CraigTrainerHeader:
+	trainer EVENT_BEAT_CRAIG, 5, PowerPlantCraigBattleText1, PowerPlantCraigEndBattleText1, PowerPlantCraigAfterBattleText1
 	db -1 ; end
+
+PowerPlantCraigText:
+	text_asm
+	ld hl, CraigTrainerHeader
+	call TalkToTrainer
+	jp TextScriptEnd
+	
+PowerPlantCraigBattleText1:
+	text_far _PowerPlantCraigBattleText1
+	text_end
+	
+PowerPlantCraigEndBattleText1:
+	text_far _PowerPlantCraigEndBattleText1
+	text_end
+	
+PowerPlantCraigAfterBattleText1:
+	text_far _PowerPlantCraigAfterBattleText1
+	text_end
 
 PowerPlantInitBattleScript:
 	call TalkToTrainer

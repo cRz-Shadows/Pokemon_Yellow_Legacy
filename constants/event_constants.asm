@@ -321,6 +321,7 @@
 	const EVENT_BEAT_POWER_PLANT_VOLTORB_6
 	const EVENT_BEAT_POWER_PLANT_VOLTORB_7
 	const EVENT_BEAT_ZAPDOS
+	const EVENT_BEAT_CRAIG
 
 ; Route 11 events
 	const_next $470
@@ -734,6 +735,7 @@
 	const_next $8C0
 	const_skip
 	const EVENT_BEAT_MEWTWO
+	const EVENT_BEAT_SMITH
 
 ; Indigo Plateau events
 	const_next $8E0
@@ -793,6 +795,7 @@ DEF INDIGO_PLATEAU_EVENTS_END EQU const_value - 1
 	const EVENT_SEAFOAM4_BOULDER2_DOWN_HOLE
 	const_skip 8
 	const EVENT_BEAT_ARTICUNO
+	const EVENT_BEAT_WEEBRA
 
 ; End of events
 	const_next $A00

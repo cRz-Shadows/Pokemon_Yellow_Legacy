@@ -16,7 +16,6 @@ TrainerAIPointers:
 	dbw 3, GenericAI
 	dbw 3, GenericAI
 	dbw 3, GenericAI
-	dbw 3, JugglerAI ; unused_juggler
 	dbw 3, GenericAI
 	dbw 3, GenericAI
 	dbw 3, GenericAI
@@ -30,7 +29,8 @@ TrainerAIPointers:
 	dbw 2, BlackbeltAI ; blackbelt
 	dbw 3, GenericAI ; rival1
 	dbw 3, GenericAI
-	dbw 1, GenericAI ; chief
+	dbw 3, GenericAI ; Smith
+	dbw 1, GenericAI ; Craig
 	dbw 3, GenericAI
 	dbw 1, GiovanniAI ; giovanni
 	dbw 3, GenericAI
@@ -51,4 +51,5 @@ TrainerAIPointers:
 	dbw 3, GenericAI
 	dbw 2, AgathaAI ; agatha
 	dbw 1, LanceAI ; lance
+	dbw 3, GenericAI ; Weebra
 	assert_table_length NUM_TRAINERS
