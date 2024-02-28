@@ -309,12 +309,12 @@ db PROF_OAK, 2
     db 0
 
 db SMITH, 1
-	db 1, 2, SKY_ATTACK
-	db 1, 4, FIRE_BLAST
+	db 1, 1, SKY_ATTACK
+	db 1, 3, FIRE_BLAST
 	db 2, 1, MEGA_DRAIN
-	db 2, 2, PSYCHIC_M
+	db 2, 3, PSYCHIC_M
 	db 2, 4, THUNDERBOLT
-	db 3, 4, THUNDER_WAVE
+	db 3, 1, THUNDER_WAVE
 	db 4, 1, SURF
 	db 4, 4, SWORDS_DANCE
 	db 5, 1, BLIZZARD
@@ -322,39 +322,39 @@ db SMITH, 1
 	db 5, 3, HYPER_BEAM
 	db 5, 4, EARTHQUAKE
 	db 6, 1, RECOVER
-	db 6, 2, SURF
+	db 6, 3, SURF
 	db 6, 4, THUNDERBOLT
 	db 0
 
 db CRAIG, 1
-	db 1, 1, THUNDERBOLT
-	db 1, 3, DIG
-	db 2, 2, SKY_ATTACK
-	db 2, 4, EARTHQUAKE
+	db 1, 2, THUNDERBOLT
+	db 1, 4, DIG
+	db 2, 1, SKY_ATTACK
+	db 2, 3, EARTHQUAKE
 	db 3, 1, MEGA_DRAIN
-	db 3, 3, SOFTBOILED
+	db 3, 2, SOFTBOILED
 	db 3, 4, REFLECT
 	db 4, 1, SURF
-	db 4, 2, PSYCHIC_M
+	db 4, 3, PSYCHIC_M
 	db 4, 4, AMNESIA
 	db 5, 2, EXPLOSION
 	db 5, 3, REFLECT
 	db 6, 1, HYPER_BEAM
-	db 6, 3, DIG
+	db 6, 2, DIG
 	db 6, 4, REFLECT
 	db 0
 
 db WEEBRA, 1
-	db 1, 1, METRONOME
-	db 1, 2, EARTHQUAKE
-	db 2, 4, PSYCHIC_M
+	db 1, 3, METRONOME
+	db 1, 4, EARTHQUAKE
+	db 2, 1, PSYCHIC_M
 	db 3, 1, FLY
-	db 3, 2, CUT
+	db 3, 3, CUT
 	db 3, 4, HYPER_BEAM
-	db 4, 2, TOXIC
-	db 4, 3, REFLECT
-	db 4, 4, ICE_BEAM
-	db 5, 4, BODY_SLAM
+	db 4, 1, TOXIC
+	db 4, 2, REFLECT
+	db 4, 3, ICE_BEAM
+	db 5, 1, BODY_SLAM
 	db 6, 1, SEISMIC_TOSS
 	db 6, 2, HYPER_BEAM
 	db 6, 3, METRONOME
