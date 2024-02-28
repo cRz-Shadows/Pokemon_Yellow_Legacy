@@ -1,8 +1,11 @@
 SeafoamIslandsB4F_Script:
 	call EnableAutoTextBoxDrawing
+	ld hl, SeafoamIslandsB4FTrainerHeaders
+	ld de, SeafoamIslandsB4F_ScriptPointers
 	ld a, [wSeafoamIslandsB4FCurScript]
-	ld hl, SeafoamIslandsB4F_ScriptPointers
-	jp CallFunctionInTable
+	call ExecuteCurMapScriptInTable
+	ld [wSeafoamIslandsB4FCurScript], a
+	ret
 
 SeafoamIslandsB4FResetScript:
 	xor a
@@ -13,7 +16,9 @@ SeafoamIslandsB4FResetScript:
 
 SeafoamIslandsB4F_ScriptPointers:
 	def_script_pointers
-	dw_const SeafoamIslandsB4FDefaultScript,       SCRIPT_SEAFOAMISLANDSB4F_DEFAULT
+	dw_const CheckFightingMapTrainers,       		SCRIPT_SEAFOAMISLANDSB4F_DEFAULT
+	dw_const DisplayEnemyTrainerTextAndStartBattle, SCRIPT_SEAFOAMISLANDSB4F_START_BATTLE
+	dw_const EndTrainerBattle,                      SCRIPT_SEAFOAMISLANDSB4F_END_BATTLE
 	dw_const SeafoamIslandsB4FObjectMoving1Script, SCRIPT_SEAFOAMISLANDSB4F_OBJECT_MOVING1
 	dw_const SeafoamIslandsB4FMoveObjectScript,    SCRIPT_SEAFOAMISLANDSB4F_MOVE_OBJECT
 	dw_const SeafoamIslandsB4FObjectMoving2Script, SCRIPT_SEAFOAMISLANDSB4F_OBJECT_MOVING2
@@ -145,7 +150,8 @@ SeafoamIslandsB4F_TextPointers:
 ; Articuno is object 3, but its event flag is bit 2.
 ; This is not a problem because its sight range is 0, and
 ; trainer headers were not stored by ExecuteCurMapScriptInTable.
-	def_trainers 2
+SeafoamIslandsB4FTrainerHeaders:
+	def_trainers 3
 ArticunoTrainerHeader:
 	trainer EVENT_BEAT_ARTICUNO, 0, SeafoamIslandsB4FArticunoBattleText, SeafoamIslandsB4FArticunoBattleText, SeafoamIslandsB4FArticunoBattleText
 WeebraTrainerHeader:
@@ -158,15 +164,15 @@ SeafoamIslandsWeebraText1:
 	call TalkToTrainer
 	jp TextScriptEnd
 	
-	SeafoamIslandsWeebraBattleText1:
+SeafoamIslandsWeebraBattleText1:
 	text_far _SeafoamIslandsWeebraBattleText1
 	text_end
 	
-	SeafoamIslandsWeebraEndBattleText1:
+SeafoamIslandsWeebraEndBattleText1:
 	text_far _SeafoamIslandsWeebraEndBattleText1
 	text_end
 	
-	SeafoamIslandsWeebraAfterBattleText1:
+SeafoamIslandsWeebraAfterBattleText1:
 	text_far _SeafoamIslandsWeebraAfterBattleText1
 	text_end
 

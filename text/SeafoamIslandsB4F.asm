@@ -14,24 +14,30 @@ _SeafoamIslandsB4FDangerSignText::
 	done
 
 _SeafoamIslandsWeebraBattleText1::
-	text "You look pretty"
-	line "strong, eh?"
+	text "You gotta be"
+	line "pretty strong"
+	cont "to get this far," 
+	cont "huh?"
+	
+	para "Then I guess"
+	line "we don't gotta"
+	cont "pull any punches."
 	done
 	
 _SeafoamIslandsWeebraEndBattleText1::
-	text "Aw, shucks…"
+	text "Nice"
+	line "moves!"
 
-	para "And I didn't even"
-	line "get to use my"
-	cont "'Essence of"
-	cont "Breaker Style'…"
+	para "I almost got off"
+	line "my 'Essence of"
+	cont "Beast Style' too!"
 	prompt
-	
-_SeafoamIslandsWeebraAfterBattleText1::
-	text "Aw, shucks…"
 
-	para "And I didn't even"
-	line "get to use my"
-	cont "'Essence of"
-	cont "Breaker Style'…"
+_SeafoamIslandsWeebraAfterBattleText1::
+	text "Honestly I prefer"
+	line "my team fresh"
+	cont "never frozen"
+
+	para "but you do"
+	line "you, bro!"
 	done
