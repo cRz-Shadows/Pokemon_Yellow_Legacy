@@ -762,6 +762,7 @@ ChanseyEvosMoves:
 	db 38, MINIMIZE
 	db 44, DEFENSE_CURL
 	db 48, LIGHT_SCREEN
+	db 50, MEGA_PUNCH
 	db 54, DOUBLE_EDGE
 	db 0
 
