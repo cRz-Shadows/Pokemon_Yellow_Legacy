@@ -285,7 +285,6 @@ SpecialTrainerMoves:
     db 6, 4, BLIZZARD
     db 0
 
-
 db PROF_OAK, 2
     db 1, 1, EARTHQUAKE
     db 1, 2, ROCK_SLIDE
