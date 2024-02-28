@@ -821,6 +821,25 @@ OaksLabOak1Text:
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	predef DisplayDexRating
+	CheckEvent EVENT_BEAT_POKEMONMANSION2F_OAK
+	jp nz, .done
+	call CeladonMansion3_PokedexCount
+	cp NUM_POKEMON - 1 ; discount Mew
+	jr nc, .completed
+	jp .done
+.completed
+	ld hl, CompletedDexText
+	call PrintText
+	call GBFadeOutToBlack
+	ld a, HS_OAKS_LAB_OAK_1
+	ld [wMissableObjectIndex], a
+	predef HideObject
+	ld a, HS_POKEMON_MANSION_2F_OAK
+	ld [wMissableObjectIndex], a
+	predef ShowObject
+	call UpdateSprites
+	call Delay3
+	call GBFadeInFromBlack
 	jp .done
 .check_for_poke_balls
 	ld b, POKE_BALL
@@ -1139,6 +1158,10 @@ OaksLabOakThatWasMyDreamText:
 
 OaksLabRivalLeaveItAllToMeText:
 	text_far _OaksLabRivalLeaveItAllToMeText
+	text_end
+
+CompletedDexText:
+	text_far _CompletedDexText
 	text_end
 
 OaksLabScientistText:
