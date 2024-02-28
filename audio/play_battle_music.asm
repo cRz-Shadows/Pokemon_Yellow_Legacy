@@ -17,10 +17,18 @@ PlayBattleMusic::
 	cp OPP_RIVAL3
 	jr z, .finalBattle
 	cp OPP_LANCE
-	jr nz, .normalTrainerBattle
-	ld a, MUSIC_GYM_LEADER_BATTLE ; lance also plays gym leader theme
-	cp OPP_PROF_OAK ; may as well, right?
+	jr z, .GymLeaderBattle
+	cp OPP_LORELEI
+	jr z, .GymLeaderBattle
+	cp OPP_BRUNO
+	jr z, .GymLeaderBattle
+	cp OPP_AGATHA
+	jr z, .GymLeaderBattle
+	cp OPP_PROF_OAK
 	jr z, .finalBattle 
+	jr .playSong
+.GymLeaderBattle
+	ld a, MUSIC_GYM_LEADER_BATTLE
 	jr .playSong
 .normalTrainerBattle
 	ld a, MUSIC_TRAINER_BATTLE
