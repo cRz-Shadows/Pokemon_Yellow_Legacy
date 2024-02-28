@@ -173,6 +173,55 @@ SpecialTrainerMoves:
 	db 5, 4, THUNDERBOLT
 	db 0
 
+	db RIVAL2, 8
+	db 1, 1, HEADBUTT
+	db 1, 2, DOUBLE_TEAM
+	db 2, 1, SKY_ATTACK
+	db 2, 2, TOXIC
+	db 2, 4, HYPER_BEAM
+	db 3, 1, SWORDS_DANCE
+	db 3, 2, BODY_SLAM
+	db 3, 3, BLIZZARD
+	db 4, 1, DOUBLE_EDGE
+	db 4, 2, DIG
+	db 4, 4, REFLECT
+	db 5, 1, SURF
+	db 5, 2, ICE_BEAM
+	db 5, 3, REFLECT
+	db 6, 1, THUNDER_WAVE
+	db 0
+
+	db RIVAL2, 9
+	db 1, 1, SURF
+	db 1, 2, ICE_BEAM
+	db 1, 3, FLY
+	db 2, 1, THUNDER_WAVE
+	db 2, 3, REFLECT
+	db 3, 1, SOFTBOILED
+	db 3, 3, REFLECT
+	db 4, 1, THUNDER_WAVE
+	db 5, 1, PSYCHIC
+	db 5, 2, REFLECT
+	db 5, 3, RECOVER
+	db 6, 3, FIRE_BLAST
+	db 6, 4, DIG
+	db 0
+
+	db RIVAL2, 10
+	db 1, 1, HYPER_BEAM
+	db 1, 2, TOXIC
+	db 1, 4, QUICK_ATTACK
+	db 2, 1, EARTHQUAKE
+	db 2, 2, BODY_SLAM
+	db 3, 1, THUNDER_WAVE
+	db 4, 1, PSYWAVE
+	db 4, 4, SOLARBEAM
+	db 5, 2, THUNDER_WAVE
+	db 6, 1, ICE_BEAM
+	db 6, 2, REFLECT
+	db 6, 4, SURF
+	db 0
+
 	db LORELEI, 1
 	db 1, 1, EARTHQUAKE
 	db 1, 2, BLIZZARD
@@ -244,7 +293,6 @@ SpecialTrainerMoves:
 	db 3, 2, BLIZZARD
 	db 3, 4, SURF
 	db 4, 1, THUNDER_WAVE
-	db 4, 3, REFLECT
 	db 4, 3, REFLECT
 	db 5, 1, SOFTBOILED
 	db 6, 3, FLAMETHROWER
