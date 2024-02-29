@@ -1489,6 +1489,7 @@ EeveeEvosMoves:
 	db EVOLVE_ITEM, WATER_STONE, 1, VAPOREON
 	db 0
 ; Learnset
+	db 6, TAIL_WHIP
 	db 8, SAND_ATTACK
 	db 10, QUICK_ATTACK
 	db 16, GROWL
