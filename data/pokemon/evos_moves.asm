@@ -1554,10 +1554,10 @@ MachopEvosMoves:
 	db 5, LEER
 	db 7, FOCUS_ENERGY
 	db 19, SEISMIC_TOSS
-	db 28, KARATE_CHOP
+	db 28, SUBMISSION
 	db 33, TAKE_DOWN
 	db 37, COUNTER
-	db 41, SUBMISSION
+	db 45, KARATE_CHOP
 	db 0
 
 ZubatEvosMoves:
