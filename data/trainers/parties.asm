@@ -12,7 +12,6 @@ TrainerDataPointers:
 	dw BikerData
 	dw BurglarData
 	dw EngineerData
-	dw SmithData
 	dw FisherData
 	dw SwimmerData
 	dw CueBallData
@@ -26,6 +25,7 @@ TrainerDataPointers:
 	dw BlackbeltData
 	dw Rival1Data
 	dw ProfOakData
+	dw SmithData
 	dw CraigData
 	dw ScientistData
 	dw GiovanniData

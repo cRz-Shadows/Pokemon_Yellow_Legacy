@@ -395,6 +395,28 @@ _OaksLabRivalLeaveItAllToMeText::
 	cont "<PLAYER>! Hahaha!"
 	done
 
+_CompletedDexText::
+	text "Incredible,"
+	line "<PLAYER>!"
+
+	para "You've completed"
+	line "the Pokédex!"
+
+	para "Yet, the world"
+	line "of #MON holds"
+	cont "many mysteries."
+
+	para "This achievement"
+	line "spurs me on to"
+	cont "uncover what"
+	cont "remains hidden."
+
+	para "There's always"
+	line "more to uncover."
+
+	para "Research calls!"
+	done
+
 _OaksLabScientistText::
 	text "I study #MON as"
 	line "PROF.OAK's AIDE."

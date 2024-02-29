@@ -35,7 +35,6 @@ INCLUDE "text/SilphCo10F.asm"
 SECTION "Text 2", ROMX
 
 INCLUDE "text/SilphCo11F.asm"
-INCLUDE "text/PokemonMansion2F.asm"
 INCLUDE "text/PokemonMansion3F.asm"
 INCLUDE "text/PokemonMansionB1F.asm"
 INCLUDE "text/SafariZoneEast.asm"
@@ -127,6 +126,7 @@ INCLUDE "text/Route22.asm"
 INCLUDE "text/Route23.asm"
 INCLUDE "text/Route24.asm"
 INCLUDE "text/Route25.asm"
+INCLUDE "text/PokemonMansion2F.asm"
 
 INCLUDE "data/text/text_4.asm"
 
