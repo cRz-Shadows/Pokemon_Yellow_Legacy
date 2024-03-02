@@ -93,6 +93,9 @@ MewtwoSprite::           INCBIN "gfx/sprites/mewtwo.2bpp"
 MewSprite::              INCBIN "gfx/icons/mew.2bpp"
 KrisSprite::             INCBIN "gfx/sprites/kris.2bpp"
 JanineSprite::         INCBIN "gfx/sprites/janine.2bpp"
+ArticunoSprite::         INCBIN "gfx/sprites/articuno.2bpp"
+MoltresSprite::         INCBIN "gfx/sprites/moltres.2bpp"
+ZapdosSprite::         INCBIN "gfx/sprites/zapdos.2bpp"
 
 
 SECTION "NPC Sprites 4", ROMX
@@ -103,9 +106,6 @@ SurgeSprite::            INCBIN "gfx/sprites/surge.2bpp"
 ErikaSprite::            INCBIN "gfx/sprites/erika.2bpp"
 SabrinaSprite::          INCBIN "gfx/sprites/sabrina.2bpp"
 BlaineSprite::           INCBIN "gfx/sprites/blaine.2bpp"
-ArticunoSprite::         INCBIN "gfx/sprites/articuno.2bpp"
-MoltresSprite::         INCBIN "gfx/sprites/moltres.2bpp"
-ZapdosSprite::         INCBIN "gfx/sprites/zapdos.2bpp"
 
 
 SECTION "NAMEHERE1", ROMX

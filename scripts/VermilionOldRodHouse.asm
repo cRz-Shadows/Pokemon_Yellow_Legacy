@@ -8,51 +8,61 @@ VermilionOldRodHouse_TextPointers:
 VermilionOldRodHouseFishingGuruText:
 	text_asm
 	ld a, [wd728]
-	bit 3, a ; got old rod?
-	jr nz, .got_old_rod
-	ld hl, .DoYouLikeToFishText
+	bit 4, a ; got good rod?
+	jr nz, .got_item
+	ld hl, .Text
 	call PrintText
 	call YesNoChoice
 	ld a, [wCurrentMenuItem]
 	and a
 	jr nz, .refused
-	lb bc, OLD_ROD, 1
+	lb bc, GOOD_ROD, 1
 	call GiveItem
 	jr nc, .bag_full
 	ld hl, wd728
-	set 3, [hl] ; got old rod
-	ld hl, .TakeThisText
-	jr .print_text
+	set 4, [hl] ; got good rod
+	ld hl, .ReceivedGoodRodText
+	jr .done
 .bag_full
 	ld hl, .NoRoomText
-	jr .print_text
+	jr .done
 .refused
 	ld hl, .ThatsSoDisappointingText
-	jr .print_text
-.got_old_rod
-	ld hl, .HowAreTheFishBitingText
-.print_text
+	jr .done
+.got_item
+	ld hl, .HowAreTheFishText
+.done
 	call PrintText
 	jp TextScriptEnd
 
-.DoYouLikeToFishText:
-	text_far _VermilionOldRodHouseFishingGuruDoYouLikeToFishText
+.Text:
+	text_far _VermilionGoodRodHouseFishingGuruText
 	text_end
 
-.TakeThisText:
-	text_far _VermilionOldRodHouseFishingGuruTakeThisText
+.ReceivedGoodRodText:
+	text_far _VermilionGoodRodHouseFishingGuruReceivedGoodRodText
 	sound_get_item_1
-	text_far _VermilionOldRodHouseFishingGuruFishingIsAWayOfLifeText
 	text_end
+
+.UnusedText:
+	para "つり　こそ"
+	line "おとこの　ロマン　だ！"
+
+	para "へぼいつりざおは"
+	line "コイキングしか　つれ　なんだが"
+	line "この　いいつりざおなら"
+	line "もっと　いいもんが　つれるんじゃ！"
+	done
 
 .ThatsSoDisappointingText:
-	text_far _VermilionOldRodHouseFishingGuruThatsSoDisappointingText
+	text_far _VermilionGoodRodHouseFishingGuruThatsSoDisappointingText
 	text_end
 
-.HowAreTheFishBitingText:
-	text_far _VermilionOldRodHouseFishingGuruHowAreTheFishBitingText
+.HowAreTheFishText:
+	text_far _VermilionGoodRodHouseFishingGuruHowAreTheFishText
 	text_end
 
 .NoRoomText:
-	text_far _VermilionOldRodHouseFishingGuruNoRoomText
+	text_far _VermilionGoodRodHouseFishingGuruNoRoomText
 	text_end
+

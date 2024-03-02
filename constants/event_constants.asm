@@ -161,7 +161,8 @@
 	const_skip 20
 	const EVENT_SAFARI_GAME_OVER
 	const EVENT_IN_SAFARI_ZONE
-	const_skip 8
+	const_skip 7
+	const EVENT_GOT_FUCHSIA_FOSSIL_GIFT
 	const EVENT_GOT_TM06
 	const EVENT_BEAT_KOGA
 	const EVENT_BEAT_FUCHSIA_GYM_TRAINER_0

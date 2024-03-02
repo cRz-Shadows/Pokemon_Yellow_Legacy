@@ -7,40 +7,38 @@ FuchsiaGoodRodHouse_TextPointers:
 
 FuchsiaGoodRodHouseFishingGuruText:
 	text_asm
-	ld a, [wd728]
-	bit 4, a ; got good rod?
-	jr nz, .got_item
+	CheckEvent EVENT_GOT_FUCHSIA_FOSSIL_GIFT
+	jr nz, .got_gift
 	ld hl, .Text
 	call PrintText
 	call YesNoChoice
 	ld a, [wCurrentMenuItem]
 	and a
 	jr nz, .refused
-	lb bc, GOOD_ROD, 1
-	call GiveItem
-	jr nc, .bag_full
-	ld hl, wd728
-	set 4, [hl] ; got good rod
-	ld hl, .ReceivedGoodRodText
-	jr .done
-.bag_full
-	ld hl, .NoRoomText
-	jr .done
+	CheckEvent EVENT_GOT_DOME_FOSSIL
+	jr nz, .giveOmanyte
+	lb bc, KABUTO, 10
+	jr .giveGiftMon
+.giveOmanyte
+	lb bc, OMANYTE, 10
+.giveGiftMon
+	call GivePokemon
+	jr nc, .done ; party full
 .refused
 	ld hl, .ThatsSoDisappointingText
 	jr .done
-.got_item
+.got_gift
 	ld hl, .HowAreTheFishText
-.done
 	call PrintText
+.done
 	jp TextScriptEnd
 
 .Text:
 	text_far _FuchsiaGoodRodHouseFishingGuruText
 	text_end
 
-.ReceivedGoodRodText:
-	text_far _FuchsiaGoodRodHouseFishingGuruReceivedGoodRodText
+.ReceivedGiftText:
+	text_far _FuchsiaGoodRodHouseFishingGuruReceivedGiftText
 	sound_get_item_1
 	text_end
 
