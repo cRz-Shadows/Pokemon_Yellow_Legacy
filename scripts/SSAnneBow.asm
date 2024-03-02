@@ -20,6 +20,7 @@ SSAnneBow_TextPointers:
 	dw_const SSAnneBowCooltrainerMText, TEXT_SSANNEBOW_COOLTRAINER_M
 	dw_const SSAnneBowSailor2Text,      TEXT_SSANNEBOW_SAILOR2
 	dw_const SSAnneBowSailor3Text,      TEXT_SSANNEBOW_SAILOR3
+	dw_const SSAnneBowSuperNerd2Text,   TEXT_SSANNEBOW_SUPER_NERD_2
 
 SSAnne5TrainerHeaders:
 	def_trainers 4
@@ -40,6 +41,30 @@ SSAnneBowSailor1Text:
 SSAnneBowCooltrainerMText:
 	text_far _SSAnneBowCooltrainerMText
 	text_end
+
+SSAnneBowSuperNerd2Text:
+	text_far _SSAnneBowSuperNerd1Text
+	text_asm
+	CheckEvent EVENT_SS_ANNE_PARTOFTHEGAME
+	jr nz, .GotMoney
+	ld hl, .Text
+	call PrintText
+	SetEvent EVENT_SS_ANNE_PARTOFTHEGAME
+	ld hl, $0500
+	ld a, l
+	ld [wAmountMoneyWon + 2], a
+	ld a, h
+	ld [wAmountMoneyWon + 1], a
+	; Add the 500 money to the player's total
+	ld de, wPlayerMoney + 2
+	ld hl, wAmountMoneyWon + 2
+	predef_jump AddBCDPredef
+.GotMoney
+	jp TextScriptEnd
+.Text
+	text_far _SSAnneBowSuperNerd2Text
+	text_end
+
 
 SSAnneBowSailor2Text:
 	text_asm

@@ -50,3 +50,12 @@ _SSAnneBowSailor3AfterBattleText::
 	cont "#MON. I think"
 	cont "there are more."
 	done
+
+_SSAnneBowSuperNerd1Text::
+	text "It's part of the"
+	line "game!"
+	prompt
+
+_SSAnneBowSuperNerd2Text::
+	text "You got ¥500."
+	done
