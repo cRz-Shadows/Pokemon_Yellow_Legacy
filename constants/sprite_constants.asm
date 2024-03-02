@@ -82,6 +82,7 @@
 	const SPRITE_MOLTRES
 	const SPRITE_ZAPDOS
 	const SPRITE_MEWTWO
+	const SPRITE_MEW
 	const SPRITE_KRIS
 DEF FIRST_STILL_SPRITE EQU const_value
 	const SPRITE_POKE_BALL               ; $47

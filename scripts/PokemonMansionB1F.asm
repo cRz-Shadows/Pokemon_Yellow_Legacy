@@ -63,6 +63,7 @@ PokemonMansionB1F_TextPointers:
 	def_text_pointers
 	dw_const PokemonMansionB1FBurglarText,   TEXT_POKEMONMANSIONB1F_BURGLAR
 	dw_const PokemonMansionB1FScientistText, TEXT_POKEMONMANSIONB1F_SCIENTIST
+	dw_const PokemonMansionB1FMewText,     	 TEXT_POKEMONMANSIONB1F_MEW
 	dw_const PickUpItemText,                 TEXT_POKEMONMANSIONB1F_RARE_CANDY
 	dw_const PickUpItemText,                 TEXT_POKEMONMANSIONB1F_FULL_RESTORE
 	dw_const PickUpItemText,                 TEXT_POKEMONMANSIONB1F_TM_BLIZZARD
@@ -77,7 +78,23 @@ Mansion4TrainerHeader0:
 	trainer EVENT_BEAT_MANSION_4_TRAINER_0, 0, PokemonMansionB1FBurglarBattleText, PokemonMansionB1FBurglarEndBattleText, PokemonMansionB1FBurglarAfterBattleText
 Mansion4TrainerHeader1:
 	trainer EVENT_BEAT_MANSION_4_TRAINER_1, 3, PokemonMansionB1FScientistBattleText, PokemonMansionB1FScientistEndBattleText, PokemonMansionB1FScientistAfterBattleText
+MewTrainerHeader:
+	trainer EVENT_BEAT_MEW, 0, MewBattleText, MewBattleText, MewBattleText
 	db -1 ; end
+
+PokemonMansionB1FMewText:
+	text_asm
+	ld hl, MewTrainerHeader
+	call TalkToTrainer
+	jp TextScriptEnd
+
+MewBattleText:
+	text_far _MewBattleText
+	text_asm
+	ld a, MEW
+	call PlayCry
+	call WaitForSoundToFinish
+	jp TextScriptEnd
 
 PokemonMansionB1FBurglarText:
 	text_asm

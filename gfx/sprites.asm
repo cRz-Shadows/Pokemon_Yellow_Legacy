@@ -90,6 +90,7 @@ JessieSprite::           INCBIN "gfx/sprites/jessie.2bpp"
 JamesSprite::            INCBIN "gfx/sprites/james.2bpp"
 BaldingGuySprite::       INCBIN "gfx/sprites/balding_guy.2bpp"
 MewtwoSprite::           INCBIN "gfx/sprites/mewtwo.2bpp"
+MewSprite::              INCBIN "gfx/icons/mew.2bpp"
 KrisSprite::             INCBIN "gfx/sprites/kris.2bpp"
 
 

@@ -197,6 +197,9 @@ PokemonMansion2FOakPostBattleScript:
 	ld a, HS_POKEMON_MANSION_2F_OAK
 	ld [wMissableObjectIndex], a
 	predef HideObject
+	ld a, HS_POKEMON_MANSION_B1F_MEW
+	ld [wMissableObjectIndex], a
+	predef ShowObject
 	call UpdateSprites
 	call Delay3
 	call GBFadeInFromBlack
