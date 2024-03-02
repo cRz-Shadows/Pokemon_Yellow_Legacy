@@ -213,6 +213,7 @@ ROMX $3A
 	"bank3A"
 ROMX $3B
 	"Battle Engine 10"
+	"Trainer Pics 3"
 ROMX $3C
 	"Pikachu PCM"
 	"Tilesets 4"

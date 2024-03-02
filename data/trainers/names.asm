@@ -48,4 +48,5 @@ TrainerNames::
 	li "AGATHA"
 	li "LANCE"
 	li "WEEBRA"
+	li "JANINE"
 	assert_list_length NUM_TRAINERS

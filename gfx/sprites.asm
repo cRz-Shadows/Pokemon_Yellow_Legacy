@@ -92,6 +92,7 @@ BaldingGuySprite::       INCBIN "gfx/sprites/balding_guy.2bpp"
 MewtwoSprite::           INCBIN "gfx/sprites/mewtwo.2bpp"
 MewSprite::              INCBIN "gfx/icons/mew.2bpp"
 KrisSprite::             INCBIN "gfx/sprites/kris.2bpp"
+JanineSprite::         INCBIN "gfx/sprites/janine.2bpp"
 
 
 SECTION "NPC Sprites 4", ROMX

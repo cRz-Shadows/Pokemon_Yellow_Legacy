@@ -379,6 +379,10 @@ JessieJamesPic::   INCBIN "gfx/trainers/jessiejames.pic"
 PKMNTrainerFPic::  INCBIN "gfx/trainers/kris.pic"
 
 
+SECTION "Trainer Pics 3", ROMX
+JaninePic::        INCBIN "gfx/trainers/janine.pic"
+    
+
 SECTION "Pics 7", ROMX
 
 RedPicBack::       INCBIN "gfx/player/redb.pic"

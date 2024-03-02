@@ -78,7 +78,7 @@ FuchsiaGym_TextPointers:
 	dw_const FuchsiaGymKogaText,              TEXT_FUCHSIAGYM_KOGA
 	dw_const FuchsiaGymRocker1Text,           TEXT_FUCHSIAGYM_ROCKER1
 	dw_const FuchsiaGymRocker2Text,           TEXT_FUCHSIAGYM_ROCKER2
-	dw_const FuchsiaGymRocker3Text,           TEXT_FUCHSIAGYM_ROCKER3
+	dw_const FuchsiaGymJanineText,            TEXT_FUCHSIAGYM_JANINE
 	dw_const FuchsiaGymRocker4Text,           TEXT_FUCHSIAGYM_ROCKER4
 	dw_const FuchsiaGymRocker5Text,           TEXT_FUCHSIAGYM_ROCKER5
 	dw_const FuchsiaGymRocker6Text,           TEXT_FUCHSIAGYM_ROCKER6
@@ -94,7 +94,7 @@ FuchsiaGymTrainerHeader0:
 FuchsiaGymTrainerHeader1:
 	trainer EVENT_BEAT_FUCHSIA_GYM_TRAINER_1, 2, FuchsiaGymRocker2BattleText, FuchsiaGymRocker2EndBattleText, FuchsiaGymRocker2AfterBattleText
 FuchsiaGymTrainerHeader2:
-	trainer EVENT_BEAT_FUCHSIA_GYM_TRAINER_2, 4, FuchsiaGymRocker3BattleText, FuchsiaGymRocker3EndBattleText, FuchsiaGymRocker3AfterBattleText
+	trainer EVENT_BEAT_FUCHSIA_GYM_TRAINER_2, 4, FuchsiaGymJanineBattleText, FuchsiaGymJanineEndBattleText, FuchsiaGymJanineAfterBattleText
 FuchsiaGymTrainerHeader3:
 	trainer EVENT_BEAT_FUCHSIA_GYM_TRAINER_3, 2, FuchsiaGymRocker4BattleText, FuchsiaGymRocker4EndBattleText, FuchsiaGymRocker4AfterBattleText
 FuchsiaGymTrainerHeader4:
@@ -217,22 +217,22 @@ FuchsiaGymRocker2AfterBattleText:
 	text_far _FuchsiaGymRocker2AfterBattleText
 	text_end
 
-FuchsiaGymRocker3Text:
+FuchsiaGymJanineText:
 	text_asm
 	ld hl, FuchsiaGymTrainerHeader2
 	call TalkToTrainer
 	jp TextScriptEnd
 
-FuchsiaGymRocker3BattleText:
-	text_far _FuchsiaGymRocker3BattleText
+FuchsiaGymJanineBattleText:
+	text_far _FuchsiaGymJanineBattleText
 	text_end
 
-FuchsiaGymRocker3EndBattleText:
-	text_far _FuchsiaGymRocker3EndBattleText
+FuchsiaGymJanineEndBattleText:
+	text_far _FuchsiaGymJanineEndBattleText
 	text_end
 
-FuchsiaGymRocker3AfterBattleText:
-	text_far _FuchsiaGymRocker3AfterBattleText
+FuchsiaGymJanineAfterBattleText:
+	text_far _FuchsiaGymJanineAfterBattleText
 	text_end
 
 FuchsiaGymRocker4Text:

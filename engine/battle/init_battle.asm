@@ -159,6 +159,9 @@ _LoadTrainerPic:
 	and a
 	jr nz, .useRed
 	ld a, [wTrainerClass]
+	cp JANINE ; first trainer class in "Trainer Pics 3"
+	ld a, BANK("Trainer Pics 3")
+	jr nc, .loadSprite
 	cp PROF_OAK ; first trainer class in "Trainer Pics 2"
 	ld a, BANK("Trainer Pics 2")
 	jr nc, .loadSprite

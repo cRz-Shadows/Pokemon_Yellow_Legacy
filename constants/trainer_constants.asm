@@ -63,4 +63,5 @@ ENDM
 	trainer_const AGATHA         ; $2E
 	trainer_const LANCE          ; $2F
 	trainer_const WEEBRA		 ; $30
+	trainer_const JANINE		 ; $31
 DEF NUM_TRAINERS EQU const_value - 1

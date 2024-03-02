@@ -48,6 +48,7 @@ TrainerDataPointers:
 	dw AgathaData
 	dw LanceData
 	dw WeebraData
+	dw JanineData
 	assert_table_length NUM_TRAINERS
 
 ; if first byte != $FF, then
@@ -760,3 +761,7 @@ LanceData:
 
 WeebraData:
 	db 55, SNORLAX, GENGAR, CHARIZARD, VAPOREON, ONIX, MACHAMP, 0
+
+JanineData:
+	; Fuchsia Gym
+	db 40, GOLBAT, VENOMOTH, NIDOQUEEN, 0

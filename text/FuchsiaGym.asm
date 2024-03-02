@@ -114,22 +114,36 @@ _FuchsiaGymRocker2AfterBattleText::
 	cont "master!"
 	done
 
-_FuchsiaGymRocker3BattleText::
-	text "Let's see you"
-	line "beat my special"
-	cont "techniques!"
+_FuchsiaGymJanineBattleText::
+	text "Fufufu..."
+	
+	para "Caught off guard?"
+
+	para "I'm Janine,"
+	
+	para "a ninja of Koga's"
+	line "gym."
+
+	para "Prepare to face"
+	line "my poison!"
 	done
 
-_FuchsiaGymRocker3EndBattleText::
-	text "You"
-	line "had me fooled!"
+_FuchsiaGymJanineEndBattleText::
+	text "You're a"
+	line "tough one. You"
+	cont "definitely won…"
 	prompt
 
-_FuchsiaGymRocker3AfterBattleText::
-	text "I like poison and"
-	line "sleep techniques,"
-	cont "as they linger"
-	cont "after battle!"
+_FuchsiaGymJanineAfterBattleText::
+	text "I'm going to"
+	line "really apply"
+
+	para "myself and improve"
+	line "my skills."
+
+	para "I want to become"
+	line "better than both"
+	cont "Father and you!"
 	done
 
 _FuchsiaGymRocker4BattleText::
