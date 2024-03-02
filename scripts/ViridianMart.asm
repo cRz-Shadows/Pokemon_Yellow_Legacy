@@ -57,6 +57,8 @@ ViridianMartOaksParcelScript:
 	lb bc, OAKS_PARCEL, 1
 	call GiveItem
 	SetEvent EVENT_GOT_OAKS_PARCEL
+	lb bc, POKE_BALL, 5
+	call GiveItem
 	ld a, SCRIPT_VIRIDIANMART_SCRIPT2
 	ld [wViridianMartCurScript], a
 	ret
