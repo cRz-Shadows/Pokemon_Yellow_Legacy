@@ -162,6 +162,7 @@ _LoadTrainerPic:
 	cp JANINE ; first trainer class in "Trainer Pics 3"
 	ld a, BANK("Trainer Pics 3")
 	jr nc, .loadSprite
+	ld a, [wTrainerClass]
 	cp PROF_OAK ; first trainer class in "Trainer Pics 2"
 	ld a, BANK("Trainer Pics 2")
 	jr nc, .loadSprite
