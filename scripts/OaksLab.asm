@@ -894,8 +894,6 @@ OaksLabOak1Text:
 	call PrintText
 	jr .done
 .come_see_me_sometimes
-	CheckEvent EVENT_GOT_POKEDEX
-	jr z, .check_got_parcel
 	ld hl, .ComeSeeMeSometimesText
 	call PrintText
 .done

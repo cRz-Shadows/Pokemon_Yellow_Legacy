@@ -17,13 +17,7 @@ _ViridianMartClerkParcelQuestText::
 	cont "to him?"
 
 	para "<PLAYER> got"
-	line "OAK's PARCEL!"
-
-	para "Take these too,"
-	line "on the house!"
-
-	para "<PLAYER> got 5"
-	line "# BALLs!@"
+	line "OAK's PARCEL!@"
 	text_end
 
 _ViridianMartYoungsterText::
