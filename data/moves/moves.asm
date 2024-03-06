@@ -109,7 +109,7 @@ Moves:
 	move MEDITATE,     ATTACK_UP1_EFFECT,            0, BIRD,   	  100, 40
 	move AGILITY,      SPEED_UP2_EFFECT,             0, BIRD,         100, 30
 	move QUICK_ATTACK, NO_ADDITIONAL_EFFECT,        40, NORMAL,       100, 30
-	move RAGE,         RAGE_EFFECT,                 20, NORMAL,       100, 20
+	move RAGE,         RAGE_EFFECT,                 60, NORMAL,       100, 20
 	move TELEPORT,     SWITCH_AND_TELEPORT_EFFECT,   0, PSYCHIC_TYPE, 100, 20
 	move NIGHT_SHADE,  NO_ADDITIONAL_EFFECT,        60, GHOST,        100, 15
 	move MIMIC,        MIMIC_EFFECT,                 0, BIRD,         100, 10
@@ -153,7 +153,7 @@ Moves:
 	move BARRAGE,      TWO_TO_FIVE_ATTACKS_EFFECT,  20, NORMAL,       100, 20
 	move LEECH_LIFE,   DRAIN_HP_EFFECT,             50, BUG,          100, 25
 	move LOVELY_KISS,  SLEEP_EFFECT,                 0, BIRD,          75, 10
-	move SKY_ATTACK,   NO_ADDITIONAL_EFFECT,        120, FLYING,       85, 10
+	move SKY_ATTACK,   NO_ADDITIONAL_EFFECT,        120, FLYING,       85, 5
 	move TRANSFORM,    TRANSFORM_EFFECT,             0, BIRD,         100, 10
 	move BUBBLE,       SPEED_DOWN_SIDE_EFFECT,      10, WATER,        100, 30
 	move DIZZY_PUNCH,  CONFUSION_SIDE_EFFECT,       70, NORMAL,       100, 10
