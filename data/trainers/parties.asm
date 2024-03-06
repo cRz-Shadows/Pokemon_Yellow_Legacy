@@ -259,7 +259,7 @@ HikerData:
 	db 22, GEODUDE, MACHOP, GEODUDE, 0
 ; Route 10
 	db 25, ZUBAT, ONIX, GOLBAT, 0
-	db 27, RHYHORN, DUGTRIO 0
+	db 27, RHYHORN, DUGTRIO, 0
 ; Rock Tunnel B1F
 	db 24, GEODUDE, GEODUDE, GRAVELER, 0
 	db 26, GRAVELER, 0
@@ -528,7 +528,7 @@ ScientistData:
 ; Silph Co. 9F
 	db 40, MUK, KABUTOPS, 0
 ; Silph Co. 10F
-	db 40, WEEZING, OMAASTAR, 0
+	db 40, WEEZING, OMASTAR, 0
 ; Mansion 3F
 	db 45, MAGNETON, ARCANINE, MUK, 0
 ; Mansion B1F
@@ -582,7 +582,7 @@ RocketData:
 ; Silph Co. 3F
 	db 38, RATICATE, HYPNO, MUK, 0
 ; Silph Co. 4F
-	db 39, MACHOKEH, HYPNO, 0
+	db 39, MACHOKE, HYPNO, 0
 	db 38, ARBOK, VILEPLUME, MAROWAK, 0
 ; Silph Co. 5F
 	db 40, TAUROS, 0

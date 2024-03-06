@@ -84,7 +84,6 @@ ROMX $D
 	"Slot Machines"
 ROMX $E
 	"Battle Engine 6"
-	"NPC Sprites 3"
 ROMX $F
 	"Battle Core"
 ROMX $10
@@ -214,6 +213,7 @@ ROMX $3A
 ROMX $3B
 	"Battle Engine 10"
 	"Trainer Pics 3"
+	"NPC Sprites 3"
 ROMX $3C
 	"Pikachu PCM"
 	"Tilesets 4"

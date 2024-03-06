@@ -362,7 +362,7 @@ CheckStatusImmunity:
 	pop hl
 	pop bc
 	scf
-	ret	
+	ret 
 ;;;;;;;;;;
 
 ;;;;;;;;;; PureRGBnote: ADDED: function that allows AI to avoid OHKO moves if they will never do anything to the player's pokemon due to speed differences
