@@ -823,7 +823,7 @@ OaksLabOak1Text:
 	predef DisplayDexRating
 	CheckEvent EVENT_BEAT_POKEMONMANSION2F_OAK
 	jp nz, .done
-	call CeladonMansion3_PokedexCount
+	call OaksLab_PokedexCount
 	cp NUM_POKEMON - 1 ; discount Mew
 	jr nc, .completed
 	jp .done
@@ -934,6 +934,13 @@ OaksLabOak1Text:
 .HowIsYourPokedexComingText:
 	text_far _OaksLabOak1HowIsYourPokedexComingText
 	text_end
+
+OaksLab_PokedexCount:
+	ld hl, wPokedexOwned
+	ld b, wPokedexOwnedEnd - wPokedexOwned
+	call CountSetBits
+	ld a, [wNumSetBits]
+	ret
 
 OaksLabPokedexText:
 	text_asm
