@@ -266,6 +266,10 @@ ItemUseBall:
 	ld a, [wcf91]
 	cp GREAT_BALL
 	ld a, 12
+	cp ULTRA_BALL
+	ld a, 4
+	cp SAFARI_BALL 
+	ld a, 4
 	jr nz, .skip1
 	ld a, 8
 
