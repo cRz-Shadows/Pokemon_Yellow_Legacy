@@ -285,7 +285,7 @@ SpecialTrainerMoves:
     db 6, 4, BLIZZARD
     db 0
 
-db PROF_OAK, 2
+	db PROF_OAK, 2
     db 1, 1, EARTHQUAKE
     db 1, 2, ROCK_SLIDE
     db 1, 3, THUNDER
@@ -306,7 +306,7 @@ db PROF_OAK, 2
     db 6, 1, THUNDER_WAVE
     db 0
 
-db SMITH, 1
+	db SMITH, 1
 	db 1, 1, SKY_ATTACK
 	db 1, 3, FIRE_BLAST
 	db 2, 1, MEGA_DRAIN
@@ -324,7 +324,7 @@ db SMITH, 1
 	db 6, 4, THUNDERBOLT
 	db 0
 
-db CRAIG, 1
+	db CRAIG, 1
 	db 1, 2, THUNDERBOLT
 	db 1, 4, DIG
 	db 2, 1, SKY_ATTACK
@@ -342,7 +342,7 @@ db CRAIG, 1
 	db 6, 4, REFLECT
 	db 0
 
-db WEEBRA, 1
+	db WEEBRA, 1
 	db 1, 3, METRONOME
 	db 1, 4, EARTHQUAKE
 	db 2, 1, PSYCHIC_M
