@@ -616,7 +616,7 @@ ItemUseBall:
 .boxCheck
 	ld a, [wBoxCount] ; is box full?
 	cp MONS_PER_BOX
-	jr nz, .done
+	ret nz
 	ld hl, BoxFullReminderTXT
 	call PrintText
 	ret
