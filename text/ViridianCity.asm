@@ -201,6 +201,9 @@ _ViridianOldRodHouseFishingGuruDoYouLikeToFishText::
 	para "I simply Looove"
 	line "fishing!"
 
+	para "I can't take my"
+	line "eyes off them!"
+
 	para "Do you like to"
 	line "fish?"
 	done
