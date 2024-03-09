@@ -238,7 +238,22 @@ DisplayChooseQuantityMenu::
 	jr nz, .incrementQuantity
 	bit BIT_D_DOWN, a
 	jr nz, .decrementQuantity
+	bit BIT_D_RIGHT, a
+	jr nz, .incrementQuantityLarge
+	bit BIT_D_LEFT, a
+	jr nz, .decrementQuantityLarge
 	jr .waitForKeyPressLoop
+.incrementQuantityLarge
+	ld a, [wItemQuantity]   ; Load the current quantity into A
+    add a, 10               ; Add 10 to the current quantity
+    cp 100                  ; Compare the result with 100
+    jr nc, .maxQuantity     ; If result is 100 or more, jump to .maxQuantity
+    ld [wItemQuantity], a   ; Store the new quantity back at the location
+    jr .handleNewQuantity   ; Continue to handling the new quantity
+.maxQuantity
+    ld a, 1                ; Set quantity to 99 if adding 10 exceeds 99
+    ld [wItemQuantity], a   ; Store the max quantity back at the location
+	jr .handleNewQuantity
 .incrementQuantity
 	ld a, [wMaxItemQuantity]
 	inc a
@@ -252,6 +267,15 @@ DisplayChooseQuantityMenu::
 	ld a, 1
 	ld [hl], a
 	jr .handleNewQuantity
+.decrementQuantityLarge
+	ld hl, wItemQuantity      ; Point HL to the current item quantity
+	ld a, [hl]                ; Load the current quantity into A
+	sub 10                    ; Subtract 10 from the current quantity
+	jr nc, .storeNewQuantity  ; If no carry occurred (no underflow), store the new quantity
+	ld a, [wMaxItemQuantity]  ; If underflow occurred, load the max quantity
+.storeNewQuantity:
+	ld [hl], a                ; Store the new or max quantity back to memory
+	jp .handleNewQuantity     ; Handle the updated quantity
 .decrementQuantity
 	ld hl, wItemQuantity ; current quantity
 	dec [hl]

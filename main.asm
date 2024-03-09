@@ -288,6 +288,7 @@ INCLUDE "engine/items/tm_prices.asm"
 SECTION "Engine Spillover", ROMX
 
 INCLUDE "engine/menus/item_descriptions.asm"
+INCLUDE "engine/gfx/animated_tiles_code.asm"
 
 
 SECTION "Itemfinder 1", ROMX
