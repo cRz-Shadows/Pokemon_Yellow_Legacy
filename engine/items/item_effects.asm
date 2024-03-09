@@ -1511,7 +1511,7 @@ ItemUseMedicine:
     ld b, 24 ; Raichu's level
 	jr nc, .next1
 	cp 1
-	ld b, 20 ; Starmie's level
+	ld b, 21 ; Starmie's level
 	jr nc, .next1
 	ld b, 12 ; Onix's level
 .next1

@@ -4177,7 +4177,7 @@ CheckForDisobedience:
     ld a, 24 ; Raichu's level
 	jr nc, .next
 	cp 1
-	ld a, 20 ; Starmie's level
+	ld a, 21 ; Starmie's level
 	jr nc, .next
 	ld a, 12 ; Onix's level
 	jp .next

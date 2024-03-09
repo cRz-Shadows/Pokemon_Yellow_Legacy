@@ -111,7 +111,7 @@ DaycareGentlemanText:
     ld d, 24 ; Raichu's level
 	jr nc, .next1
 	cp 1
-	ld d, 20 ; Starmie's level
+	ld d, 21 ; Starmie's level
 	jr nc, .next1
 	ld d, 12 ; Onix's level
 .next1
