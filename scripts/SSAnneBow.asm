@@ -58,6 +58,7 @@ SSAnneBowSuperNerd2Text:
 	; Add the 500 money to the player's total
 	ld de, wPlayerMoney + 2
 	ld hl, wAmountMoneyWon + 2
+	ld c, $3
 	predef_jump AddBCDPredef
 .GotMoney
 	jp TextScriptEnd
