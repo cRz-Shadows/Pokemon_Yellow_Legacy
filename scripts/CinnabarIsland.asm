@@ -5,6 +5,8 @@ CinnabarIsland_Script:
 	ResetEvent EVENT_MANSION_SWITCH_ON
 	ResetEvent EVENT_LAB_STILL_REVIVING_FOSSIL
 	ld hl, CinnabarIsland_ScriptPointers
+	ld a, $00
+	ld [wOpponentAfterWrongAnswer], a
 	ld a, [wCinnabarIslandCurScript]
 	jp CallFunctionInTable
 
