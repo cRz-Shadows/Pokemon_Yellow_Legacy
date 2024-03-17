@@ -1,9 +1,13 @@
 _ViridianPokecenterGentlemanText::
 	text "You can use that"
-	line "PC in the corner."
+	line "PC in the corner"
+	cont "to store"
+	cont "#MON."
 
 	para "The receptionist"
-	line "told me. So kind!"
+	line "will tell you"
+	cont "when it's full!"
+	cont "So kind!"
 	done
 
 _ViridianPokecenterCooltrainerMText::

@@ -217,15 +217,17 @@ _FuchsiaGymGymGuideChampInMakingText::
 
 	para "FUCHSIA GYM is"
 	line "riddled with"
-	cont "invisible walls!"
+	cont "poison-types!"
 
-	para "KOGA might appear"
-	line "close, but he's"
-	cont "blocked off!"
+	para "That might appear"
+	line "easy, but KOGA"
+	cont "does well to"
+	cont "cover his ground"
+	cont "type weakness."
 
-	para "You have to find"
-	line "gaps in the walls"
-	cont "to reach him!"
+	para "Psychic-type"
+	line "#MON should"
+	cont "do well here!"
 	done
 
 _FuchsiaGymGymGuideBeatKogaText::

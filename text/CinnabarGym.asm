@@ -141,6 +141,9 @@ _CinnabarGymSuperNerd4AfterBattleText::
 _CinnabarGymSuperNerd5BattleText::
 	text "I know why BLAINE"
 	line "became a trainer!"
+	
+	para "I'll tell you if"
+	line "you beat me!"
 	done
 
 _CinnabarGymSuperNerd5EndBattleText::
@@ -200,10 +203,14 @@ _CinnabarGymGymGuideChampInMakingText::
 	cont "#MON pro!"
 
 	para "Douse his spirits"
-	line "with water!"
+	line "with water but"
+	cont "be careful of"
+	cont "his counters!"
 
-	para "You better take"
-	line "some BURN HEALs!"
+	para "He's got a lot"
+	line "of coverage moves"
+	cont "to check your"
+	cont "effective #MON"
 	done
 
 _CinnabarGymGymGuideBeatBlaineText::

@@ -225,12 +225,17 @@ _ViridianGymGuidePreBattleText::
 
 	para "This will be the"
 	line "toughest of all"
-	cont "the GYM LEADERs!"
+	cont "GYMs!"
 
-	para "I heard that the"
-	line "trainers here"
-	cont "like ground-type"
-	cont "#MON!"
+	para "I did hear a"
+	line "rumor that"
+	cont "this leader"
+	cont "is quite wealthy."
+	
+	para "You should expect"
+	line "to see a lot"
+	cont "of TM moves if"
+	cont "that is true!"
 	done
 
 _ViridianGymGuidePostBattleText::

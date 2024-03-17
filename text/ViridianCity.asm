@@ -165,9 +165,14 @@ _ViridianCityTrainerTips1Text::
 	line "and expand your"
 	cont "collection!"
 
-	para "The more you have,"
-	line "the easier it is"
-	cont "to fight!"
+	para "Many #MON"
+	line "have recently"
+	cont "moved habitats."
+	
+	para "Keep an eye out"
+	line "on new routes"
+	cont "for unexpected"
+	cont "species!"
 	done
 
 _ViridianCityTrainerTips2Text::
@@ -178,10 +183,10 @@ _ViridianCityTrainerTips2Text::
 	cont "limited by their"
 	cont "POWER POINTs, PP."
 
-	para "To replenish PP,"
-	line "rest your tired"
-	cont "#MON at a"
-	cont "#MON CENTER!"
+	para "Enemy trainers"
+	line "are not limited"
+	cont "by this,"
+	cont "however!"
 	done
 
 _ViridianCityGymSignText::

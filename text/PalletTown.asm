@@ -33,19 +33,35 @@ _PalletTownGirlText::
 	text "I'm raising"
 	line "#MON too!"
 
-	para "When they get"
-	line "strong, they can"
-	cont "protect me!"
+	para "Like my new"
+	line "RUNNING SHOES?"
+
+	para "I can get to"
+	line "VIRIDIAN MART"
+	cont "in record time!"
+
+	para "I can't run to"
+	line "CINNABAR ISLAND" 
+	cont "but I can see"
+	cont "it from here!"
+
+	para "Is someone"
+	line "swimming on a"
+	cont "RHYDON?"
 	done
 
 _PalletTownFisherText::
 	text "Technology is"
 	line "incredible!"
 
-	para "You can now store"
-	line "and recall items"
-	cont "and #MON as"
-	cont "data via PC!"
+	para "My new backpack"
+	line "can store triple"
+	cont "the items!"
+
+	para "It even sorts"
+	line "itself by"
+	cont "pressing this"
+	cont "button!"
 	done
 
 _PalletTownOaksLabSignText::
