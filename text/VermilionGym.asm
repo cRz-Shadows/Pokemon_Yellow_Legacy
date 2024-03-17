@@ -143,7 +143,7 @@ _VermilionGymGymGuideChampInMakingText::
 	line "most known for"
 	cont "for only using"
 	cont "a single #MON"
-	cont "on his team!"
+	cont "for his team!"
 
 	para "In doing so,"
 	line "his ace has"
