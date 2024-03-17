@@ -11,7 +11,7 @@ ENDM
 Moves:
 ; Characteristics of each move.
 	table_width MOVE_LENGTH, Moves
-	move POUND,        NO_ADDITIONAL_EFFECT,        40, NORMAL,       100, 35
+	move POUND,        NO_ADDITIONAL_EFFECT,        41, NORMAL,       100, 35
 	move KARATE_CHOP,  NO_ADDITIONAL_EFFECT,        50, FIGHTING,     95, 25
 	move DOUBLESLAP,   TWO_TO_FIVE_ATTACKS_EFFECT,  20, NORMAL,       100, 35
 	move COMET_PUNCH,  TWO_TO_FIVE_ATTACKS_EFFECT,  25, NORMAL,       100, 25
