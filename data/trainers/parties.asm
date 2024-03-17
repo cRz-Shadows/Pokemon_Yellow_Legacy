@@ -668,7 +668,7 @@ MistyData:
 	db $FF, 10, PIKACHU, 10, PIKACHU, 10, PIKACHU, 10, PIKACHU, 10, PIKACHU, 10, PIKACHU, 0 ; Placeholder
 
 LtSurgeData:
-	db $FF, 28, RAICHU, 0
+	db $FF, 30, RAICHU, 0
 ; Rematch
 	db $FF, 10, PIKACHU, 10, PIKACHU, 10, PIKACHU, 10, PIKACHU, 10, PIKACHU, 10, PIKACHU, 0 ; Placeholder
 
