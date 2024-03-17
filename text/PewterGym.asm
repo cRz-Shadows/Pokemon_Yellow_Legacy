@@ -148,15 +148,18 @@ _PewterGymGuideBeginAdviceText::
 	prompt
 
 _PewterGymGuideAdviceText::
-	text "The 1st #MON"
-	line "out in a match is"
-	cont "at the top of the"
-	cont "#MON LIST!"
+	text "Brock's lead"
+	line "is GEODUDE!"
 
-	para "By changing the"
-	line "order of #MON,"
-	cont "matches could be"
-	cont "made easier!"
+	para "Offense driven,"
+	line "it can throw"
+	cont "rocks with high"
+	cont "accuracy!"
+	
+	para "His ONIX is"
+	line "all defense!"
+	cont "Watch out for"
+	cont "it's BIND!"
 	done
 
 _PewterGymGuideFreeServiceText::

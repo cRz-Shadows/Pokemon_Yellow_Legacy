@@ -98,7 +98,7 @@ Moves:
 	move THUNDERBOLT,  PARALYZE_SIDE_EFFECT1,       95, ELECTRIC,     100, 15
 	move THUNDER_WAVE, PARALYZE_EFFECT,              0, ELECTRIC,     100, 20
 	move THUNDER,      PARALYZE_SIDE_EFFECT1,      120, ELECTRIC,      85, 5
-	move ROCK_THROW,   NO_ADDITIONAL_EFFECT,        50, ROCK,         100, 15
+	move ROCK_THROW,   NO_ADDITIONAL_EFFECT,        50, ROCK,         95, 15
 	move EARTHQUAKE,   NO_ADDITIONAL_EFFECT,       100, GROUND,       100, 10
 	move FISSURE,      OHKO_EFFECT,                  1, GROUND,        30,  5
 	move DIG,          CHARGE_EFFECT,               70, GROUND,       100, 10
@@ -167,7 +167,7 @@ Moves:
 	move FURY_SWIPES,  TWO_TO_FIVE_ATTACKS_EFFECT,  20, NORMAL,       100, 15
 	move BONEMERANG,   ATTACK_TWICE_EFFECT,         50, GROUND,        90, 10
 	move REST,         HEAL_EFFECT,                  0, BIRD,         100, 10
-	move ROCK_SLIDE,   FLINCH_SIDE_EFFECT1,         75, ROCK,        95, 10
+	move ROCK_SLIDE,   FLINCH_SIDE_EFFECT1,         75, ROCK,          95, 10
 	move HYPER_FANG,   FLINCH_SIDE_EFFECT1,         80, NORMAL,        90, 15
 	move SHARPEN,      ATTACK_UP1_EFFECT,            0, BIRD,         100, 30
 	move CONVERSION,   CONVERSION_EFFECT,            0, BIRD,         100, 30
