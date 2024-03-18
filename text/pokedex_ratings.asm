@@ -81,8 +81,9 @@ _DexRatingText_Own90To99::
 _DexRatingText_Own100To109::
 	text "You finally got at"
 	line "least 100 species!"
-	cont "I can't believe"
-	cont "how good you are!"
+
+	para "I can't believe"
+	line "how good you are!"
 	done
 
 _DexRatingText_Own110To119::
