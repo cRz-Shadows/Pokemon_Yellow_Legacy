@@ -67,7 +67,7 @@ _Route22RivalAfterBattleText1::
 	cont "before pressing A"
 	cont "on STATS,"
 
-	para "You can check to
+	para "You can check to"
 	line "see a #MONs"
 	cont "growth potential."
 

@@ -104,11 +104,11 @@ INCLUDE "text/Route5.asm"
 INCLUDE "text/Route6.asm"
 INCLUDE "text/Route7.asm"
 INCLUDE "text/Route8.asm"
-INCLUDE "text/Route9.asm"
 
 
 SECTION "Text 4", ROMX
 
+INCLUDE "text/Route9.asm"
 INCLUDE "text/Route9_2.asm"
 INCLUDE "text/Route10.asm"
 INCLUDE "text/Route11.asm"
@@ -141,7 +141,6 @@ INCLUDE "text/OaksLab.asm"
 INCLUDE "text/pokedex_ratings.asm"
 INCLUDE "text/ViridianPokecenter.asm"
 INCLUDE "text/ViridianMart.asm"
-INCLUDE "text/ViridianSchoolHouse.asm"
 INCLUDE "text/ViridianNicknameHouse.asm"
 INCLUDE "text/ViridianGym.asm"
 INCLUDE "text/Museum1F.asm"
@@ -240,8 +239,6 @@ INCLUDE "data/text/text_7.asm"
 
 SECTION "Text 8", ROMX
 
-INCLUDE "data/text/text_8.asm"
-
 INCLUDE "text/PalletTown.asm"
 INCLUDE "text/ViridianCity.asm"
 INCLUDE "text/PewterCity.asm"
@@ -252,14 +249,17 @@ INCLUDE "text/CeladonCity.asm"
 INCLUDE "text/FuchsiaCity.asm"
 INCLUDE "text/CinnabarIsland.asm"
 INCLUDE "text/SaffronCity.asm"
+INCLUDE "text/ViridianSchoolHouse.asm"
 
-INCLUDE "data/text/text_9.asm"
+INCLUDE "data/text/text_8.asm"
 
 
 SECTION "Text 9", ROMX
 
 INCLUDE "text/move_deleter.asm"
 INCLUDE "text/move_relearner.asm"
+
+INCLUDE "data/text/text_9.asm"
 
 
 SECTION "Pokédex Text", ROMX

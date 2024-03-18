@@ -221,8 +221,9 @@ _CeruleanCityTrainerTipsText::
 
 	para "#MON with"
 	line "high base SPEED"
-	cont "can consistently"
-	cont "land crits 20%"
+
+	para "can land crits"
+	cont "crits 20 percent"
 	cont "of the time."
 	done
 

@@ -71,7 +71,7 @@ _ViridianCityYoungster2YouWantToKnowAboutText::
 	para "A DV can range"
 	line "from 0 to 15"
 	cont "with the higher"
-	cont "being better.
+	cont "being better."
 
 	para "DVs reflect"
 	line "the traits of an"
