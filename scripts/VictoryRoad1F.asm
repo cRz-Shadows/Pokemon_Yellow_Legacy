@@ -36,6 +36,10 @@ VictoryRoad1FDefaultScript:
 	ld hl, wCurrentMapScriptFlags
 	set 5, [hl]
 	SetEvent EVENT_VICTORY_ROAD_1_BOULDER_ON_SWITCH
+	call WaitForSoundToFinish
+	ld a, SFX_SWITCH
+	call PlaySound
+	call WaitForSoundToFinish
 	ret
 
 .SwitchCoords:
