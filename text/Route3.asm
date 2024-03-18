@@ -41,6 +41,10 @@ _Route3Youngster2AfterBattleText::
 	line "your #MON on"
 	cont "PC? Each BOX can"
 	cont "hold 20 #MON!"
+
+	para "You'll get a call"
+	line "when your box"
+	cont "is full!"
 	done
 
 _Route3CooltrainerF1BattleText::

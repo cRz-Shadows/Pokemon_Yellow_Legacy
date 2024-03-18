@@ -31,16 +31,26 @@ _Route1Youngster1NoRoomText::
 	done
 
 _Route1Youngster2Text::
-	text "See those ledges"
-	line "along the road?"
+	text "Do you know"
+	line "about STAT" 
+	cont "experience?"
 
-	para "It's a bit scary,"
-	line "but you can jump"
-	cont "from them."
+	para "When a #MON"
+	line "battles, it"
+	cont "gains EXP."
 
-	para "You can get back"
-	line "to PALLET TOWN"
-	cont "quicker that way."
+	para "This EXP gives"
+	line "it increased"
+	cont "stats that"
+	cont "enemy trainers"
+	cont "don't have."
+
+	para "A #MON trained"
+	line "from LVL 5 to"
+	cont "LVL 50 could"
+	cont "have the stats"
+	cont "of an opponent"
+	cont "at LVL 60!"
 	done
 
 _Route1SignText::

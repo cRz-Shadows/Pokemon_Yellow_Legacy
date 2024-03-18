@@ -213,10 +213,17 @@ _CeruleanCitySignText::
 _CeruleanCityTrainerTipsText::
 	text "TRAINER TIPS"
 
-	para "Pressing B Button"
-	line "during evolution"
-	cont "cancels the whole"
-	cont "process."
+	para "Critical Hits"
+	line "are easier to"
+	cont "land if a"
+	cont "#MON"
+	cont "is fast."
+
+	para "#MON with"
+	line "high base SPEED"
+	cont "can consistently"
+	cont "land crits 20%"
+	cont "of the time."
 	done
 
 _CeruleanCityBikeShopSign::

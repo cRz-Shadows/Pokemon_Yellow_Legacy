@@ -61,9 +61,45 @@ _ViridianCityGambler1GymLeaderReturnedText::
 
 _ViridianCityYoungster2YouWantToKnowAboutText::
 	text "You want to know"
-	line "about the 2 kinds"
-	cont "of caterpillar"
-	cont "#MON?"
+	line "about #MON"
+	cont "growth potential?"
+	
+	para "That's called"
+	line "Diversity Value"
+	cont "or DV for short."
+
+	para "A DV can range"
+	line "from 0 to 15"
+	cont "with the higher"
+	cont "being better.
+
+	para "DVs reflect"
+	line "the traits of an"
+	cont "individual"
+	cont "#MON."
+
+	para "The DV value"
+	line "determines stat"
+	cont "variation."
+	
+	para "At lvl 100,"
+	line "the difference"
+	cont "between a 0 and"
+	cont "15 DV, would be"
+	cont "30 stat points."
+
+	para "I wouldn't"
+	line "worry about it"
+	cont "too much, but"
+	cont "you can check"
+	cont "via the STATS"
+	cont "page."
+
+	para "Simply hold"
+	line "START and then"
+	cont "press A on STATS"
+	cont "in the #MON"
+	cont "menu."
 	done
 
 ViridianCityYoungster2OkThenText::
