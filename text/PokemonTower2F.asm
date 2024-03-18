@@ -25,6 +25,16 @@ _PokemonTower2FRivalVictoryText::
 
 	para "Toughen them up a"
 	line "bit more!"
+
+	para "Also watch out"
+	line "for ghost-type"
+	cont "moves!"
+
+	para "They may not hit"
+	line "normal-types,"
+	cont "but non physical"
+	cont "moves can still"
+	cont "hit hard!"
 	prompt
 
 _PokemonTower2FRivalHowsYourDexText::
