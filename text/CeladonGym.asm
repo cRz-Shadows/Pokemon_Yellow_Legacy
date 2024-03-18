@@ -202,14 +202,14 @@ _CeladonGymAfterBattleText7::
 	line "date coming up"
 	cont "and I'm nervous!"
 
-	para "Going into an
+	para "Going into an"
 	line "uncertain event"
 	cont "can be scary!"
 
 	para "It's important"
 	line "to prepare for"
 	cont "all possible"
-	cont "outcomes!
+	cont "outcomes!"
 	done
 
 _CeladonGymBattleText8::

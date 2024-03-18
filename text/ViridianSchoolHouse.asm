@@ -9,7 +9,7 @@ _ViridianSchoolHouseBrunetteGirlText::
 
 	para "What's this?"
 	line "I don't know"
-	cont "what type SLAM 
+	cont "what type SLAM"
 	cont "is!"
 	done
 

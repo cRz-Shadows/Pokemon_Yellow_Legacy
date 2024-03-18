@@ -148,7 +148,7 @@ _VermilionGymGymGuideChampInMakingText::
 	para "In doing so,"
 	line "his ace has"
 	cont "become extremely"
-	cont "powerful!
+	cont "powerful!"
 
 	para "Birds and water"
 	line "#MON are at"
