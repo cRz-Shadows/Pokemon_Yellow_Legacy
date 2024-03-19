@@ -87,6 +87,58 @@ CreditsTextPointers:
 	dw CreditsText_Nakamichi
 	dw CreditsText_Yoshimura
 	dw CreditsText_Yamazaki
+
+	dw CreditsText_Creator
+	dw CreditsText_Developer
+	dw CreditsText_Editor
+	dw CreditsText_Moderators
+	dw CreditsText_Playtesters
+	dw CreditsText_SpriteArtists
+	dw CreditsText_BackspriteArtists
+	dw CreditsText_Tutorials
+	dw CreditsText_Pret
+	dw CreditsText_SmithPlaysPokemon
+	dw CreditsText_Smith
+	dw CreditsText_cRzShadows
+	dw CreditsText_Weebra
+	dw CreditsText_Aero
+	dw CreditsText_Zach
+	dw CreditsText_Karlos
+	dw CreditsText_Isona
+	dw CreditsText_Regi
+	dw CreditsText_Daily
+	dw CreditsText_Obelisk
+	dw CreditsText_Disq
+	dw CreditsText_Brice
+	dw CreditsText_ReaderDragon
+	dw CreditsText_Sable
+	dw CreditsText_Soul
+	dw CreditsText_Talos
+	dw CreditsText_Alakadoof
+	dw CreditsText_Rwne
+	dw CreditsText_Rangi42
+	dw CreditsText_PlagueVonKarma
+	dw CreditsText_Jojobear13
+	dw CreditsText_YakiNeen
+	dw CreditsText_Pgattic
+	dw CreditsText_Xillicis
+	dw CreditsText_Dannye
+	dw CreditsText_SoupPotato
+	dw CreditsText_Voloved
+	dw CreditsText_Veganlies2me
+	dw CreditsText_SatoMew
+	dw CreditsText_TPP
+	dw CreditsText_Idain
+	dw CreditsText_Nayru62
+	dw CreditsText_Jaas
+	dw CreditsText_Longlostsoul
+	dw CreditsText_GhostMissingNo
+	dw CreditsText_Chamber
+	dw CreditsText_Soloo993
+	dw CreditsText_BlueEmerald
+	dw CreditsText_Lake
+	dw CreditsText_Neslug
+	dw CreditsText_TomWang
 	assert_table_length NUM_CRED_STRINGS
 
 CreditsText_Version:
@@ -278,13 +330,15 @@ CreditsText_Playtesters:
 	db -6, "PLAYTESTERS@"
 CreditsText_SpriteArtists:
 	db -6, "SPRITE ARTISTS@"
+CreditsText_BackspriteArtists:
+	db -6, "BACKSPRITE ARTISTS@"
 CreditsText_Tutorials:
 	db -6, "TUTORIALS / CODE@"
 CreditsText_Pret:
 	db -1, "THANK YOU TO THE"
-	next " PRET TEAM FOR THE"
-	next "    POKECRYSTAL"
-	next "    DISASSEMBLY@"
+	next "PRET TEAM FOR THE"
+	next "POKECRYSTAL"
+	next "DISASSEMBLY@"
 
 CreditsText_SmithPlaysPokemon:
 	db -1, "SMITHPLAYSPOKEMON@"
@@ -315,22 +369,35 @@ CreditsText_Obelisk:
 ; Playtesters
 CreditsText_Disq:
 	db -6, "DISQ@"
-CreditsText_Sable:
-	db -6, "SABLE@"
 CreditsText_Brice:
 	db -6, "BRICE@"
+CreditsText_ReaderDragon:
+	db -6, "READER DRAGON@"
+CreditsText_Sable:
+	db -6, "SABLE@"
+CreditsText_Soul:
+	db -6, "SOULXCROSS@"
+CreditsText_Talos:
+	db -6, "TALOS@"
+CreditsText_Alakadoof:
+	db -6, "ALAKADOOF@"
+CreditsText_Rwne:
+	db -6, "RWNE@"
+
 
 ; Code/Tutorials
 CreditsText_Rangi42:
 	db -6, "RANGI42@"
-CreditsText_Jojobear13:
-	db -6, "JOJOBEAR13@"
 CreditsText_PlagueVonKarma:
 	db -6, "PLAGUEVONKARMA@"
+CreditsText_Jojobear13:
+	db -6, "JOJOBEAR13@"
 CreditsText_YakiNeen:
 	db -6, "YAKINEEN@"
 CreditsText_Pgattic:
 	db -6, "PGATTIC@"
+CreditsText_Xillicis:
+	db -6, "XILLICIS@"
 CreditsText_Dannye:
 	db -6, "DANNYE@"
 CreditsText_SoupPotato:
@@ -341,12 +408,16 @@ CreditsText_Veganlies2me:
 	db -6, "VEGANLIES2ME@"
 CreditsText_SatoMew:
 	db -6, "SATOMEW@"
-CreditsText_Xillicis:
-	db -6, "XILLICIS@"
+CreditsText_TPP:
+	db -6, "TWITCHPLAYSPOKEMON@"
+
+; Special Thanks
 CreditsText_Idain:
 	db -6, "IDAIN@"
 CreditsText_Nayru62:
 	db -6, "NAYRU62@"
+CreditsText_Jaas:
+	db -6, "JaaShooUhh@"
 
 ; Sprite Artists
 ; Backsprites
@@ -358,6 +429,8 @@ CreditsText_Karlos2:
 	db -6, "KARLOS@"
 CreditsText_ReaderDragon2:
 	db -6, "READER DRAGON@"
+CreditsText_Alakadoof2:
+	db -6, "ALAKADOOF@"
 
 ; Green Sprite
 CreditsText_Longlostsoul:
