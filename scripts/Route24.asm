@@ -35,7 +35,7 @@ Route24DefaultScript:
 	call DisplayTextID
 	CheckAndResetEvent EVENT_NUGGET_REWARD_AVAILABLE
 	ret z
-	ld a, D_DOWN
+	ld a, D_DOWN | B_BUTTON
 	ld [wSimulatedJoypadStatesEnd], a
 	ld a, $1
 	ld [wSimulatedJoypadStatesIndex], a

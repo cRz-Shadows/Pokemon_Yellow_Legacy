@@ -180,7 +180,7 @@ OaksLabPlayerDontGoAwayScript:
 	call DisplayTextID
 	ld a, $1
 	ld [wSimulatedJoypadStatesIndex], a
-	ld a, D_UP
+	ld a, D_UP | B_BUTTON
 	ld [wSimulatedJoypadStatesEnd], a
 	call StartSimulatingJoypadStates
 	ld a, PLAYER_DIR_UP
@@ -254,7 +254,7 @@ OaksLabRivalTakesPokeballScript:
 	ld [wPlayerMovingDirection], a
 	ld a, $2
 	ld [wSimulatedJoypadStatesIndex], a
-	ld a, D_RIGHT
+	ld a, D_RIGHT | B_BUTTON
 	ld [wSimulatedJoypadStatesEnd], a
 	ld [wSimulatedJoypadStatesEnd + 1], a
 	call StartSimulatingJoypadStates
@@ -266,7 +266,7 @@ OaksLabPlayerWalksToOakScript:
 	jr z, .asm_1c599
 	ld a, $1
 	ld [wSimulatedJoypadStatesIndex], a
-	ld a, D_LEFT
+	ld a, D_LEFT | B_BUTTON
 	ld [wSimulatedJoypadStatesEnd], a
 	jr .asm_1c5a6
 

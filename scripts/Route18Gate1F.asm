@@ -64,7 +64,7 @@ Route18Gate1FGuardScript:
 	call DisplayTextID
 	ld a, $1
 	ld [wSimulatedJoypadStatesIndex], a
-	ld a, D_RIGHT
+	ld a, D_RIGHT | B_BUTTON
 	ld [wSimulatedJoypadStatesEnd], a
 	call StartSimulatingJoypadStates
 	ld a, SCRIPT_ROUTE18GATE1F_PLAYER_MOVING_RIGHT

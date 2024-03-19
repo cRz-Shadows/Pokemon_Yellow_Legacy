@@ -203,7 +203,7 @@ PalletTownPlayerFollowsOakScript:
 	set 1, [hl]
 	ld a, $1
 	ld [wSimulatedJoypadStatesIndex], a
-	ld a, D_LEFT
+	ld a, D_LEFT | B_BUTTON
 	ld [wSimulatedJoypadStatesEnd], a
 	xor a
 	ld [wSpritePlayerStateData1ImageIndex], a

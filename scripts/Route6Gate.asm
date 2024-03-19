@@ -57,7 +57,7 @@ Route6GatePlayerMovingScript:
 Route6GateMovePlayerDownScript:
 	ld hl, wd730
 	set 7, [hl]
-	ld a, D_DOWN
+	ld a, D_DOWN | B_BUTTON
 	ld [wSimulatedJoypadStatesEnd], a
 	ld a, $1
 	ld [wSimulatedJoypadStatesIndex], a

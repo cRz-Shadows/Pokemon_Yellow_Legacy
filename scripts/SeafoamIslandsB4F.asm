@@ -51,7 +51,7 @@ SeafoamIslandsB4FDefaultScript:
 	ld a, 1
 .forcePlayerUpFromSurfExit
 	ld [wSimulatedJoypadStatesIndex], a
-	ld a, D_UP
+	ld a, D_UP | B_BUTTON
 	ld [wSimulatedJoypadStatesEnd], a
 	call StartSimulatingJoypadStates
 	ld hl, wFlags_D733

@@ -77,7 +77,7 @@ BrunosRoomDefaultScript:
 	ld a, TEXT_BRUNOSROOM_BRUNO_DONT_RUN_AWAY
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID  ; "Don't run away!"
-	ld a, D_UP
+	ld a, D_UP | B_BUTTON
 	ld [wSimulatedJoypadStatesEnd], a
 	ld a, $1
 	ld [wSimulatedJoypadStatesIndex], a

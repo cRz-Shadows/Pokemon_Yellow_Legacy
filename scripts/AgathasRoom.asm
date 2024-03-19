@@ -77,7 +77,7 @@ AgathasRoomDefaultScript:
 	ld a, TEXT_AGATHASROOM_AGATHA_DONT_RUN_AWAY
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID
-	ld a, D_UP
+	ld a, D_UP | B_BUTTON
 	ld [wSimulatedJoypadStatesEnd], a
 	ld a, $1
 	ld [wSimulatedJoypadStatesIndex], a

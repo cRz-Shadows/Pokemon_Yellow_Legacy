@@ -12,7 +12,7 @@ Route8Gate_ScriptPointers:
 Route8GateMovePlayerRightScript:
 	ld hl, wd730
 	set 7, [hl]
-	ld a, D_RIGHT
+	ld a, D_RIGHT | B_BUTTON
 	ld [wSimulatedJoypadStatesEnd], a
 	ld a, $1
 	ld [wSimulatedJoypadStatesIndex], a

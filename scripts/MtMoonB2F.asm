@@ -250,7 +250,7 @@ MtMoonB2FScript_49e15:
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	ld a, $1
 	ld [wSimulatedJoypadStatesIndex], a
-	ld a, D_UP
+	ld a, D_UP | B_BUTTON
 	ld [wSimulatedJoypadStatesEnd], a
 	call StartSimulatingJoypadStates
 	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
