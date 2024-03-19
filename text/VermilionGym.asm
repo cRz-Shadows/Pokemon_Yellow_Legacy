@@ -32,6 +32,43 @@ _VermilionGymLTSurgePostBattleAdviceText::
 	cont "type #MON!"
 	done
 
+_VermilionGymRematchPreBattle1Text::
+	text "CHAMPION, huh?"
+	line "I've powered up!"
+
+    para "This'll be a"
+	line "surge of power"
+	cont "you've never"
+	cont "seen before!"
+
+	para "Care for a jolt"
+	line "of reality,"
+	cont "CHAMP?"
+	done
+
+_VermilionGymPreRematchBattle2Text::
+	text "That's the"
+	line "spirit!"
+	
+	para "No holding back!"
+	done
+
+_VermilionGymRematchPostBattleText::
+	text "Your team's"
+	para "electrifying"
+	line "strength..."
+
+	para "You're the real"
+	line "deal!"
+
+	para "You've proven"
+	line "yourself again,"
+	cont "CHAMPION."
+
+	para "Until next time,"
+    line "stay charged!"
+	done
+
 _VermilionGymLTSurgeThunderBadgeInfoText::
 	text "The THUNDERBADGE"
 	line "cranks up your"

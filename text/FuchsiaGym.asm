@@ -36,6 +36,48 @@ _FuchsiaGymKogaPostBattleAdviceText::
 	line "terrorize foes!"
 	done
 
+_FuchsiaGymRematchPreBattle1Text::
+	text "Fwahahaha!"
+
+    para "CHAMPION, huh?"
+	
+    para "I commend your"
+    cont "strength."
+
+    para "But as a ninja"
+    line "master, I've"
+    cont "grown stronger."
+
+    para "Dare face me"
+	line "again, with all"
+	cont "my power?"
+	done
+
+_FuchsiaGymPreRematchBattle2Text::
+	text "Let us see if"
+	line "the CHAMPION"
+	
+	para "can survive the"
+	line "ultimate poison"
+	cont "technique!"
+    done
+
+_FuchsiaGymRematchPostBattleText::
+	text "You've withstood"
+	line "the deadliest"
+	cont "of poisons and"
+	cont "emerged stronger."
+
+	para "Truly, you are"
+	line "worthy of the"
+	cont "title Champion."
+
+	para "Continue to hone"
+	line "your skills, for"
+	cont "the path of a"
+	cont "ninja never ends."
+	done
+
 _FuchsiaGymKogaSoulBadgeInfoText::
 	text "Now that you have"
 	line "the SOULBADGE,"

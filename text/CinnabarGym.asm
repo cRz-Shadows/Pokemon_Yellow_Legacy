@@ -30,6 +30,39 @@ _CinnabarGymBlainePostBattleAdviceText::
 	line "water #MON!"
 	done
 
+_CinnabarGymRematchPreBattle1Text::
+	text "Ah! The CHAMP!"
+    
+    para "I've stoked my"
+    line "flames hotter"
+    cont "than ever before!"
+    
+    para "Let's see if you"
+    line "can withstand"
+    cont "my inferno now!"
+    
+    para "Ready for a"
+    line "rematch, CHAMP?"
+	done
+
+_CinnabarGymPreRematchBattle2Text::
+	text "Hah! Fired up!"
+    
+    para "This battle will"
+    line "be scorching!"
+    done
+
+_CinnabarGymRematchPostBattleText::
+	text "Incredible!"
+    
+    para "Your strength"
+    line "exceeds even the"
+    cont "wildest flames!"
+    
+    para "Truly, you are a"
+    line "worthy CHAMPION."
+	done
+
 _CinnabarGymBlaineVolcanoBadgeInfoText::
 	text "Hah!"
 

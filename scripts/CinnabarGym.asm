@@ -216,6 +216,8 @@ CinnabarGymBlainePostBattleScript:
 	jp z, CinnabarGymResetScripts
 	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
 	ld [wJoyIgnore], a
+	CheckEvent EVENT_BEAT_CHAMPION_RIVAL
+	jr nz, BlaineRematchPostBattle
 ; fallthrough
 CinnabarGymReceiveTM38:
 	ld a, TEXT_CINNABARGYM_BLAINE_VOLCANO_BADGE_INFO
@@ -248,6 +250,12 @@ CinnabarGymReceiveTM38:
 
 	jp CinnabarGymResetScripts
 
+BlaineRematchPostBattle:
+	ld a, TEXT_CINNABARGYM_REMATCH_POST_BATTLE
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+	jp CinnabarGymResetScripts
+
 CinnabarGym_TextPointers:
 	def_text_pointers
 	dw_const CinnabarGymBlaineText,                 TEXT_CINNABARGYM_BLAINE
@@ -262,6 +270,7 @@ CinnabarGym_TextPointers:
 	dw_const CinnabarGymBlaineVolcanoBadgeInfoText, TEXT_CINNABARGYM_BLAINE_VOLCANO_BADGE_INFO
 	dw_const CinnabarGymBlaineReceivedTM38Text,     TEXT_CINNABARGYM_BLAINE_RECEIVED_TM38
 	dw_const CinnabarGymBlaineTM38NoRoomText,       TEXT_CINNABARGYM_BLAINE_TM38_NO_ROOM
+	dw_const CinnabarGymRematchPostBattleText, 	  	TEXT_CINNABARGYM_REMATCH_POST_BATTLE
 
 CinnabarGymStartBattleScript:
 	ldh a, [hSpriteIndexOrTextID]
@@ -283,6 +292,48 @@ CinnabarGymStartBattleScript:
 	ld [wCurMapScript], a
 	jp TextScriptEnd
 
+CinnabarGymStartRematchScript:
+	ld hl, .PreBattleRematch1Text
+	call PrintText
+	call YesNoChoice
+	ld a, [wCurrentMenuItem]
+	and a
+	jr nz, .refused
+	ld hl, .PreBattleRematch2Text
+	call PrintText
+	call Delay3
+	ld a, OPP_BLAINE
+	ld [wCurOpponent], a
+	ld a, 2
+	ld [wTrainerNo], a
+	ld a, $4 ; new script
+	ld [wCinnabarGymCurScript], a
+	ld [wCurMapScript], a
+	ld a, SCRIPT_CINNABARGYM_BLAINE_POST_BATTLE
+	ld [wCinnabarGymCurScript], a
+	ld [wCurMapScript], a
+	jp TextScriptEnd
+.refused
+	ld hl, .PreBattleRematchRefusedText
+	call PrintText
+	jp TextScriptEnd
+	
+.PreBattleRematch1Text
+	text_far _CinnabarGymRematchPreBattle1Text
+	text_end
+
+.PreBattleRematchRefusedText
+	text_far _GymRematchRefusedText
+	text_end
+
+.PreBattleRematch2Text
+	text_far _CinnabarGymPreRematchBattle2Text
+	text_end
+
+CinnabarGymRematchPostBattleText:
+	text_far _CinnabarGymRematchPostBattleText
+	text_end
+
 CinnabarGymBlaineText:
 	text_asm
 	CheckEvent EVENT_BEAT_BLAINE
@@ -295,6 +346,8 @@ CinnabarGymBlaineText:
 .afterBeat
 	ld hl, .PostBattleAdviceText
 	call PrintText
+	CheckEvent EVENT_BEAT_CHAMPION_RIVAL
+	jr nz, .BlaineRematch
 	jp TextScriptEnd
 .beforeBeat
 	ld hl, .PreBattleText
@@ -305,6 +358,8 @@ CinnabarGymBlaineText:
 	ld a, $7
 	ld [wGymLeaderNo], a
 	jp CinnabarGymStartBattleScript
+.BlaineRematch
+	jp CinnabarGymStartRematchScript
 
 .PreBattleText:
 	text_far _CinnabarGymBlainePreBattleText
