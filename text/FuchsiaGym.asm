@@ -119,10 +119,10 @@ _FuchsiaGymJanineBattleText::
 	
 	para "Caught off guard?"
 
-	para "I'm Janine,"
+	para "I'm JANINE, a"
 	
-	para "a ninja of Koga's"
-	line "gym."
+	para "ninja of KOGA's"
+	line "GYM."
 
 	para "Prepare to face"
 	line "my poison!"
