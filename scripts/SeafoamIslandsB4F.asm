@@ -5,7 +5,20 @@ SeafoamIslandsB4F_Script:
 	ld a, [wSeafoamIslandsB4FCurScript]
 	call ExecuteCurMapScriptInTable
 	ld [wSeafoamIslandsB4FCurScript], a
+	CheckEvent EVENT_INITIATED_WEEBRA_BATTLE
+	ret nz
+	ld hl, WeebraFightCheckCoords
+	call ArePlayerCoordsInArray
+	ret nc
+	SetEvent EVENT_INITIATED_WEEBRA_BATTLE
+	ld a, SCRIPT_SEAFOAMISLANDSB4F_DEFAULT
+	ld [wSeafoamIslandsB4FCurScript], a
 	ret
+
+WeebraFightCheckCoords:
+	dbmapcoord 7, 2
+	dbmapcoord 7, 3
+	db -1 ; end
 
 SeafoamIslandsB4FResetScript:
 	xor a
