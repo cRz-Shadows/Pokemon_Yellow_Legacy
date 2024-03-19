@@ -50,7 +50,16 @@ DisplayListMenuID::
 	ld [wTopMenuItemY], a
 	ld a, 5
 	ld [wTopMenuItemX], a
+	ld a, [wTempFlag]
+	cp 1
+	ld a, 0
+	ld [wTempFlag], a
+	jr nz, .noSort
 	ld a, A_BUTTON | B_BUTTON | SELECT | START
+	jr .continue
+.noSort
+	ld a, A_BUTTON | B_BUTTON | SELECT
+.continue
 	ld [wMenuWatchedKeys], a
 	ld c, 10
 	call DelayFrames

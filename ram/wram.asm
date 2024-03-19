@@ -964,7 +964,10 @@ wBadgeNameTile:: db
 ; badge is owned) to be drawn on the trainer screen
 ; the byte after the list gets read when shifting back one byte
 wBadgeOrFaceTiles:: ds NUM_BADGES + 1
-	ds 1
+
+; Used for checking whether we can call sort on the item menu
+wTempFlag:: db
+
 ; temporary list created when displaying the badges on the trainer screen
 ; one byte for each badge; 0 = not obtained, 1 = obtained
 wTempObtainedBadgesBooleans:: ds NUM_BADGES
