@@ -15,13 +15,57 @@ SpecialTrainerMoves:
 	db 2, 4, BIND
 	db 0
 
+	db BROCK, 2
+	db 1, 1, BLIZZARD
+	db 2, 1, FISSURE
+	db 4, 1, BODY_SLAM
+	db 5, 2, SOLARBEAM
+	db 5, 3, CONFUSE_RAY
+	db 6, 1, FLY
+	db 6, 3, EARTHQUAKE
+	db 6, 4, DOUBLE_EDGE
+	db 0
+
 	db MISTY, 1
 	db 2, 1, TAIL_WHIP
+	db 0
+
+	db MISTY, 2
+	db 1, 1, ICE_BEAM
+	db 1, 2, DOUBLE_TEAM
+	db 2, 1, BLIZZARD
+	db 3, 1, PSYCHIC_M
+	db 3, 2, THUNDER
+	db 4, 1, SURF
+	db 4, 2, EARTHQUAKE
+	db 4, 4, REFLECT
+	db 5, 1, SUBSTITUTE
+	db 5, 3, BLIZZARD
+	db 6, 1, SURF
+	db 6, 3, RECOVER
+	db 6, 4, THUNDERBOLT
 	db 0
 
 	db LT_SURGE, 1
 	db 1, 3, BODY_SLAM
 	db 1, 4, SURF
+	db 0
+
+	db LT_SURGE, 2
+	db 1, 2, THUNDER_WAVE
+	db 2, 1, THUNDER_WAVE
+	db 2, 3, REFLECT
+	db 3, 1, HEADBUTT
+	db 3, 2, DIG
+	db 4, 1, THUNDER
+	db 4, 2, BLIZZARD
+	db 4, 3, RECOVER
+	db 5, 1, ICE_PUNCH
+	db 5, 3, PSYCHIC_M
+	db 6, 1, SURF
+	db 6, 2, CUT
+	db 6, 3, THUNDER
+	db 6, 4, THUNDER_WAVE
 	db 0
 
 	db ERIKA, 1
@@ -55,6 +99,22 @@ SpecialTrainerMoves:
     db 5, 1, LEECH_SEED
     db 0
 
+	db ERIKA, 4
+	db 1, 3, STUN_SPORE
+	db 2, 2, LEECH_SEED
+	db 2, 3, SLEEP_POWDER
+	db 2, 4, RAZOR_LEAF
+	db 3, 1, LEECH_LIFE
+	db 3, 3, SOLARBEAM
+	db 4, 1, MEGA_DRAIN
+	db 4, 2, SUBSTITUTE
+	db 5, 1, MEGA_DRAIN
+	db 5, 3, GROWTH
+	db 6, 2, LEECH_SEED
+	db 6, 3, SUBSTITUTE
+	db 6, 4, MEGA_DRAIN
+    db 0
+
 	db KOGA, 1
 	db 1, 2, TOXIC
 	db 1, 3, BITE
@@ -80,6 +140,25 @@ SpecialTrainerMoves:
 	db 5, 3, TOXIC
 	db 0
 
+	db KOGA, 3
+	db 1, 1, FLY
+	db 1, 2, TOXIC
+	db 1, 3, DOUBLE_TEAM
+	db 1, 4, CONFUSE_RAY
+	db 2, 3, MEGA_DRAIN
+	db 2, 4, MINIMIZE
+	db 3, 1, SURF
+	db 3, 3, BLIZZARD
+	db 3, 4, REFLECT
+	db 4, 2, FIRE_BLAST
+	db 4, 3, THUNDERBOLT
+	db 4, 4, SLUDGE
+	db 5, 2, EARTHQUAKE
+	db 5, 3, ROCK_SLIDE
+	db 6, 1, DOUBLE_TEAM
+	db 6, 4, LEECH_LIFE
+	db 0
+
 	db BLAINE, 1
 	db 2, 1, FIRE_BLAST
 	db 2, 2, WING_ATTACK
@@ -95,6 +174,24 @@ SpecialTrainerMoves:
 	db 5, 2, PSYCHIC_M
 	db 5, 3, CONFUSE_RAY
 	db 5, 4, THUNDERPUNCH
+	db 0
+
+	db BLAINE, 2
+	db 1, 2, AGILITY
+	db 1, 3, SOLARBEAM
+	db 1, 4, HORN_DRILL
+	db 2, 4, DIG
+	db 3, 2, FIRE_BLAST
+	db 3, 3, EARTHQUAKE
+	db 3, 4, SWORDS_DANCE
+	db 4, 2, CONFUSE_RAY
+	db 4, 3, SOLARBEAM
+	db 5, 1, FIRE_BLAST
+	db 5, 2, DIG
+	db 5, 3, DOUBLE_EDGE
+	db 6, 1, THUNDERPUNCH
+	db 6, 2, PSYCHIC_M
+	db 6, 3, CONFUSE_RAY
 	db 0
 
 	db SABRINA, 1
@@ -116,6 +213,22 @@ SpecialTrainerMoves:
 	db 2, 3, LIGHT_SCREEN
 	db 3, 1, PSYWAVE
 	db 4, 1, THUNDER_WAVE
+	db 0
+
+	db SABRINA, 3
+	db 1, 1, THUNDERBOLT
+	db 1, 4, THUNDER_WAVE
+	db 2, 1, SUBSTITUTE
+	db 2, 2, PSYWAVE
+	db 3, 1, SURF
+	db 3, 2, REFLECT
+	db 4, 1, LOVELY_KISS
+	db 4, 2, DREAM_EATER
+	db 4, 3, BUBBLEBEAM
+	db 5, 1, PSYCHIC_M
+	db 5, 3, DOUBLE_TEAM
+	db 5, 4, MEGA_DRAIN
+	db 6, 1, THUNDER_WAVE
 	db 0
 
 	db GIOVANNI, 1
