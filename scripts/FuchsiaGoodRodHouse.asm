@@ -26,8 +26,10 @@ FuchsiaGoodRodHouseFishingGuruText:
 	jr nc, .done ; party full
 .refused
 	ld hl, .ThatsSoDisappointingText
+	call PrintText
 	jr .done
 .got_gift
+	SetEvent EVENT_GOT_FUCHSIA_FOSSIL_GIFT
 	ld hl, .HowAreTheFishText
 	call PrintText
 .done
