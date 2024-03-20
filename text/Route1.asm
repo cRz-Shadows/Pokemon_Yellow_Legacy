@@ -64,8 +64,7 @@ _OakBeforeBattleText::
 	
 	para "It seems you"
 	line "caught me during"
-	cont "during my lunch"
-	cont "hour!"
+	cont "my lunch hour!"
 
 	para "<PLAYER>, you"
 	line "have truly come"
