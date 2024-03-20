@@ -300,11 +300,12 @@ SpecialTrainerMoves:
     db 2, 4, DOUBLE_TEAM
     db 3, 1, SWORDS_DANCE
     db 3, 2, EARTHQUAKE
+	db 3, 3, SLEEP_POWDER
     db 4, 1, REFLECT
     db 4, 2, EARTHQUAKE
+	db 5, 2, REST
     db 5, 2, AMNESIA
     db 5, 3, PSYCHIC_M
-    db 5, 4, REST
     db 6, 1, EARTHQUAKE
     db 6, 2, ROCK_SLIDE
     db 6, 3, SLUDGE
@@ -312,24 +313,22 @@ SpecialTrainerMoves:
     db 0
 
 	db PROF_OAK, 2
-    db 1, 1, EARTHQUAKE
-    db 1, 2, ROCK_SLIDE
-    db 1, 3, THUNDER
-    db 1, 4, SLUDGE
-    db 2, 1, AGILITY
-    db 2, 2, SOLARBEAM
-    db 3, 1, HYPER_BEAM
-    db 3, 2, EARTHQUAKE
-    db 3, 3, BLIZZARD
-    db 3, 4, THUNDER
-    db 4, 1, BUBBLEBEAM
-    db 4, 2, BLIZZARD
-    db 4, 3, SKY_ATTACK
-    db 4, 4, REFLECT
-    db 5, 2, AMNESIA
-    db 5, 3, REFLECT
-    db 5, 4, REST
-    db 6, 1, THUNDER_WAVE
+    db 1, 1, HYPER_BEAM
+    db 1, 2, EARTHQUAKE
+    db 1, 3, BLIZZARD
+    db 1, 4, THUNDER
+	db 2, 1, THUNDER_WAVE
+	db 3, 1, BUBBLEBEAM
+    db 3, 4, REFLECT
+    db 4, 1, AGILITY
+    db 4, 2, SOLARBEAM
+    db 5, 1, AMNESIA
+    db 5, 2, REFLECT
+    db 5, 3, REST
+	db 6, 1, EARTHQUAKE
+    db 6, 2, ROCK_SLIDE
+    db 6, 3, THUNDER
+    db 6, 4, SLUDGE
     db 0
 
 	db SMITH, 1

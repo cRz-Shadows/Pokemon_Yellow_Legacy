@@ -296,18 +296,14 @@ PalletTownGirlText:
 	text_end
 
 PalletTownFisherText:
-	; text_far _PalletTownFisherText
+	; text_far _PalletTownFisherText 
 	; text_end
-	text_asm
+	text_asm ;! Remove this and uncomment above
 	lb bc, RARE_CANDY, 99
 	call GiveItem
-	jr nc, .BagFull
-	jr .finish
-.BagFull
-	ld a, TEXT_FUCHSIAGYM_KOGA_TM06_NO_ROOM
-	ldh [hSpriteIndexOrTextID], a
-	call DisplayTextID
-.finish
+	lb bc, MEW, 29
+	call GivePokemon
+
 	ld hl, .PalletTownFisherTextTemp
 	call PrintText
 	jp TextScriptEnd
