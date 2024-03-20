@@ -411,7 +411,7 @@ _CompletedDexText::
 	line "<PLAYER>!"
 
 	para "You've completed"
-	line "the Pokédex!"
+	line "the #DEX!"
 
 	para "Yet, the world"
 	line "of #MON holds"
