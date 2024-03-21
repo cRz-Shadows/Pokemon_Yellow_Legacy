@@ -10,7 +10,7 @@ GameCornerPrizeRoom_TextPointers:
 	dw_const GameCornerPRizeRoomPrizeVendorText, TEXT_GAMECORNERPRIZEROOM_PRIZE_VENDOR_2
 	dw_const GameCornerPRizeRoomPrizeVendorText, TEXT_GAMECORNERPRIZEROOM_PRIZE_VENDOR_3
 
-	GameCornerPrizeRoomClerkText:
+GameCornerPrizeRoomClerkText:
 	text_asm
 	; Show player's coins
 	call GameCornerDrawCoinBox
