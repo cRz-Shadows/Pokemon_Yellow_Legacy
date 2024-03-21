@@ -153,6 +153,8 @@ DisplayListMenuIDLoop::
 	ld a, [hl] ; a = item quantity
 	ld [wMaxItemQuantity], a
 .skipGettingQuantity
+	ld a, [wcf91]
+	ld [wd0b5], a
 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	;joenote need to load the proper bank for TM/HM
 	cp HM01
