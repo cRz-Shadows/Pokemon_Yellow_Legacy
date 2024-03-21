@@ -139,7 +139,7 @@ SaffronGymSabrinaText:
 	ld a, [wNumSetBits]
 	cp 5
 	jr nc, .Sabrina6thGym
-	jr Sabrina5thGym
+	jr .Sabrina5thGym
 .todone
 	jr .done
 .SabrinaRematch
