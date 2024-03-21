@@ -98,10 +98,16 @@ GetName::
 	ld bc, NAME_BUFFER_LENGTH
 	call CopyData
 .gotPtr
-	ld a, e
-	ld [wUnusedCF8D], a
-	ld a, d
-	ld [wUnusedCF8D + 1], a
+	; ld a, e
+	; ld [wUnusedCF8D], a
+	; ld a, d
+	; ld [wUnusedCF8D + 1], a
+	ld a, [wd11e]
+	cp HM01
+	jr c, .notMachine2
+	ld a, ITEM_NAME	;this needs to be reset because machines can be in the same listings as items	
+	ld [wNameListType], a
+.notMachine2
 	pop de
 	pop bc
 	pop hl
