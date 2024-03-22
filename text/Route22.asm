@@ -68,7 +68,7 @@ _Route22RivalAfterBattleText1::
 	cont "on STATS,"
 
 	para "You can check to"
-	line "see a #MONs"
+	line "see a #MON's"
 	cont "growth potential."
 
 	para "You should quit"
