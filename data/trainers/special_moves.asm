@@ -450,9 +450,9 @@ SpecialTrainerMoves:
 	db 2, 1, MEGA_DRAIN
 	db 2, 3, PSYCHIC_M
 	db 2, 4, THUNDERBOLT
-	db 3, 1, THUNDER_WAVE
-	db 4, 1, SURF
-	db 4, 4, SWORDS_DANCE
+	db 3, 1, SURF
+	db 3, 4, SWORDS_DANCE
+	db 4, 1, THUNDER_WAVE
 	db 5, 1, BLIZZARD
 	db 5, 2, FIRE_BLAST
 	db 5, 3, HYPER_BEAM
