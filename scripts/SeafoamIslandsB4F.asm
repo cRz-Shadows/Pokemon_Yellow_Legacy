@@ -7,6 +7,8 @@ SeafoamIslandsB4F_Script:
 	ld [wSeafoamIslandsB4FCurScript], a
 	CheckEvent EVENT_INITIATED_WEEBRA_BATTLE
 	ret nz
+	CheckEvent EVENT_BEAT_WEEBRA
+	ret nz
 	ld hl, WeebraFightCheckCoords
 	call ArePlayerCoordsInArray
 	ret nc
@@ -187,7 +189,9 @@ SeafoamIslandsWeebraEndBattleText1:
 	
 SeafoamIslandsWeebraAfterBattleText1:
 	text_far _SeafoamIslandsWeebraAfterBattleText1
-	text_end
+	text_asm
+	ClearEvent EVENT_INITIATED_WEEBRA_BATTLE
+	jp TextScriptEnd
 
 SeafoamIslandsB4FArticunoText:
 	text_asm
