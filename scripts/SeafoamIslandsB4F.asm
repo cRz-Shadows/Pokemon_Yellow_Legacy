@@ -190,7 +190,7 @@ SeafoamIslandsWeebraEndBattleText1:
 SeafoamIslandsWeebraAfterBattleText1:
 	text_far _SeafoamIslandsWeebraAfterBattleText1
 	text_asm
-	ClearEvent EVENT_INITIATED_WEEBRA_BATTLE
+	ResetEvent EVENT_INITIATED_WEEBRA_BATTLE
 	jp TextScriptEnd
 
 SeafoamIslandsB4FArticunoText:

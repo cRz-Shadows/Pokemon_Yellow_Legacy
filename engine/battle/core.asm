@@ -4148,7 +4148,6 @@ CheckForDisobedience:
 	and a
 	jr z, .NormalMode2
 ; what level might disobey?
-	CheckEvent EVENT_BEAT_CHAMPION_RIVAL
 	ld a, [wGameStage] ; Check if player has beat the game
 	and a
 	ld a, 101
