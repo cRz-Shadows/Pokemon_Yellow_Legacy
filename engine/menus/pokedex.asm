@@ -825,7 +825,6 @@ Pokedex_PrintMovesText:
 	pop de
 
 	ld a, [de]
-.first
 	cp 0
 	jp z, .done2
 	push de
@@ -837,7 +836,6 @@ Pokedex_PrintMovesText:
 
 	inc de
 	ld a, [de]
-.second
 	cp 0
 	jp z, .done2
 	push de
@@ -849,7 +847,6 @@ Pokedex_PrintMovesText:
 
 	inc de
 	ld a, [de]
-.third
 	cp 0
 	jp z, .done2
 	push de
@@ -858,7 +855,7 @@ Pokedex_PrintMovesText:
 	hlcoord 2, 14
 	call PlaceString
 	pop de
-.fourth
+
 	inc de
 	ld a, [de]
 	cp 0
@@ -882,6 +879,9 @@ Pokedex_PrintMovesText:
 	pop de
 
 	inc de
+	ld a, [de]
+	cp 0
+	jp z, .done2
 
 	; wait for button press
 	push de

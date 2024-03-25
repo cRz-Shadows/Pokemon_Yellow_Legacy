@@ -3179,7 +3179,7 @@ FindWildLocationsOfMon:
 	inc c
 	jr .loop
 .done
-	call CheckMapForFishingMon ; fishing
+	farcall CheckMapForFishingMon ; fishing
 	ld a, $ff ; list terminator
 	ld [de], a
 	ret
@@ -3200,53 +3200,4 @@ CheckMapForMon:
 	dec b
 	jr nz, .loop
 	dec hl
-	ret
-
-CheckMapForFishingMon:
-	push hl
-	push de
-	push bc
-	ld hl, SuperRodFishingSlots
-	ld bc, $117 ; length of SuperRodFishingSlots
-	ld de, wcd6d
-	ld a, BANK(SuperRodFishingSlots)
-	call FarCopyData
-	pop bc
-	pop de
-	ld hl, wcd6d ; SuperRodFishingSlots
-.loop
-	ld a, [hl] ; current map id
-	cp $ff
-	jr z, .done
-	ld c, a
-	inc hl
-
-	ld b, $0
-.loop2
-	ld a, $4 ; 4 pokemon per map
-	cp b
-	jr z, .loop
-	ld a, [wd11e] ; ID of the mon we're searching for
-	; Do old rod and good rod mons manually because there's so little of them
-	cp POLIWAG
-	jr z, .found
-	cp MAGIKARP
-	jr z, .found
-	cp GOLDEEN
-	jr z, .found
-	cp KRABBY
-	jr z, .found
-	cp [hl]
-	jr nz, .notfound
-.found
-	ld a, c ; found so add map id to list
-	ld [de], a
-	inc de
-.notfound
-	inc hl
-	inc hl
-	inc b
-	jr .loop2
-.done
-	pop hl
 	ret
