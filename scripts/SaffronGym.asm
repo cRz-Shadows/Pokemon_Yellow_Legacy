@@ -158,7 +158,7 @@ SaffronGymSabrinaText:
 	call Delay3
 	ld a, OPP_SABRINA
 	ld [wCurOpponent], a
-	ld a, 4
+	ld a, 3
 	ld [wTrainerNo], a
 	ld a, $4 ; new script
 	ld [wSaffronGymCurScript], a

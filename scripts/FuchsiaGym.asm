@@ -157,7 +157,7 @@ FuchsiaGymKogaText:
 	call Delay3
 	ld a, OPP_KOGA
 	ld [wCurOpponent], a
-	ld a, 4
+	ld a, 3
 	ld [wTrainerNo], a
 	ld a, $4 ; new script
 	ld [wFuchsiaGymCurScript], a

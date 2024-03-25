@@ -534,7 +534,8 @@ wLuckySlotHiddenObjectIndex:: db
 NEXTU
 ; values between 0-6. Shake screen horizontally, shake screen vertically, blink Pokemon...
 wAnimationType:: db
-	ds 29
+wMoveListCounter:: db
+	ds 28
 wAnimPalette:: db
 
 NEXTU

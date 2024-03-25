@@ -20,7 +20,7 @@ _CeruleanGymMistyPreBattleText::
 	done
 
 _CeruleanGymRematchPreBattle1Text::
-	para "You've grown so"
+	text "You've grown so"
     line "much since our"
     cont "last battle."
 
