@@ -3180,6 +3180,7 @@ FindWildLocationsOfMon:
 	jr .loop
 .done
 	farcall CheckMapForFishingMon ; fishing
+	call AddStaticEncounters
 	ld a, $ff ; list terminator
 	ld [de], a
 	ret
@@ -3200,4 +3201,99 @@ CheckMapForMon:
 	dec b
 	jr nz, .loop
 	dec hl
+	ret
+
+AddStaticEncounters: ; manually add gift mons, static encounters and fossil locations
+	ld a, [wd11e]
+	cp MAGIKARP
+	ld b, ROUTE_4
+	jp z, .addEncounter
+	cp CHARMANDER
+	ld b, ROUTE_24
+	jr z, .addEncounter
+	cp SQUIRTLE
+	ld b, VERMILION_CITY
+	jr z, .addEncounter
+	cp BULBASAUR
+	ld b, CERULEAN_CITY
+	jr z, .addEncounter
+	cp SNORLAX
+	jr z, .addSnorlax
+	cp EEVEE
+	ld b, CELADON_CITY
+	jr z, .addEncounter
+	cp LAPRAS
+	ld b, SAFFRON_CITY
+	jr z, .addEncounter
+	cp OMANYTE
+	jr z, .addFossils
+	cp KABUTO
+	jr z, .addFossils
+	cp AERODACTYL
+	ld b, PEWTER_CITY
+	jr z, .addEncounter
+	cp HITMONCHAN
+	ld b, SAFFRON_CITY
+	jr z, .addEncounter
+	cp HITMONLEE
+	ld b, SAFFRON_CITY
+	jr z, .addEncounter
+	cp ARTICUNO
+	ld b, SEAFOAM_ISLANDS_B4F
+	jr z, .addEncounter
+	cp ZAPDOS
+	ld b, POWER_PLANT
+	jr z, .addEncounter
+	cp MOLTRES
+	ld b, VICTORY_ROAD_2F
+	jr z, .addEncounter
+	cp MEWTWO
+	ld b, CERULEAN_CAVE_B1F
+	jr z, .addEncounter
+	; trade mons
+	cp MR_MIME
+	ld b, ROUTE_2
+	jr z, .addEncounter
+	cp MACHAMP
+	ld b, ROUTE_5
+	jr z, .addEncounter
+	cp DUGTRIO
+	ld b, ROUTE_11
+	jr z, .addEncounter
+	cp PARASECT
+	ld b, ROUTE_18
+	jr z, .addEncounter
+	cp RHYDON
+	ld b, CINNABAR_ISLAND
+	jr z, .addEncounter
+	cp DEWGONG
+	ld b, CINNABAR_ISLAND
+	jr z, .addEncounter
+	cp MUK
+	ld b, CINNABAR_ISLAND
+	jr z, .addEncounter
+	cp JYNX
+	ld b, SAFFRON_CITY
+	jr z, .addEncounter
+	ret
+.addEncounter
+	ld a, b
+	ld [de], a
+	inc de
+	ret
+.addSnorlax
+	ld a, ROUTE_12
+	ld [de], a
+	inc de
+	ld a, ROUTE_16
+	ld [de], a
+	inc de
+	ret
+.addFossils
+	ld a, MT_MOON_B2F
+	ld [de], a
+	inc de
+	ld a, FUCHSIA_CITY
+	ld [de], a
+	inc de
 	ret
