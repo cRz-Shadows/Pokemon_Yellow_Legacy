@@ -3210,7 +3210,7 @@ AddStaticEncounters: ; manually add gift mons, static encounters and fossil loca
 	jp z, .addEncounter
 	cp CHARMANDER
 	ld b, ROUTE_24
-	jr z, .addEncounter
+	jp z, .addEncounter
 	cp SQUIRTLE
 	ld b, VERMILION_CITY
 	jr z, .addEncounter
@@ -3274,6 +3274,9 @@ AddStaticEncounters: ; manually add gift mons, static encounters and fossil loca
 	jr z, .addEncounter
 	cp JYNX
 	ld b, SAFFRON_CITY
+	jr z, .addEncounter
+	cp ELECTRODE
+	ld b, POWER_PLANT
 	jr z, .addEncounter
 	ret
 .addEncounter
