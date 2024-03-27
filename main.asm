@@ -65,6 +65,7 @@ INCLUDE "engine/events/hidden_objects/book_or_sculpture.asm"
 INCLUDE "engine/events/hidden_objects/elevator.asm"
 INCLUDE "engine/events/hidden_objects/town_map.asm"
 INCLUDE "engine/events/hidden_objects/pokemon_stuff.asm"
+INCLUDE "text/tmhm_names.asm"
 
 
 SECTION "bank4", ROMX
@@ -178,7 +179,6 @@ INCLUDE "engine/battle/effects.asm"
 SECTION "bank10", ROMX
 
 INCLUDE "engine/menus/pokedex.asm"
-INCLUDE "engine/overworld/emotion_bubbles.asm"
 INCLUDE "engine/movie/trade.asm"
 INCLUDE "engine/movie/intro.asm"
 INCLUDE "engine/movie/trade2.asm"
@@ -187,6 +187,7 @@ INCLUDE "engine/menus/options.asm"
 
 SECTION "Pokédex Rating", ROMX
 
+INCLUDE "engine/overworld/emotion_bubbles.asm"
 INCLUDE "engine/events/pokedex_rating.asm"
 
 
@@ -288,6 +289,7 @@ INCLUDE "engine/items/tm_prices.asm"
 SECTION "Engine Spillover", ROMX
 
 INCLUDE "engine/menus/item_descriptions.asm"
+INCLUDE "engine/gfx/animated_tiles_code.asm"
 
 
 SECTION "Itemfinder 1", ROMX

@@ -61,9 +61,45 @@ _ViridianCityGambler1GymLeaderReturnedText::
 
 _ViridianCityYoungster2YouWantToKnowAboutText::
 	text "You want to know"
-	line "about the 2 kinds"
-	cont "of caterpillar"
-	cont "#MON?"
+	line "about #MON"
+	cont "growth potential?"
+	
+	para "That's called"
+	line "Diversity Value"
+	cont "or DV for short."
+
+	para "A DV can range"
+	line "from 0 to 15"
+	cont "with the higher"
+	cont "being better."
+
+	para "DVs reflect"
+	line "the traits of an"
+	cont "individual"
+	cont "#MON."
+
+	para "The DV value"
+	line "determines stat"
+	cont "variation."
+	
+	para "At lvl 100,"
+	line "the difference"
+	cont "between a 0 and"
+	cont "15 DV, would be"
+	cont "30 stat points."
+
+	para "I wouldn't"
+	line "worry about it"
+	cont "too much, but"
+	cont "you can check"
+	cont "via the STATS"
+	cont "page."
+
+	para "Simply hold"
+	line "START and then"
+	cont "press A on STATS"
+	cont "in the #MON"
+	cont "menu."
 	done
 
 ViridianCityYoungster2OkThenText::
@@ -165,9 +201,14 @@ _ViridianCityTrainerTips1Text::
 	line "and expand your"
 	cont "collection!"
 
-	para "The more you have,"
-	line "the easier it is"
-	cont "to fight!"
+	para "Many #MON"
+	line "have recently"
+	cont "moved habitats."
+	
+	para "Keep an eye out"
+	line "on new routes"
+	cont "for unexpected"
+	cont "species!"
 	done
 
 _ViridianCityTrainerTips2Text::
@@ -178,10 +219,10 @@ _ViridianCityTrainerTips2Text::
 	cont "limited by their"
 	cont "POWER POINTs, PP."
 
-	para "To replenish PP,"
-	line "rest your tired"
-	cont "#MON at a"
-	cont "#MON CENTER!"
+	para "Enemy trainers"
+	line "are not limited"
+	cont "by this,"
+	cont "however!"
 	done
 
 _ViridianCityGymSignText::
@@ -192,60 +233,4 @@ _ViridianCityGymSignText::
 _ViridianCityGymLockedText::
 	text "The GYM's doors"
 	line "are locked..."
-	done
-
-_ViridianOldRodHouseFishingGuruDoYouLikeToFishText::
-	text "I'm the FISHING"
-	line "GURU!"
-
-	para "I simply Looove"
-	line "fishing!"
-
-	para "Do you like to"
-	line "fish?"
-	done
-
-_ViridianOldRodHouseFishingGuruTakeThisText::
-	text "Grand! I like"
-	line "your style!"
-
-	para "Take this and"
-	line "fish, young one!"
-
-	para "<PLAYER> received"
-	line "an @"
-	text_ram wStringBuffer
-	text "!@"
-	text_end
-
-_ViridianOldRodHouseFishingGuruFishingIsAWayOfLifeText::
-	text_start
-
-	para "Fishing is a way"
-	line "of life!"
-
-	para "From the seas to"
-	line "rivers, go out"
-	cont "and land the big"
-	cont "one, young one!"
-	done
-
-_ViridianOldRodHouseFishingGuruThatsSoDisappointingText::
-	text "Oh... That's so"
-	line "disappointing..."
-	done
-
-_ViridianOldRodHouseFishingGuruHowAreTheFishBitingText::
-	text "Hello there,"
-	line "<PLAYER>!"
-
-	para "How are the fish"
-	line "biting?"
-	done
-
-_ViridianOldRodHouseFishingGuruNoRoomText::
-	text "Oh no!"
-
-	para "You have no room"
-	line "for my gift!"
 	done

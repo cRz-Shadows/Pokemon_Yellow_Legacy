@@ -74,7 +74,7 @@ VermilionCityDefaultScript:
 	and a
 	ret nz
 .ship_departed
-	ld a, D_UP
+	ld a, D_UP | B_BUTTON
 	ld [wSimulatedJoypadStatesEnd], a
 	ld a, $1
 	ld [wSimulatedJoypadStatesIndex], a

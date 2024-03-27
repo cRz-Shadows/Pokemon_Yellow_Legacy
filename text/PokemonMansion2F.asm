@@ -59,7 +59,7 @@ _PokemonMansion2F_OakBeforeBattleText::
 	cont "ancient texts."
 	
 	para "Looking at the"
-	line "story of Mewtwo,"
+	line "story of MEWTWO,"
 	
 	para "one ponders its"
 	line "origins..."
@@ -91,9 +91,10 @@ _PokemonMansion2F_OakRefusedBattleText::
 	done
 
 _PokemonMansion2F_OakDefeatedText::
-	text "This defeat"
-	line "teaches me more"
-	cont "than any victory."
+	text "This"
+	line "defeat teaches"
+	cont "me more than"
+	cont "any victory."
 	prompt
 
 _PokemonMansion2F_OakWonText::
@@ -126,5 +127,5 @@ _PokemonMansion2F_OakPostBattleText::
 	done
 
 _PokemonMansion2F_MewText::
-	text "Mew..."
+	text "MEW..."
 	done

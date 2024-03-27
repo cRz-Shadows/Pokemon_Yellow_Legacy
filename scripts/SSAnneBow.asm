@@ -43,11 +43,12 @@ SSAnneBowCooltrainerMText:
 	text_end
 
 SSAnneBowSuperNerd2Text:
-	text_far _SSAnneBowSuperNerd1Text
 	text_asm
 	CheckEvent EVENT_SS_ANNE_PARTOFTHEGAME
 	jr nz, .GotMoney
-	ld hl, .Text
+	ld hl, .Text1
+	call PrintText
+	ld hl, .Text2
 	call PrintText
 	SetEvent EVENT_SS_ANNE_PARTOFTHEGAME
 	ld hl, $0500
@@ -58,11 +59,20 @@ SSAnneBowSuperNerd2Text:
 	; Add the 500 money to the player's total
 	ld de, wPlayerMoney + 2
 	ld hl, wAmountMoneyWon + 2
+	ld c, $3
 	predef_jump AddBCDPredef
 .GotMoney
+	ld hl, .Text3
+	call PrintText
 	jp TextScriptEnd
-.Text
+.Text1
+	text_far _SSAnneBowSuperNerd1Text
+	text_end
+.Text2
 	text_far _SSAnneBowSuperNerd2Text
+	text_end
+.Text3
+	text_far _SSAnneBowSuperNerd3Text
 	text_end
 
 

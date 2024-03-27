@@ -32,6 +32,43 @@ _VermilionGymLTSurgePostBattleAdviceText::
 	cont "type #MON!"
 	done
 
+_VermilionGymRematchPreBattle1Text::
+	text "CHAMPION, huh?"
+	line "I've powered up!"
+
+    para "This'll be a"
+	line "surge of power"
+	cont "you've never"
+	cont "seen before!"
+
+	para "Care for a jolt"
+	line "of reality,"
+	cont "CHAMP?"
+	done
+
+_VermilionGymPreRematchBattle2Text::
+	text "That's the"
+	line "spirit!"
+	
+	para "No holding back!"
+	done
+
+_VermilionGymRematchPostBattleText::
+	text "Your team's"
+	para "electrifying"
+	line "strength..."
+
+	para "You're the real"
+	line "deal!"
+
+	para "You've proven"
+	line "yourself again,"
+	cont "CHAMPION."
+
+	para "Until next time,"
+    line "stay charged!"
+	done
+
 _VermilionGymLTSurgeThunderBadgeInfoText::
 	text "The THUNDERBADGE"
 	line "cranks up your"
@@ -139,29 +176,37 @@ _VermilionGymGymGuideChampInMakingText::
 	text "Yo! Champ in"
 	line "making!"
 
-	para "LT.SURGE has a"
-	line "nickname. People"
-	cont "refer to him as"
-	cont "the Lightning"
-	cont "American!"
+	para "LT.SURGE is"
+	line "most known for"
+	cont "for only using"
+	cont "a single #MON"
+	cont "for his team!"
 
-	para "He's an expert on"
-	line "electric #MON!"
+	para "In doing so,"
+	line "his ace has"
+	cont "become extremely"
+	cont "powerful!"
 
 	para "Birds and water"
 	line "#MON are at"
-	cont "risk! Beware of"
-	cont "paralysis too!"
+	cont "risk! But that"
+	cont "isn't all!"
 
-	para "LT.SURGE is very"
-	line "cautious!"
+	para "LT.SURGE has"
+	line "taught his #MON"
+	cont "a very strong"
+	cont "water technique."
 
-	para "You'll have to"
-	line "break a code to"
-	cont "get to him!"
+	para "This makes it"
+	line "a hard fight for"
+	cont "any one #MON"
+	cont "to solo!"
+
+	para "Teamwork is the"
+	line "key to winning!"
 	done
 
 _VermilionGymGymGuideBeatLTSurgeText::
 	text "Whew! That match"
-	line "was electric!"
+	line "was animated!"
 	done

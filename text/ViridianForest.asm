@@ -76,6 +76,10 @@ _ViridianForestCooltrainerFAfterBattleText::
 	text "I looked forever,"
 	line "but I never found"
 	cont "a PIKACHU here!"
+
+	para "I did run"
+	line "into an ODDISH"
+	cont "though!"
 	done
 
 _ViridianForestYoungster5BattleText::

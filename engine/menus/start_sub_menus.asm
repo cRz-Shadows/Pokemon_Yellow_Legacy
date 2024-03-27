@@ -335,6 +335,8 @@ StartMenu_Item::
 	ld [wListMenuID], a
 	ld a, [wBagSavedMenuItem]
 	ld [wCurrentMenuItem], a
+	ld a, 1
+	ld [wTempFlag], a
 	call DisplayListMenuID
 	jp nz, .sortItems
 	ld a, [wCurrentMenuItem]

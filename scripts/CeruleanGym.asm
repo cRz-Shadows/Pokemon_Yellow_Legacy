@@ -42,7 +42,10 @@ CeruleanGymMistyPostBattleScript:
 	jp z, CeruleanGymResetScripts
 	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
 	ld [wJoyIgnore], a
-
+	ld a, [wGameStage] ; Check if player has beat the game
+	and a
+	jr nz, MistyRematchPostBattle
+; fallthrough
 CeruleanGymReceiveTM11:
 	ld a, TEXT_CERULEANGYM_MISTY_CASCADE_BADGE_INFO
 	ldh [hSpriteIndexOrTextID], a
@@ -71,6 +74,12 @@ CeruleanGymReceiveTM11:
 
 	jp CeruleanGymResetScripts
 
+MistyRematchPostBattle:
+	ld a, TEXT_CERULEANGYM_REMATCH_POST_BATTLE
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+	jp CeruleanGymResetScripts
+
 CeruleanGym_TextPointers:
 	def_text_pointers
 	dw_const CeruleanGymMistyText,                 TEXT_CERULEANGYM_MISTY
@@ -80,6 +89,7 @@ CeruleanGym_TextPointers:
 	dw_const CeruleanGymMistyCascadeBadgeInfoText, TEXT_CERULEANGYM_MISTY_CASCADE_BADGE_INFO
 	dw_const CeruleanGymMistyReceivedTM11Text,     TEXT_CERULEANGYM_MISTY_RECEIVED_TM11
 	dw_const CeruleanGymMistyTM11NoRoomText,       TEXT_CERULEANGYM_MISTY_TM11_NO_ROOM
+	dw_const CeruleanGymRematchPostBattleText, 	   TEXT_CERULEANGYM_REMATCH_POST_BATTLE
 
 CeruleanGymTrainerHeaders:
 	def_trainers 2
@@ -99,6 +109,9 @@ CeruleanGymMistyText:
 	call DisableWaitingAfterTextDisplay
 	jr .done
 .afterBeat
+	ld a, [wGameStage] ; Check if player has beat the game
+	and a
+	jr nz, .MistyRematch
 	ld hl, .TM11ExplanationText
 	call PrintText
 	jr .done
@@ -119,6 +132,30 @@ CeruleanGymMistyText:
 	ld [wGymLeaderNo], a
 	xor a
 	ldh [hJoyHeld], a
+	jr .endBattle
+.MistyRematch
+	ld hl, .PreBattleRematch1Text
+	call PrintText
+	call YesNoChoice
+	ld a, [wCurrentMenuItem]
+	and a
+	jr nz, .refused
+	ld hl, .PreBattleRematch2Text
+	call PrintText
+	call Delay3
+	ld a, OPP_MISTY
+	ld [wCurOpponent], a
+	ld a, 2
+	ld [wTrainerNo], a
+	ld a, $4 ; new script
+	ld [wCeruleanGymCurScript], a
+	ld [wCurMapScript], a
+	jr .endBattle
+.refused
+	ld hl, .PreBattleRematchRefusedText
+	call PrintText
+	jr .done
+.endBattle
 	ld a, SCRIPT_CERULEANGYM_MISTY_POST_BATTLE
 	ld [wCeruleanGymCurScript], a
 .done
@@ -130,6 +167,22 @@ CeruleanGymMistyText:
 
 .TM11ExplanationText:
 	text_far _CeruleanGymMistyTM11ExplanationText
+	text_end
+
+.PreBattleRematch1Text
+	text_far _CeruleanGymRematchPreBattle1Text
+	text_end
+
+.PreBattleRematchRefusedText
+	text_far _GymRematchRefusedText
+	text_end
+
+.PreBattleRematch2Text
+	text_far _CeruleanGymPreRematchBattle2Text
+	text_end
+
+CeruleanGymRematchPostBattleText:
+	text_far _CeruleanGymRematchPostBattleText
 	text_end
 
 CeruleanGymMistyCascadeBadgeInfoText:

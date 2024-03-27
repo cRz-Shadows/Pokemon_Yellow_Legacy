@@ -85,19 +85,23 @@ _GameCornerMiddleAgedWomanText::
 
 _GameCornerGymGuideChampInMakingText::
 	text "Hey!"
-
-	para "You have better"
-	line "things to do,"
-	cont "champ in making!"
+	line "You found me!"
 
 	para "CELADON GYM's"
 	line "LEADER is ERIKA!"
 	cont "She uses grass-"
 	cont "type #MON!"
 
-	para "She might appear"
-	line "docile, but don't"
-	cont "be fooled!"
+	para "They wouldn't"
+	line "let me in so"
+	cont "I don't know"
+	cont "anything else!"
+
+	para "Maybe the JUNIOR"
+	line "TRAINERs will"
+	cont "let some info"
+	cont "slip if you"
+	cont "beat them!"
 	done
 
 _GameCornerGymGuideTheyOfferRarePokemonText::

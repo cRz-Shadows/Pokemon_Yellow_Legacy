@@ -28,4 +28,11 @@ _PokemonTower1FChannelerText::
 	text "I am a CHANNELER!"
 	line "There are spirits"
 	cont "up to mischief!"
+
+	para "Ghost-type"
+	line "#MON don't"
+	cont "make physical"
+	cont "contact, but"
+	cont "instead land"
+	cont "SPECIAL damage!"
 	done

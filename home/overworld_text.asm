@@ -18,21 +18,32 @@ BoulderText::
 	text_asm
 	ld a, [wObtainedBadges]
 	bit 3, a ; RAINBOW BADGE
-	jr z, .done
+	jr z, .done 
 	ld d, STRENGTH
-	farcall HasPartyMove
+	callfar HasPartyMove
 	ld a, [wWhichTrade]
-	and a
-	jr nz, .done
+	and a 
+	jr nz, .done 
 	ld a, [wWhichPokemon]
-	push af
+	push af 
 	call ManualTextScroll
-	pop af
-	ld [wWhichPokemon], a
-	call GetPartyMonName2
+	pop af 
+	ld [wWhichPokemon], a 
+	call GetPartyMonName2 
+	ld a, [wWhichPokemon]
+	ld hl, wPartySpecies
+	ld c, a
+	ld a, l
+	add a, c
+	ld l, a
+	jr nc, .noCarry
+	inc h
+.noCarry
+	ld a, [hl]
+	ld [wcf91], a
 	predef PrintStrengthTxt
-.done
-	jp TextScriptEnd
+.done 
+    jp TextScriptEnd 
 
 MartSignText::
 	text_far _MartSignText

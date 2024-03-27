@@ -50,7 +50,16 @@ DisplayListMenuID::
 	ld [wTopMenuItemY], a
 	ld a, 5
 	ld [wTopMenuItemX], a
+	ld a, [wTempFlag]
+	cp 1
+	ld a, 0
+	ld [wTempFlag], a
+	jr nz, .noSort
 	ld a, A_BUTTON | B_BUTTON | SELECT | START
+	jr .continue
+.noSort
+	ld a, A_BUTTON | B_BUTTON | SELECT
+.continue
 	ld [wMenuWatchedKeys], a
 	ld c, 10
 	call DelayFrames
@@ -146,8 +155,17 @@ DisplayListMenuIDLoop::
 .skipGettingQuantity
 	ld a, [wcf91]
 	ld [wd0b5], a
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;joenote need to load the proper bank for TM/HM
+	cp HM01
 	ld a, BANK(ItemNames)
 	ld [wPredefBank], a
+	jr c, .go_get_name
+	;else it's a tm/hm
+	ld a, BANK(tmhmNames)
+	ld [wPredefBank], a
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+.go_get_name
 	call GetName
 	jr .storeChosenEntry
 .pokemonList
@@ -238,7 +256,24 @@ DisplayChooseQuantityMenu::
 	jr nz, .incrementQuantity
 	bit BIT_D_DOWN, a
 	jr nz, .decrementQuantity
+	bit BIT_D_RIGHT, a
+	jr nz, .incrementQuantityLarge
+	bit BIT_D_LEFT, a
+	jr nz, .decrementQuantityLarge
 	jr .waitForKeyPressLoop
+.incrementQuantityLarge
+	ld a, [wMaxItemQuantity]
+	ld b, a
+	ld a, [wItemQuantity]
+    add a, 10
+    cp b
+    jr nc, .maxQuantity ; if number goes grater than max, set it to max
+    ld [wItemQuantity], a 
+    jr .handleNewQuantity
+.maxQuantity
+    ld a, b
+    ld [wItemQuantity], a
+	jr .handleNewQuantity
 .incrementQuantity
 	ld a, [wMaxItemQuantity]
 	inc a
@@ -252,12 +287,20 @@ DisplayChooseQuantityMenu::
 	ld a, 1
 	ld [hl], a
 	jr .handleNewQuantity
+.decrementQuantityLarge
+	ld hl, wItemQuantity
+	ld a, [hl]
+	sub 10
+	jr nc, .storeNewQuantity ; if quantity goes below 1, set to 1
+	ld a, 1
+	jr .storeNewQuantity
 .decrementQuantity
 	ld hl, wItemQuantity ; current quantity
 	dec [hl]
 	jr nz, .handleNewQuantity
 ; wrap to the max quantity if the player goes below 1
 	ld a, [wMaxItemQuantity]
+.storeNewQuantity
 	ld [hl], a
 .handleNewQuantity
 	hlcoord 17, 10

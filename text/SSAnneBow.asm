@@ -59,3 +59,8 @@ _SSAnneBowSuperNerd1Text::
 _SSAnneBowSuperNerd2Text::
 	text "You got ¥500."
 	done
+
+_SSAnneBowSuperNerd3Text::
+	text "It's part of the"
+	line "game!"
+	done

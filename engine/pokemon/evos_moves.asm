@@ -831,4 +831,87 @@ GetMonLearnset:
 	jr nz, .skipEvolutionDataLoop ; if not, jump back up
 	ret
 
+PrepareLevelUpMoveList:: ; I don't know how the fuck you're a single colon in shin pokered but it sure as shit doesn't work here - PvK
+; Loads relearnable move list to wRelearnableMoves.
+; Input: party mon index = [wWhichPokemon]
+	; Get mon id.
+	ld a, [wWhichPokemon]
+	ld [wd0b5], a	;joenote - put mon id into wram for potential later usage of GetMonHeader
+
+	ld de, wRelearnableMoves ; de = moves list
+	ld c, 0 ; c = count of relearnable moves
+
+	;joenote - start checking for level-0 moves
+	xor a
+	ld b, a	;b will act as a counter, as there can only be up to 4 level-0 moves
+	call GetMonHeader ;mon id already stored earlier in wd0b5
+	ld hl, wMonHMoves
+.loop2
+	ld a, b	;get the current loop counter into a
+	cp $4
+	jr nc, .done2	;if gone through 4 moves already, reached the end of the list. move to done2.
+	ld a, [hl]	;load move
+	and a
+	jr z, .done2	;if move has id 0, list has reached the end early. move to done2.
+
+	; Add move to the list, and update the running count.
+	ld a, 1
+	ld [de], a
+	inc de
+
+	ld a, [hl]	;load move
+	ld [de], a
+	inc de
+	inc c
+	inc hl	;increment to the next level-0 move
+	inc b	;increment the loop counter
+	jr .loop2
+.done2
+	
+	push bc
+	; Get pointer to evos moves data.
+	ld a, [wWhichPokemon]
+	dec a
+	ld c, a
+	ld b, 0
+	ld hl, EvosMovesPointerTable
+	add hl, bc
+	add hl, bc
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a  ; hl = pointer to evos moves data for our mon
+	pop bc
+
+	; Skip over evolution data.
+.skipEvoEntriesLoop
+	ld a, [hli]
+	and a
+	jr nz, .skipEvoEntriesLoop
+	; Write list of relearnable moves, while keeping count along the way.
+	ld b, 100 ;  b = mon's level
+
+.loop
+	ld a, [hli]
+	and a
+	jr z, .done
+
+	cp b
+	jr c, .addMove
+	jr nz, .done
+.addMove
+	ld [de], a
+	inc de
+
+	ld a, [hli] ; move id
+	; Add move to the list, and update the running count.
+	ld [de], a
+	inc de
+	inc c
+	jr .loop
+.done
+	ld a, c
+	ld [wMoveListCounter], a ; number of moves in the list
+.debug
+	ret
+
 INCLUDE "data/pokemon/evos_moves.asm"

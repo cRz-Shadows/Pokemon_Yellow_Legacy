@@ -64,7 +64,7 @@ GetPrizeMenuId:
 ; (distinguishing between Pokemon names
 ; and Items (specifically TMs) names)
 	ldh a, [hSpriteIndexOrTextID]
-	sub 3       ; prize-texts' id are 3, 4 and 5
+	sub 4       ; prize-texts' id are 3, 4 and 5
 	ld [wWhichPrizeWindow], a    ; prize-texts' id (relative, i.e. 0, 1 or 2)
 	add a
 	add a

@@ -1,14 +1,14 @@
 CreditsMons:
 ; one entry per CRED_TEXT_MON or CRED_TEXT_FADE_MON in CreditsOrder
-	db VENUSAUR
-	db ARBOK
-	db RHYHORN
+	db STARMIE
+	db ARCANINE
+	db MACHAMP
 	db FEAROW
 	db ABRA
 	db GRAVELER
-	db HITMONLEE
+	db FLAREON
 	db TANGELA
-	db STARMIE
+	db KADABRA
 	db GYARADOS
 	db DITTO
 	db OMASTAR

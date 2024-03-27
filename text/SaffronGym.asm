@@ -37,6 +37,34 @@ _SaffronGymSabrinaPostBattleAdviceText::
 	cont "realize it!"
 	done
 
+_SaffronGymRematchPreBattle1Text::
+	text "My psychic power"
+    line "feels your might."
+
+    para "Since our last"
+    line "battle, I've"
+    cont "grown stronger."
+
+    para "Ready for a"
+    line "true challenge?"
+    cont "Rematch me?"
+	done
+
+_SaffronGymPreRematchBattle2Text::
+	text "Let's see the"
+    line "power within!"
+    done
+
+_SaffronGymRematchPostBattleText::
+	text "Incredible!"
+    line "Your strength"
+    cont "is the real deal!"
+
+    para "This loss"
+    line "sharpens my"
+    cont "psychic sense."
+	done
+
 _SaffronGymSabrinaMarshBadgeInfoText::
 	text "The MARSHBADGE"
 	line "makes #MON up"
@@ -78,17 +106,22 @@ _SaffronGymGuideChampInMakingText::
 	text "Yo! Champ in"
 	line "making!"
 
-	para "SABRINA's #MON"
-	line "use psychic power"
-	cont "instead of force!"
+	para "SABRINA's pure"
+	line "psychic #MON"
+	cont "are incredibly"
+	cont "powerful!"
 
-	para "Fighting #MON"
-	line "are weak against"
-	cont "psychic #MON!"
+	para "With high SPECIAL,"
+	line "they land huge"
+	cont "damage and take"
+	cont "non physical"
+	cont "hits quite well."
 
-	para "They get creamed"
-	line "before they can"
-	cont "even aim a punch!"
+	para "If you don't have"
+	line "a ghost or bug-"
+	cont "type, bring a"
+	cont "#MON with"
+	cont "high ATTACK!"
 	done
 
 _SaffronGymGuideBeatSabrinaText::
@@ -134,7 +167,8 @@ _SaffronGymYoungster1EndBattleText::
 
 _SaffronGymYoungster1AfterBattleText::
 	text "Psychic #MON"
-	line "fear only bugs!"
+	line "fear only bugs"
+	cont "and ghosts!"
 	done
 
 _SaffronGymChanneler2BattleText::

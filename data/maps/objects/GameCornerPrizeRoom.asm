@@ -1,6 +1,7 @@
 	object_const_def
 	const_export GAMECORNERPRIZEROOM_BALDING_GUY
 	const_export GAMECORNERPRIZEROOM_GAMBLER
+	const_export GAMECORNERPRIZEROOM_SHADY_CLERK
 
 GameCornerPrizeRoom_Object:
 	db $f ; border block
@@ -17,5 +18,6 @@ GameCornerPrizeRoom_Object:
 	def_object_events
 	object_event  1,  4, SPRITE_BALDING_GUY, STAY, NONE, TEXT_GAMECORNERPRIZEROOM_BALDING_GUY
 	object_event  7,  3, SPRITE_GAMBLER, WALK, LEFT_RIGHT, TEXT_GAMECORNERPRIZEROOM_GAMBLER
+	object_event  9,  5, SPRITE_BIKE_SHOP_CLERK, STAY, LEFT, TEXT_GAMECORNERPRIZEROOM_SHADY_CLERK
 
 	def_warps_to GAME_CORNER_PRIZE_ROOM

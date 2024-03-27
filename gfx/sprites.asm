@@ -90,12 +90,12 @@ JessieSprite::           INCBIN "gfx/sprites/jessie.2bpp"
 JamesSprite::            INCBIN "gfx/sprites/james.2bpp"
 BaldingGuySprite::       INCBIN "gfx/sprites/balding_guy.2bpp"
 MewtwoSprite::           INCBIN "gfx/sprites/mewtwo.2bpp"
-MewSprite::              INCBIN "gfx/icons/mew.2bpp"
+MewSprite::              INCBIN "gfx/sprites/mew.2bpp"
 KrisSprite::             INCBIN "gfx/sprites/kris.2bpp"
-JanineSprite::         INCBIN "gfx/sprites/janine.2bpp"
+JanineSprite::           INCBIN "gfx/sprites/janine.2bpp"
 ArticunoSprite::         INCBIN "gfx/sprites/articuno.2bpp"
-MoltresSprite::         INCBIN "gfx/sprites/moltres.2bpp"
-ZapdosSprite::         INCBIN "gfx/sprites/zapdos.2bpp"
+MoltresSprite::          INCBIN "gfx/sprites/moltres.2bpp"
+ZapdosSprite::           INCBIN "gfx/sprites/zapdos.2bpp"
 
 
 SECTION "NPC Sprites 4", ROMX

@@ -151,9 +151,20 @@ _OaksLabGirlText::
 	line "authority on"
 	cont "#MON!"
 
-	para "Many #MON"
-	line "trainers hold him"
-	cont "in high regard!"
+	para "We were shocked"
+	line "to recently learn"
+	cont "about the inter-"
+	cont "action of bug"
+	cont "and poison."
+
+	para "Poison is"
+	line "strong against"
+	cont "bug-types."
+	
+	para "It seems that"
+	line "bug is no longer"
+	cont "strong against"
+	cont "poison, however!"
 	done
 
 _OaksLabRivalFedUpWithWaitingText::
@@ -400,7 +411,7 @@ _CompletedDexText::
 	line "<PLAYER>!"
 
 	para "You've completed"
-	line "the Pokédex!"
+	line "the #DEX!"
 
 	para "Yet, the world"
 	line "of #MON holds"
@@ -420,4 +431,15 @@ _CompletedDexText::
 _OaksLabScientistText::
 	text "I study #MON as"
 	line "PROF.OAK's AIDE."
+
+	para "We recently"
+	line "finished a"
+	cont "paper proving"
+	cont "a rumor false."
+
+	para "As thought,"
+	line "the rare ghost-"
+	cont "type is super"
+	cont "effective to"
+	cont "psychic-types."
 	done

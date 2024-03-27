@@ -19,6 +19,39 @@ _CeruleanGymMistyPreBattleText::
 	line "sweetie?"
 	done
 
+_CeruleanGymRematchPreBattle1Text::
+	text "You've grown so"
+    line "much since our"
+    cont "last battle."
+
+    para "Ready for a"
+    line "rematch at my"
+    cont "full strength?"
+
+    para "I won't hold"
+    line "back this time!"
+
+    para "Ready to dive"
+    line "in, CHAMPION?"
+	done
+
+_CeruleanGymPreRematchBattle2Text::
+	text "Let's make a"
+    line "splash!"
+	done
+
+_CeruleanGymRematchPostBattleText::
+	text "You've bested"
+    line "me again!"
+
+    para "Your strength"
+    line "is inspiring!"
+
+    para "I'll train harder"
+    line "for our next"
+    cont "battle!"
+	done
+
 _CeruleanGymMistyTM11ExplanationText::
 	text "TM11 teaches"
 	line "BUBBLEBEAM!"
@@ -114,15 +147,27 @@ _CeruleanGymGymGuideChampInMakingText::
 	para "Here's my advice!"
 
 	para "The LEADER, MISTY,"
-	line "is a pro who uses"
-	cont "water #MON!"
+	line "is offensively"
+	cont "focused!"
 
-	para "You can drain all"
-	line "their water with"
-	cont "plant #MON!"
+	para "Not only do"
+	line "her water moves"
+	cont "hit hard, she"
+	cont "is very smart!"
 
-	para "Or, zap them with"
-	line "electricity!"
+	para "Her lead and ace"
+	line "know psychic-"
+	cont "type moves!"
+
+	para "This helps cover"
+	line "her weaknesses"
+	cont "from many dual"
+	cont "poison-types."
+
+	para "Electric-types"
+	line "seem to be the"
+	cont "best counter to"
+	cont "this team of 3!"
 	done
 
 _CeruleanGymGymGuideBeatMistyText::

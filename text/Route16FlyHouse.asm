@@ -10,7 +10,7 @@ _Route16FlyHouseBrunetteGirlText::
 
 _Route16FlyHouseBrunetteGirlReceivedHM02Text::
 	text "<PLAYER> received"
-	line "HM02!@"
+	line "HM02 FLY!@"
 	text_end
 
 _Route16FlyHouseBrunetteGirlHM02ExplanationText::

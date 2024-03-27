@@ -43,6 +43,10 @@ VictoryRoad3FDefaultScript:
 	ld hl, wCurrentMapScriptFlags
 	set 5, [hl]
 	SetEvent EVENT_VICTORY_ROAD_3_BOULDER_ON_SWITCH1
+	call WaitForSoundToFinish
+	ld a, SFX_SWITCH
+	call PlaySound
+	call WaitForSoundToFinish
 	ret
 .handle_hole
 	CheckAndSetEvent EVENT_VICTORY_ROAD_3_BOULDER_ON_SWITCH2
