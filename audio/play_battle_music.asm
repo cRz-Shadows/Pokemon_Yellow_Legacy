@@ -26,7 +26,7 @@ PlayBattleMusic::
 	jr z, .GymLeaderBattle
 	cp OPP_PROF_OAK
 	jr z, .finalBattle 
-	jr .playSong
+	jr .normalTrainerBattle
 .GymLeaderBattle
 	ld a, MUSIC_GYM_LEADER_BATTLE
 	jr .playSong
