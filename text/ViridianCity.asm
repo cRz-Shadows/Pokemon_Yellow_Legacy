@@ -25,8 +25,21 @@ _ViridianCityOldManHadMyCoffeeNowText::
 
 _ViridianCityOldManLosingMyTouchText::
 	text "That didn't work!"
-	line "I must be losing"
+	line "I may be losing"
 	cont "my touch."
+
+	para "Maybe that was"
+	line "just a strong"
+	cont "#MON."
+	
+	para "Apparently, if"
+	line "you hold START"
+	cont "while pressing A"
+	cont "on STATS,"
+
+	para "You can check to"
+	line "see a #MON's"
+	cont "growth potential."
 
 	para "I've run out of"
 	line "# BALLs too."

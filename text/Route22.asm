@@ -62,15 +62,6 @@ _Route22RivalAfterBattleText1::
 	para "I will need"
 	line "to get stronger!"
 
-	para "Apparently, if"
-	line "you hold START"
-	cont "before pressing A"
-	cont "on STATS,"
-
-	para "You can check to"
-	line "see a #MON's"
-	cont "growth potential."
-
 	para "You should quit"
 	line "dawdling and get"
 	cont "a move on!"

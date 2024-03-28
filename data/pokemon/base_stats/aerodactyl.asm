@@ -17,7 +17,7 @@
 	tmhm RAZOR_WIND,   FLAMETHROWER,   TOXIC,        TAKE_DOWN,    DOUBLE_EDGE,  \
 	     HYPER_BEAM,   RAGE,         DRAGON_RAGE,  EARTHQUAKE, MIMIC,          \
 	     DOUBLE_TEAM, REFLECT,      BIDE,         FIRE_BLAST,   SWIFT,         \
-		 SKY_ATTACK,  REST,         SUBSTITUTE,   FLY
+		 SKY_ATTACK,  REST,         SUBSTITUTE,   FLY,  ROCK_SLIDE
 	; end
 
 	db 0 ; padding

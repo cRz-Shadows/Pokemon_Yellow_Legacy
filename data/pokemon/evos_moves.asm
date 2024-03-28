@@ -266,7 +266,7 @@ SpearowEvosMoves:
 	db 10, FURY_ATTACK
 	db 14, FOCUS_ENERGY
 	db 18, SWIFT
-	db 20, MIRROR_MOVE
+	db 21, MIRROR_MOVE
 	db 24, DRILL_PECK
 	db 28, WHIRLWIND
 	db 30, SHARPEN
@@ -703,7 +703,6 @@ PidgeyEvosMoves:
 	db 21, WHIRLWIND
 	db 29, TAKE_DOWN
 	db 39, AGILITY
-	db 45, SKY_ATTACK
 	db 54, MIRROR_MOVE
 	db 0
 
@@ -1406,7 +1405,7 @@ SandshrewEvosMoves:
 	db 14, DIG
 	db 18, SWIFT
 	db 23, SLASH
-	db 30, EARTHQUAKE
+	db 33, EARTHQUAKE
 	db 0
 
 SandslashEvosMoves:
@@ -1492,7 +1491,8 @@ EeveeEvosMoves:
 	db 6, TAIL_WHIP
 	db 8, SAND_ATTACK
 	db 10, QUICK_ATTACK
-	db 16, GROWL
+	db 14, GROWL
+	db 17, DOUBLE_KICK
 	db 20, BITE
 	db 25, HEADBUTT
 	db 36, FOCUS_ENERGY
@@ -1651,6 +1651,7 @@ KakunaEvosMoves:
 	db EVOLVE_LEVEL, 10, BEEDRILL
 	db 0
 ; Learnset
+	db 7, HARDEN
 	db 0
 
 BeedrillEvosMoves:
@@ -1661,7 +1662,9 @@ BeedrillEvosMoves:
 	db 12, RAGE
 	db 15, FOCUS_ENERGY
 	db 18, FURY_ATTACK
+	db 21, ACID
 	db 27, TWINEEDLE
+	db 30, SLUDGE
 	db 35, SWORDS_DANCE
 	db 40, AGILITY
 	db 0
@@ -1762,6 +1765,7 @@ CaterpieEvosMoves:
 MetapodEvosMoves:
 ; Evolutions
 	db EVOLVE_LEVEL, 10, BUTTERFREE
+	db 7, HARDEN
 	db 0
 ; Learnset
 	db 7, HARDEN
@@ -2529,7 +2533,6 @@ WeepinbellEvosMoves:
 	db EVOLVE_ITEM, LEAF_STONE, 1, VICTREEBEL
 	db 0
 ; Learnset
-	db 13, POISONPOWDER
 	db 15, HEADBUTT
 	db 21, STUN_SPORE
 	db 25, ACID
@@ -2544,6 +2547,7 @@ VictreebelEvosMoves:
 	db 0
 ; Learnset
 	db 13, POISONPOWDER
+	db 14, VINE_WHIP
 	db 15, HEADBUTT
 	db 21, STUN_SPORE
 	db 25, ACID

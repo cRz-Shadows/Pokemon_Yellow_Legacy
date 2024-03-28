@@ -133,6 +133,7 @@ SpecialTrainerMoves:
 	db 1, 4, BITE
 	db 2, 3, MEGA_DRAIN
 	db 3, 2, SURF
+	db 3, 3, ICE_BEAM
 	db 4, 2, SLUDGE
 	db 4, 3, THUNDERBOLT
 	db 5, 1, SOLARBEAM
@@ -329,7 +330,7 @@ SpecialTrainerMoves:
 	db 2, 1, FLY
 	db 2, 2, SURF
 	db 2, 3, SLAM
-	db 3, 2, HYPER_BEAM
+	db 3, 3, HYPER_BEAM
 	db 3, 4, EARTHQUAKE
 	db 4, 3, EARTHQUAKE
 	db 5, 1, BLIZZARD

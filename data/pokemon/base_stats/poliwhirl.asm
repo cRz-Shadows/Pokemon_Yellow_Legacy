@@ -19,7 +19,7 @@
 	     SUBMISSION,   COUNTER,      SEISMIC_TOSS, RAGE,         EARTHQUAKE,   \
 	     FISSURE,      PSYCHIC_M,    MIMIC,        DOUBLE_TEAM,  BIDE,         \
 	     METRONOME,    SKULL_BASH,   REST,         PSYWAVE,      SUBSTITUTE,   \
-	     SURF,         STRENGTH
+	     SURF,         STRENGTH,   DREAM_EATER
 	; end
 
 	db 0 ; padding
