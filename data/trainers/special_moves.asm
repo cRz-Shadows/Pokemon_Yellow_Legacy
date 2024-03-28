@@ -305,6 +305,7 @@ SpecialTrainerMoves:
 	db 1, 4, THUNDERPUNCH
 	db 2, 1, ICE_BEAM
 	db 3, 1, BODY_SLAM
+	db 4, 1, EXPLOSION
 	db 5, 1, BODY_SLAM
 	db 5, 2, ROCK_SLIDE
 	db 5, 3, EARTHQUAKE
