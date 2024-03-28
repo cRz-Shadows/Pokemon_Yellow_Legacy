@@ -19,7 +19,7 @@
 	     HYPER_BEAM,   PAY_DAY,      SUBMISSION,   COUNTER,      SEISMIC_TOSS, \
 	     RAGE,         DIG,          MIMIC,        DOUBLE_TEAM,  BIDE,         \
 	     SWIFT,        SKULL_BASH,   REST,         SUBSTITUTE,   SURF,         \
-	     STRENGTH, PSYCHIC, PSYWAVE
+	     STRENGTH, PSYCHIC_M, PSYWAVE
 	; end
 
 	db 0 ; padding
