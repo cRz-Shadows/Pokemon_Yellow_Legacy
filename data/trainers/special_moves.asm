@@ -356,7 +356,7 @@ SpecialTrainerMoves:
 
 	db RIVAL2, 6 ; Silph Co - 43, ELECTABUZZ, 44, CLOYSTER, 43, DODRIO , 44, ALAKAZAM, 46, FLAREON
 	db 1, 1, THUNDER_WAVE
-	db 1, 2, PSYCHIC
+	db 1, 2, PSYCHIC_M
 	db 2, 1, SELFDESTRUCT
 	db 2, 2, TOXIC
 	db 2, 3, SURF
