@@ -3256,7 +3256,7 @@ AddStaticEncounters: ; manually add gift mons, static encounters and fossil loca
 	cp MR_MIME
 	ld b, ROUTE_2
 	jr z, .addEncounter
-	cp MACHAMP
+	cp MAHOKE
 	ld b, ROUTE_5
 	jr z, .addEncounter
 	cp DUGTRIO
