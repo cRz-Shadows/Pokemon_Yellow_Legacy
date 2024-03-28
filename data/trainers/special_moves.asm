@@ -321,7 +321,7 @@ SpecialTrainerMoves:
 	db 3, 3, ROCK_SLIDE 
 	db 4, 2, SUBSTITUTE
 	db 5, 1, PSYCHIC_M
-	db 5, 3, BLIZZARD
+	db 5, 3, MEGA_DRAIN
 	db 5, 4, THUNDER
 	db 0
 
