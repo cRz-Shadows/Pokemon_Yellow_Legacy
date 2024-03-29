@@ -114,6 +114,7 @@ VermilionCityJennyPostBattleScript:
 	jr z, .skip	; Kick out if the player lost.
 	ld a, TEXT_VERMILION_CITY_JENNY_POST_BATTLE
 	ldh [hSpriteIndexOrTextID], a
+	SetEvent EVENT_BEAT_JENNY
 	call DisplayTextID
 .skip
 	ld a, $0

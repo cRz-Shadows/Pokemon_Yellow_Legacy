@@ -28,6 +28,7 @@ JoyPostBattleScript:
 	ld a, [wIsInBattle]
 	inc a
 	jr z, .skip	; Kick out if the player lost.
+	SetEvent EVENT_BEAT_NURSE_JOY
 	ld a, TEXT_FUCHSIAPOKECENTER_POST_BATTLE
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID
