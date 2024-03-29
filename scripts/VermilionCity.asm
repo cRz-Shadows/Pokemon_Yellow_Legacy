@@ -52,6 +52,7 @@ VermilionCity_ScriptPointers:
 	dw_const VermilionCityPlayerExitShipScript,      SCRIPT_VERMILIONCITY_PLAYER_EXIT_SHIP
 	dw_const VermilionCityPlayerMovingUp2Script,     SCRIPT_VERMILIONCITY_PLAYER_MOVING_UP2
 	dw_const VermilionCityPlayerAllowedToPassScript, SCRIPT_VERMILIONCITY_PLAYER_ALLOWED_TO_PASS
+	dw_const VermilionCityJennyPostBattleScript,     SCRIPT_VERMILIONCITY_JENNY_POST_BATTLE
 
 VermilionCityDefaultScript:
 	ld a, [wSpritePlayerStateData1FacingDirection]
@@ -148,6 +149,7 @@ VermilionCity_TextPointers:
 	dw_const VermilionCityPokemonFanClubSignText, TEXT_VERMILIONCITY_POKEMON_FAN_CLUB_SIGN
 	dw_const VermilionCityGymSignText,            TEXT_VERMILIONCITY_GYM_SIGN
 	dw_const VermilionCityHarborSignText,         TEXT_VERMILIONCITY_HARBOR_SIGN
+	dw_const VermilionCityJennyPostBattleText,         TEXT_VERMILION_CITY_JENNY_POST_BATTLE
 
 VermilionCityBeautyText:
 	text_far _VermilionCityBeautyText

@@ -58,4 +58,6 @@ TrainerClassMoveChoiceModifications:
 	move_choices 1, 2, 3, 4 ; LANCE
 	move_choices 1, 2, 3, 4 ; WEEBRA
 	move_choices 1, 3, 4 ; JANINE
+	move_choices 1, 2, 3, 4 ; JOY
+	move_choices 1, 2, 3, 4 ; JENNY
 	assert_list_length NUM_TRAINERS

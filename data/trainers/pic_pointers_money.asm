@@ -56,4 +56,6 @@ TrainerPicAndMoneyPointers::
 	pic_money LancePic,        9900
 	pic_money PKMNTrainerFPic, 9900
 	pic_money JaninePic, 	   3500
+	pic_money JoyPic, 	   	   9900
+	pic_money JennyPic, 	   9900
 	assert_table_length NUM_TRAINERS

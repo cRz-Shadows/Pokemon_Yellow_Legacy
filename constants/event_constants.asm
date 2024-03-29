@@ -112,7 +112,8 @@
 	const_skip
 	const EVENT_GOT_BIKE_VOUCHER
 	const EVENT_LEFT_FANCLUB_AFTER_BIKE_VOUCHER
-	const_skip 3
+	const EVENT_BEAT_JENNY
+	const_skip 2
 	const EVENT_SEEL_FAN_BOAST
 	const EVENT_PIKACHU_FAN_BOAST
 	const_skip 8
@@ -161,7 +162,8 @@
 	const_skip 20
 	const EVENT_SAFARI_GAME_OVER
 	const EVENT_IN_SAFARI_ZONE
-	const_skip 7
+	const EVENT_BEAT_NURSE_JOY
+	const_skip 6
 	const EVENT_GOT_FUCHSIA_FOSSIL_GIFT
 	const EVENT_GOT_TM06
 	const EVENT_BEAT_KOGA

@@ -49,4 +49,6 @@ TrainerNames::
 	li "LANCE"
 	li "WEEBRA"
 	li "JANINE"
+	li "NURSE JOY"
+	li "OFF.JENNY"
 	assert_list_length NUM_TRAINERS

@@ -381,6 +381,8 @@ PKMNTrainerFPic::  INCBIN "gfx/trainers/kris.pic"
 
 SECTION "Trainer Pics 3", ROMX
 JaninePic::        INCBIN "gfx/trainers/janine.pic"
+JoyPic::           INCBIN "gfx/trainers/janine.pic" ; TODO chance to Joy
+JennyPic::         INCBIN "gfx/trainers/janine.pic" ; TODO chance to Jenny
     
 
 SECTION "Pics 7", ROMX

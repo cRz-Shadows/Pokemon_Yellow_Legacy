@@ -53,4 +53,6 @@ TrainerAIPointers:
 	dbw 1, LanceAI ; lance
 	dbw 3, GenericAI ; Weebra
 	dbw 3, GenericAI ; janine
+	dbw 3, GenericAI ; joy
+	dbw 3, GenericAI ; jenny
 	assert_table_length NUM_TRAINERS

@@ -2298,7 +2298,7 @@ wLancesRoomCurScript:: db
 	ds 4
 wSilphCo10FCurScript:: db
 wSilphCo11FCurScript:: db
-	ds 1
+wFuchsiaPokecenterCurScript:: db
 wFuchsiaGymCurScript:: db
 wSaffronGymCurScript:: db
 	ds 1

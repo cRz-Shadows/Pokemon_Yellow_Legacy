@@ -575,4 +575,43 @@ SpecialTrainerMoves:
 	db 6, 3, METRONOME
 	db 6, 4, EARTHQUAKE
 	db 0
+
+	db JOY, 1 ; db 62, KANGASKHAN, SNORLAX, STARMIE, PORYGON, EXEGGUTOR, CHANSEY, 0
+	db 1, 1, REST
+    db 1, 2, DOUBLE_TEAM
+    db 1, 3, FISSURE
+    db 2, 2, ICE_BEAM
+    db 2, 3, AMNESIA
+    db 2, 4, DOUBLE_TEAM
+    db 3, 1, RECOVER
+    db 3, 3, THUNDER_WAVE
+    db 3, 4, SUBSTITUTE
+    db 4, 1, REFLECT
+    db 4, 2, BLIZZARD
+    db 4, 3, RECOVER
+    db 4, 4, THUNDER_WAVE
+    db 5, 1, SOFTBOILED
+    db 5, 2, REFLECT
+    db 5, 3, DREAM_EATER
+    db 6, 1, SOFTBOILED
+    db 6, 2, REFLECT
+    db 6, 3, EGG_BOMB
+    db 6, 4, THUNDER_WAVE
+	db 0
+
+	db JENNY, 1 ; db 62, PIDGEOT, BLASTOISE, TANGELA, GENGAR, PARASECT, ARCANINE, 0
+	db 1, 1, TAKE_DOWN
+    db 1, 4, TOXIC
+    db 2, 1, SURF
+    db 2, 2, EARTHQUAKE
+    db 2, 4, BODY_SLAM
+    db 3, 2, SLEEP_POWDER
+    db 3, 3, MIMIC
+    db 4, 1, PSYCHIC_M
+    db 4, 4, THUNDERBOLT
+    db 5, 4, LEECH_LIFE
+    db 6, 1, REFLECT
+    db 6, 2, FIRE_BLAST
+    db 6, 3, BODY_SLAM
+    db 6, 4, DIG
 	db -1 ; end

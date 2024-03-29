@@ -40,9 +40,52 @@ VermilionCityPrintOfficerJennyText::
 	ret
 
 .asm_f1a69
+	; jenny post game fight
+	ld a, [wGameStage] ; Check if player has beat the game
+	and a
+	jr z, .squirtleText
+	CheckEvent EVENT_BEAT_JENNY
+	jr nz, .squirtleText
+
+	ld hl, JennyPreBattleText
+	call PrintText
+	call YesNoChoice
+	ld a, [wCurrentMenuItem]
+	and a
+	jr nz, .refused
+
+	ld hl, JennyAcceptedText
+	call PrintText
+	call Delay3
+	ld a, OPP_JENNY
+	ld [wCurOpponent], a
+	ld a, 1
+	ld [wTrainerNo], a
+	ld a, SCRIPT_VERMILIONCITY_JENNY_POST_BATTLE
+	ld [wFuchsiaPokecenterCurScript], a
+	ld [wCurMapScript], a
+	jr .done
+.refused
+	ld hl, JennyRefusedText
+	call PrintText
+	jr .done
+.squirtleText
 	ld hl, OfficerJennyText5
 	call PrintText
+.done
 	ret
+
+JennyPreBattleText:
+	text_far _JennyBattleText
+	text_end
+
+JennyRefusedText:
+	text_far _JennyRefusedText
+	text_end
+
+JennyAcceptedText:
+	text_far _JennyAcceptedText
+	text_end
 
 OfficerJennyText1:
 	text_far _OfficerJennyText1
@@ -63,6 +106,22 @@ OfficerJennyText4:
 
 OfficerJennyText5:
 	text_far _OfficerJennyText5
+	text_end
+
+VermilionCityJennyPostBattleScript:
+	ld a, [wIsInBattle]
+	inc a
+	jr z, .skip	; Kick out if the player lost.
+	ld a, TEXT_VERMILION_CITY_JENNY_POST_BATTLE
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+.skip
+	ld a, $0
+	ld [wFuchsiaPokecenterCurScript], a
+	ld [wCurMapScript], a
+	ret
+VermilionCityJennyPostBattleText:
+	text_far _NurseJoyAfterBattleText
 	text_end
 
 VermilionCityPrintSignText::

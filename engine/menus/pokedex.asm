@@ -895,7 +895,7 @@ Pokedex_PrintMovesText:
 .done2
 	ret
 
-NewPageButtonPressCheck:
+NewPageButtonPressCheck::
 .waitForButtonPressLetGo
 	call Joypad
 	ldh a, [hJoyHeld]

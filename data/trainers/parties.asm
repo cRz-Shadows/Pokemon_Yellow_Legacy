@@ -49,6 +49,8 @@ TrainerDataPointers:
 	dw LanceData
 	dw WeebraData
 	dw JanineData
+	dw JoyData
+	dw JennyData
 	assert_table_length NUM_TRAINERS
 
 ; if first byte != $FF, then
@@ -791,5 +793,14 @@ WeebraData:
 	db 55, SNORLAX, GENGAR, CHARIZARD, VAPOREON, ONIX, MACHAMP, 0
 
 JanineData:
-	; Fuchsia Gym
+; Fuchsia Gym
 	db 40, GOLBAT, VENOMOTH, NIDOQUEEN, 0
+
+JoyData:
+; Fuchsia Pokecenter
+	; db 1, PIKACHU, PIKACHU, PIKACHU, PIKACHU, PIKACHU, PIKACHU, 0
+	db 62, KANGASKHAN, SNORLAX, STARMIE, PORYGON, EXEGGUTOR, CHANSEY, 0
+
+JennyData:
+; Vermilion City
+	db 62, PIDGEOT, BLASTOISE, TANGELA, GENGAR, PARASECT, ARCANINE, 0

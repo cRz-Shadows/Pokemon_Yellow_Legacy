@@ -129,6 +129,46 @@ _OfficerJennyText5::
 	line "doing?"
 	done
 
+_JennyBattleText::
+	text "As a CHAMPION,"
+	line "you've grown"
+	cont "strong."
+
+	para "And so has that"
+	line "SQUIRTLE I gave"
+	cont "you."
+
+	para "I wonder how"
+	line "strong?"
+
+	para "Can I test your"
+	line "strength in a"
+	cont "battle?"
+	done
+
+_JennyRefusedText::
+	text "Oh, that's too"
+	line "bad. Maybe"
+	cont "another time."
+	done
+
+_JennyAcceptedText::
+	text "I knew you"
+	line "wouldn't back"
+	cont "down!"
+	done
+
+_JennyAfterBattleText::
+    text "Incredible!"
+
+	para "You and SQUIRTLE"
+	line "are unstoppable!"
+
+	para "Keep up the"
+	line "great work,"
+	cont "CHAMPION!"
+    done
+
 _VermilionCitySignText::
 	text "VERMILION CITY"
 	line "The Port of"

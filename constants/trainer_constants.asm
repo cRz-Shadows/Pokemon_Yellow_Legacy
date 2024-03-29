@@ -64,4 +64,6 @@ ENDM
 	trainer_const LANCE          ; $2F
 	trainer_const WEEBRA		 ; $30
 	trainer_const JANINE		 ; $31
+	trainer_const JOY		 	 ; $32
+	trainer_const JENNY		 	 ; $33
 DEF NUM_TRAINERS EQU const_value - 1
