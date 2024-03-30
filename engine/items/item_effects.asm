@@ -3215,37 +3215,36 @@ AddStaticEncounters: ; manually add gift mons, static encounters and fossil loca
 	jp z, .addEncounter
 	cp SQUIRTLE
 	ld b, VERMILION_CITY
-	jr z, .addEncounter
+	jp z, .addEncounter
 	cp BULBASAUR
 	ld b, CERULEAN_CITY
-	jr z, .addEncounter
+	jp z, .addEncounter
 	cp SNORLAX
-	jr z, .addSnorlax
+	jp z, .addSnorlax
 	cp EEVEE
-	ld b, CELADON_CITY
-	jr z, .addEncounter
+	jp z, .addCeladon
 	cp LAPRAS
-	ld b, SAFFRON_CITY
-	jr z, .addEncounter
+	jp z, .addSaffron
 	cp OMANYTE
-	jr z, .addFossils
+	jp z, .addFossils
 	cp KABUTO
-	jr z, .addFossils
+	jp z, .addFossils
 	cp AERODACTYL
 	ld b, PEWTER_CITY
 	jr z, .addEncounter
 	cp HITMONCHAN
-	ld b, SAFFRON_CITY
-	jr z, .addEncounter
+	jr z, .addSaffron
 	cp HITMONLEE
-	ld b, SAFFRON_CITY
-	jr z, .addEncounter
+	jr z, .addSaffron
+	cp VOLTORB
+	jr z, .addPowerPlant
+	cp ELECTRODE
+	jr z, .addPowerPlant
 	cp ARTICUNO
 	ld b, SEAFOAM_ISLANDS_B4F
 	jr z, .addEncounter
 	cp ZAPDOS
-	ld b, POWER_PLANT
-	jr z, .addEncounter
+	jr z, .addPowerPlant
 	cp MOLTRES
 	ld b, VICTORY_ROAD_2F
 	jr z, .addEncounter
@@ -3266,20 +3265,26 @@ AddStaticEncounters: ; manually add gift mons, static encounters and fossil loca
 	ld b, ROUTE_18
 	jr z, .addEncounter
 	cp RHYDON
-	ld b, CINNABAR_ISLAND
-	jr z, .addEncounter
+	jr z, .addCinnabarIsland
 	cp DEWGONG
-	ld b, CINNABAR_ISLAND
-	jr z, .addEncounter
+	jr z, .addCinnabarIsland
 	cp MUK
-	ld b, CINNABAR_ISLAND
-	jr z, .addEncounter
+	jr z, .addCinnabarIsland
 	cp JYNX
-	ld b, SAFFRON_CITY
-	jr z, .addEncounter
-	cp ELECTRODE
-	ld b, POWER_PLANT
-	jr z, .addEncounter
+	jr z, .addSaffron
+	; game corner mons 
+	cp ABRA
+	jr z, .addCeladon
+	cp SEEL
+	jr z, .addCeladon
+	cp MAGMAR
+	jr z, .addCeladon
+	cp ELECTABUZZ
+	jr z, .addCeladon
+	cp DRATINI
+	jr z, .addCeladon
+	cp PORYGON
+	jr z, .addCeladon
 	ret
 .addEncounter
 	ld a, b
@@ -3302,3 +3307,15 @@ AddStaticEncounters: ; manually add gift mons, static encounters and fossil loca
 	ld [de], a
 	inc de
 	ret
+.addSaffron
+	ld b, SAFFRON_CITY
+	jr z, .addEncounter
+.addPowerPlant
+	ld b, POWER_PLANT
+	jr z, .addEncounter
+.addCinnabarIsland
+	ld b, CINNABAR_ISLAND
+	jr z, .addEncounter
+.addCeladon
+	ld b, CELADON_CITY
+	jr z, .addEncounter

@@ -133,6 +133,7 @@ CreditsTextPointers:
 	dw CreditsText_Jaas
 	dw CreditsText_Longlostsoul
 	dw CreditsText_GhostMissingNo
+	dw CreditsText_ZetaNull
 	dw CreditsText_Chamber
 	dw CreditsText_Soloo993
 	dw CreditsText_BlueEmerald
@@ -354,7 +355,7 @@ CreditsText_Weebra:
 CreditsText_Aero:
 	db -6, "AERO@"
 CreditsText_Zach:
-	db -6, "ZACH@"
+	db -6, "ZUPERZACH@"
 CreditsText_Karlos:
 	db -6, "KARLOS@"
 CreditsText_Isona:
@@ -437,6 +438,10 @@ CreditsText_Longlostsoul:
 	db -6, "MADAME FROG@"
 CreditsText_GhostMissingNo:
 	db -6, "GHOST-MISSINGNO@"
+
+; Porygon Sprite
+CreditsText_ZetaNull:
+	db -6, "ZETA NULL@"
 
 ; Party Sprites
 CreditsText_Chamber:
