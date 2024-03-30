@@ -89,7 +89,7 @@ _PewterGymBrockWaitTakeThisText::
 
 _PewterGymReceivedTM34Text::
 	text "<PLAYER> received"
-	line "TM34!@"
+	line "TM34 BIDE!@"
 	text_end
 
 _TM34ExplanationText::
