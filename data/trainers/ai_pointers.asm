@@ -26,7 +26,7 @@ TrainerAIPointers:
 	dbw 3, JugglerAI ; juggler
 	dbw 3, GenericAI
 	dbw 3, GenericAI
-	dbw 2, BlackbeltAI ; blackbelt
+	dbw 2, GenericAI ; blackbelt
 	dbw 3, GenericAI ; rival1
 	dbw 3, GenericAI
 	dbw 3, GenericAI ; Smith

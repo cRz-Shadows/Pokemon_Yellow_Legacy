@@ -737,18 +737,22 @@ GiovanniAI:
 
 CooltrainerMAI:
 	cp 25 percent + 1
-	ret nc
-	jp AIUseXAttack
-
-CooltrainerFAI:
-	; The intended 25% chance to consider switching will not apply.
-	; Uncomment the line below to fix this.
-	cp 25 percent + 1
-	; ret nc
+	ret nc ; 25% chance to switch
 	ld a, 10
 	call AICheckIfHPBelowFraction
 	jp c, AIUseHyperPotion
-	ld a, 5
+	ld a, 1
+	call AICheckIfHPBelowFraction
+	ret nc
+	jp AISwitchIfEnoughMons
+
+CooltrainerFAI:
+	cp 25 percent + 1
+	ret nc ; 25% chance to switch
+	ld a, 10
+	call AICheckIfHPBelowFraction
+	jp c, AIUseHyperPotion
+	ld a, 1
 	call AICheckIfHPBelowFraction
 	ret nc
 	jp AISwitchIfEnoughMons
