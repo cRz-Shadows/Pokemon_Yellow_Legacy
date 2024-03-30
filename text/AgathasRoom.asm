@@ -38,6 +38,46 @@ _AgathaAfterBattleText::
 	cont "along now, child!"
 	done
 
+_AgathaRematchBeforeBattleText::
+	text "Back again, eh?"
+
+	para "Seen OAK lately?"
+	line "Still fond of"
+	cont "you, I bet!"
+
+	para "He's softened,"
+	line "unlike me. I"
+	cont "relish battles!"
+
+	para "Let's see your"
+	line "growth, young"
+	cont "one!"
+
+	para "Ready, <PLAYER>?"
+	done
+
+_AgathaRematchEndBattleText::
+	text "Oh, my!"
+	line "You've grown"
+	cont "even stronger!"
+	prompt
+
+_AgathaRematchAfterBattleText::
+	text "Well earned,"
+	line "CHAMPION! You've"
+	cont "grown mighty!"
+
+	para "You've earned"
+	line "OAK's--and my"
+	cont "respect!"
+
+	para "Now, go!"
+
+	para "Show the world"
+	line "your power,"
+	cont "<PLAYER>!"
+	done
+
 _AgathasRoomAgathaDontRunAwayText::
 	text "Someone's voice:"
 	line "Don't run away!"

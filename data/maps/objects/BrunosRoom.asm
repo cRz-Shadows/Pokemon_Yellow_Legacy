@@ -1,5 +1,6 @@
 	object_const_def
 	const_export BRUNOSROOM_BRUNO
+	const_export BRUNOSROOM_BRUNO_REMATCH
 
 BrunosRoom_Object:
 	db $3 ; border block
@@ -14,5 +15,6 @@ BrunosRoom_Object:
 
 	def_object_events
 	object_event  5,  2, SPRITE_BRUNO, STAY, DOWN, TEXT_BRUNOSROOM_BRUNO, OPP_BRUNO, 1
+	object_event  7,  3, SPRITE_BRUNO, STAY, DOWN, TEXT_BRUNOSROOM_BRUNO_REMATCH, OPP_BRUNO, 2
 
 	def_warps_to BRUNOS_ROOM

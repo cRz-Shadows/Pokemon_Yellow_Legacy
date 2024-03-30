@@ -1,5 +1,6 @@
 	object_const_def
 	const_export LORELEISROOM_LORELEI
+	const_export LORELEISROOM_LORELEI_REMATCH
 
 LoreleisRoom_Object:
 	db $3 ; border block
@@ -14,5 +15,6 @@ LoreleisRoom_Object:
 
 	def_object_events
 	object_event  5,  2, SPRITE_LORELEI, STAY, DOWN, TEXT_LORELEISROOM_LORELEI, OPP_LORELEI, 1
+	object_event  7,  3, SPRITE_LORELEI, STAY, DOWN, TEXT_LORELEISROOM_LORELEI_REMATCH, OPP_LORELEI, 2 ; rematch
 
 	def_warps_to LORELEIS_ROOM

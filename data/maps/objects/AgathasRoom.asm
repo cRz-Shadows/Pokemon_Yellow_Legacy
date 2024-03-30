@@ -1,5 +1,6 @@
 	object_const_def
 	const_export AGATHASROOM_AGATHA
+	const_export AGATHASROOM_AGATHA_REMATCH
 
 AgathasRoom_Object:
 	db $0 ; border block
@@ -14,5 +15,6 @@ AgathasRoom_Object:
 
 	def_object_events
 	object_event  5,  2, SPRITE_AGATHA, STAY, DOWN, TEXT_AGATHASROOM_AGATHA, OPP_AGATHA, 1
+	object_event  7,  3, SPRITE_AGATHA, STAY, DOWN, TEXT_AGATHASROOM_AGATHA_REMATCH, OPP_AGATHA, 2
 
 	def_warps_to AGATHAS_ROOM

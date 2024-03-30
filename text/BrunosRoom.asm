@@ -31,6 +31,44 @@ _BrunoAfterBattleText::
 	cont "challenge!"
 	done
 
+_BrunoRematchBeforeBattleText::
+	text "Your strength is"
+	line "legendary now."
+	cont "But so is mine!"
+
+	para "We've both grown"
+	line "stronger with"
+	cont "our #MON."
+
+	para "Let's test our"
+	line "limits again!"
+
+	para "Prepare yourself!"
+	line "For an intense"
+	cont "battle!"
+
+	para "Hoo hah!"
+	done
+
+_BrunoRematchEndBattleText::
+	text "Incredible!"
+	line "You've surpassed"
+	cont "even my wildest"
+	cont "expectations!"
+	prompt
+
+_BrunoRematchAfterBattleText::
+	text "Truly, you are"
+	line "a CHAMPION among"
+	cont "CHAMPIONS."
+
+	para "Continue to hone"
+	line "your skills."
+
+	para "The journey never"
+	line "ends!"
+	done
+
 _BrunosRoomBrunoDontRunAwayText::
 	text "Someone's voice:"
 	line "Don't run away!"

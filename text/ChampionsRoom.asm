@@ -81,6 +81,57 @@ _ChampionsRoomRivalAfterBattleText::
 	line "like to admit it."
 	done
 
+_ChampionsRoomRivalRematchIntroText::
+	text "Back again?"
+	line "I've been waiting,"
+	cont "<PLAYER>!"
+
+	para "This time, my"
+	line "team's stronger"
+	cont "and ready to"
+	cont "take you down!"
+
+	para "Ready to hand"
+    line "over that title?"
+
+    para "Let's do this!"
+    line "No holding back!"
+	done
+
+_RivalRematchDefeatedText::
+	text "Even with my"
+	line "strongest team,"
+
+	para "your skills as"
+	line "CHAMPION..."
+
+	para "They're real."
+	prompt
+
+_RivalRematchVictoryText::
+	text "With my new"
+	line "strategies,"
+
+	para "you stood no"
+	line "chance, <PLAYER>!"
+
+	para "The title of"
+	line "champion is"
+	cont "rightfully mine!"
+	prompt
+
+_ChampionsRoomRivalRematchAfterBattleText::
+	text "Fine, you win."
+	line "You're the best," 
+	cont "<PLAYER>."
+
+	para "But I won't give"
+	line "up just yet!"
+
+	para "Next time I'll"
+	line "be CHAMPION."
+	done
+
 _ChampionsRoomOakText::
 	text "OAK: <PLAYER>!"
 	done
