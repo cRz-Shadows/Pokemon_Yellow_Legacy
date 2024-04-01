@@ -162,9 +162,8 @@ _FuchsiaGymJanineBattleText::
 	para "Caught off guard?"
 
 	para "I'm JANINE, a"
-	
-	para "ninja of KOGA's"
-	line "GYM."
+	line "ninja of KOGA's"
+	cont "GYM."
 
 	para "Prepare to face"
 	line "my poison!"
@@ -254,7 +253,7 @@ _FuchsiaGymRocker6AfterBattleText::
 	done
 
 _FuchsiaGymGymGuideChampInMakingText::
-	text "Yo! Champ in"
+	text "Yo! CHAMP in"
 	line "making!"
 
 	para "FUCHSIA GYM is"
