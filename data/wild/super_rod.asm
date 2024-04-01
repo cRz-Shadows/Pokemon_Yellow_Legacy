@@ -34,9 +34,10 @@ SuperRodFishingSlots::
 
 CheckMapForFishingMon:
 	push hl
+	push bc
 	ld hl, SuperRodFishingSlots
 .loop
-	ld a, [hl] ; current map id
+	ld a, [hl] ; current map idW
 	cp $ff
 	jr z, .done
 	ld c, a
@@ -60,14 +61,18 @@ CheckMapForFishingMon:
 	cp [hl]
 	jr nz, .notfound
 .found
+	ld a, [de]
+	cp c
+	jr z, .notfound ; already added this to buffer
+	inc de
 	ld a, c ; found so add map id to list
 	ld [de], a
-	inc de
 .notfound
 	inc hl
 	inc hl
 	inc b
 	jr .loop2
 .done
+	pop bc
 	pop hl
 	ret

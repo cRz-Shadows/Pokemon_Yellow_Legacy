@@ -60,8 +60,7 @@ _PalletTownFisherText::
 
 	para "It even sorts"
 	line "itself by"
-	cont "pressing this"
-	cont "button!"
+	cont "pressing START!"
 	done
 
 _PalletTownOaksLabSignText::

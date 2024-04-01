@@ -192,7 +192,7 @@ _PewterGymGuideBeginAdviceText::
 	prompt
 
 _PewterGymGuideAdviceText::
-	text "Brock's lead"
+	text "BROCK's lead"
 	line "is GEODUDE!"
 
 	para "Offense driven,"
@@ -203,7 +203,7 @@ _PewterGymGuideAdviceText::
 	para "His ONIX is"
 	line "all defense!"
 	cont "Watch out for"
-	cont "it's BIND!"
+	cont "its BIND!"
 	done
 
 _PewterGymGuideFreeServiceText::

@@ -732,9 +732,10 @@ _ViridianBlackboardPrlzText::
 
 _ViridianBlackboardBurnText::
 	text "A burn reduces"
-	line "power and speed."
-	cont "It also causes"
-	cont "ongoing damage."
+	line "power."
+	
+	para "It also causes"
+	line "ongoing damage."
 
 	para "Burns remain"
 	line "after battles."

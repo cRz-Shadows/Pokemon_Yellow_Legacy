@@ -76,8 +76,14 @@ _ViridianCityYoungster2YouWantToKnowAboutText::
 	text "You want to know"
 	line "about #MON"
 	cont "growth potential?"
-	
-	para "That's called"
+	done
+
+ViridianCityYoungster2OkThenText::
+	text "Oh, OK then!"
+	done
+
+ViridianCityYoungster2CaterpieAndWeedleDescriptionText::
+	text "That's called"
 	line "Diversity Value"
 	cont "or DV for short."
 
@@ -113,19 +119,6 @@ _ViridianCityYoungster2YouWantToKnowAboutText::
 	cont "press A on STATS"
 	cont "in the #MON"
 	cont "menu."
-	done
-
-ViridianCityYoungster2OkThenText::
-	text "Oh, OK then!"
-	done
-
-ViridianCityYoungster2CaterpieAndWeedleDescriptionText::
-	text "CATERPIE has no"
-	line "poison, but"
-	cont "WEEDLE does."
-
-	para "Watch out for its"
-	line "POISON STING!"
 	done
 
 _ViridianCityGirlHasntHadHisCoffeeYetText::
@@ -234,8 +227,7 @@ _ViridianCityTrainerTips2Text::
 
 	para "Enemy trainers"
 	line "are not limited"
-	cont "by this,"
-	cont "however!"
+	cont "by this, however!"
 	done
 
 _ViridianCityGymSignText::
