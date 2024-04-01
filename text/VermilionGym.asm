@@ -178,8 +178,8 @@ _VermilionGymGymGuideChampInMakingText::
 
 	para "LT.SURGE is"
 	line "most known for"
-	cont "for only using"
-	cont "a single #MON"
+	cont "only using a"
+	cont "single #MON"
 	cont "for his team!"
 
 	para "In doing so,"
@@ -193,9 +193,10 @@ _VermilionGymGymGuideChampInMakingText::
 	cont "isn't all!"
 
 	para "LT.SURGE has"
-	line "taught his #MON"
-	cont "a very strong"
-	cont "water technique."
+	line "taught his"
+	cont "#MON a very"
+	cont "strong water"
+	cont "technique."
 
 	para "This makes it"
 	line "a hard fight for"

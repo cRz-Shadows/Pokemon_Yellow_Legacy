@@ -78,7 +78,8 @@ _SSAnne1FRoomsCooltrainerFAfterBattleText::
 _SSAnne1FRoomsGirl1Text::
 	text "Room service, I"
 	line "would like a"
-	cont "cherry pie please!"
+	cont "cherry pie,"
+	cont "please!"
 	done
 
 _SSAnne1FRoomsMiddleAgedManText::
