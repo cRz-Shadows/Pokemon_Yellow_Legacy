@@ -116,7 +116,7 @@ MapHSPointers:
 	dw NoHS
 	dw NoHS
 	dw NoHS
-	dw NoHS
+	dw LancesRoomHS
 	dw NoHS
 	dw NoHS
 	dw NoHS
@@ -248,9 +248,9 @@ MapHSPointers:
 	dw NoHS
 	dw NoHS
 	dw UnusedMapF4HS
-	dw NoHS
-	dw NoHS
-	dw NoHS
+	dw LoreleisRoomHS
+	dw BrunosRoomHS
+	dw AgathasRoomHS
 	dw NoHS
 	assert_table_length NUM_MAPS
 	dw -1 ; end
