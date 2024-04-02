@@ -3,7 +3,7 @@ FuchsiaPokecenter_Script:
 	call EnableAutoTextBoxDrawing
 	ld hl, FuchsiaPokecenter_ScriptPointers
 	ld a, [wFuchsiaPokecenterCurScript]
-	jp CallFunctionInTable
+	call CallFunctionInTable
 	ret
 
 FuchsiaPokecenter_ScriptPointers:
@@ -33,7 +33,7 @@ JoyPostBattleScript:
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID
 .skip
-	ld a, $0
+	ld a, SCRIPT_FUCHSIAPOKECENTER_DEFAULT
 	ld [wFuchsiaPokecenterCurScript], a
 	ld [wCurMapScript], a
 	ret
