@@ -52,7 +52,7 @@ Voltorb7TrainerHeader:
 ZapdosTrainerHeader:
 	trainer EVENT_BEAT_ZAPDOS, 0, PowerPlantZapdosBattleText, PowerPlantZapdosBattleText, PowerPlantZapdosBattleText
 CraigTrainerHeader:
-	trainer EVENT_BEAT_CRAIG, 6, PowerPlantCraigBattleText1, PowerPlantCraigEndBattleText1, PowerPlantCraigAfterBattleText1
+	trainer EVENT_BEAT_CRAIG, 5, PowerPlantCraigBattleText1, PowerPlantCraigEndBattleText1, PowerPlantCraigAfterBattleText1
 	db -1 ; end
 
 PowerPlantCraigText:
