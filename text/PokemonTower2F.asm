@@ -32,7 +32,7 @@ _PokemonTower2FRivalVictoryText::
 
 	para "They may not hit"
 	line "normal-types,"
-	cont "but non physical"
+	cont "but non-physical"
 	cont "moves can still"
 	cont "hit hard!"
 	prompt

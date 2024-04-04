@@ -62,7 +62,7 @@ _SortItemsText::
 
 _SortComplete::
 	text "Sorting is"
-	next "Complete."
+	next "complete."
 	prompt
 
 _NothingToSort::

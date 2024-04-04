@@ -114,7 +114,7 @@ _SaffronGymGuideChampInMakingText::
 	para "With high SPECIAL,"
 	line "they land huge"
 	cont "damage and take"
-	cont "non physical"
+	cont "non-physical"
 	cont "hits quite well."
 
 	para "If you don't have"
