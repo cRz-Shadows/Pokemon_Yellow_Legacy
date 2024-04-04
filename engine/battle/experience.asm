@@ -3,6 +3,12 @@ GainExperience:
 	cp LINK_STATE_BATTLING
 	ret z ; return if link battle
 	call DivideExpDataByNumMonsGainingExp
+	ld a, [wBoostExpByExpAll] ;load in a if the EXP All is being used
+	ld hl, WithExpAllText ; this is preparing the text to show
+	and a ;check wBoostExpByExpAll value
+	jr z, .skipExpAll ; if wBoostExpByExpAll is zero, we are not using it, so we don't show anything and keep going on
+	call PrintText ; if the code reaches this point it means we have the Exp.All, so show the message
+.skipExpAll
 	ld hl, wPartyMon1
 	xor a
 	ld [wWhichPokemon], a

@@ -38,7 +38,7 @@ LoadSpinnerArrowTiles::
 	ld a, [hli]
 	ld h, [hl]
 	ld l, a
-	call CopyVideoData
+	call CopySpinnerTiles
 	pop bc
 	ld a, $6
 	add c
@@ -47,6 +47,49 @@ LoadSpinnerArrowTiles::
 	pop af
 	dec a
 	jr nz, .loop
+	call DelayFrame ;Delay a frame because CopySpinnerTiles does not do this 
+	ret
+
+CopySpinnerTiles:
+	di	;prevent vblank functions from running
+	;back up destination address
+	ld b, h
+	ld c, l
+	;back up stack pointer
+	ld hl, sp + 0
+	ld a, h
+	ld [hstemp], a
+	ld a, l
+	ld [hstemp + 1], a
+	;set stack pointer to source address
+	ld h, d
+	ld l, e
+	ld sp, hl
+	;restore destination address
+	ld h, b
+	ld l, c
+	;Stack Pointer = tile source address
+	;HL = tile destination address
+	ld c, 8
+.loop
+	pop de
+.waitVRAM
+	ldh a, [rSTAT]		;read from stat register to get the mode
+	and %10				
+	jr nz, .waitVRAM	
+	ld [hl], e
+	inc l
+	ld [hl], d
+	inc l
+	dec c
+	jr nz, .loop
+	;restore stack spointer
+	ld a, [hstemp]
+	ld h, a
+	ld a, [hstemp + 1]
+	ld l, a
+	ld sp, hl
+	ei	;re-enable vblank functions
 	ret
 
 INCLUDE "data/tilesets/spinner_tiles.asm"

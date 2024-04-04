@@ -343,7 +343,7 @@ hUnlockedSilphCoDoors::
 ; the first tile ID in a sequence of tile IDs that increase by 1 each step
 hStartTileID:: db
 
-	ds 2
+hstemp:: dw
 
 hNewPartyLength:: db
 
