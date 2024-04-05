@@ -28,7 +28,7 @@ Route15Gate2FOaksAideText:
 	jp TextScriptEnd
 	
 .Route15Gate2FOaksAideHiText:
-	text_far _Route15Gate2FOaksAideExpAllText
+	text_far _Route15Gate2FOaksAideHiText
 	text_end
 .Route15Gate2FOaksAideGotItemText:
 	text_far _Route15Gate2FOaksAideGotItemText

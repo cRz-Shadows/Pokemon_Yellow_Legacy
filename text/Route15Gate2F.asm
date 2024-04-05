@@ -5,19 +5,19 @@ _Route15Gate2FOaksAideHiText::
 
 	para "I'm supposed to"
 	line "give you an"
-	cont "EXP SHARE!"
-	done
+	cont "EXP ALL!"
+	prompt
 
 _Route15Gate2FOaksAideGotItemText::
 	text "<PLAYER> got the"
-	line "EXP SHARE!@"
-	done
+	line "EXP ALL!"
+	prompt
 
 _Route15Gate2FOaksAideNoRoomText::
 	text "Oh! I see you"
 	line "don't have any"
 	cont "room for the"
-	cont "EXP SHARE."
+	cont "EXP ALL."
 	done
 
 _Route15Gate2FOaksAideExpAllText::
