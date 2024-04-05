@@ -92,7 +92,7 @@ SpecialTrainerMoves:
 	db ERIKA, 3
 	db 1, 2, STUN_SPORE
     db 1, 3, SOLARBEAM
-    db 2, 4, RAZOR_LEAF
+    db 2, 4, SWORDS_DANCE
     db 3, 2, SOLARBEAM
     db 3, 3, LEECH_SEED
     db 4, 1, REFLECT
@@ -121,7 +121,8 @@ SpecialTrainerMoves:
 	db 2, 1, ACID_ARMOR
 	db 2, 2, MEGA_DRAIN
 	db 3, 1, SURF
-	db 3, 3, ICE_BEAM
+	db 3, 2, ICE_BEAM
+	db 3, 4, SLUDGE
 	db 4, 1, SOLARBEAM
 	db 4, 2, DOUBLE_TEAM
 	db 4, 3, TOXIC
@@ -264,7 +265,7 @@ SpecialTrainerMoves:
 	db 5, 3, THUNDERBOLT
 	db 0
 
-	db GIOVANNI, 3
+	db GIOVANNI, 3 ; 53, DUGTRIO, 54, NIDOQUEEN, 55, PERSIAN,  54, NIDOKING, 55, RHYDON
 	db 1, 1, EARTHQUAKE
 	db 1, 2, SLASH
 	db 1, 3, FISSURE
@@ -287,7 +288,7 @@ SpecialTrainerMoves:
 	db 5, 4, THUNDERBOLT
 	db 0
 
-	db LORELEI, 1
+	db LORELEI, 1 ; 56, SLOWBRO, 55, CLOYSTER, 55, DEWGONG,  56, JYNX, 57, LAPRAS
 	db 1, 1, EARTHQUAKE
 	db 1, 2, BLIZZARD
 	db 2, 1, SURF
@@ -300,7 +301,7 @@ SpecialTrainerMoves:
 	db 5, 3, SURF
 	db 0
 
-	db BRUNO, 1
+	db BRUNO, 1 ; 57, HITMONCHAN, 56, POLIWRATH, 57, HITMONLEE, 56, ONIX, 58, MACHAMP
 	db 1, 3, ICE_PUNCH
 	db 1, 4, THUNDERPUNCH
 	db 2, 1, ICE_BEAM
@@ -311,7 +312,7 @@ SpecialTrainerMoves:
 	db 5, 3, EARTHQUAKE
 	db 0
 
-	db AGATHA, 1
+	db AGATHA, 1 ; 57, GENGAR, 58, GOLBAT, 57, MAROWAK, 58, ARBOK, 59, GENGAR
 	db 1, 1, MEGA_DRAIN
 	db 2, 1, FLY
 	db 2, 2, TOXIC
@@ -325,7 +326,7 @@ SpecialTrainerMoves:
 	db 5, 4, THUNDER
 	db 0
 
-	db LANCE, 1
+	db LANCE, 1 ; 61, DRAGONITE, 60, GYARADOS, 60, CHARIZARD, 61, AERODACTYL, 62, DRAGONITE
 	db 1, 1, WRAP
 	db 1, 3, THUNDER_WAVE
 	db 2, 1, FLY
@@ -391,7 +392,7 @@ SpecialTrainerMoves:
 	db 2, 4, MIRROR_MOVE
 	db 3, 1, SOFTBOILED
 	db 3, 2, SOLARBEAM
-	db 3, 3, DOUBLE_TEAM
+	db 3, 3, LEECH_SEED
 	db 3, 4, SLEEP_POWDER
 	db 4, 1, SWORDS_DANCE
 	db 4, 3, BLIZZARD
@@ -434,7 +435,7 @@ SpecialTrainerMoves:
 	db 6, 4, ICE_BEAM
 	db 0
 
-	db RIVAL3, 1 ; Champion - 64, ALAKAZAM, 63, RHYDON, 64, GYARADOS, 64, ARCANINE, 64, EXEGGUTOR, 65, JOLTEON
+	db RIVAL3, 1 ; Champion - 63, ALAKAZAM, 60, RHYDON, 61, GYARADOS, 63, ARCANINE, 62, EXEGGUTOR, 65, JOLTEON
 	db 1, 1, THUNDER_WAVE
 	db 1, 4, DOUBLE_TEAM
 	db 2, 3, HORN_DRILL
@@ -451,7 +452,7 @@ SpecialTrainerMoves:
 	db 6, 2, HEADBUTT
 	db 0
 
-	db RIVAL3, 2 ; Champion - 63, MAGNETON, 64, DODRIO, 64, ALAKAZAM, 63, SANDSLASH, 63, CLOYSTER,  65, FLAREON
+	db RIVAL3, 2 ; Champion - 62, MAGNETON, 61, DODRIO, 63, ALAKAZAM, 60, SANDSLASH, 62, CLOYSTER, 65, FLAREON
 	db 1, 1, THUNDER_WAVE
 	db 1, 3, REFLECT
 	db 2, 1, DRILL_PECK
@@ -467,7 +468,7 @@ SpecialTrainerMoves:
 	db 6, 3, DIG
 	db 0
 
-	db RIVAL3, 3 ; Champion - 64, MACHAMP, 63, PIDGEOT, 63, NINETALES, 64, VICTREEBEL, 64, ALAKAZAM, 65, VAPOREON
+	db RIVAL3, 3 ; Champion - 60, MACHAMP, 61, PIDGEOT, 62, NINETALES, 62, VICTREEBEL, 63, ALAKAZAM, 65, VAPOREON
 	db 1, 1, EARTHQUAKE
 	db 1, 2, ROCK_SLIDE
 	db 2, 1, TOXIC
