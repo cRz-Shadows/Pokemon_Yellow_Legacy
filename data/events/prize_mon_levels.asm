@@ -5,4 +5,4 @@ PrizeMonLevelDictionary:
 
 	db ELECTABUZZ,  22
 	db DRATINI,     25
-	db PORYGON,    	25
+	db PORYGON,    	30
