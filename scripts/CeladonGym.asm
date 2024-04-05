@@ -51,6 +51,9 @@ CeladonGymReceiveTM21:
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID
 	SetEvent EVENT_BEAT_ERIKA
+	ld a, HS_REDS_HOUSE_2F_MR_MIME
+	ld [wMissableObjectIndex], a
+	predef ShowObject
 	lb bc, TM_MEGA_DRAIN, 1
 	call GiveItem
 	jr nc, .BagFull

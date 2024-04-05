@@ -47,6 +47,7 @@ DEF SHOW EQU $15
 	const HS_NUGGET_BRIDGE_GUY             ; 25
 	const HS_ROUTE_24_ITEM                 ; 26
 	const HS_ROUTE_25_ITEM                 ; 27
+	const HS_REDS_HOUSE_2F_MR_MIME         ; 27
 	const HS_DAISY_SITTING                 ; 28
 	const HS_DAISY_WALKING                 ; 29
 	const HS_TOWN_MAP                      ; 2A

@@ -87,6 +87,7 @@ SpriteSheetPointerTable:
 	overworld_sprite ArticunoSprite, 12         ; SPRITE_ARTICUNO
 	overworld_sprite MoltresSprite, 12          ; SPRITE_MOLTRES
 	overworld_sprite ZapdosSprite, 12           ; SPRITE_ZAPDOS
+	overworld_sprite MrMimeSprite, 12     		; SPRITE_MRMIME
 	overworld_sprite MewtwoSprite, 12           ; SPRITE_MEWTWO
 	overworld_sprite MewSprite, 12           	; SPRITE_MEW
 	overworld_sprite KrisSprite, 12     		; SPRITE_KRIS

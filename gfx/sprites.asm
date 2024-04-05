@@ -96,6 +96,7 @@ JanineSprite::           INCBIN "gfx/sprites/janine.2bpp"
 ArticunoSprite::         INCBIN "gfx/sprites/articuno.2bpp"
 MoltresSprite::          INCBIN "gfx/sprites/moltres.2bpp"
 ZapdosSprite::           INCBIN "gfx/sprites/zapdos.2bpp"
+MrMimeSprite::           INCBIN "gfx/sprites/mr_mime.2bpp"
 
 
 SECTION "NPC Sprites 4", ROMX

@@ -28,6 +28,11 @@ _RedsHouse1FMomLookingGreatText::
 	cont "Take care now!"
 	done
 
+_RedsHouse1FMrMimeText::
+	text "MIME, MIME,"
+	line "MR MIME."
+	done
+
 _RedsHouse1FTVStandByMeMovieText::
 	text "There's a movie"
 	line "on TV. Four boys"
