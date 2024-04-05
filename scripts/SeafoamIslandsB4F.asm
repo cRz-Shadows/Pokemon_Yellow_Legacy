@@ -1,26 +1,9 @@
 SeafoamIslandsB4F_Script:
 	call EnableAutoTextBoxDrawing
-	ld hl, SeafoamIslandsB4FTrainerHeaders
-	ld de, SeafoamIslandsB4F_ScriptPointers
 	ld a, [wSeafoamIslandsB4FCurScript]
-	call ExecuteCurMapScriptInTable
-	ld [wSeafoamIslandsB4FCurScript], a
-	CheckEvent EVENT_INITIATED_WEEBRA_BATTLE
-	ret nz
-	CheckEvent EVENT_BEAT_WEEBRA
-	ret nz
-	ld hl, WeebraFightCheckCoords
-	call ArePlayerCoordsInArray
-	ret nc
-	SetEvent EVENT_INITIATED_WEEBRA_BATTLE
-	ld a, SCRIPT_SEAFOAMISLANDSB4F_DEFAULT
-	ld [wSeafoamIslandsB4FCurScript], a
+	ld hl, SeafoamIslandsB4F_ScriptPointers
+	jp CallFunctionInTable
 	ret
-
-WeebraFightCheckCoords:
-	dbmapcoord 7, 2
-	dbmapcoord 7, 3
-	db -1 ; end
 
 SeafoamIslandsB4FResetScript:
 	xor a
@@ -31,13 +14,12 @@ SeafoamIslandsB4FResetScript:
 
 SeafoamIslandsB4F_ScriptPointers:
 	def_script_pointers
-	dw_const CheckFightingMapTrainers,       		SCRIPT_SEAFOAMISLANDSB4F_DEFAULT
-	dw_const DisplayEnemyTrainerTextAndStartBattle, SCRIPT_SEAFOAMISLANDSB4F_START_BATTLE
-	dw_const EndTrainerBattle,                      SCRIPT_SEAFOAMISLANDSB4F_END_BATTLE
+	dw_const SeafoamIslandsB4FDefaultScript,       SCRIPT_SEAFOAMISLANDSB4F_DEFAULT
 	dw_const SeafoamIslandsB4FObjectMoving1Script, SCRIPT_SEAFOAMISLANDSB4F_OBJECT_MOVING1
 	dw_const SeafoamIslandsB4FMoveObjectScript,    SCRIPT_SEAFOAMISLANDSB4F_MOVE_OBJECT
 	dw_const SeafoamIslandsB4FObjectMoving2Script, SCRIPT_SEAFOAMISLANDSB4F_OBJECT_MOVING2
 	dw_const SeafoamIslandsB4FObjectMoving3Script, SCRIPT_SEAFOAMISLANDSB4F_OBJECT_MOVING3
+	dw_const WeebraPostBattleScript,               SCRIPT_SEAFOAMISLANDSB4F_WEEBRA_POST_BATTLE
 	EXPORT SCRIPT_SEAFOAMISLANDSB4F_MOVE_OBJECT ; used by engine/overworld/player_state.asm
 
 SeafoamIslandsB4FObjectMoving3Script:
@@ -161,6 +143,7 @@ SeafoamIslandsB4F_TextPointers:
 	dw_const SeafoamIslandsWeebraText1,      	TEXT_SEAFOAM_ISLANDS_WEEBRA
 	dw_const SeafoamIslandsB4FBouldersSignText, TEXT_SEAFOAMISLANDSB4F_BOULDERS_SIGN
 	dw_const SeafoamIslandsB4FDangerSignText,   TEXT_SEAFOAMISLANDSB4F_DANGER_SIGN
+	dw_const SeafoamIslandsWeebraEndBattleText1,TEXT_SEAFOAM_ISLANDS_WEEBRA_END_BATTLE
 
 ; Articuno is object 3, but its event flag is bit 2.
 ; This is not a problem because its sight range is 0, and
@@ -169,15 +152,75 @@ SeafoamIslandsB4FTrainerHeaders:
 	def_trainers 3
 ArticunoTrainerHeader:
 	trainer EVENT_BEAT_ARTICUNO, 0, SeafoamIslandsB4FArticunoBattleText, SeafoamIslandsB4FArticunoBattleText, SeafoamIslandsB4FArticunoBattleText
-WeebraTrainerHeader:
-	trainer EVENT_BEAT_WEEBRA, 5, SeafoamIslandsWeebraBattleText1, SeafoamIslandsWeebraEndBattleText1, SeafoamIslandsWeebraAfterBattleText1
 	db -1 ; end
 
 SeafoamIslandsWeebraText1:
 	text_asm
-	ld hl, WeebraTrainerHeader
-	call TalkToTrainer
+	CheckEvent EVENT_BEAT_WEEBRA
+	jr nz, .AlreadyFought
+	ld hl, SeafoamIslandsWeebraBattleText1
+	call PrintText
+	call Delay3
+	ld a, OPP_WEEBRA
+	ld [wCurOpponent], a
+	ld a, 1
+	ld [wTrainerNo], a
+.skip
+	ld a, SCRIPT_SEAFOAMISLANDSB4F_WEEBRA_POST_BATTLE
+	ld [wSeafoamIslandsB4FCurScript], a
+	ld [wCurMapScript], a
 	jp TextScriptEnd
+.AlreadyFought
+	ld hl, SeafoamIslandsWeebraAfterBattleText1
+	call PrintText
+	call Delay3
+	ld hl, WeebraFightCheckCoords
+	call ArePlayerCoordsInArray
+	jp nc, TextScriptEnd ; if weebra has already moved, don't move
+	jr .skip
+	
+WeebraPostBattleScript:
+	ld a, [wIsInBattle]
+	inc a
+	jr z, .skip	; Kick out if the player lost.
+	ld hl, WeebraFightCheckCoords
+	call ArePlayerCoordsInArray
+	jr nc, .skip ; if weebra has already moved, don't move
+	CheckEvent EVENT_BEAT_WEEBRA
+	jr nz, .dontDoText
+	ld a, TEXT_SEAFOAM_ISLANDS_WEEBRA_END_BATTLE
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+	SetEvent EVENT_BEAT_WEEBRA
+.dontDoText
+	ld a, SEAFOAM_ISLANDS_WEEBRA
+	ldh [hSpriteIndex], a
+	ld de, MovementData_Weebra
+	call MoveSprite
+	ld a, SPRITE_FACING_LEFT
+	ldh [hSpriteFacingDirection], a
+	xor a
+	ld [wJoyIgnore], a
+.skip
+	ld a, SCRIPT_SEAFOAMISLANDSB4F_DEFAULT
+	ld [wSeafoamIslandsB4FCurScript], a
+	ld [wCurMapScript], a
+	; ResetEvent EVENT_INITIATED_WEEBRA_BATTLE
+	ret
+SeafoamIslandsWeebraAfterBattleText1:
+	text_far _SeafoamIslandsWeebraAfterBattleText1
+	text_end
+
+WeebraFightCheckCoords:
+	dbmapcoord 7, 2
+	dbmapcoord 7, 3
+	db -1 ; end
+
+MovementData_Weebra:
+	db NPC_MOVEMENT_RIGHT
+	db NPC_MOVEMENT_RIGHT
+	db NPC_MOVEMENT_RIGHT
+	db -1 ; end
 	
 SeafoamIslandsWeebraBattleText1:
 	text_far _SeafoamIslandsWeebraBattleText1
@@ -186,12 +229,6 @@ SeafoamIslandsWeebraBattleText1:
 SeafoamIslandsWeebraEndBattleText1:
 	text_far _SeafoamIslandsWeebraEndBattleText1
 	text_end
-	
-SeafoamIslandsWeebraAfterBattleText1:
-	text_far _SeafoamIslandsWeebraAfterBattleText1
-	text_asm
-	ResetEvent EVENT_INITIATED_WEEBRA_BATTLE
-	jp TextScriptEnd
 
 SeafoamIslandsB4FArticunoText:
 	text_asm

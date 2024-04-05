@@ -79,9 +79,9 @@ SeafoamIslandsB3FDefaultScript:
 	ret
 
 RLEList_ForcedSurfingStrongCurrentNearSteps:
-	db D_DOWN, 6
-	db D_RIGHT, 5
-	db D_DOWN, 3
+	db D_DOWN | B_BUTTON, 6
+	db D_RIGHT | B_BUTTON, 5
+	db D_DOWN | B_BUTTON, 3
 	db -1 ; end
 
 SeafoamIslandsB3FObjectMoving1Script:

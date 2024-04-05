@@ -25,19 +25,18 @@ _SeafoamIslandsWeebraBattleText1::
 	done
 	
 _SeafoamIslandsWeebraEndBattleText1::
-	text "Nice"
-	line "moves!"
+	text "Nice moves!"
 
 	para "I almost got off"
 	line "my 'Essence of"
 	cont "Beast Style' too!"
-	prompt
+	done
 
 _SeafoamIslandsWeebraAfterBattleText1::
 	text "Honestly I prefer"
 	line "my team fresh"
 	cont "never frozen,"
 
-	para "but you do"
-	line "you, bro!"
+	para "but you do you,"
+	line "bro!"
 	done

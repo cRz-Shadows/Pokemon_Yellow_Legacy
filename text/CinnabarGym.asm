@@ -243,7 +243,7 @@ _CinnabarGymGymGuideChampInMakingText::
 	para "He's got a lot"
 	line "of coverage moves"
 	cont "to check your"
-	cont "effective #MON"
+	cont "effective #MON."
 	done
 
 _CinnabarGymGymGuideBeatBlaineText::

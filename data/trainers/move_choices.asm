@@ -42,7 +42,7 @@ TrainerClassMoveChoiceModifications:
 	move_choices 1, 3    ; COOLTRAINER_M
 	move_choices 1, 3    ; COOLTRAINER_F
 	move_choices 1, 2, 3, 4 ; BRUNO
-	move_choices 1, 2    ; BROCK
+	move_choices 1		 ; BROCK
 	move_choices 1, 3, 4 ; MISTY
 	move_choices 1, 2, 3 ; LT_SURGE
 	move_choices 1, 3, 4 ; ERIKA
