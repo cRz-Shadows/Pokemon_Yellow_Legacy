@@ -10,7 +10,7 @@ _Route12Gate2FBrunetteGirlYouCanHaveThisText::
 
 _Route12Gate2FBrunetteGirlReceivedTM39Text::
 	text "<PLAYER> received"
-	line "TM39!@"
+	line "TM39 SWIFT!@"
 	text_end
 
 _Route12Gate2FBrunetteGirlTM39ExplanationText::

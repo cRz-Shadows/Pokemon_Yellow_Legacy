@@ -73,7 +73,7 @@ _CeladonMartRoofLittleGirlYayLemonadeText::
 
 _CeladonMartRoofLittleGirlReceivedTM49Text::
 	text "<PLAYER> received"
-	line "TM49!@"
+	line "TM49 TRIATTK!@"
 	text_end
 
 _CeladonMartRoofLittleGirlTM49ExplanationText::
