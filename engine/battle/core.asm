@@ -4158,22 +4158,22 @@ CheckForDisobedience:
 	ld a, 65 ; Jolteon/Flareon/Vaporeon's level
 	jr nc, .next
 	cp 7
-	ld a, 58 ; Rhydon's level
+	ld a, 55 ; Rhydon's level
 	jr nc, .next
 	cp 6
-	ld a, 55 ; Magmar's level
+	ld a, 53 ; Magmar's level
 	jr nc, .next
 	cp 5
 	ld a, 50 ; Alakazam's level
 	jr nc, .next
     cp 4
-	ld a, 45 ; Venomoth's level
+	ld a, 43 ; Venomoth's level
 	jr nc, .next
 	cp 3
 	ld a, 35 ; Vileplume's level
 	jr nc, .next
 	cp 2
-    ld a, 24 ; Raichu's level
+    ld a, 24 ; Bit below Raichu's level
 	jr nc, .next
 	cp 1
 	ld a, 21 ; Starmie's level

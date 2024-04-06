@@ -1495,22 +1495,22 @@ ItemUseMedicine:
 	ld b, 65 ; Jolteon/Flareon/Vaporeon's level
 	jr nc, .next1
 	cp 7
-	ld b, 58 ; Rhydon's level
+	ld b, 55 ; Rhydon's level
 	jr nc, .next1
 	cp 6
-	ld b, 55 ; Magmar's level
+	ld b, 53 ; Magmar's level
 	jr nc, .next1
 	cp 5
 	ld b, 50 ; Alakazam's level
 	jr nc, .next1
     cp 4
-	ld b, 45 ; Venomoth's level
+	ld b, 43 ; Venomoth's level
 	jr nc, .next1
 	cp 3
 	ld b, 35 ; Vileplume's level
 	jr nc, .next1
 	cp 2
-    ld b, 24 ; Raichu's level
+    ld b, 24 ; Bit below Raichu's level
 	jr nc, .next1
 	cp 1
 	ld b, 21 ; Starmie's level

@@ -138,22 +138,22 @@ GainExperience:
 	ld d, 65 ; Jolteon/Flareon/Vaporeon's level
 	jr nc, .next1
 	cp 7
-	ld d, 58 ; Rhydon's level
+	ld d, 55 ; Rhydon's level
 	jr nc, .next1
 	cp 6
-	ld d, 55 ; Magmar's level
+	ld d, 53 ; Magmar's level
 	jr nc, .next1
 	cp 5
 	ld d, 50 ; Alakazam's level
 	jr nc, .next1
     cp 4
-	ld d, 45 ; Venomoth's level
+	ld d, 43 ; Venomoth's level
 	jr nc, .next1
 	cp 3
 	ld d, 35 ; Vileplume's level
 	jr nc, .next1
 	cp 2
-    ld d, 24 ; Raichu's level
+    ld d, 24 ; Bit below Raichu's level
 	jr nc, .next1
 	cp 1
 	ld d, 21 ; Starmie's level
