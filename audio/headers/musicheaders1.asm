@@ -16,6 +16,13 @@ Music_Gym::
 	channel 2, Music_Gym_Ch2
 	channel 3, Music_Gym_Ch3
 
+Music_Viridian_Gym::
+	channel_count 4
+	channel 1, Music_YellowUnusedSong_Ch1
+	channel 2, Music_YellowUnusedSong_Ch2
+	channel 3, Music_YellowUnusedSong_Ch3
+	channel 4, Music_YellowUnusedSong_Ch4
+
 ; Viridian City, Pewter City, Saffron City
 Music_Cities1::
 	channel_count 4
