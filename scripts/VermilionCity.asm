@@ -288,3 +288,20 @@ VermilionCityOfficerJennyText:
 	text_asm
 	farcall VermilionCityPrintOfficerJennyText
 	jp TextScriptEnd
+
+VermilionCityJennyPostBattleScript:
+	ld a, [wIsInBattle]
+	inc a
+	jr z, .skip	; Kick out if the player lost.
+	ld a, TEXT_VERMILION_CITY_JENNY_POST_BATTLE
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+	SetEvent EVENT_BEAT_JENNY
+.skip
+	ld a, $0
+	ld [wVermilionCityCurScript], a
+	ld [wCurMapScript], a
+	ret
+VermilionCityJennyPostBattleText:
+	text_far _JennyAfterBattleText
+	text_end

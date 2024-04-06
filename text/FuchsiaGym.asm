@@ -42,7 +42,7 @@ _FuchsiaGymRematchPreBattle1Text::
     para "CHAMPION, huh?"
 	
     para "I commend your"
-    cont "strength."
+    line "strength."
 
     para "But as a ninja"
     line "master, I've"
@@ -70,7 +70,7 @@ _FuchsiaGymRematchPostBattleText::
 
 	para "Truly, you are"
 	line "worthy of the"
-	cont "title Champion."
+	cont "title CHAMPION."
 
 	para "Continue to hone"
 	line "your skills, for"

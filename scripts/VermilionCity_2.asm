@@ -62,7 +62,7 @@ VermilionCityPrintOfficerJennyText::
 	ld a, 1
 	ld [wTrainerNo], a
 	ld a, SCRIPT_VERMILIONCITY_JENNY_POST_BATTLE
-	ld [wFuchsiaPokecenterCurScript], a
+	ld [wVermilionCityCurScript], a
 	ld [wCurMapScript], a
 	jr .done
 .refused
@@ -106,23 +106,6 @@ OfficerJennyText4:
 
 OfficerJennyText5:
 	text_far _OfficerJennyText5
-	text_end
-
-VermilionCityJennyPostBattleScript:
-	ld a, [wIsInBattle]
-	inc a
-	jr z, .skip	; Kick out if the player lost.
-	ld a, TEXT_VERMILION_CITY_JENNY_POST_BATTLE
-	ldh [hSpriteIndexOrTextID], a
-	SetEvent EVENT_BEAT_JENNY
-	call DisplayTextID
-.skip
-	ld a, $0
-	ld [wFuchsiaPokecenterCurScript], a
-	ld [wCurMapScript], a
-	ret
-VermilionCityJennyPostBattleText:
-	text_far _NurseJoyAfterBattleText
 	text_end
 
 VermilionCityPrintSignText::
