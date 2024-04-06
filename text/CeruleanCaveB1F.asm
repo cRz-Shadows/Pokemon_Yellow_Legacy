@@ -26,5 +26,5 @@ _CeruleanCaveSmithAfterBattleText1::
 	cont "yourself in this"
 	cont "cave!"
 
-	para "Good luck nerd!"
+	para "Good luck, nerd!"
 	done

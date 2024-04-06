@@ -99,8 +99,9 @@ _ChampionsRoomRivalRematchIntroText::
 	done
 
 _RivalRematchDefeatedText::
-	text "Even with my"
-	line "strongest team,"
+	text "Even"
+	line "with my"
+	cont "strongest team,"
 
 	para "your skills as"
 	line "CHAMPION..."
@@ -128,7 +129,7 @@ _ChampionsRoomRivalRematchAfterBattleText::
 	para "But I won't give"
 	line "up just yet!"
 
-	para "Next time I'll"
+	para "Next time, I'll"
 	line "be CHAMPION."
 	done
 

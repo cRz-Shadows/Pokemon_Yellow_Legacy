@@ -1200,7 +1200,7 @@ wNPCMovementScriptSpriteOffset:: db
 
 wScriptedNPCWalkCounter:: db
 
-	ds 1
+wBoulderSFXCheck:: db ; used for playing switch sounds in victory road
 
 ; if running on SGB, it's 1, else it's 0
 wOnSGB:: db

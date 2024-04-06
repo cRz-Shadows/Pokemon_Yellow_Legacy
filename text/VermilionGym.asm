@@ -55,8 +55,8 @@ _VermilionGymPreRematchBattle2Text::
 
 _VermilionGymRematchPostBattleText::
 	text "Your team's"
-	para "electrifying"
-	line "strength..."
+	line "electrifying"
+	cont "strength..."
 
 	para "You're the real"
 	line "deal!"

@@ -229,7 +229,7 @@ _ViridianGymGuidePreBattleText::
 
 	para "I did hear a"
 	line "rumor that"
-	cont "this leader"
+	cont "this LEADER"
 	cont "is quite wealthy."
 	
 	para "You should expect"

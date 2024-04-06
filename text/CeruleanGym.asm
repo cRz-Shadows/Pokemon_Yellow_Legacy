@@ -82,7 +82,7 @@ _CeruleanGymMistyCascadeBadgeInfoText::
 
 _CeruleanGymMistyReceivedTM11Text::
 	text "<PLAYER> received"
-	line "TM11! BBLBEAM@"
+	line "TM11 BBLBEAM!@"
 	text_end
 
 _CeruleanGymMistyTM11NoRoomText::
