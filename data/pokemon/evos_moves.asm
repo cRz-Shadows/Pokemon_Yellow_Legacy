@@ -1281,7 +1281,16 @@ RaichuEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 0
+	db 6, QUICK_ATTACK
+	db 8, THUNDER_WAVE
+	db 11, TAIL_WHIP
+	db 15, DOUBLE_TEAM
+	db 20, THUNDERPUNCH
+	db 24, HEADBUTT
+	db 30, THUNDERBOLT
+	db 36, AGILITY
+	db 41, THUNDER
+	db 50, LIGHT_SCREEN
 
 MissingNo56EvosMoves:
 ; Evolutions
