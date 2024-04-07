@@ -1291,6 +1291,7 @@ RaichuEvosMoves:
 	db 36, AGILITY
 	db 41, THUNDER
 	db 50, LIGHT_SCREEN
+	db 0
 
 MissingNo56EvosMoves:
 ; Evolutions
