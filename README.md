@@ -130,10 +130,10 @@ These videos also provide an overview of the hack and the ideology behind it:
     - [Out of Bounds don't Crash the Game](https://github.com/pret/pokered/wiki/Out-of-Bounds-don't-Crash-the-Game)
     - [Fix No Mon Scenarios Softlock](https://github.com/pret/pokered/wiki/Fix-No-Mon-Scenarios-Softlock)
     - [Collision check when Jumping a Ledge](https://github.com/pret/pokered/wiki/Collision-check-when-Jumping-a-Ledge)
-- Pgattic
+- Pgattic:
     - [Running Shoes (This required some extra work for yellow if you want to implement)](https://github.com/pret/pokered/wiki/Running-Shoes)
     - [Remove Artificial Save Delay](https://github.com/pret/pokered/wiki/Remove-Artificial-Save-Delay)
-- Xillicis
+- Xillicis:
     - [Remove 25% chance for enemy stat down moves to miss](https://github.com/pret/pokered/wiki/Remove-25%25-chance-for-enemy-stat-down-moves-to-miss)
     - [Implement move priority system](https://github.com/pret/pokered/wiki/Implement-move-priority-system)
 - TwitchPlaysPokemon - [Trainer pokemon nickname](https://github.com/twitchplayspokemon/tppcrystal251pub/blob/public/main.asm)
