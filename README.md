@@ -45,7 +45,7 @@ These videos also provide an overview of the hack and the ideology behind it:
 - **IRC:** [libera#pret][irc]
 
 
-## Credits For Features In Yellow Legacy:
+## Credits For Yellow Legacy:
 
 ### Creators:
 - TheSmithPlays - Developer
