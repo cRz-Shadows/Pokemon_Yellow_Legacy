@@ -47,6 +47,14 @@ _NurseJoyBattleText::
     line "a battle?"
 	done
 
+_NurseJoyBattleText2::
+    text "Actually..."
+    line "Before you go,"
+
+    para "Could I ask for"
+    line "another battle?"
+	done
+
 _NurseJoyRefusedText::
 	text "I understand."
 	line "Duty calls, and"

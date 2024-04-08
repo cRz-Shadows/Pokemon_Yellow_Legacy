@@ -48,11 +48,12 @@ FuchsiaPokecenterNurseText:
 	and a
 	jr z, .done
 	CheckEvent EVENT_BEAT_NURSE_JOY
-	jr nz, .done
+	jr nz, .NotFirstBattle
 	farcall NewPageButtonPressCheck
 	ld a, PLAYER_DIR_UP
 	ld [wPlayerMovingDirection], a
 	ld hl, NurseJoyPreBattleText
+.continue
 	call PrintText
 	call YesNoChoice
 	ld a, [wCurrentMenuItem]
@@ -74,6 +75,12 @@ FuchsiaPokecenterNurseText:
 	call PrintText
 .done
 	jp TextScriptEnd
+.NotFirstBattle
+	farcall NewPageButtonPressCheck
+	ld a, PLAYER_DIR_UP
+	ld [wPlayerMovingDirection], a
+	ld hl, NurseJoyPreBattleText2
+	jr .continue
 NurseJoyPreBattleText:
 	text_far _NurseJoyBattleText
 	text_end
@@ -82,6 +89,9 @@ NurseJoyRefusedText:
 	text_end
 NurseJoyAcceptedText:
 	text_far _NurseJoyAcceptedText
+	text_end
+NurseJoyPreBattleText2:
+	text_far _NurseJoyBattleText2
 	text_end
 
 FuchsiaPokecenterRockerText:

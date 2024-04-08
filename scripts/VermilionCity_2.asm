@@ -44,8 +44,8 @@ VermilionCityPrintOfficerJennyText::
 	ld a, [wGameStage] ; Check if player has beat the game
 	and a
 	jr z, .squirtleText
-	CheckEvent EVENT_BEAT_JENNY
-	jr nz, .squirtleText
+	; CheckEvent EVENT_BEAT_JENNY ; uncomment if you don't want the ability to rematch
+	; jr nz, .squirtleText
 
 	ld hl, JennyPreBattleText
 	call PrintText
