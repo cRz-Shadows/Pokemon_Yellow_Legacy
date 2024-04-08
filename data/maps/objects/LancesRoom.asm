@@ -13,7 +13,7 @@ LancesRoom_Object:
 	def_bg_events
 
 	def_object_events
-	object_event  7,  3, SPRITE_LANCE, STAY, DOWN, TEXT_LANCESROOM_LANCE, OPP_LANCE, 1
-	object_event  7,  3, SPRITE_LANCE, STAY, DOWN, TEXT_LANCESROOM_LANCE_REMATCH, OPP_LANCE, 2
+	object_event  6,  1, SPRITE_LANCE, STAY, DOWN, TEXT_LANCESROOM_LANCE, OPP_LANCE, 1
+	object_event  6,  1, SPRITE_LANCE, STAY, DOWN, TEXT_LANCESROOM_LANCE_REMATCH, OPP_LANCE, 2
 
 	def_warps_to LANCES_ROOM

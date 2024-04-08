@@ -128,6 +128,12 @@ HallOfFameOakCongratulationsScript:
 	ld a, HS_AGATHASROOM_AGATHA_REMATCH
 	ld [wMissableObjectIndex], a
 	predef ShowObject
+	ld a, HS_AGATHASROOM_LANCE
+	ld [wMissableObjectIndex], a
+	predef HideObject
+	ld a, HS_AGATHASROOM_LANCE_REMATCH
+	ld [wMissableObjectIndex], a
+	predef ShowObject
 	ld a, SCRIPT_HALLOFFAME_RESET_EVENTS_AND_SAVE
 	ld [wHallOfFameCurScript], a
 	ret
