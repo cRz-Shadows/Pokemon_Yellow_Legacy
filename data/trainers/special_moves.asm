@@ -80,9 +80,11 @@ SpecialTrainerMoves:
 	db 4, 4, SLEEP_POWDER
 	db 0
 
-	db ERIKA, 2
+	db ERIKA, 2 ; db $FF, 41, TANGELA, 42, VICTREEBEL, 42, VENUSAUR, 43, VILEPLUME, 0
 	db 1, 1, BIND
-    db 2, 3, SWORDS_DANCE
+	db 1, 2, BODY_SLAM
+    db 2, 1, SWORDS_DANCE
+	db 2, 2, WRAP
     db 3, 1, RAZOR_LEAF
     db 3, 2, LEECH_SEED
     db 3, 3, SLUDGE
