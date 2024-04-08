@@ -1,6 +1,6 @@
 # Pokémon Yellow Legacy
 
-The Yellow Legacy project is the prequel to [Crystal Legacy](https://github.com/cRz-Shadows/Pokemon_Crystal_Legacy) by content creator Patrick Smith ([TheSmithPlays](https://www.youtube.com/@TheSmithPlays)), and the second project in his planned Legacy series. It is based on [the Pokémon Yellow disassembly](https://github.com/pret/pokeyellow). The Legacy project is focused on changing the base game in a way that adds quality of life additions and better balancing with the benefit of twenty years of hindsight. The primary goal of each mod is to keep the original feeling of the game while still making meaningful improvements for the player. This means that certain idiosyncrasies of the first generation of Pokémon games will remain, as they are considered an essential aspect to the core experience.
+The Yellow Legacy project is the prequel to [Crystal Legacy](https://github.com/cRz-Shadows/Pokemon_Crystal_Legacy) by content creator Patrick Smith ([TheSmithPlays](https://www.youtube.com/@TheSmithPlays)), and the second project in his planned Legacy series. It is based on [the Pokémon Yellow Disassembly](https://github.com/pret/pokeyellow). The Legacy project is focused on changing the base game in a way that adds quality of life additions and better balancing with the benefit of twenty years of hindsight. The primary goal of each mod is to keep the original feeling of the game while still making meaningful improvements for the player. This means that certain idiosyncrasies of the first generation of Pokémon games will remain, as they are considered an essential aspect to the core experience.
 
 Pokémon Yellow exists in a unique role in the Pokémon franchise – it was the first truly significant revision of existing Pokémon games, and it still exists as the only core Pokémon game to be influenced by the anime. Furthermore, Pokémon Yellow introduced greater use of color, more challenging boss fights, availability for all three starters, and Pikachu as your companion. As a project to improve this game, Yellow Legacy seeks to find balance between furthering the unique niche of anime-influence while still representing the first generation of Pokémon as a whole.
 
@@ -71,8 +71,8 @@ These videos also provide an overview of the hack and the ideology behind it:
 
 
 ### Sprite Artists:
-- Backsprites
-    - zuperZACH
+- Backsprites - Anyone is welcome to use any of our backsprites so long as you **credit the artists** listed here
+    - ZuperZACH
     - Isona,
     - Karlos
     - Reader Dragon
@@ -87,7 +87,7 @@ These videos also provide an overview of the hack and the ideology behind it:
     - Madame Frog/Hatun
     - Ghost-MissingNo
 - Porygon Front Sprite - Zeta_Null
-- Nurse Joy Battle Sprite - zuperZACH
+- Nurse Joy Battle Sprite - ZuperZACH
 - Officer Jenny Battle Sprite - Karlos
 - Misty and addtl. Kabuto map sprites - Isona
 - (Removed) Leaf sprite - Longlostsoul
