@@ -359,7 +359,6 @@ LickitungEvosMoves:
 	db 15, DISABLE
 	db 19, HEADBUTT
 	db 23, DEFENSE_CURL
-	db 28, DISABLE
 	db 32, BODY_SLAM
 	db 39, SCREECH
 	db 44, WRAP
@@ -467,7 +466,6 @@ LaprasEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 16, WATER_GUN
 	db 19, MIST
 	db 23, AURORA_BEAM
 	db 25, BODY_SLAM
@@ -2299,15 +2297,15 @@ GeodudeEvosMoves:
 ; Evolutions
 	db EVOLVE_LEVEL, 25, GRAVELER
 	db 0
-; Learnset
-db 6, DEFENSE_CURL
-db 12, ROCK_THROW
-db 21, DIG
-db 26, HARDEN
-db 31, SELFDESTRUCT
-db 40, ROCK_SLIDE
-db 45, EARTHQUAKE
-db 48, EXPLOSION
+	; Learnset
+	db 6, DEFENSE_CURL
+	db 12, ROCK_THROW
+	db 21, DIG
+	db 26, HARDEN
+	db 31, SELFDESTRUCT
+	db 40, ROCK_SLIDE
+	db 45, EARTHQUAKE
+	db 48, EXPLOSION
 	db 0
 
 PorygonEvosMoves:

@@ -10,7 +10,7 @@
 	INCBIN "gfx/pokemon/front/hypno.pic", 0, 1 ; sprite dimensions
 	dw HypnoPicFront, HypnoPicBack
 
-	db POUND, HYPNOSIS, DISABLE, CONFUSION ; level 1 learnset
+	db POUND, HYPNOSIS, NO_MOVE, NO_MOVE ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
