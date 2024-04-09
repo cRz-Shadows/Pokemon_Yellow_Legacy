@@ -352,7 +352,7 @@ CreditsText_Pret1:
 CreditsText_Pret2:
 	db -7, "PRET TEAM FOR THE@"
 CreditsText_Pret3:
-	db -4, "POKECRYSTAL@"
+	db -4, "POKEYELLOW@"
 CreditsText_Pret4:
 	db -4, "DISASSEMBLY@"
 
