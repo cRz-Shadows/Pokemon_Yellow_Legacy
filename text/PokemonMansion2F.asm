@@ -63,17 +63,66 @@ _PokemonMansion2F_OakBeforeBattleText::
 	
 	para "one ponders its"
 	line "origins..."
+
+	para "I spent many"
+	line "years exploring"
+	cont "the region to"
+	cont "discover"
+	cont "every species."
+
+	para "It seems not"
+	line "even my re-"
+	cont "search could"
+	cont "have prepared"
+	cont "me for this."
 	
+	para "There were"
+	line "a few, however."
+
+	para "They were"
+	line "so powerful,"
+	cont "so rare,"
+	cont "I had to keep"
+	cont "their capture"
+	cont "hidden."
+
+	para "In learning"
+	line "of MEWTWO's"
+	cont "creation,"
+	cont "it seems my"
+	cont "fears were well"
+	cont "placed."
+
+	para "Not all are"
+	line "capable of"
+	cont "wielding such"
+	cont "power."
+
 	para "But let's focus"
 	line "on the present."
 
-	para "Our last battle"
-	line "showed me the"
-	cont "path to growth."
+	para "<PLAYER>!"
 	
-	para "How about we test"
-	line "our strength once"
-	cont "more?"
+	para "You have"
+	line "become a"
+	cont "#MON"
+	cont "master above"
+	cont "all others."
+
+	para "Our battle has"
+	line "showed me back"
+	cont "to the path"
+	cont "of strength."
+	
+	para "Today, I"
+	line "challenge you"
+	cont "with my full,"
+	cont "unrestrained"
+	cont "power."
+
+	para "Might I test"
+	line "your strength" 
+	cont "once more?"
 	done
 
 _PokemonMansion2F_OakRealChallengeBattleText::
