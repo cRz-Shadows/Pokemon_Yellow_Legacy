@@ -141,9 +141,50 @@ PokemonMansion2FSwitchText:
 
 PokemonMansion2FOakText:
 	text_asm
-	ld hl, PokemonMansion2F_OakBeforeBattleText
+	ld hl, PokemonMansion2F_OakBeforeBattleText1
 	call PrintText
 
+	ld a, SPRITE_FACING_RIGHT
+	ld [wSprite02StateData1FacingDirection], a
+	call Delay3
+
+	ld hl, PokemonMansion2F_OakBeforeBattleText2
+	call PrintText
+
+	call GetNPCFacePlayerDirection
+	ld [wSprite02StateData1FacingDirection], a
+	call Delay3
+
+	ld hl, PokemonMansion2F_OakBeforeBattleText3
+	call PrintText
+
+	ld a, [wPlayerDirection]
+	bit PLAYER_DIR_BIT_DOWN, a
+	jr z, .FaceUpInstead
+	ld a, SPRITE_FACING_DOWN
+	jr .Turn
+.FaceUpInstead
+	ld a, SPRITE_FACING_UP
+.Turn
+	ld [wSprite02StateData1FacingDirection], a
+	call Delay3
+
+	ld hl, PokemonMansion2F_OakBeforeBattleText4
+	call PrintText
+
+	ld a, SPRITE_FACING_RIGHT
+	ld [wSprite02StateData1FacingDirection], a
+	call Delay3
+
+	ld hl, PokemonMansion2F_OakBeforeBattleText5
+	call PrintText
+
+	call GetNPCFacePlayerDirection
+	ld [wSprite02StateData1FacingDirection], a
+	call Delay3
+
+	ld hl, PokemonMansion2F_OakBeforeBattleText6
+	call PrintText
 	call YesNoChoice
 	ld a, [wCurrentMenuItem]
 	and a
@@ -213,8 +254,28 @@ PokemonMansion2FOakPostBattleScript:
 	ld [wCurMapScript], a	;joenote - also set the value for current map script or you will have a bad time
 	ret
 
-PokemonMansion2F_OakBeforeBattleText:
-	text_far _PokemonMansion2F_OakBeforeBattleText
+PokemonMansion2F_OakBeforeBattleText1:
+	text_far _PokemonMansion2F_OakBeforeBattleText1
+	text_end
+
+PokemonMansion2F_OakBeforeBattleText2:
+	text_far _PokemonMansion2F_OakBeforeBattleText2
+	text_end
+
+PokemonMansion2F_OakBeforeBattleText3:
+	text_far _PokemonMansion2F_OakBeforeBattleText3
+	text_end
+
+PokemonMansion2F_OakBeforeBattleText4:
+	text_far _PokemonMansion2F_OakBeforeBattleText4
+	text_end
+
+PokemonMansion2F_OakBeforeBattleText5:
+	text_far _PokemonMansion2F_OakBeforeBattleText5
+	text_end
+
+PokemonMansion2F_OakBeforeBattleText6:
+	text_far _PokemonMansion2F_OakBeforeBattleText6
 	text_end
 
 PokemonMansion2F_OakRealChallengeBattleText:
@@ -240,3 +301,25 @@ PokemonMansion2F_OakPostBattleText:
 PokemonMansion2F_MewText:
 	text_far _PokemonMansion2F_MewText
 	text_end
+
+GetNPCFacePlayerDirection:
+		ld a, [wPlayerDirection]
+		bit PLAYER_DIR_BIT_UP, a
+		jr z, .notFacingDown
+		ld c, SPRITE_FACING_DOWN
+		jr .facingDirectionDetermined
+	.notFacingDown
+		bit PLAYER_DIR_BIT_DOWN, a
+		jr z, .notFacingUp
+		ld c, SPRITE_FACING_UP
+		jr .facingDirectionDetermined
+	.notFacingUp
+		bit PLAYER_DIR_BIT_LEFT, a
+		jr z, .notFacingRight
+		ld c, SPRITE_FACING_RIGHT
+		jr .facingDirectionDetermined
+	.notFacingRight
+		ld c, SPRITE_FACING_LEFT
+	.facingDirectionDetermined
+		ld a, c
+		ret

@@ -46,7 +46,7 @@ _PokemonMansion2FSwitchNotPressedText::
 	text "Not quite yet!"
 	done
 
-_PokemonMansion2F_OakBeforeBattleText::
+_PokemonMansion2F_OakBeforeBattleText1::
 	text "You've caught me"
 	line "in a moment of"
 	cont "deep research."
@@ -57,14 +57,18 @@ _PokemonMansion2F_OakBeforeBattleText::
 	cont "more than a"
 	cont "whisper in"
 	cont "ancient texts."
-	
-	para "Looking at the"
+	prompt
+
+_PokemonMansion2F_OakBeforeBattleText2::	
+	text "Looking at the"
 	line "story of MEWTWO,"
 	
 	para "one ponders its"
 	line "origins..."
+	prompt
 
-	para "I spent many"
+_PokemonMansion2F_OakBeforeBattleText3::
+	text "I spent many"
 	line "years exploring"
 	cont "the region to"
 	cont "discover every"
@@ -72,16 +76,21 @@ _PokemonMansion2F_OakBeforeBattleText::
 
 	para "There were"
 	line "a few, however."
+	prompt
 
-	para "They were"
+_PokemonMansion2F_OakBeforeBattleText4::
+	text "They were"
 	line "so powerful,"
+
 	para "so rare,"
 
 	para "I had to keep"
 	line "their capture"
 	cont "hidden."
+	prompt
 
-	para "In learning of"
+_PokemonMansion2F_OakBeforeBattleText5::
+	text "In learning of"
 	line "MEWTWO's creation,"
 
 	para "it seems my fears"
@@ -91,8 +100,10 @@ _PokemonMansion2F_OakBeforeBattleText::
 	line "capable of"
 	cont "wielding such"
 	cont "power."
+	prompt
 
-	para "But let's focus"
+_PokemonMansion2F_OakBeforeBattleText6::
+	text "But let's focus"
 	line "on the present."
 
 	para "<PLAYER>!"
