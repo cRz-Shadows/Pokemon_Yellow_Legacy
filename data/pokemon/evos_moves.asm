@@ -385,14 +385,15 @@ GrimerEvosMoves:
 	db EVOLVE_LEVEL, 38, MUK
 	db 0
 ; Learnset
-	db 20, HARDEN
-	db 24, ACID
-	db 29, POISON_GAS
-	db 33, MINIMIZE
-	db 37, SLUDGE
+	db 10, HARDEN
+	db 16, ACID
+	db 19, POISON_GAS
+	db 24, ACID_ARMOR
+	db 27, MINIMIZE
+	db 33, SLUDGE
+	db 37, BODY_SLAM
 	db 42, TOXIC
 	db 45, SCREECH
-	db 48, ACID_ARMOR
 	db 0
 
 GengarEvosMoves:
@@ -1047,12 +1048,12 @@ FarfetchdEvosMoves:
 ; Learnset
 	db 7, LEER
 	db 9, SHARPEN
-	db 15, FURY_ATTACK
+	db 13, FURY_ATTACK
 	db 18, WING_ATTACK
 	db 23, SLASH
 	db 28, SWORDS_DANCE
-	db 31, AGILITY
-	db 39, DRILL_PECK
+	db 31, DRILL_PECK
+	db 39, AGILITY
 	db 0
 
 VenonatEvosMoves:
@@ -1906,14 +1907,15 @@ MukEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 20, HARDEN
-	db 24, ACID
-	db 29, POISON_GAS
-	db 33, MINIMIZE
-	db 37, SLUDGE
+	db 10, HARDEN
+	db 16, ACID
+	db 19, POISON_GAS
+	db 24, ACID_ARMOR
+	db 27, MINIMIZE
+	db 33, SLUDGE
+	db 37, BODY_SLAM
 	db 42, TOXIC
 	db 45, SCREECH
-	db 48, ACID_ARMOR
 	db 0
 
 MissingNo8AEvosMoves:

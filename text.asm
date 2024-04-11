@@ -55,6 +55,7 @@ INCLUDE "text/BrunosRoom.asm"
 INCLUDE "text/AgathasRoom.asm"
 INCLUDE "text/RockTunnelB1F.asm"
 INCLUDE "text/SeafoamIslandsB4F.asm"
+INCLUDE "text/Route9.asm"
 
 INCLUDE "data/text/text_2.asm"
 
@@ -107,7 +108,6 @@ INCLUDE "text/Route8.asm"
 
 SECTION "Text 4", ROMX
 
-INCLUDE "text/Route9.asm"
 INCLUDE "text/Route9_2.asm"
 INCLUDE "text/Route10.asm"
 INCLUDE "text/Route11.asm"

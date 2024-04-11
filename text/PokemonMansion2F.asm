@@ -67,31 +67,25 @@ _PokemonMansion2F_OakBeforeBattleText::
 	para "I spent many"
 	line "years exploring"
 	cont "the region to"
-	cont "discover"
-	cont "every species."
+	cont "discover every"
+	cont "species."
 
-	para "It seems not"
-	line "even my re-"
-	cont "search could"
-	cont "have prepared"
-	cont "me for this."
-	
 	para "There were"
 	line "a few, however."
 
 	para "They were"
 	line "so powerful,"
-	cont "so rare,"
-	cont "I had to keep"
-	cont "their capture"
+	para "so rare,"
+
+	para "I had to keep"
+	line "their capture"
 	cont "hidden."
 
-	para "In learning"
-	line "of MEWTWO's"
-	cont "creation,"
-	cont "it seems my"
-	cont "fears were well"
-	cont "placed."
+	para "In learning of"
+	line "MEWTWO's creation,"
+
+	para "it seems my fears"
+	line "were well placed."
 
 	para "Not all are"
 	line "capable of"
@@ -103,25 +97,23 @@ _PokemonMansion2F_OakBeforeBattleText::
 
 	para "<PLAYER>!"
 	
-	para "You have"
-	line "become a"
-	cont "#MON"
-	cont "master above"
-	cont "all others."
+	para "You have become"
+	line "a #MON master"
+	cont "above all others."
 
 	para "Our battle has"
 	line "showed me back"
-	cont "to the path"
-	cont "of strength."
+	cont "to the path of"
+	cont "strength."
 	
-	para "Today, I"
-	line "challenge you"
-	cont "with my full,"
-	cont "unrestrained"
-	cont "power."
+	para "Now, I challenge"
+	line "you with my full,"
+
+	para "unrestrained"
+	line "power."
 
 	para "Might I test"
-	line "your strength" 
+	line "your might" 
 	cont "once more?"
 	done
 

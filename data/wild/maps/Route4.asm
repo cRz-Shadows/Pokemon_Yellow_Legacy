@@ -3,7 +3,7 @@ Route4WildMons:
 	db 11, SPEAROW
 	db 11, EKANS
 	db 12, MANKEY
-	db 13, SPEAROW
+	db 13, FARFETCHD
 	db 13, SANDSHREW
 	db 13, RATTATA
 	db 14, SANDSHREW
