@@ -119,11 +119,11 @@ SpecialTrainerMoves:
 	db 6, 4, MEGA_DRAIN
     db 0
 
-	db KOGA, 1
+	db KOGA, 1 ; 42, GOLBAT, 42, MUK, 41, TENTACRUEL, 43, VENOMOTH, 0
 	db 1, 2, TOXIC
 	db 1, 3, BITE
 	db 2, 1, ACID_ARMOR
-	db 2, 2, MEGA_DRAIN
+	db 2, 3, MEGA_DRAIN
 	db 3, 1, SURF
 	db 3, 2, ICE_BEAM
 	db 3, 4, SLUDGE
@@ -132,11 +132,12 @@ SpecialTrainerMoves:
 	db 4, 3, TOXIC
 	db 0
 
-	db KOGA, 2
+	db KOGA, 2 ; 49, GOLBAT, 48, MUK, 49, TENTACRUEL, 48, WEEZING, 50, VENOMOTH, 0
 	db 1, 1, TOXIC
 	db 1, 2, CONFUSE_RAY
 	db 1, 4, BITE
-	db 2, 3, MEGA_DRAIN
+	db 2, 2, MEGA_DRAIN
+	db 2, 4, ACID_ARMOR
 	db 3, 2, SURF
 	db 3, 3, ICE_BEAM
 	db 4, 2, SLUDGE
@@ -644,8 +645,7 @@ SpecialTrainerMoves:
     db 1, 2, PSYCHIC_M
     db 1, 3, ICE_BEAM
     db 1, 4, THUNDERBOLT
-    db 2, 2, MINIMIZE
-    db 2, 3, BODY_SLAM
+    db 2, 3, MINIMIZE
     db 2, 4, FIRE_BLAST
     db 3, 1, DOUBLE_TEAM
     db 3, 2, SURF
