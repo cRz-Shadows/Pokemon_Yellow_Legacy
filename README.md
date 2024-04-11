@@ -73,7 +73,7 @@ These videos also provide an overview of the hack and the ideology behind it:
 ### Sprite Artists:
 - Backsprites - Anyone is welcome to use any of our backsprites so long as you **credit the artists** listed here
     - ZuperZACH
-    - Isona,
+    - Isona
     - Karlos
     - Reader Dragon
     - Alakadoof
@@ -81,7 +81,8 @@ These videos also provide an overview of the hack and the ideology behind it:
     - Chamber
     - Soloo993
     - Blue Emerald
-    - Lake, Neslug
+    - Lake
+    - Neslug
     - Tom Wang
 - Green sprite
     - Madame Frog/Hatun
@@ -94,7 +95,7 @@ These videos also provide an overview of the hack and the ideology behind it:
 
 
 ### Where you can find all Pret Tutorials:
-* https://github.com/pret/pokeyellow/wiki/Tutorials,
+* https://github.com/pret/pokeyellow/wiki/Tutorials
 * https://github.com/pret/pokered/wiki/Tutorials
 
 
