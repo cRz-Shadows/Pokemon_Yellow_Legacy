@@ -119,10 +119,10 @@ LoreleisRoomLoreleiEndBattleScript:
 	call EndTrainerBattle
 	ld a, [wIsInBattle]
 	cp $ff
+	jp z, ResetLoreleiScript
 	ld a, [wGameStage] ; Check if player has beat the game
 	and a
 	jr nz, .Rematch
-	jp z, ResetLoreleiScript
 	ld a, TEXT_LORELEISROOM_LORELEI
 .continue
 	ldh [hSpriteIndexOrTextID], a
