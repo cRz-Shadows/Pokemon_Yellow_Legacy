@@ -490,7 +490,7 @@ SpecialTrainerMoves:
 	db 6, 2, REFLECT
 	db 0
 
-	db PROF_OAK, 1
+	db PROF_OAK, 1 ; 69, TAUROS, 70, CHARIZARD, 70, VENUSAUR, 70, BLASTOISE, 69, SNORLAX, 70, NIDOKING, 0
     db 1, 1, HYPER_BEAM
     db 1, 2, EARTHQUAKE
     db 1, 3, BLIZZARD
@@ -513,7 +513,7 @@ SpecialTrainerMoves:
     db 6, 4, BLIZZARD
     db 0
 
-	db PROF_OAK, 2
+	db PROF_OAK, 2 ; 78, TAUROS, 77, ZAPDOS, 77, ARTICUNO, 77, MOLTRES, 78, SNORLAX, 81, NIDOKING, 0
     db 1, 1, HYPER_BEAM
     db 1, 2, EARTHQUAKE
     db 1, 3, BLIZZARD
@@ -521,7 +521,7 @@ SpecialTrainerMoves:
 	db 2, 1, THUNDER_WAVE
 	db 3, 1, BUBBLEBEAM
     db 3, 4, REFLECT
-    db 4, 1, AGILITY
+    db 4, 1, FIRE_BLAST
     db 4, 2, SOLARBEAM
     db 5, 1, AMNESIA
     db 5, 2, REFLECT
