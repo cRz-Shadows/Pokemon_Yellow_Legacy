@@ -77,45 +77,47 @@ DaycareGentlemanText:
 	ld [wMonDataLocation], a
 	call LoadMonData
 	callfar CalcLevelFromExperience
-	ld a, d
-	
+
+	push bc
 	ld a, [wDifficulty] ; Check if player is on hard mode
 	and a
 	jr z, .next1 ; no level caps if not on hard mode
 
 	ld a, [wGameStage] ; Check if player has beat the game
 	and a
-	ld d, 100
+	ld b, MAX_LEVEL
 	jr nz, .next1
 	farcall GetBadgesObtained
 	ld a, [wNumSetBits]
 	cp 8
-	ld d, 65 ; Jolteon/Flareon/Vaporeon's level
+	ld b, 65 ; Jolteon/Flareon/Vaporeon's level
 	jr nc, .next1
 	cp 7
-	ld d, 55 ; Rhydon's level
+	ld b, 55 ; Rhydon's level
 	jr nc, .next1
 	cp 6
-	ld d, 53 ; Magmar's level
+	ld b, 53 ; Magmar's level
 	jr nc, .next1
 	cp 5
-	ld d, 50 ; Alakazam's level
+	ld b, 50 ; Alakazam's level
 	jr nc, .next1
     cp 4
-	ld d, 43 ; Venomoth's level
+	ld b, 43 ; Venomoth's level
 	jr nc, .next1
 	cp 3
-	ld d, 35 ; Vileplume's level
+	ld b, 35 ; Vileplume's level
 	jr nc, .next1
 	cp 2
-    ld d, 24 ; Bit below Raichu's level
+    ld b, 24 ; Bit below Raichu's level
 	jr nc, .next1
 	cp 1
-	ld d, 21 ; Starmie's level
+	ld b, 21 ; Starmie's level
 	jr nc, .next1
-	ld d, 12 ; Onix's level
+	ld b, 12 ; Onix's level
 .next1
-	cp d
+	ld a, d
+	cp b
+	pop bc
 	jr c, .skipCalcExp
 
 	ld d, MAX_LEVEL
