@@ -296,19 +296,7 @@ PalletTownGirlText:
 	text_end
 
 PalletTownFisherText:
-	; text_far _PalletTownFisherText 
-	; text_end
-	text_asm ;! Remove this and uncomment above
-	lb bc, RARE_CANDY, 99
-	call GiveItem
-	lb bc, MEW, 29
-	call GivePokemon
-
-	ld hl, .PalletTownFisherTextTemp
-	call PrintText
-	jp TextScriptEnd
-.PalletTownFisherTextTemp:
-	text_far _PalletTownFisherText
+	text_far _PalletTownFisherText 
 	text_end
 
 PalletTownOaksLabSignText:
