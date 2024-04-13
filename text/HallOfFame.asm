@@ -26,3 +26,30 @@ _HallOfFameOakText::
 	cont "your #MON are"
 	cont "HALL OF FAMERs!"
 	done
+
+_HallOfFameRematchOakText::
+	text "OAK: Er-hem!"
+	line "Congratulations,"
+	cont "<PLAYER>!"
+
+	para "Welcome back to"
+	line "the HALL OF FAME!"
+
+	para "Once again, we"
+	line "celebrate your"
+	cont "triumph as CHAMP!"
+
+	para "Your dedication"
+	line "to excellence"
+	cont "is commendable!"
+
+	para "And your #MON,"
+	line "they shine"
+	cont "brightly in this"
+	cont "esteemed hall!"
+
+	para "<PLAYER>, even as"
+	line "CHAMPION, your"
+	cont "achievements"
+	cont "inspire us all!"
+	done

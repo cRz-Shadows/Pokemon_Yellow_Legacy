@@ -55,7 +55,6 @@ INCLUDE "text/BrunosRoom.asm"
 INCLUDE "text/AgathasRoom.asm"
 INCLUDE "text/RockTunnelB1F.asm"
 INCLUDE "text/SeafoamIslandsB4F.asm"
-INCLUDE "text/Route9.asm"
 
 INCLUDE "data/text/text_2.asm"
 
@@ -180,6 +179,7 @@ INCLUDE "text/VermilionGym.asm"
 INCLUDE "text/VermilionPidgeyHouse.asm"
 INCLUDE "text/VermilionDock.asm"
 
+
 INCLUDE "data/text/text_6.asm"
 
 INCLUDE "text/VermilionOldRodHouse.asm"
@@ -258,6 +258,7 @@ SECTION "Text 9", ROMX
 INCLUDE "text/move_deleter.asm"
 INCLUDE "text/move_relearner.asm"
 INCLUDE "text/ChampionsRoom.asm"
+INCLUDE "text/Route9.asm"
 
 INCLUDE "data/text/text_9.asm"
 
