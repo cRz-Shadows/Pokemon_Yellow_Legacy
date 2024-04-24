@@ -550,7 +550,7 @@ SpecialTrainerMoves:
 	db 6, 4, THUNDERBOLT
 	db 0
 
-	db CRAIG, 1
+	db CRAIG, 1; JOLTEON, AERODACTYL, EXEGGUTOR, SNORLAX, CLOYSTER, ARCANINE, 0
 	db 1, 2, THUNDERBOLT
 	db 1, 4, DIG
 	db 2, 1, SKY_ATTACK
@@ -559,7 +559,7 @@ SpecialTrainerMoves:
 	db 3, 2, SOFTBOILED
 	db 3, 4, REFLECT
 	db 4, 1, SURF
-	db 4, 3, PSYCHIC_M
+	db 4, 2, PSYCHIC_M
 	db 4, 4, AMNESIA
 	db 5, 2, EXPLOSION
 	db 5, 3, REFLECT
@@ -568,12 +568,12 @@ SpecialTrainerMoves:
 	db 6, 4, REFLECT
 	db 0
 
-	db WEEBRA, 1
-	db 1, 3, METRONOME
+	db WEEBRA, 1 ; SNORLAX, GENGAR, CHARIZARD, VAPOREON, ONIX, MACHAMP, 0
+	db 1, 1, METRONOME
 	db 1, 4, EARTHQUAKE
 	db 2, 1, PSYCHIC_M
 	db 3, 1, FLY
-	db 3, 3, CUT
+	db 3, 2, CUT
 	db 3, 4, HYPER_BEAM
 	db 4, 1, TOXIC
 	db 4, 2, REFLECT

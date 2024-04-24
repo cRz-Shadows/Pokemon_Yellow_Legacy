@@ -204,6 +204,15 @@ _PewterGymGuideAdviceText::
 	line "all defense!"
 	cont "Watch out for"
 	cont "its BIND!"
+
+	para "It will be tough"
+	line "for your PIKACHU"
+	cont "at this GYM!"
+
+	para "Electric attacks"
+	line "are harmless to"
+	cont "BROCK's ground-"
+	cont "type #MON."
 	done
 
 _PewterGymGuideFreeServiceText::
@@ -221,6 +230,19 @@ _PewterGymGuidePostBattleText::
 _PewterGymGuyText::
 	text "All right! Let's"
 	line "get happening!"
+
+	para "BROCK's lead"
+	line "is GEODUDE!"
+
+	para "Offense driven,"
+	line "it can throw"
+	cont "rocks with high"
+	cont "accuracy!"
+	
+	para "His ONIX is"
+	line "all defense!"
+	cont "Watch out for"
+	cont "its BIND!"
 
 	para "It will be tough"
 	line "for your PIKACHU"

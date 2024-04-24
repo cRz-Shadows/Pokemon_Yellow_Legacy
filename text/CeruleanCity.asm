@@ -223,8 +223,8 @@ _CeruleanCityTrainerTipsText::
 	line "high base SPEED"
 
 	para "can land crits"
-	cont "crits 20 percent"
-	cont "of the time."
+	line "20 percent of "
+	cont "the time."
 	done
 
 _CeruleanCityBikeShopSign::

@@ -263,7 +263,7 @@ _FuchsiaGymGymGuideChampInMakingText::
 	para "That might appear"
 	line "easy, but KOGA"
 	cont "does well to"
-	cont "cover his ground"
+	cont "cover his ground-"
 	cont "type weakness."
 
 	para "Psychic-type"

@@ -29,8 +29,8 @@ _RedsHouse1FMomLookingGreatText::
 	done
 
 _RedsHouse1FMrMimeText::
-	text "MIME, MIME,"
-	line "MR MIME."
+	text "MR MIME: MIME,"
+	line "MIME, MR MIME."
 	done
 
 _RedsHouse1FTVStandByMeMovieText::
