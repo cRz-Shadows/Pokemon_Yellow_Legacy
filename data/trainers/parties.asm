@@ -110,6 +110,8 @@ BugCatcherData:
 	db 21, BUTTERFREE, BEEDRILL, SCYTHER, 0
 ; Viridian Forest
 	db 6, CATERPIE, METAPOD, 0
+; Victory Road - Talos
+	db 53, SCYTHER, KABUTOPS, STARMIE, BLASTOISE, 0
 
 LassData:
 ; Route 3
@@ -271,6 +273,8 @@ HikerData:
 	db $FF, 24, MACHOP, 25, MACHOKE, 0
 	db 24, ONIX, SANDSHREW, ONIX, 0
 	db $FF, 24, GEODUDE, 25, GRAVELER, 0
+; Victory Road - Sable
+	db 52, AERODACTYL, PARASECT, JOLTEON, ARCANINE, 0
 
 BikerData:
 ; Route 13
@@ -310,6 +314,8 @@ BurglarData:
 	db 43, NINETALES, 0
 ; Mansion B1F
 	db 44, MACHOKE, RAPIDASH, 0
+; Victory Road - Disq
+	db 53, FLAREON, TENTACRUEL, NINETALES, DEWGONG, 0
 
 EngineerData:
 ; Unused
@@ -407,6 +413,8 @@ BeautyData:
 	db 43, DRAGONAIR, GYARADOS, SEADRA, 0
 ; Route 20
 	db 43, BLASTOISE, DEWGONG, SLOWBRO, 0
+; Victory Road - ReaderDragon
+	db 53, RAICHU, HYPNO, PERSIAN, TAUROS, 0
 
 PsychicData:
 ; Saffron Gym
@@ -424,13 +432,13 @@ RockerData:
 JugglerData:
 ; Silph Co. 5F
 	db 37, KADABRA, MR_MIME, 0
-; Victory Road 2F
-	db 51, ELECTRODE, HYPNO, ELECTRODE, ALAKAZAM, 0
+; Victory Road 2F - Obelisk
+	db 51, POLIWRATH, RHYDON, FLAREON, JOLTEON, 0
 ; Fuchsia Gym
 	db 34, BEEDRILL, NIDOKING, GOLBAT, HAUNTER, 0
 	db 37, TENTACRUEL, MUK, 0
-; Victory Road 2F
-	db 54, MR_MIME, 0
+; Victory Road 2F - Alakadoof
+	db 53, OMASTAR, ALAKAZAM, RAICHU, MR_MIME, 0
 ; Unused
 	db 33, HYPNO, 0
 ; Fuchsia Gym
@@ -444,8 +452,8 @@ TamerData:
 ; Viridian Gym
 	db 55, RHYHORN, 0
 	db 53, ARBOK, TAUROS, 0
-; Victory Road 2F
-	db 53, PERSIAN, GOLDUCK, 0
+; Victory Road 2F - Regi
+	db 53, TANGELA, SANDSLASH, LICKITUNG, ARBOK, 0
 ; Unused
 	db 42, RHYHORN, PRIMEAPE, ARBOK, TAUROS, 0
 
@@ -486,8 +494,8 @@ BlackbeltData:
 	db 52, POLIWRATH, MACHOKE, 0
 	db 53, MACHOKE, HITMONLEE, 0
 	db 51, HITMONLEE, HITMONCHAN, MACHOKE, 0
-; Victory Road 2F
-	db 52, POLIWRATH, DODRIO, PINSIR, HITMONCHAN, 0
+; Victory Road 2F - Brice
+	db 52, POLIWRATH, DODRIO, MACHAMP PINSIR, 0
 
 Rival1Data:
 ; Oak's Lab
@@ -622,12 +630,12 @@ RocketData:
 CooltrainerMData:
 ; Viridian Gym
 	db 52, NIDOQUEEN, NIDOKING, 0
-; Victory Road 3F
+; Victory Road 3F - Karlos, Tiberius
 	db 52, CHARIZARD, MAGNETON, TENTACRUEL, RHYDON, 0
-	db 53, KINGLER, TENTACRUEL, BLASTOISE, 0
+	db 53, NIDOKING, CHARIZARD, VILEPLUME, SLOWBRO, 0
 ; Unused
 	db 45, KINGLER, STARMIE, 0
-; Victory Road 1F
+; Victory Road 1F - Aero
 	db 53, ELECTABUZZ, SNORLAX, SLOWBRO, PORYGON, 0
 ; Unused
 	db 44, IVYSAUR, WARTORTLE, CHARMELEON, 0
@@ -640,13 +648,13 @@ CooltrainerMData:
 CooltrainerFData:
 ; Celadon Gym
 	db 29, WEEPINBELL, GLOOM, IVYSAUR, 0
-; Victory Road 3F
-	db 53, NINETALES, STARMIE, VICTREEBEL, 0
-	db 52, WIGGLYTUFF, CLEFABLE, CHANSEY, EEVEE, 0
+; Victory Road 3F -  Soul, Zach
+	db 53, DRAGONAIR, GENGAR, TAUROS, NIDOQUEEN, 0
+	db 54, WIGGLYTUFF, CLEFABLE, CHANSEY, EEVEE, 0
 ; Unused
 	db 46, VILEPLUME, BUTTERFREE, 0
-; Victory Road 1F
-	db 54, PERSIAN, NINETALES, 0
+; Victory Road 1F - Isona
+	db 53, SEADRA, DRAGONAIR, VENUSAUR, HYPNO, 0
 ; Unused
 	db 45, IVYSAUR, VENUSAUR, 0
 	db 45, NIDORINA, NIDOQUEEN, 0
