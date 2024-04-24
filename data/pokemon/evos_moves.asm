@@ -1500,6 +1500,7 @@ EeveeEvosMoves:
 ; Learnset
 	db 6, TAIL_WHIP
 	db 8, SAND_ATTACK
+	db 9, BITE
 	db 10, QUICK_ATTACK
 	db 14, GROWL
 	db 17, DOUBLE_KICK
