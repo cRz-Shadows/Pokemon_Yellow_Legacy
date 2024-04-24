@@ -260,3 +260,18 @@ _ChampionsRoomRematchOakComeWithMeText::
 	line "celebrate your"
 	cont "achievement!"
 	done
+
+_ChampionsRoomJolteonText::
+	text "JOLTEON:"
+	line "JOLTEON!"
+	done
+
+_ChampionsRoomFlareonText::
+	text "FLAREON:"
+	line "FLAREON!"
+	done
+
+_ChampionsRoomVaporeonText::
+	text "VAPOREON:"
+	line "VAPOREON!"
+	done

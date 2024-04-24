@@ -285,6 +285,9 @@ ChampionsRoom_TextPointers:
 	def_text_pointers
 	dw_const ChampionsRoomRivalText,                    TEXT_CHAMPIONSROOM_RIVAL
 	dw_const ChampionsRoomOakText,                      TEXT_CHAMPIONSROOM_OAK
+	dw_const ChampionsRoomJolteonText,                  TEXT_CHAMPIONSROOM_JOLTEON
+	dw_const ChampionsRoomFlareonText,                  TEXT_CHAMPIONSROOM_FLAREON
+	dw_const ChampionsRoomVaporeonText,                 TEXT_CHAMPIONSROOM_VAPOREON
 	dw_const ChampionsRoomOakCongratulatesPlayerText,   TEXT_CHAMPIONSROOM_OAK_CONGRATULATES_PLAYER
 	dw_const ChampionsRoomOakDisappointedWithRivalText, TEXT_CHAMPIONSROOM_OAK_DISAPPOINTED_WITH_RIVAL
 	dw_const ChampionsRoomOakComeWithMeText,            TEXT_CHAMPIONSROOM_OAK_COME_WITH_ME
@@ -371,4 +374,16 @@ ChampionsRoomRematchOakDisappointedWithRivalText:
 
 ChampionsRoomRematchOakComeWithMeText:
 	text_far _ChampionsRoomRematchOakComeWithMeText
+	text_end
+
+ChampionsRoomJolteonText:
+	text_far _ChampionsRoomJolteonText
+	text_end
+
+ChampionsRoomFlareonText:
+	text_far _ChampionsRoomFlareonText
+	text_end
+
+ChampionsRoomVaporeonText:
+	text_far _ChampionsRoomVaporeonText
 	text_end

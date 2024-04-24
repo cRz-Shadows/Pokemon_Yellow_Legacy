@@ -144,6 +144,21 @@ HallOfFameOakCongratulationsScript:
 	ld a, HS_LANCESROOM_LANCE_REMATCH
 	ld [wMissableObjectIndex], a
 	predef ShowObject
+	ld a, [wRivalStarter]
+	cp RIVAL_STARTER_FLAREON
+	jr .UnhideFlareon
+	cp RIVAL_STARTER_VAPOREON
+	jr .UnhideVaporeon
+	ld a, HS_CHAMPIONS_ROOM_JOLTEON
+	jr .done
+.UnhideFlareon
+	ld a, HS_CHAMPIONS_ROOM_FLAREON
+	jr .done
+.UnhideVaporeon
+	ld a, HS_CHAMPIONS_ROOM_VAPOREON
+.done
+	ld [wMissableObjectIndex], a
+	predef ShowObject
 	ld a, SCRIPT_HALLOFFAME_RESET_EVENTS_AND_SAVE
 	ld [wHallOfFameCurScript], a
 	ret

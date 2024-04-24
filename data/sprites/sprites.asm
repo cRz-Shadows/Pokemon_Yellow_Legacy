@@ -89,7 +89,7 @@ SpriteSheetPointerTable:
 	overworld_sprite ZapdosSprite, 12           ; SPRITE_ZAPDOS
 	overworld_sprite MrMimeSprite, 12     		; SPRITE_MRMIME
 	overworld_sprite MewtwoSprite, 12           ; SPRITE_MEWTWO
-	overworld_sprite MewSprite, 12           	; SPRITE_MEW
+	overworld_sprite MewSprite, 4           	; SPRITE_MEW
 	overworld_sprite KrisSprite, 12     		; SPRITE_KRIS
 	overworld_sprite KabutoSprite, 12     		; SPRITE_KABUTO
 	overworld_sprite PokeBallSprite, 4          ; SPRITE_POKE_BALL
@@ -104,4 +104,7 @@ SpriteSheetPointerTable:
 	overworld_sprite GamblerAsleepSprite, 4     ; SPRITE_UNUSED_GAMBLER_ASLEEP_1
 	overworld_sprite GamblerAsleepSprite, 4     ; SPRITE_UNUSED_GAMBLER_ASLEEP_2
 	overworld_sprite GamblerAsleepSprite, 4     ; SPRITE_GAMBLER_ASLEEP
+	overworld_sprite JolteonSprite, 4     		; SPRITE_JOLTEON
+	overworld_sprite FlareonSprite, 4     		; SPRITE_FLAREON
+	overworld_sprite VaporeonSprite, 4    		; SPRITE_VAPOREON
 	assert_table_length NUM_SPRITES
