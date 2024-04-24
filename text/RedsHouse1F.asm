@@ -28,6 +28,38 @@ _RedsHouse1FMomLookingGreatText::
 	cont "Take care now!"
 	done
 
+_RedsHouse1FMomChampionText::
+	text "MOM: <PLAYER>!"
+
+	para "I'm so proud of"
+	line "you for becoming"
+	cont "the #MON"
+	cont "LEAGUE CHAMPION!"
+
+	para "You and your"
+	line "#MON have"
+	cont "worked so hard"
+	cont "for this."
+
+	para "Congratulations!"
+
+	para "Take some time to"
+	line "celebrate with"
+	cont "your #MON and"
+	cont "friends."
+	
+	para "You've earned it!"
+
+	para "I know you'll"
+	line "continue to be a"
+	cont "great trainer"
+	cont "and CHAMPION."
+
+	para "I'll always be"
+	line "here to support"
+	cont "you, <PLAYER>."
+	done
+
 _RedsHouse1FMrMimeText::
 	text "MR MIME: MIME,"
 	line "MIME, MR MIME."

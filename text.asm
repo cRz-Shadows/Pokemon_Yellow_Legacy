@@ -107,7 +107,7 @@ INCLUDE "text/Route8.asm"
 
 SECTION "Text 4", ROMX
 
-INCLUDE "text/Route9_2.asm"
+INCLUDE "text/RedsHouse1F.asm"
 INCLUDE "text/Route10.asm"
 INCLUDE "text/Route11.asm"
 INCLUDE "text/Route12.asm"
@@ -133,7 +133,7 @@ SECTION "Text 5", ROMX
 
 INCLUDE "data/text/text_5.asm"
 
-INCLUDE "text/RedsHouse1F.asm"
+INCLUDE "text/Route9_2.asm"
 INCLUDE "text/BluesHouse.asm"
 INCLUDE "text/OaksLab.asm"
 INCLUDE "text/pokedex_ratings.asm"

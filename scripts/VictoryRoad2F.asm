@@ -78,10 +78,10 @@ VictoryRoad2FDefaultScript:
 VictoryRoad2F_TextPointers:
 	def_text_pointers
 	dw_const VictoryRoad2FHikerText,        TEXT_VICTORYROAD2F_HIKER
-	dw_const VictoryRoad2FSuperNerd1Text,   TEXT_VICTORYROAD2F_SUPER_NERD1
-	dw_const VictoryRoad2FCooltrainerMText, TEXT_VICTORYROAD2F_COOLTRAINER_M
-	dw_const VictoryRoad2FSuperNerd2Text,   TEXT_VICTORYROAD2F_SUPER_NERD2
-	dw_const VictoryRoad2FSuperNerd3Text,   TEXT_VICTORYROAD2F_SUPER_NERD3
+	dw_const VictoryRoad2FJuggler1Text,   	TEXT_VICTORYROAD2F_JUGGLER1
+	dw_const VictoryRoad2FTamerText, 		TEXT_VICTORYROAD2F_TAMER
+	dw_const VictoryRoad2FPokemaniacText,   TEXT_VICTORYROAD2F_POKEMANIAC
+	dw_const VictoryRoad2FJuggler2Text,   	TEXT_VICTORYROAD2F_JUGGLER2
 	dw_const VictoryRoad2FMoltresText,      TEXT_VICTORYROAD2F_MOLTRES
 	dw_const PickUpItemText,                TEXT_VICTORYROAD2F_TM_SUBMISSION
 	dw_const PickUpItemText,                TEXT_VICTORYROAD2F_FULL_HEAL
@@ -96,13 +96,13 @@ VictoryRoad2TrainerHeaders:
 VictoryRoad2TrainerHeader0:
 	trainer EVENT_BEAT_VICTORY_ROAD_2_TRAINER_0, 4, VictoryRoad2FHikerBattleText, VictoryRoad2FHikerEndBattleText, VictoryRoad2FHikerAfterBattleText
 VictoryRoad2TrainerHeader1:
-	trainer EVENT_BEAT_VICTORY_ROAD_2_TRAINER_1, 3, VictoryRoad2FSuperNerd1BattleText, VictoryRoad2FSuperNerd1EndBattleText, VictoryRoad2FSuperNerd1AfterBattleText
+	trainer EVENT_BEAT_VICTORY_ROAD_2_TRAINER_1, 3, VictoryRoad2FJuggler1BattleText, VictoryRoad2FJuggler1EndBattleText, VictoryRoad2FJuggler1AfterBattleText
 VictoryRoad2TrainerHeader2:
-	trainer EVENT_BEAT_VICTORY_ROAD_2_TRAINER_2, 3, VictoryRoad2FCooltrainerMBattleText, VictoryRoad2FCooltrainerMEndBattleText, VictoryRoad2FCooltrainerMAfterBattleText
+	trainer EVENT_BEAT_VICTORY_ROAD_2_TRAINER_2, 3, VictoryRoad2FTamerBattleText, VictoryRoad2FTamerEndBattleText, VictoryRoad2FTamerAfterBattleText
 VictoryRoad2TrainerHeader3:
-	trainer EVENT_BEAT_VICTORY_ROAD_2_TRAINER_3, 1, VictoryRoad2FSuperNerd2BattleText, VictoryRoad2FSuperNerd2EndBattleText, VictoryRoad2FSuperNerd2AfterBattleText
+	trainer EVENT_BEAT_VICTORY_ROAD_2_TRAINER_3, 1, VictoryRoad2FPokemaniacBattleText, VictoryRoad2FPokemaniacEndBattleText, VictoryRoad2FPokemaniacAfterBattleText
 VictoryRoad2TrainerHeader4:
-	trainer EVENT_BEAT_VICTORY_ROAD_2_TRAINER_4, 3, VictoryRoad2FSuperNerd3BattleText, VictoryRoad2FSuperNerd3EndBattleText, VictoryRoad2FSuperNerd3AfterBattleText
+	trainer EVENT_BEAT_VICTORY_ROAD_2_TRAINER_4, 3, VictoryRoad2FJuggler2BattleText, VictoryRoad2FJuggler2EndBattleText, VictoryRoad2FJuggler2AfterBattleText
 MoltresTrainerHeader:
 	trainer EVENT_BEAT_MOLTRES, 0, VictoryRoad2FMoltresBattleText, VictoryRoad2FMoltresBattleText, VictoryRoad2FMoltresBattleText
 	db -1 ; end
@@ -113,25 +113,25 @@ VictoryRoad2FHikerText:
 	call TalkToTrainer
 	jp TextScriptEnd
 
-VictoryRoad2FSuperNerd1Text:
+VictoryRoad2FJuggler1Text:
 	text_asm
 	ld hl, VictoryRoad2TrainerHeader1
 	call TalkToTrainer
 	jp TextScriptEnd
 
-VictoryRoad2FCooltrainerMText:
+VictoryRoad2FTamerText:
 	text_asm
 	ld hl, VictoryRoad2TrainerHeader2
 	call TalkToTrainer
 	jp TextScriptEnd
 
-VictoryRoad2FSuperNerd2Text:
+VictoryRoad2FPokemaniacText:
 	text_asm
 	ld hl, VictoryRoad2TrainerHeader3
 	call TalkToTrainer
 	jp TextScriptEnd
 
-VictoryRoad2FSuperNerd3Text:
+VictoryRoad2FJuggler2Text:
 	text_asm
 	ld hl, VictoryRoad2TrainerHeader4
 	call TalkToTrainer
@@ -163,50 +163,50 @@ VictoryRoad2FHikerAfterBattleText:
 	text_far _VictoryRoad2FHikerAfterBattleText
 	text_end
 
-VictoryRoad2FSuperNerd1BattleText:
-	text_far _VictoryRoad2FSuperNerd1BattleText
+VictoryRoad2FJuggler1BattleText:
+	text_far _VictoryRoad2FJuggler1BattleText
 	text_end
 
-VictoryRoad2FSuperNerd1EndBattleText:
-	text_far _VictoryRoad2FSuperNerd1EndBattleText
+VictoryRoad2FJuggler1EndBattleText:
+	text_far _VictoryRoad2FJuggler1EndBattleText
 	text_end
 
-VictoryRoad2FSuperNerd1AfterBattleText:
-	text_far _VictoryRoad2FSuperNerd1AfterBattleText
+VictoryRoad2FJuggler1AfterBattleText:
+	text_far _VictoryRoad2FJuggler1AfterBattleText
 	text_end
 
-VictoryRoad2FCooltrainerMBattleText:
-	text_far _VictoryRoad2FCooltrainerMBattleText
+VictoryRoad2FTamerBattleText:
+	text_far _VictoryRoad2FTamerBattleText
 	text_end
 
-VictoryRoad2FCooltrainerMEndBattleText:
-	text_far _VictoryRoad2FCooltrainerMEndBattleText
+VictoryRoad2FTamerEndBattleText:
+	text_far _VictoryRoad2FTamerEndBattleText
 	text_end
 
-VictoryRoad2FCooltrainerMAfterBattleText:
-	text_far _VictoryRoad2FCooltrainerMAfterBattleText
+VictoryRoad2FTamerAfterBattleText:
+	text_far _VictoryRoad2FTamerAfterBattleText
 	text_end
 
-VictoryRoad2FSuperNerd2BattleText:
-	text_far _VictoryRoad2FSuperNerd2BattleText
+VictoryRoad2FPokemaniacBattleText:
+	text_far _VictoryRoad2FPokemaniacBattleText
 	text_end
 
-VictoryRoad2FSuperNerd2EndBattleText:
-	text_far _VictoryRoad2FSuperNerd2EndBattleText
+VictoryRoad2FPokemaniacEndBattleText:
+	text_far _VictoryRoad2FPokemaniacEndBattleText
 	text_end
 
-VictoryRoad2FSuperNerd2AfterBattleText:
-	text_far _VictoryRoad2FSuperNerd2AfterBattleText
+VictoryRoad2FPokemaniacAfterBattleText:
+	text_far _VictoryRoad2FPokemaniacAfterBattleText
 	text_end
 
-VictoryRoad2FSuperNerd3BattleText:
-	text_far _VictoryRoad2FSuperNerd3BattleText
+VictoryRoad2FJuggler2BattleText:
+	text_far _VictoryRoad2FJuggler2BattleText
 	text_end
 
-VictoryRoad2FSuperNerd3EndBattleText:
-	text_far _VictoryRoad2FSuperNerd3EndBattleText
+VictoryRoad2FJuggler2EndBattleText:
+	text_far _VictoryRoad2FJuggler2EndBattleText
 	text_end
 
-VictoryRoad2FSuperNerd3AfterBattleText:
-	text_far _VictoryRoad2FSuperNerd3AfterBattleText
+VictoryRoad2FJuggler2AfterBattleText:
+	text_far _VictoryRoad2FJuggler2AfterBattleText
 	text_end
