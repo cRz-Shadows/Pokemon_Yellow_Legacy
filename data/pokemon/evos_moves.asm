@@ -2532,9 +2532,9 @@ BellsproutEvosMoves:
 	db 0
 ; Learnset
 	db 13, POISONPOWDER
-	db 15, HEADBUTT
 	db 21, STUN_SPORE
 	db 25, ACID
+	db 27, HEADBUTT
 	db 29, RAZOR_LEAF
 	db 36, SLUDGE
 	db 43, WRAP
@@ -2546,9 +2546,9 @@ WeepinbellEvosMoves:
 	db EVOLVE_ITEM, LEAF_STONE, 1, VICTREEBEL
 	db 0
 ; Learnset
-	db 15, HEADBUTT
 	db 21, STUN_SPORE
 	db 25, ACID
+	db 27, HEADBUTT
 	db 29, RAZOR_LEAF
 	db 36, SLUDGE
 	db 43, WRAP
@@ -2561,9 +2561,9 @@ VictreebelEvosMoves:
 ; Learnset
 	db 13, POISONPOWDER
 	db 14, VINE_WHIP
-	db 15, HEADBUTT
 	db 21, STUN_SPORE
 	db 25, ACID
+	db 27, HEADBUTT
 	db 29, RAZOR_LEAF
 	db 36, SLUDGE
 	db 43, WRAP
