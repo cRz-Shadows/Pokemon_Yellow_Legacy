@@ -115,12 +115,15 @@ DaycareGentlemanText:
 	jr nc, .next1
 	ld b, 12 ; Onix's level
 .next1
+	ld a, b
+	ld [wMaxDaycareLevel], a
 	ld a, d
 	cp b
 	pop bc
 	jr c, .skipCalcExp
 
-	ld d, MAX_LEVEL
+	ld a, [wMaxDaycareLevel]
+	ld d, a
 	callfar CalcExperience
 	ld hl, wDayCareMonExp
 	ldh a, [hExperience]
@@ -129,7 +132,8 @@ DaycareGentlemanText:
 	ld [hli], a
 	ldh a, [hExperience + 2]
 	ld [hl], a
-	ld d, MAX_LEVEL
+	ld a, [wMaxDaycareLevel]
+	ld d, a
 
 .skipCalcExp
 	xor a

@@ -1,16 +1,21 @@
 _VictoryRoad3FCooltrainerM1BattleText::
-	text "I heard rumors of"
-	line "a child prodigy!"
+	text "Have you seen a"
+	line "badger #MON"
+	cont "around here?"
 	done
 
 _VictoryRoad3FCooltrainerM1EndBattleText::
-	text "The"
-	line "rumors were true!"
+	text "Maybe it was a"
+	line "mouse?"
 	prompt
 
 _VictoryRoad3FCooltrainerM1AfterBattleText::
-	text "You beat GIOVANNI"
-	line "of TEAM ROCKET?"
+	text "I swear it was"
+	line "around here"
+	cont "somewhere,"
+
+	para "maybe I'm in the"
+	line "wrong place..."
 	done
 
 _VictoryRoad3FCooltrainerF1BattleText::
