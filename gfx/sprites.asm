@@ -114,6 +114,7 @@ SECTION "NPC Sprites 5", ROMX
 FlareonSprite::          INCBIN "gfx/sprites/flareon.2bpp"
 VaporeonSprite::         INCBIN "gfx/sprites/vaporeon.2bpp"
 JolteonSprite::          INCBIN "gfx/sprites/jolteon.2bpp"
+LaprasSprite::           INCBIN "gfx/sprites/lapras.2bpp"
 
 
 SECTION "NAMEHERE1", ROMX
