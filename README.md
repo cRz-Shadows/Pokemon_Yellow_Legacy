@@ -114,6 +114,8 @@ These videos also provide an overview of the hack and the ideology behind it:
     - [Safari zone rock buff](https://github.com/PlagueVonKarma/kep-hack/blob/7cd95d15616fb04b2a386b9f4df5e190dbda9a0c/engine/battle/core.asm#L4)
     - [DV / Stat Exp display in stat menu](https://github.com/PlagueVonKarma/kep-hack/commit/98110eddc82ff056a0c8420dc96fe5d9bbd9cb79)
     - [Overworld Strength](https://github.com/PlagueVonKarma/kep-hack/blob/dd5f64ad0644684bf35228362c6edebf37fa51db/home/overworld_text.asm#L4)
+    - [Faster Spinners](https://github.com/PlagueVonKarma/kep-hack/commit/7c5c2a3047dd74b9ed014053172e0222b49d486b)
+    - [Shorter Exp All Message](https://github.com/pret/pokered/wiki/Experience-System-&-Exp.-All-Enhancements-(Single-message,-etc))
 - Jojobear13:
     - [Box full reminder ](https://github.com/jojobear13/shinpokered/commit/7223a046997168913e67444b509ec15462bc7ec1)
     - [Player animation is faster when running](https://github.com/jojobear13/shinpokered/commit/34b1776a54c7617f749e8ca2757721d58a59c150)
