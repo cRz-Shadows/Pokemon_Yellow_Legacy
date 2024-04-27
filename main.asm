@@ -162,6 +162,11 @@ SECTION "Battle Engine 6", ROMX
 INCLUDE "data/moves/moves.asm"
 INCLUDE "data/pokemon/cries.asm"
 INCLUDE "engine/battle/trainer_ai.asm"
+INCLUDE "engine/battle/unused_stats_functions.asm"
+INCLUDE "engine/battle/scroll_draw_trainer_pic.asm"
+INCLUDE "engine/battle/move_effects/heal.asm"
+INCLUDE "engine/battle/move_effects/transform.asm"
+INCLUDE "engine/battle/move_effects/reflect_light_screen.asm"
 
 
 SECTION "Battle Engine 10", ROMX
@@ -384,8 +389,6 @@ SECTION "Battle Engine 8", ROMX
 
 INCLUDE "engine/battle/common_text.asm"
 INCLUDE "engine/battle/link_battle_versus_text.asm"
-INCLUDE "engine/battle/unused_stats_functions.asm"
-INCLUDE "engine/battle/scroll_draw_trainer_pic.asm"
 INCLUDE "engine/battle/pikachu_entrance_anim.asm"
 INCLUDE "engine/battle/decrement_pp.asm"
 INCLUDE "engine/events/pikachu_happiness.asm"
@@ -403,9 +406,6 @@ INCLUDE "engine/items/super_rod.asm"
 INCLUDE "engine/battle/init_battle.asm"
 INCLUDE "engine/battle/init_battle_variables.asm"
 INCLUDE "engine/battle/move_effects/focus_energy.asm"
-INCLUDE "engine/battle/move_effects/heal.asm"
-INCLUDE "engine/battle/move_effects/transform.asm"
-INCLUDE "engine/battle/move_effects/reflect_light_screen.asm"
 INCLUDE "engine/battle/move_effects/mist.asm"
 INCLUDE "engine/battle/move_effects/one_hit_ko.asm"
 INCLUDE "engine/battle/move_effects/pay_day.asm"

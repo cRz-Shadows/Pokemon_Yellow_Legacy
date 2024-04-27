@@ -3,35 +3,49 @@ _VictoryRoad2FMoltresBattleText::
 	text_end
 
 _VictoryRoad2FHikerBattleText::
-	text "VICTORY ROAD is"
-	line "the final test"
-	cont "for trainers!"
+	text "Uh, I don't think"
+	line "I'm supposed to"
+	cont "be here."
+
+	para "Can you give me"
+	line "directions?"
 	done
 
 _VictoryRoad2FHikerEndBattleText::
-	text "Aiyah!"
+	text "You gave me a"
+	line "whalloping!"
 	prompt
 
 _VictoryRoad2FHikerAfterBattleText::
-	text "If you get stuck,"
-	line "try moving some"
-	cont "boulders around!"
+	text "I was hiking down"
+	line "MT SILVER and I"
+	cont "ended up here."
+
+	para "Can you point"
+	line "me towards"
+	cont "BLACKTHORN City?"
 	done
 
 _VictoryRoad2FJuggler1BattleText::
-	text "Ah, so you wish"
-	line "to challenge the"
-	cont "ELITE FOUR?"
+	text "Tch, Lets see if"
+	line "KANTO trainers"
+	cont "are strong."
 	done
 
 _VictoryRoad2FJuggler1EndBattleText::
-	text "You"
-	line "got me!"
+	text "Not bad! You are"
+	line "pretty good."
 	prompt
 
 _VictoryRoad2FJuggler1AfterBattleText::
-	text "<RIVAL> also came"
-	line "through here!"
+	text "I come from"
+	line "another region"
+	cont "close to KANTO."
+
+	para "You showed me"
+	line "I neeed to a"
+	cont "bigger arsenal"
+	cont "to continue"
 	done
 
 _VictoryRoad2FTamerBattleText::
@@ -63,24 +77,25 @@ _VictoryRoad2FPokemaniacEndBattleText::
 	prompt
 
 _VictoryRoad2FPokemaniacAfterBattleText::
-	text "I can beat you"
-	line "when it comes to"
-	cont "knowledge about"
-	cont "#MON!"
+	text "If you get stuck,"
+	line "try moving some"
+	cont "boulders around!"
 	done
 
 _VictoryRoad2FJuggler2BattleText::
-	text "Is VICTORY ROAD"
-	line "too tough?"
+	text "I want a #MON"
+	line "that can learn"
+	cont "lots of HMs!"
 	done
 
 _VictoryRoad2FJuggler2EndBattleText::
-	text "Well"
-	line "done!"
+	text "No, not PIKACHU!"
+	line "Something cuter!"
 	prompt
 
 _VictoryRoad2FJuggler2AfterBattleText::
-	text "Many trainers give"
-	line "up the challenge"
-	cont "here."
+	text "Maybe a brown,"
+	line "plump mouse"
+	cont "#MON with big"
+	cont "teeth?"
 	done

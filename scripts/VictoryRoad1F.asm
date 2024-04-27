@@ -147,37 +147,37 @@ VictoryRoad1FBugCatcherAfterBattleText:
 	text_end
 
 VictoryRoad1FBeautyBattleText:
-	text_far _VictoryRoad1FBugCatcherBattleText
+	text_far _VictoryRoad1FBeautyBattleText
 	text_end
 
 VictoryRoad1FBeautyEndBattleText:
-	text_far _VictoryRoad1FBugCatcherEndBattleText
+	text_far _VictoryRoad1FBeautyEndBattleText
 	text_end
 
 VictoryRoad1FBeautyAfterBattleText:
-	text_far _VictoryRoad1FBugCatcherAfterBattleText
+	text_far _VictoryRoad1FBeautyAfterBattleText
 	text_end
 
 VictoryRoad1FBurglarBattleText:
-	text_far _VictoryRoad1FBugCatcherBattleText
+	text_far _VictoryRoad1FBurglarBattleText
 	text_end
 
 VictoryRoad1FBurglarEndBattleText:
-	text_far _VictoryRoad1FBugCatcherEndBattleText
+	text_far _VictoryRoad1FBurglarEndBattleText
 	text_end
 
 VictoryRoad1FBurglarAfterBattleText:
-	text_far _VictoryRoad1FBugCatcherAfterBattleText
+	text_far _VictoryRoad1FBurglarAfterBattleText
 	text_end
 
 VictoryRoad1FBlackbeltBattleText:
-	text_far _VictoryRoad1FBugCatcherBattleText
+	text_far _VictoryRoad1FBlackbeltBattleText
 	text_end
 
 VictoryRoad1FBlackbeltEndBattleText:
-	text_far _VictoryRoad1FBugCatcherEndBattleText
+	text_far _VictoryRoad1FBlackbeltEndBattleText
 	text_end
 
 VictoryRoad1FBlackbeltAfterBattleText:
-	text_far _VictoryRoad1FBugCatcherAfterBattleText
+	text_far _VictoryRoad1FBlackbeltAfterBattleText
 	text_end

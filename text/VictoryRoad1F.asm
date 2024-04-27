@@ -1,33 +1,39 @@
 _VictoryRoad1FCooltrainerFBattleText::
-	text "I wonder if you"
-	line "are good enough"
-	cont "for me!"
+	text "Oh? Did you"
+	line "need help with"
+	cont "something?"
 	done
 
 _VictoryRoad1FCooltrainerFEndBattleText::
-	text "I"
-	line "lost out!"
+	text "Ah. You've got"
+	line "the hang of"
+	cont "things, then."
 	prompt
 
 _VictoryRoad1FCooltrainerFAfterBattleText::
-	text "I never wanted to"
-	line "lose to anybody!"
+	text "I love helping"
+	line "people learn!"
+
+	para "Maybe I should've"
+	line "been a TEACHER?"
 	done
 
 _VictoryRoad1FCooltrainerMBattleText::
-	text "I can see you're"
-	line "good! Let me see"
-	cont "exactly how good!"
+	text "I hope you can"
+	line "entertain me for"
+	cont "a bit."
 	done
 
 _VictoryRoad1FCooltrainerMEndBattleText::
-	text "I"
-	line "had a chance..."
+	text "Hm, well this"
+	line "didn't turn out"
+	cont "well."
 	prompt
 
 _VictoryRoad1FCooltrainerMAfterBattleText::
-	text "I concede, you're"
-	line "better than me!"
+	text "Perhaps I should"
+	line "try a more"
+	cont "physical moveset"
 	done
 
 _VictoryRoad1FBugCatcherBattleText::
