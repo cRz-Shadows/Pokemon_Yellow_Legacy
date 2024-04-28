@@ -499,9 +499,9 @@ SpecialTrainerMoves:
     db 2, 2, EARTHQUAKE
     db 2, 3, SLASH
     db 2, 4, DOUBLE_TEAM
-    db 3, 1, SWORDS_DANCE
-    db 3, 2, EARTHQUAKE
-	db 3, 3, SLEEP_POWDER
+    db 3, 2, SWORDS_DANCE
+    db 3, 3, EARTHQUAKE
+	db 3, 4, SLEEP_POWDER
     db 4, 1, REFLECT
     db 4, 2, EARTHQUAKE
 	db 5, 2, REST
