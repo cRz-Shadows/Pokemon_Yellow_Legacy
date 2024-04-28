@@ -48,7 +48,7 @@ _VictoryRoad1FBugCatcherBattleText::
 _VictoryRoad1FBugCatcherEndBattleText::
 	text "MY"
 	cont "BUGS!!!"
-	done
+	prompt
 
 _VictoryRoad1FBugCatcherAfterBattleText::
 	text "I know they"
@@ -71,7 +71,7 @@ _VictoryRoad1FBeautyEndBattleText::
 	text "Aw, "
 	line "RAICHU and their"
 	cont "friends lost..."
-	done
+	prompt
 
 _VictoryRoad1FBeautyAfterBattleText::
 	text "It doesn't matter,"
@@ -87,7 +87,7 @@ _VictoryRoad1FBurglarEndBattleText::
 	text "I thought"
 	line "you were soft"
 	cont "and weak..."
-	done
+	prompt
 
 _VictoryRoad1FBurglarAfterBattleText::
 	text "Go away, I am"
@@ -109,7 +109,7 @@ _VictoryRoad1FBlackbeltEndBattleText::
 	text "You"
 	line "were fast as"
 	cont "lightning!"
-	done
+	prompt
 
 _VictoryRoad1FBlackbeltAfterBattleText::
 	text "Oh-ho-ho-ho,"
