@@ -5,8 +5,9 @@ _VictoryRoad3FCooltrainerM1BattleText::
 	done
 
 _VictoryRoad3FCooltrainerM1EndBattleText::
-	text "Maybe it was a"
-	line "mouse?"
+	text " "
+	line "Maybe it was a"
+	cont "mouse?"
 	prompt
 
 _VictoryRoad3FCooltrainerM1AfterBattleText::
@@ -28,8 +29,9 @@ _VictoryRoad3FCooltrainerF1BattleText::
 	done
 
 _VictoryRoad3FCooltrainerF1EndBattleText::
-	text "Losing just means"
-	line "I have more to"
+	text " "
+	line "Losing just means"
+	cont "I have more to"
 	cont "learn!"
 	prompt
 
@@ -49,9 +51,9 @@ _VictoryRoad3FCooltrainerM2BattleText::
 	done
 
 _VictoryRoad3FCooltrainerM2EndBattleText::
-	text "Seems you learned"
-	line "a lot along the"
-	cont "way."
+	text "Seems"
+	line "you learned a lot"
+	cont "along the way."
 
 	para "Nice fight!"
 	prompt
@@ -77,7 +79,8 @@ _VictoryRoad3FCooltrainerF2BattleText::
 	done
 
 _VictoryRoad3FCooltrainerF2EndBattleText::
-	text "Is that so?"
+	text "Is"
+	line "that so?"
 	prompt
 
 _VictoryRoad3FCooltrainerF2AfterBattleText::

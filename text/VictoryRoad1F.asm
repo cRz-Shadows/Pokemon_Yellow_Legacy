@@ -5,9 +5,10 @@ _VictoryRoad1FCooltrainerFBattleText::
 	done
 
 _VictoryRoad1FCooltrainerFEndBattleText::
-	text "Ah. You've got"
-	line "the hang of"
-	cont "things, then."
+	text "Ah."
+	line "You've got the"
+	cont "hang of things,"
+	cont "then."
 	prompt
 
 _VictoryRoad1FCooltrainerFAfterBattleText::
@@ -25,27 +26,28 @@ _VictoryRoad1FCooltrainerMBattleText::
 	done
 
 _VictoryRoad1FCooltrainerMEndBattleText::
-	text "Hm, well this"
-	line "didn't turn out"
-	cont "well."
+	text "Hm,"
+	line "this didn't turn"
+	cont "out well."
 	prompt
 
 _VictoryRoad1FCooltrainerMAfterBattleText::
 	text "Perhaps I should"
 	line "try a more"
-	cont "physical moveset"
+	cont "physical moveset."
 	done
 
 _VictoryRoad1FBugCatcherBattleText::
 	text "These aren't your"
-	line "average BUG-"
+	line "average bug-"
 	cont "types!"
 
-	para "Lets duel!"
+	para "Let's duel!"
 	done
 
 _VictoryRoad1FBugCatcherEndBattleText::
-	text "MY BUGS!!!"
+	text "MY"
+	cont "BUGS!!!"
 	done
 
 _VictoryRoad1FBugCatcherAfterBattleText::
@@ -66,9 +68,9 @@ _VictoryRoad1FBeautyBattleText::
 	done
 
 _VictoryRoad1FBeautyEndBattleText::
-	text "Aw, RAICHU and"
-	line "their friends"
-	cont "lost..."
+	text "Aw, "
+	line "RAICHU and their"
+	cont "friends lost..."
 	done
 
 _VictoryRoad1FBeautyAfterBattleText::
@@ -82,9 +84,9 @@ _VictoryRoad1FBurglarBattleText::
 	done
 
 _VictoryRoad1FBurglarEndBattleText::
-	text "I thought you"
-	line "were soft and"
-	cont "weak..."
+	text "I thought"
+	line "you were soft"
+	cont "and weak..."
 	done
 
 _VictoryRoad1FBurglarAfterBattleText::
@@ -104,8 +106,9 @@ _VictoryRoad1FBlackbeltBattleText::
 	done
 
 _VictoryRoad1FBlackbeltEndBattleText::
-	text "You were fast as"
-	line "lightning!"
+	text "You"
+	line "were fast as"
+	cont "lightning!"
 	done
 
 _VictoryRoad1FBlackbeltAfterBattleText::

@@ -12,18 +12,18 @@ _VictoryRoad2FHikerBattleText::
 	done
 
 _VictoryRoad2FHikerEndBattleText::
-	text "You gave me a"
-	line "whalloping!"
+	text "You gave me"
+	line "a whalloping!"
 	prompt
 
 _VictoryRoad2FHikerAfterBattleText::
 	text "I was hiking down"
-	line "MT SILVER and I"
+	line "MT. SILVER and I"
 	cont "ended up here."
 
 	para "Can you point"
 	line "me towards"
-	cont "BLACKTHORN City?"
+	cont "BLACKTHORN CITY?"
 	done
 
 _VictoryRoad2FJuggler1BattleText::
@@ -33,8 +33,9 @@ _VictoryRoad2FJuggler1BattleText::
 	done
 
 _VictoryRoad2FJuggler1EndBattleText::
-	text "Not bad! You are"
-	line "pretty good."
+	text "Not bad!"
+	line "You are pretty"
+	cont "good."
 	prompt
 
 _VictoryRoad2FJuggler1AfterBattleText::
@@ -43,9 +44,9 @@ _VictoryRoad2FJuggler1AfterBattleText::
 	cont "close to KANTO."
 
 	para "You showed me"
-	line "I neeed to a"
-	cont "bigger arsenal"
-	cont "to continue"
+	line "I neeed to have"
+	cont "a bigger arsenal"
+	cont "to continue."
 	done
 
 _VictoryRoad2FTamerBattleText::
@@ -89,8 +90,9 @@ _VictoryRoad2FJuggler2BattleText::
 	done
 
 _VictoryRoad2FJuggler2EndBattleText::
-	text "No, not PIKACHU!"
-	line "Something cuter!"
+	text "No, not"
+	line "PIKACHU!"
+	cont "Something cuter!"
 	prompt
 
 _VictoryRoad2FJuggler2AfterBattleText::
