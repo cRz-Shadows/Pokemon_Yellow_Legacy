@@ -211,7 +211,12 @@ VermilionDock_EraseSSAnne:
 VermilionDock_TextPointers:
 	def_text_pointers
 	dw_const VermilionDockUnusedText, TEXT_VERMILIONDOCK_UNUSED
+	dw_const VermilionDockTruckText,  TEXT_VERMILIONDOCK_TRUCK
 
 VermilionDockUnusedText:
 	text_far _VermilionDockUnusedText
+	text_end
+	
+VermilionDockTruckText:
+	text_far _VermilionDockTruckText
 	text_end
