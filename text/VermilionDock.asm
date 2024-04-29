@@ -11,5 +11,5 @@ _VermilionDockTruckText::
 	line "look."
 
 	para "Oh, it's just a"
-	line "MEOWTH."
+	line "DITTO."
 	done

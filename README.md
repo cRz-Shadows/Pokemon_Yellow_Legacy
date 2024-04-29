@@ -77,6 +77,9 @@ These videos also provide an overview of the hack and the ideology behind it:
     - Karlos
     - Reader Dragon
     - Alakadoof
+- Pokemon overworld sprites - Anyone is welcome to use any of our overworld sprites so long as you **credit the artists** listed here
+    - Isona
+    - Alakadoof
 - Pokemon party sprites
     - Chamber
     - Soloo993
@@ -90,7 +93,7 @@ These videos also provide an overview of the hack and the ideology behind it:
 - Porygon Front Sprite - Zeta_Null
 - Nurse Joy Battle Sprite - ZuperZACH
 - Officer Jenny Battle Sprite - Karlos
-- Misty and addtl. Kabuto map sprites - Isona
+- Misty overworld sprite - Isona
 - (Removed) Leaf sprite - Longlostsoul
 
 

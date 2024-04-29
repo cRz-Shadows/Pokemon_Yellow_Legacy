@@ -111,13 +111,34 @@ KabutoSprite::           INCBIN "gfx/sprites/kabuto.2bpp"
 
 
 SECTION "NPC Sprites 5", ROMX
+
 FlareonSprite::          INCBIN "gfx/sprites/flareon.2bpp"
 VaporeonSprite::         INCBIN "gfx/sprites/vaporeon.2bpp"
 JolteonSprite::          INCBIN "gfx/sprites/jolteon.2bpp"
 LaprasSprite::           INCBIN "gfx/sprites/lapras.2bpp"
 
 
-SECTION "NAMEHERE1", ROMX
+SECTION "NPC Sprites 6", ROMX
+
+PoliwrathSprite::        INCBIN "gfx/sprites/poliwrath.2bpp"
+MeowthSprite::           INCBIN "gfx/sprites/meowth.2bpp"
+CuboneSprite::           INCBIN "gfx/sprites/poliwrath.2bpp"
+PsyduckSprite::          INCBIN "gfx/sprites/poliwrath.2bpp"
+NidoranmSprite::         INCBIN "gfx/sprites/poliwrath.2bpp"
+NidorinoSprite::         INCBIN "gfx/sprites/poliwrath.2bpp"
+NidoranfSprite::         INCBIN "gfx/sprites/lapras.2bpp"
+MachopSprite::           INCBIN "gfx/sprites/lapras.2bpp"
+MachokeSprite::          INCBIN "gfx/sprites/poliwrath.2bpp"
+PidgeySprite::           INCBIN "gfx/sprites/lapras.2bpp"
+PidgeotSprite::          INCBIN "gfx/sprites/poliwrath.2bpp"
+SpearowSprite::          INCBIN "gfx/sprites/lapras.2bpp"
+FearowSprite::           INCBIN "gfx/sprites/lapras.2bpp"
+Seel2Sprite::            INCBIN "gfx/sprites/poliwrath.2bpp"
+SlowpokeSprite::         INCBIN "gfx/sprites/lapras.2bpp"
+KangaskhanSprite::       INCBIN "gfx/sprites/lapras.2bpp"
+
+
+SECTION "Mon Icons 1", ROMX
 
 MonIcons::
 INCBIN "gfx/icons/null.2bpp"
@@ -250,7 +271,7 @@ INCBIN "gfx/icons/magmar.2bpp"
 INCBIN "gfx/icons/pinsir.2bpp"
 
 
-SECTION "NAMEHERE2", ROMX
+SECTION "Mon Icons 2", ROMX
 
 MonIcons2::
 INCBIN "gfx/icons/tauros.2bpp"

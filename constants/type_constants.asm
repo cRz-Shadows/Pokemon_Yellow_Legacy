@@ -11,12 +11,14 @@ DEF PHYSICAL EQU const_value
 	const BIRD         ; $06
 	const BUG          ; $07
 
+DEF SPECIAL EQU const_value
+	const GHOST        ; $08
+
 DEF UNUSED_TYPES EQU const_value
 	const_next 20
 DEF UNUSED_TYPES_END EQU const_value
 
-DEF SPECIAL EQU const_value
-	const GHOST        ; $1B
+; SPECIAL continued, doing this maintains trade functionality with crystal
 	const FIRE         ; $14
 	const WATER        ; $15
 	const GRASS        ; $16
