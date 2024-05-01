@@ -27,7 +27,7 @@ RockTunnelB1F_TextPointers:
 RockTunnel2TrainerHeaders:
 	def_trainers
 RockTunnel2TrainerHeader0:
-	trainer EVENT_BEAT_ROCK_TUNNEL_2_TRAINER_0, 4, RockTunnelB1FCooltrainerF1BattleText, RockTunnelB1FCooltrainerF1EndBattleText, RockTunnelB1FCooltrainerF1AfterBattleText
+	trainer EVENT_BEAT_ROCK_TUNNEL_2_TRAINER_0, 3, RockTunnelB1FCooltrainerF1BattleText, RockTunnelB1FCooltrainerF1EndBattleText, RockTunnelB1FCooltrainerF1AfterBattleText
 RockTunnel2TrainerHeader1:
 	trainer EVENT_BEAT_ROCK_TUNNEL_2_TRAINER_1, 3, RockTunnelB1FHiker1BattleText, RockTunnelB1FHiker1EndBattleText, RockTunnelB1FHiker1AfterBattleText
 RockTunnel2TrainerHeader2:
@@ -41,7 +41,7 @@ RockTunnel2TrainerHeader5:
 RockTunnel2TrainerHeader6:
 	trainer EVENT_BEAT_ROCK_TUNNEL_2_TRAINER_6, 3, RockTunnelB1FHiker3BattleText, RockTunnelB1FHiker3EndBattleText, RockTunnelB1FHiker3AfterBattleText
 RockTunnel2TrainerHeader7:
-	trainer EVENT_BEAT_ROCK_TUNNEL_2_TRAINER_7, 3, RockTunnelB1FSuperNerd3BattleText, RockTunnelB1FSuperNerd3EndBattleText, RockTunnelB1FSuperNerd3AfterBattleText
+	trainer EVENT_BEAT_ROCK_TUNNEL_2_TRAINER_7, 2, RockTunnelB1FSuperNerd3BattleText, RockTunnelB1FSuperNerd3EndBattleText, RockTunnelB1FSuperNerd3AfterBattleText
 	db -1 ; end
 
 RockTunnelB1FCooltrainerF1Text:
