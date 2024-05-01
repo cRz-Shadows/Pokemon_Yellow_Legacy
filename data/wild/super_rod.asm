@@ -52,9 +52,9 @@ CheckMapForFishingMon:
 	; Do old rod and good rod mons manually because there's so little of them
 	cp POLIWAG
 	jr z, .found
-	cp MAGIKARP
-	jr z, .found
 	cp GOLDEEN
+	jr z, .found
+	cp HORSEA
 	jr z, .found
 	cp KRABBY
 	jr z, .found

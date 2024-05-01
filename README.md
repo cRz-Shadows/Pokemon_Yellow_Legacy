@@ -80,6 +80,7 @@ These videos also provide an overview of the hack and the ideology behind it:
 - Pokemon overworld sprites - Anyone is welcome to use any of our overworld sprites so long as you **credit the artists** listed here
     - Isona
     - Alakadoof
+    - Karlos
 - Pokemon party sprites
     - Chamber
     - Soloo993
