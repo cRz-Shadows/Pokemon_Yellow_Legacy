@@ -136,6 +136,7 @@ FearowSprite::           INCBIN "gfx/sprites/fearow.2bpp"
 Seel2Sprite::            INCBIN "gfx/sprites/seel2.2bpp"
 SlowpokeSprite::         INCBIN "gfx/sprites/slowpoke.2bpp"
 KangaskhanSprite::       INCBIN "gfx/sprites/kangaskhan.2bpp"
+WigglytuffSprite::       INCBIN "gfx/sprites/wigglytuff.2bpp"
 
 
 SECTION "Mon Icons 1", ROMX
