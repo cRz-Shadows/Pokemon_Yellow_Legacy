@@ -2160,10 +2160,11 @@ GoldeenEvosMoves:
 	db EVOLVE_LEVEL, 33, SEAKING
 	db 0
 ; Learnset
-	db 8, SUPERSONIC
-	db 12, WATER_GUN
-	db 14, HORN_ATTACK
-	db 16, WATERFALL
+	db 7, PECK
+	db 10, SUPERSONIC
+	db 13, WATER_GUN
+	db 15, HORN_ATTACK
+	db 17, WATERFALL
 	db 24, FURY_ATTACK
 	db 33, DRILL_PECK
 	db 43, HORN_DRILL
@@ -2174,14 +2175,14 @@ SeakingEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 8, SUPERSONIC
-	db 12, WATER_GUN
-	db 14, HORN_ATTACK
-	db 16, WATERFALL
+	db 7, PECK
+	db 10, SUPERSONIC
+	db 13, WATER_GUN
+	db 15, HORN_ATTACK
+	db 17, WATERFALL
 	db 24, FURY_ATTACK
 	db 33, DRILL_PECK
-	db 38, SWORDS_DANCE
-	db 45, HORN_DRILL
+	db 43, HORN_DRILL
 	db 48, AGILITY
 	db 0
 
