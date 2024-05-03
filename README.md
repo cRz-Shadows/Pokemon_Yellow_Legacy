@@ -16,7 +16,7 @@ While Yellow Legacy is not designed as a “Kaizo” project, Pokémon trainer f
 
 
 ## A complete list of features can be found here:
-- Full doc: https://docs.google.com/document/d/1JlZRhW2fcBUd7y23DB7MGfJCU95FK_yJI-QdRFdMawI/edit?usp=sharing
+- Full doc: https://docs.google.com/document/d/1JlZRhW2fcBUd7y23DB7MGfJCU95FK_yJI-QdRFdMawI/copy
 
 These videos also provide an overview of the hack and the ideology behind it:
 - Release 1.0: **To add later**
@@ -58,16 +58,18 @@ These videos also provide an overview of the hack and the ideology behind it:
 - Disq
 - Karlos
 - ZuperZACH
+- Regi
 - Isona
 - Obelisk
-- Brice
+- JanitorOPplznerf
 - Sable
 - Alakadoof
 - ReaderDragon
+- Rwne
 - Talos
 - Tiberius
 - SoulXCross
-- Idain
+- Mogul
 
 
 ### Sprite Artists:

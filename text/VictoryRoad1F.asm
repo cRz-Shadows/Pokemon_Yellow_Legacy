@@ -47,7 +47,7 @@ _VictoryRoad1FBugCatcherBattleText::
 
 _VictoryRoad1FBugCatcherEndBattleText::
 	text "MY"
-	cont "BUGS!!!"
+	line "BUGS!!!"
 	prompt
 
 _VictoryRoad1FBugCatcherAfterBattleText::

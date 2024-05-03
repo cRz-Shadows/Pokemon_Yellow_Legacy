@@ -51,9 +51,10 @@ _VictoryRoad3FCooltrainerM2BattleText::
 	done
 
 _VictoryRoad3FCooltrainerM2EndBattleText::
-	text "Seems"
-	line "you learned a lot"
-	cont "along the way."
+	text " "
+	line "Seems you learned"
+	cont "a lot along the"
+	cont "way."
 
 	para "Nice fight!"
 	prompt
