@@ -148,7 +148,7 @@ These videos also provide an overview of the hack and the ideology behind it:
     - [Implement move priority system](https://github.com/pret/pokered/wiki/Implement-move-priority-system)
 - TwitchPlaysPokemon - [Trainer pokemon nickname](https://github.com/twitchplayspokemon/tppcrystal251pub/blob/public/main.asm)
 - Dannye - [Add All Unique Party Menu Sprite Icons](https://github.com/pret/pokered/wiki/Add-All-Unique-Party-Menu-Sprite-Icons)
-- SoupPotato - [Functioning EXP bar in battle](https://github.com/AhabsStudios/pokekaizen/commit/0332a4d1ca74b4993b2f4bc8d926bac971a0751d)
+- SoupPotato/Dannye - [Functioning EXP bar in battle](https://github.com/AhabsStudios/pokekaizen/commit/0332a4d1ca74b4993b2f4bc8d926bac971a0751d)
 - Voloved - [Add Item Sorting In Bag](https://github.com/pret/pokered/wiki/Add-Item-Sorting-In-Bag)
 - Veganlies2me - [Adding Gender Selection (original tutorial done by Mateo)](https://github.com/pret/pokered/wiki/Adding-Gender-Selection-(original-tutorial-done-by-Mateo))
 - Vortyne - [Move overworld tile anim code out of home bank](https://github.com/Vortyne/pureRGB/commit/09c037f5df39cd99fe4e13b4d5fee8ed86206e7b)
