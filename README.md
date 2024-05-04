@@ -19,7 +19,7 @@ While Yellow Legacy is not designed as a “Kaizo” project, Pokémon trainer f
 - Full doc: https://docs.google.com/document/d/1JlZRhW2fcBUd7y23DB7MGfJCU95FK_yJI-QdRFdMawI/copy
 
 These videos also provide an overview of the hack and the ideology behind it:
-- Release 1.0: **To add later**
+- Release 1.0: https://youtu.be/jTH2fVqHPwc
 - Prerelease: https://www.youtube.com/playlist?list=PLyv5bsGgaxonXuHoUUsv3mM7xzTwENccO
 
 
@@ -32,6 +32,7 @@ These videos also provide an overview of the hack and the ideology behind it:
 ## Discussion and Community
 * YouTube: https://www.youtube.com/@smithplayspokemon
 * Discord: https://discord.gg/Wupx8tHRVS
+* Reddit: https://www.reddit.com/r/PokemonLegacy
 * Twitter: https://twitter.com/TheSmithPlays
 * Instagram: https://www.instagram.com/thesmithplays/
 
