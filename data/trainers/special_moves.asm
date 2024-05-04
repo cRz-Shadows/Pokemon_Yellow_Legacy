@@ -348,7 +348,7 @@ SpecialTrainerMoves:
 	db 0
 
 	db RIVAL2, 5 ; Silph Co - 43, PARASECT, 44, GYARADOS, 43, RHYDON, 44, ALAKAZAM, 46, JOLTEON
-	db 1, 4, MEGA_DRAIN
+	db 1, 4, LEECH_LIFE
 	db 2, 1, SURF
 	db 2, 2, ICE_BEAM
 	db 2, 3, DOUBLE_EDGE
@@ -356,7 +356,7 @@ SpecialTrainerMoves:
 	db 3, 1, HORN_DRILL
 	db 3, 2, BODY_SLAM
 	db 3, 3, EARTHQUAKE
-	db 4, 1, DOUBLE_TEAM
+	db 4, 1, THUNDER_WAVE
 	db 4, 4, TRI_ATTACK
 	db 5, 1, DIG
 	db 5, 4, THUNDER_WAVE
@@ -395,8 +395,8 @@ SpecialTrainerMoves:
 	db 1, 4, HEADBUTT
 	db 2, 1, DOUBLE_EDGE
 	db 2, 2, SKY_ATTACK
-	db 2, 3, QUICK_ATTACK
-	db 2, 4, MIRROR_MOVE
+	db 2, 3, TOXIC
+	db 2, 4, DOUBLE_TEAM
 	db 3, 1, SOFTBOILED
 	db 3, 2, SOLARBEAM
 	db 3, 3, LEECH_SEED
