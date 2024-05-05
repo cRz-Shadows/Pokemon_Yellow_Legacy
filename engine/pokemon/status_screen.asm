@@ -155,7 +155,7 @@ StatusScreen:
 .checkstart	;print DVs if start is held
 	bit BIT_START, a
 	jr z, .doregular
-	ld de, wDVCalcVar2
+	ld de, wDVCalcVar2 + 4
 	lb bc, 1, 2
 .printnum
 	call PrintNumber
@@ -345,7 +345,7 @@ PrintStatsBox:
 .checkstart	;joenote - print DVs if start is held
 	bit 3, a
 	jr z, .doregular
-	ld de, wDVCalcVar2 + 4
+	ld de, wDVCalcVar2
 	lb bc, 1, 2
 	call PrintStat
 	ld de, wDVCalcVar2 + 1
