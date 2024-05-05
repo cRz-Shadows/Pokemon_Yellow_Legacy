@@ -424,6 +424,7 @@ NidoqueenEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
+	db 2, TAIL_WHIP
 	db 6, POISON_STING
 	db 8, HEADBUTT
 	db 12, DOUBLE_KICK
