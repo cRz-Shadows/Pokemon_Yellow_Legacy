@@ -104,6 +104,7 @@
 	const SPRITE_SEEL2
 	const SPRITE_KANGASKHAN
 	const SPRITE_SLOWPOKE
+	const SPRITE_DODUO
 DEF FIRST_STILL_SPRITE EQU const_value
 	const SPRITE_POKE_BALL               ; $47
 	const SPRITE_FOSSIL                  ; $48

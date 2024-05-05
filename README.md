@@ -16,7 +16,9 @@ While Yellow Legacy is not designed as a “Kaizo” project, Pokémon trainer f
 
 
 ## A complete list of features can be found here:
-- Full doc: https://docs.google.com/document/d/1JlZRhW2fcBUd7y23DB7MGfJCU95FK_yJI-QdRFdMawI/copy
+- Full doc: 
+    - [Make a Copy](https://docs.google.com/document/d/1JlZRhW2fcBUd7y23DB7MGfJCU95FK_yJI-QdRFdMawI/copy)
+    - [Download as PDF](https://docs.google.com/document/d/1JlZRhW2fcBUd7y23DB7MGfJCU95FK_yJI-QdRFdMawI/export?format=pdf)
 
 These videos also provide an overview of the hack and the ideology behind it:
 - Release 1.0: https://youtu.be/jTH2fVqHPwc

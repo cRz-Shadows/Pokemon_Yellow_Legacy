@@ -109,6 +109,7 @@ SpriteSheetPointerTable:
 	overworld_sprite Seel2Sprite, 12     		; SPRITE_SEEL2
 	overworld_sprite KangaskhanSprite, 12     	; SPRITE_KANGASKHAN
 	overworld_sprite SlowpokeSprite, 12     	; SPRITE_SLOWPOKE
+	overworld_sprite DoduoSprite, 12    		; SPRITE_DODUO
 	overworld_sprite PokeBallSprite, 4          ; SPRITE_POKE_BALL
 	overworld_sprite FossilSprite, 4            ; SPRITE_FOSSIL
 	overworld_sprite BoulderSprite, 4           ; SPRITE_BOULDER
