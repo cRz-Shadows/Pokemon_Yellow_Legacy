@@ -441,7 +441,21 @@ GetPal_Pikachu::
 	jr .town
 
 .caveOrBruno
+	ld a, [wCurMap]
+	cp SEAFOAM_ISLANDS_1F
+	jr z, .SeafoamIslands
+	cp SEAFOAM_ISLANDS_B1F
+	jr z, .SeafoamIslands
+	cp SEAFOAM_ISLANDS_B2F
+	jr z, .SeafoamIslands
+	cp SEAFOAM_ISLANDS_B3F
+	jr z, .SeafoamIslands
+	cp SEAFOAM_ISLANDS_B4F
+	jr z, .SeafoamIslands
 	ld a, PAL_CAVE - 1
+	jr .town
+.SeafoamIslands
+	ld a, PAL_CYANMON - 1
 	jr .town
 
 .Lorelei
