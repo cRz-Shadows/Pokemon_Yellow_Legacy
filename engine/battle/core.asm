@@ -4142,8 +4142,8 @@ CheckForDisobedience:
 	call AddNTimes
 	ld a, [wPlayerID]
 	cp [hl]
-; it was traded
-.monIsTraded
+	jr nz, .monIsTraded
+
 	ld a, [wDifficulty] ; Check if player is on hard mode
 	and a
 	jr z, .NormalMode2
@@ -4181,18 +4181,12 @@ CheckForDisobedience:
 	ld a, 12 ; Onix's level
 	jp .next
 .NormalMode2
-	ld hl, wPartyMon1OTID
-	ld bc, wPartyMon2 - wPartyMon1
-	ld a, [wPlayerMonNumber]
-	call AddNTimes
-	ld a, [wPlayerID]
-	cp [hl]
-	jr nz, .monIsTraded
 	inc hl
 	ld a, [wPlayerID + 1]
 	cp [hl]
 	jp z, .canUseMove ; on normal mode non traded pokemon will always obey
-
+	; it was traded
+.monIsTraded
 	ld hl, wObtainedBadges
 	bit BIT_EARTHBADGE, [hl]
 	ld a, 101
