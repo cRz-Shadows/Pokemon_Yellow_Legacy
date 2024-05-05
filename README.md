@@ -142,6 +142,9 @@ These videos also provide an overview of the hack and the ideology behind it:
     - [Out of Bounds don't Crash the Game](https://github.com/pret/pokered/wiki/Out-of-Bounds-don't-Crash-the-Game)
     - [Fix No Mon Scenarios Softlock](https://github.com/pret/pokered/wiki/Fix-No-Mon-Scenarios-Softlock)
     - [Collision check when Jumping a Ledge](https://github.com/pret/pokered/wiki/Collision-check-when-Jumping-a-Ledge)
+- Vortyne:
+    - [Multiple-level-up learnset skipping bug fix](https://github.com/Vortyne/pureRGB/commit/9c38ff4a1afb8c0773202b37c8b9068b4b9f4354)
+    - [Move overworld tile anim code out of home bank](https://github.com/Vortyne/pureRGB/commit/09c037f5df39cd99fe4e13b4d5fee8ed86206e7b)
 - Pgattic:
     - [Running Shoes (This required some extra work for yellow if you want to implement)](https://github.com/pret/pokered/wiki/Running-Shoes)
     - [Remove Artificial Save Delay](https://github.com/pret/pokered/wiki/Remove-Artificial-Save-Delay)
@@ -153,7 +156,6 @@ These videos also provide an overview of the hack and the ideology behind it:
 - SoupPotato/Dannye - [Functioning EXP bar in battle](https://github.com/AhabsStudios/pokekaizen/commit/0332a4d1ca74b4993b2f4bc8d926bac971a0751d)
 - Voloved - [Add Item Sorting In Bag](https://github.com/pret/pokered/wiki/Add-Item-Sorting-In-Bag)
 - Veganlies2me - [Adding Gender Selection (original tutorial done by Mateo)](https://github.com/pret/pokered/wiki/Adding-Gender-Selection-(original-tutorial-done-by-Mateo))
-- Vortyne - [Move overworld tile anim code out of home bank](https://github.com/Vortyne/pureRGB/commit/09c037f5df39cd99fe4e13b4d5fee8ed86206e7b)
 - SatoMew (presumably more people worked on these but satomew is the only page author) - [Bugs and Glitches](https://github.com/pret/pokered/wiki/%5BARCHIVED%5D-Bugs-and-Glitches)
 
 

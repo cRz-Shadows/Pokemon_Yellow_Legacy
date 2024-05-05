@@ -112,6 +112,13 @@ Evolution_PartyMonLoop: ; loop over party mons
 	ld [wCurEnemyLVL], a
 	ld a, 1
 	ld [wEvolutionOccurred], a
+	; FIXED: skipping evolution learned moves if levelled up a non-evolved pokemon multiple times then evolving
+	ld a, [wTempCoins1]
+	cp b
+	jp nc, .evoLevelRequirementSatisfied
+	ld a, b
+	ld [wTempCoins1], a
+.evoLevelRequirementSatisfied
 	push hl
 	ld a, [hl]
 	ld [wEvoNewSpecies], a
@@ -211,7 +218,33 @@ Evolution_PartyMonLoop: ; loop over party mons
 	ld [wd11e], a
 	xor a
 	ld [wMonDataLocation], a
+	;FIXED: fixing skip move-learn on level-up evolution
+	ld a, [wIsInBattle]
+	and a
+	jr z, .notinbattle
+	push bc
+	
+	ld a, [wCurEnemyLVL]	; load the final level into a.
+	ld c, a	; load the final level to over to c
+	ld a, [wTempCoins1]	; load the evolution level into a
+	ld b, a	; load the evolution level over to b
+	dec b
+.inc_level	; marker for looping back 
+	inc b	;increment 	the current evolution level
+	ld a, b	;put the evolution level in a
+	ld [wCurEnemyLVL], a	;and reset the final level to the evolution level
+	push bc	;save b & c on the stack as they hold the currently tracked evolution level a true final level
 	call LearnMoveFromLevelUp
+	pop bc	;get the current evolution and final level values back from the stack
+	ld a, b	;load the current evolution level into a
+	cp c	;compare it with the final level
+	jr nz, .inc_level	;loop back again if final level has not been reached
+	
+	pop bc
+	jr .skipfix_end
+.notinbattle
+	call LearnMoveFromLevelUp
+.skipfix_end
 	pop hl
 	predef SetPartyMonTypes
 	ld a, [wIsInBattle]
@@ -321,7 +354,7 @@ Evolution_ReloadTilesetTilePatterns:
 	ret z
 	jp ReloadTilesetTilePatterns
 
-LearnMoveFromLevelUp:
+LearnMoveFromLevelUp: ; FIXED: supports learning multiple moves at the same level
 	ld a, [wd11e] ; species
 	ld [wcf91], a
 	call GetMonLearnset
