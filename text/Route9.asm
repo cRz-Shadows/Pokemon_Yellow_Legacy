@@ -99,21 +99,21 @@ _Route9Hiker2AfterBattleText::
 	line "should be tough!"
 	done
 
-_Route9Youngster1BattleText::
+_Route9Youngster2BattleText::
 	text "I got up early"
 	line "every day to"
 	cont "raise my #MON"
 	cont "from cocoons!"
 	done
 
-_Route9Youngster1EndBattleText::
+_Route9Youngster2EndBattleText::
 	text "WHAT?"
 
 	para "What a total"
 	line "waste of time!"
 	prompt
 
-_Route9Youngster1AfterBattleText::
+_Route9Youngster2AfterBattleText::
 	text "I have to collect"
 	line "more than bugs to"
 	cont "get stronger..."

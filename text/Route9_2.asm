@@ -1,14 +1,14 @@
-_Route9Youngster2BattleText::
+_Route9Youngster1BattleText::
 	text "Go, my super bug"
 	line "#MON!"
 	done
 
-_Route9Youngster2EndBattleText::
+_Route9Youngster1EndBattleText::
 	text "My"
 	line "bugs..."
 	prompt
 
-_Route9Youngster2AfterBattleText::
+_Route9Youngster1AfterBattleText::
 	text "If you don't like"
 	line "bug #MON, you"
 	cont "bug me!"
