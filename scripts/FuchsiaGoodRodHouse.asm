@@ -23,6 +23,7 @@ FuchsiaGoodRodHouseFishingGuruText:
 	lb bc, OMANYTE, 10
 .giveGiftMon
 	call GivePokemon
+	jp nc, TextScriptEnd
 	SetEvent EVENT_GOT_FUCHSIA_FOSSIL_GIFT
 	jr .done
 .refused

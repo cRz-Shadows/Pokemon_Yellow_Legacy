@@ -4998,18 +4998,22 @@ ApplyAttackToEnemyPokemon:
 	cp DRAGON_RAGE
 	jr z, .storeDamage
 ; Psywave
+	push bc
 	ld a, [hl]
 	ld b, a
 	srl a
 	add b
 	ld b, a ; b = level * 1.5
-; loop until a random number in the range [1, b) is found
+; loop until a random number in the range [level, b) is found
 .loop
 	call BattleRandom
-	and a
-	jr z, .loop
+	ld c, a ; store the random number in 'c'
+	ld a, [wBattleMonLevel]
+	add c ; add the level to the random number
+	jr c, .loop ; if carry is set (overflow), generate a new random number
 	cp b
 	jr nc, .loop
+	pop bc
 	ld b, a
 .storeDamage ; store damage value at b
 	ld hl, wDamage
@@ -5117,19 +5121,22 @@ ApplyAttackToPlayerPokemon:
 	cp DRAGON_RAGE
 	jr z, .storeDamage
 ; Psywave
+	push bc
 	ld a, [hl]
 	ld b, a
 	srl a
 	add b
 	ld b, a ; b = attacker's level * 1.5
-; loop until a random number in the range [0, b) is found
-; this differs from the range when the player attacks, which is [1, b)
-; it's possible for the enemy to do 0 damage with Psywave, but the player always does at least 1 damage
+; loop until a random number in the range [level, b) is found
 .loop
 	call BattleRandom
-	add a, 1            ; Increment to ensure we start from 1, adjusting the range to [1, b)
+	ld c, a ; store the random number in 'c'
+	ld a, [wEnemyMonLevel]
+	add c ; add the level to the random number
+	jr c, .loop ; if carry is set (overflow), generate a new random number
 	cp b
 	jr nc, .loop
+	pop bc
 	ld b, a
 .storeDamage
 	ld hl, wDamage
