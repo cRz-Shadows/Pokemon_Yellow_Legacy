@@ -44,7 +44,7 @@ _VictoryRoad2FJuggler1AfterBattleText::
 	cont "close to KANTO."
 
 	para "You showed me"
-	line "I neeed to have"
+	line "I need to have"
 	cont "a bigger arsenal"
 	cont "to continue."
 	done
