@@ -1415,7 +1415,7 @@ SandshrewEvosMoves:
 	db 10, SAND_ATTACK
 	db 14, DIG
 	db 18, SWIFT
-	db 23, SLASH
+	db 22, SLASH
 	db 33, EARTHQUAKE
 	db 0
 

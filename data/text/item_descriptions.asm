@@ -353,8 +353,8 @@ _TM01Description::
 	prompt
 
 _TM02Description::
-	text "1st turn: Prepare"
-	next "2nd turn: Attack"
+	text "1st turn: Attack"
+	next "2nd turn: Rest"
 	prompt
 
 _TM03Description::

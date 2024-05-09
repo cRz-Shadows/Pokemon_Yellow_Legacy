@@ -20,6 +20,11 @@ EvolutionAfterBattle:
 	push hl
 	push bc
 	push de
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; shinpokerednote: FIXED: We keep a pointer to the current PKMN's Level at the Beginning of the Battle. Helps fix the evolution move learn skip bug.
+	ld hl, wStartBattleLevels
+	push hl
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld hl, wPartyCount
 	push hl
 
@@ -28,10 +33,19 @@ Evolution_PartyMonLoop: ; loop over party mons
 	inc [hl]
 	pop hl
 	inc hl
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; shinpokerednote: FIXED: We store current PKMN' Level at the Beginning of the Battle
+; to a chosen memory address in order to be compared later with the evolution requirements.
+	pop de
+	ld a, [de]
+	ld [wTempLevelStore], a
+	inc de
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, [hl]
 	cp $ff ; have we reached the end of the party?
 	jp z, .done
 	ld [wEvoOldSpecies], a
+	push de; shinpokerednote: FIXED If we are not done we need to push the pointer for the next iteration. (next index of wStartBattleLevels)
 	push hl
 	ld a, [wWhichPokemon]
 	ld c, a
@@ -93,6 +107,12 @@ Evolution_PartyMonLoop: ; loop over party mons
 	jp c, Evolution_PartyMonLoop ; if so, go the next mon
 	jr .doEvolution
 .checkItemEvo
+;;;;;;;;;; shinpokerednote: FIXED: skip checking stone evolutions if in battle to avoid the exploit with species numbers allowing stone evolution after battle.
+	ld a, [wIsInBattle] 
+	and a
+	ld a, [hli]
+	jp nz, .nextEvoEntry1
+;;;;;;;;;;
 	ld a, [wIsInBattle] ; are we in battle?
 	and a
 	ld a, [hli]
@@ -112,13 +132,14 @@ Evolution_PartyMonLoop: ; loop over party mons
 	ld [wCurEnemyLVL], a
 	ld a, 1
 	ld [wEvolutionOccurred], a
-	; FIXED: skipping evolution learned moves if levelled up a non-evolved pokemon multiple times then evolving
-	ld a, [wTempCoins1]
+;;;;;;;;;; shinpokerednote: FIXED: skipping evolution learned moves if levelled up a non-evolved pokemon multiple times then evolving
+	ld a, [wTempLevelStore]
 	cp b
 	jp nc, .evoLevelRequirementSatisfied
 	ld a, b
-	ld [wTempCoins1], a
+	ld [wTempLevelStore], a
 .evoLevelRequirementSatisfied
+;;;;;;;;;;
 	push hl
 	ld a, [hl]
 	ld [wEvoNewSpecies], a
@@ -218,33 +239,6 @@ Evolution_PartyMonLoop: ; loop over party mons
 	ld [wd11e], a
 	xor a
 	ld [wMonDataLocation], a
-	;FIXED: fixing skip move-learn on level-up evolution
-	ld a, [wIsInBattle]
-	and a
-	jr z, .notinbattle
-	push bc
-	
-	ld a, [wCurEnemyLVL]	; load the final level into a.
-	ld c, a	; load the final level to over to c
-	ld a, [wTempCoins1]	; load the evolution level into a
-	ld b, a	; load the evolution level over to b
-	dec b
-.inc_level	; marker for looping back 
-	inc b	;increment 	the current evolution level
-	ld a, b	;put the evolution level in a
-	ld [wCurEnemyLVL], a	;and reset the final level to the evolution level
-	push bc	;save b & c on the stack as they hold the currently tracked evolution level a true final level
-	call LearnMoveFromLevelUp
-	pop bc	;get the current evolution and final level values back from the stack
-	ld a, b	;load the current evolution level into a
-	cp c	;compare it with the final level
-	jr nz, .inc_level	;loop back again if final level has not been reached
-	
-	pop bc
-	jr .skipfix_end
-.notinbattle
-	call LearnMoveFromLevelUp
-.skipfix_end
 	pop hl
 	predef SetPartyMonTypes
 	ld a, [wIsInBattle]
@@ -354,10 +348,24 @@ Evolution_ReloadTilesetTilePatterns:
 	ret z
 	jp ReloadTilesetTilePatterns
 
-LearnMoveFromLevelUp: ; FIXED: supports learning multiple moves at the same level
+LearnMoveFromLevelUp: 
+	ld hl, EvosMovesPointerTable
 	ld a, [wd11e] ; species
 	ld [wcf91], a
-	call GetMonLearnset
+	dec a
+	ld bc, 0
+	ld hl, EvosMovesPointerTable
+	add a
+	rl b
+	ld c, a
+	add hl, bc
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a
+.skipEvolutionDataLoop ; loop to skip past the evolution data, which comes before the move data
+	ld a, [hli]
+	and a ; have we reached the end of the evolution data?
+	jr nz, .skipEvolutionDataLoop ; if not, jump back up
 .learnSetLoop ; loop over the learn set until we reach a move that is learnt at the current level or the end of the list
 	ld a, [hli]
 	and a ; have we reached the end of the learn set?
@@ -945,6 +953,31 @@ PrepareLevelUpMoveList:: ; I don't know how the fuck you're a single colon in sh
 	ld a, c
 	ld [wMoveListCounter], a ; number of moves in the list
 .debug
+	ret
+
+; shinpokerednote: ADDED: Stores the player's pokemon levels into wStartBattleLevels. 
+; Used to track the levels at the beginning of battle so when evolving pokemon their learnsets can factor in multiple level-ups.
+StorePKMNLevels:
+	push hl
+	push de
+	ld a, [wPartyCount]	;1 to 6
+	ld b, a	;use b for countdown
+	ld hl, wPartyMon1Level
+	ld de, wStartBattleLevels
+.loopStorePKMNLevels
+	ld a, [hl]
+	ld [de], a	
+	dec b
+	jr z, .doneStorePKMNLevels
+	push bc
+	ld bc, wPartyMon2 - wPartyMon1
+	add hl, bc
+	inc de
+	pop bc
+	jr .loopStorePKMNLevels
+.doneStorePKMNLevels
+	pop de
+	pop hl
 	ret
 
 INCLUDE "data/pokemon/evos_moves.asm"
