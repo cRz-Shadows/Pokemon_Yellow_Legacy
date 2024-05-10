@@ -557,7 +557,7 @@ GastlyEvosMoves:
 ; Learnset
 	db 10, SMOG
 	db 15, PSYWAVE
-	db 20, POISON_GAS
+	db 23, POISON_GAS
 	db 36, NIGHT_SHADE
 	db 55, HYPNOSIS
 	db 55, DREAM_EATER
