@@ -72,7 +72,6 @@ SpecialTrainerMoves:
 
 	db ERIKA, 1 ; db $FF, 33, TANGELA, 34, VICTREEBEL, 31, IVYSAUR, 35, VILEPLUME, 0
 	db 1, 1, BIND
-	db 2, 1, MEGA_DRAIN
 	db 3, 1, RAZOR_LEAF
 	db 3, 2, ACID
 	db 3, 3, LEECH_SEED
