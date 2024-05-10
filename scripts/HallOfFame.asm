@@ -146,9 +146,9 @@ HallOfFameOakCongratulationsScript:
 	predef ShowObject
 	ld a, [wRivalStarter]
 	cp RIVAL_STARTER_FLAREON
-	jr .UnhideFlareon
+	jr z, .UnhideFlareon
 	cp RIVAL_STARTER_VAPOREON
-	jr .UnhideVaporeon
+	jr z, .UnhideVaporeon
 	ld a, HS_CHAMPIONS_ROOM_JOLTEON
 	jr .done
 .UnhideFlareon
