@@ -443,11 +443,16 @@ _OakSpeechText1::
 	prompt
 
 _NormalModeText::
-	text "Classic #MON."
+	text "Are you sure?"
+
+	para "Classic #MON"
+	line "rules."
 	done
 
 _HardModeText::
-	text "Set mode, no"
+	text "Are you sure?"
+	
+	para "Set mode, no"
 	line "items in battle,"
 	cont "gym level caps."
 	done
