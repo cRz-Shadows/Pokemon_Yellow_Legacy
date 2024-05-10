@@ -291,7 +291,9 @@ DisplayChooseQuantityMenu::
 	ld hl, wItemQuantity
 	ld a, [hl]
 	sub 10
+	jr z, .setTo1 ; if quantity is 0, set to 1
 	jr nc, .storeNewQuantity ; if quantity goes below 1, set to 1
+.setTo1
 	ld a, 1
 	jr .storeNewQuantity
 .decrementQuantity
