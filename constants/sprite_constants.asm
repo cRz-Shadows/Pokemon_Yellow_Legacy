@@ -105,6 +105,7 @@
 	const SPRITE_KANGASKHAN
 	const SPRITE_SLOWPOKE
 	const SPRITE_DODUO
+	const SPRITE_VAPOREON
 DEF FIRST_STILL_SPRITE EQU const_value
 	const SPRITE_POKE_BALL               ; $47
 	const SPRITE_FOSSIL                  ; $48
@@ -120,6 +121,5 @@ DEF FIRST_STILL_SPRITE EQU const_value
 	const SPRITE_GAMBLER_ASLEEP          ; $52
 	const SPRITE_JOLTEON
 	const SPRITE_FLAREON
-	const SPRITE_VAPOREON
 	const SPRITE_WIGGLYTUFF
 DEF NUM_SPRITES EQU const_value - 1
