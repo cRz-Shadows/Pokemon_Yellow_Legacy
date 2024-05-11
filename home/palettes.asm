@@ -21,22 +21,27 @@ Delay3::
 	jp DelayFrames
 
 GBPalNormal::
-; Reset BGP and OBP0.
-	ld a, %11100100 ; 3210
-	ldh [rBGP], a
+; Reset OBP0 to default
 	ld a, %11010000 ; 3100
+	jr GBPalOBP0Set
+GBPalIcons::
+; Reset OBP0 for icons
+	ld a, %11100100 ; 3210
+	; fallthrough
+GBPalOBP0Set:
+; Set OBP0
 	ldh [rOBP0], a
-	call UpdateGBCPal_BGP
-	call UpdateGBCPal_OBP0
-	call UpdateGBCPal_OBP1
-	ret
-
+	ld a, %11100100 ; 3210
+	jr GBPalBGPSet
 GBPalWhiteOut::
 ; White out all palettes.
 	xor a
-	ldh [rBGP], a
 	ldh [rOBP0], a
 	ldh [rOBP1], a
+	; fallthrough
+GBPalBGPSet:
+; Set BGP
+	ldh [rBGP], a
 	call UpdateGBCPal_BGP
 	call UpdateGBCPal_OBP0
 	call UpdateGBCPal_OBP1
