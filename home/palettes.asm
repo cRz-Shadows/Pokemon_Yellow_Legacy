@@ -27,18 +27,20 @@ GBPalNormal::
 GBPalIcons::
 ; Reset OBP0 for icons
 	ld a, %11100100 ; 3210
+	; fallthrough
 GBPalOBP0Set:
 ; Set OBP0
 	ldh [rOBP0], a
 	ld a, %11100100 ; 3210
-	jr GBPalUpdate
+	jr GBPalBGPSet
 GBPalWhiteOut::
 ; White out all palettes.
 	xor a
 	ldh [rOBP0], a
 	ldh [rOBP1], a
 	; fallthrough
-GBPalUpdate:
+GBPalBGPSet:
+; Set BGP
 	ldh [rBGP], a
 	call UpdateGBCPal_BGP
 	call UpdateGBCPal_OBP0
