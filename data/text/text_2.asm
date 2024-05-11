@@ -1239,7 +1239,7 @@ _GainedText::
 
 _WithExpAllText::
 	text "Party gained"
-	next "@"
+	line "@"
 	text_end
 
 _BoostedText::

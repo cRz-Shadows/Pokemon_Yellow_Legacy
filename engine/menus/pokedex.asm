@@ -462,8 +462,8 @@ ShowPokedexDataInternal:
 	ld b, SET_PAL_POKEDEX
 	call RunPaletteCommand
 	ld a, [wMoveListCounter] ; using this as a temp variable
-	cp 0
-	jr nz, .PrintMoves
+	cp 1
+	jr z, .PrintMoves
 	pop af
 	ld [wd11e], a
 	call DrawDexEntryOnScreen
