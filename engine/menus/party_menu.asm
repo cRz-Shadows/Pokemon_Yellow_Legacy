@@ -206,7 +206,7 @@ RedrawPartyMenu_::
 	ld a, 1
 	ldh [hAutoBGTransferEnabled], a
 	call Delay3
-	jp GBPalNormal
+	jp GBPalIcons
 .printItemUseMessage
 	and $0F
 	ld hl, PartyMenuItemUseMessagePointers
