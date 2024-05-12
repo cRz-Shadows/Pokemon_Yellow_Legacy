@@ -115,7 +115,7 @@ DisplayNamingScreen:
 	ld [wAnimCounter], a
 .selectReturnPoint
 	call PrintAlphabet
-	call GBPalIcons
+	call GBPalNormal
 .ABStartReturnPoint
 	ld a, [wNamingScreenSubmitName]
 	and a
