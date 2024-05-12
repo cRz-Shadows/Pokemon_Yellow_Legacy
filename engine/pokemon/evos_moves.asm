@@ -920,6 +920,8 @@ StorePKMNLevels:
 	push hl
 	push de
 	ld a, [wPartyCount]	;1 to 6
+	and a
+	jr z, .doneStorePKMNLevels
 	ld b, a	;use b for countdown
 	ld hl, wPartyMon1Level
 	ld de, wStartBattleLevels
