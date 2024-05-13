@@ -61,8 +61,10 @@ CheckMapForFishingMon:
 	cp [hl]
 	jr nz, .notfound
 .found
+	dec de
 	ld a, [de]
 	cp c
+	inc de
 	jr z, .notfound ; already added this to buffer
 	ld a, c ; found so add map id to list
 	ld [de], a
