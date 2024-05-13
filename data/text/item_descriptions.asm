@@ -363,8 +363,8 @@ _TM03Description::
 	prompt
 
 _TM04Description::
-	text "Blows away the foe"
-	next "and ends battle."
+	text "An attack that"
+	next "may cause a burn."
 	prompt
 
 _TM05Description::

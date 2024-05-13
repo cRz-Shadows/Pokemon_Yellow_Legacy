@@ -98,6 +98,7 @@ ArticunoSprite::         INCBIN "gfx/sprites/articuno.2bpp"
 MoltresSprite::          INCBIN "gfx/sprites/moltres.2bpp"
 ZapdosSprite::           INCBIN "gfx/sprites/zapdos.2bpp"
 MrMimeSprite::           INCBIN "gfx/sprites/mr_mime.2bpp"
+FlareonSprite::          INCBIN "gfx/sprites/flareon.2bpp"
 
 
 SECTION "NPC Sprites 4", ROMX
@@ -109,13 +110,12 @@ ErikaSprite::            INCBIN "gfx/sprites/erika.2bpp"
 SabrinaSprite::          INCBIN "gfx/sprites/sabrina.2bpp"
 BlaineSprite::           INCBIN "gfx/sprites/blaine.2bpp"
 KabutoSprite::           INCBIN "gfx/sprites/kabuto.2bpp"
+JolteonSprite::          INCBIN "gfx/sprites/jolteon.2bpp"
 
 
 SECTION "NPC Sprites 5", ROMX
 
-FlareonSprite::          INCBIN "gfx/sprites/flareon.2bpp"
 VaporeonSprite::         INCBIN "gfx/sprites/vaporeon.2bpp"
-JolteonSprite::          INCBIN "gfx/sprites/jolteon.2bpp"
 LaprasSprite::           INCBIN "gfx/sprites/lapras.2bpp"
 
 
