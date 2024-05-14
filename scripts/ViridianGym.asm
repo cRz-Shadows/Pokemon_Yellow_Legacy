@@ -214,9 +214,6 @@ ViridianGymGiovanniText:
 	call DisableWaitingAfterTextDisplay
 	jr .text_script_end
 .afterBeat
-	ld c, BANK(Music_YellowUnusedSong)
-	ld a, MUSIC_YELLOW_UNUSED_SONG
-	call PlayMusic
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	ld hl, .PostBattleAdviceText
