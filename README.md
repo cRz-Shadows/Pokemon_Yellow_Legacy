@@ -92,7 +92,7 @@ These videos also provide an overview of the hack and the ideology behind it:
     - Blue Emerald
     - Lake
     - Neslug
-    - Tom Wang
+    - Pikachu25
 - Green sprite
     - Madame Frog/Hatun
     - Ghost-MissingNo

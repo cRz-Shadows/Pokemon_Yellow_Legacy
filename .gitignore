@@ -30,6 +30,7 @@ pokeyellow_debug.map
 
 # save game files
 *.sgm
+*.srm
 *.sav
 *.rtc
 *.sn*
