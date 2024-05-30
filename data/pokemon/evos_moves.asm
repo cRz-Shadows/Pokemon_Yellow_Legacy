@@ -1552,9 +1552,9 @@ VaporeonEvosMoves:
 	db 26, BUBBLEBEAM
 	db 30, BITE
 	db 36, AURORA_BEAM
-	db 39, MIST
 	db 39, HAZE
-	db 41, ACID_ARMOR
+	db 41, MIST
+	db 44, ACID_ARMOR
 	db 47, REST
 	db 52, HYDRO_PUMP
 	db 0
