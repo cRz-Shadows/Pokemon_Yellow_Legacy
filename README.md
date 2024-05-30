@@ -175,10 +175,10 @@ These videos also provide an overview of the hack and the ideology behind it:
 - [PureRGB](https://github.com/Vortyne/pureRGB)
 
 
-[docs]: https://pret.github.io/pokecrystal/
-[wiki]: https://github.com/pret/pokecrystal/wiki
-[tutorials]: https://github.com/pret/pokecrystal/wiki/Tutorials
+
+[wiki]: https://github.com/pret/pokeyellow/wiki
+[tutorials]: https://github.com/pret/pokeyellow/wiki/Tutorials
 [discord]: https://discord.gg/d5dubZ3
 [irc]: https://web.libera.chat/?#pret
-[ci]: https://github.com/pret/pokecrystal/actions
+[ci]: https://github.com/pret/pokeyellow/actions
 [ci-badge]: https://github.com/pret/pokecrystal/actions/workflows/main.yml/badge.svg
