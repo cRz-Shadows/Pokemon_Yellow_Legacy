@@ -113,9 +113,9 @@ _CeladonCityTrainerTips2Text::
 
 	para "GUARD SPEC."
 	line "protects #MON"
-	cont "against SPECIAL"
-	cont "attacks such as"
-	cont "fire and water!"
+	cont "from status-"
+	cont "reduction moves"
+	cont "during battle."
 
 	para "Get your items at"
 	line "CELADON DEPT."
