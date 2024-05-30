@@ -42,7 +42,6 @@ These videos also provide an overview of the hack and the ideology behind it:
 ## Pret Stuff
 - **All Pret Projects:** [pret.github.io](https://pret.github.io/).
 - [**FAQ**](FAQ.md)
-- [**Documentation**][docs]
 - [**Wiki**][wiki] (includes [tutorials][tutorials])
 - **Discord:** [pret][discord]
 - **IRC:** [libera#pret][irc]
@@ -173,7 +172,6 @@ These videos also provide an overview of the hack and the ideology behind it:
 - [Shinred](https://github.com/jojobear13/shinpokered)
 - [RedStar BlueStar](https://github.com/Rangi42/redstarbluestar)
 - [PureRGB](https://github.com/Vortyne/pureRGB)
-
 
 
 [wiki]: https://github.com/pret/pokeyellow/wiki
