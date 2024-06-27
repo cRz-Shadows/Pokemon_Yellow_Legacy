@@ -41,14 +41,14 @@ Moves:
 	move SAND_ATTACK,  ACCURACY_DOWN1_EFFECT,        0, BIRD,         100, 15
 	move HEADBUTT,     FLINCH_SIDE_EFFECT2,         70, NORMAL,       100, 15
 	move HORN_ATTACK,  NO_ADDITIONAL_EFFECT,        65, NORMAL,       100, 25
-	move FURY_ATTACK,  TWO_TO_FIVE_ATTACKS_EFFECT,  15, NORMAL,       100, 35
+	move FURY_ATTACK,  TWO_TO_FIVE_ATTACKS_EFFECT,  18, NORMAL,       100, 35
 	move HORN_DRILL,   OHKO_EFFECT,                  1, NORMAL,        30,  5
 	move TACKLE,       NO_ADDITIONAL_EFFECT,        35, NORMAL,       100, 35
 	move BODY_SLAM,    PARALYZE_SIDE_EFFECT2,       85, NORMAL,       100, 15
 	move WRAP,         TRAPPING_EFFECT,             15, NORMAL,        85, 20
 	move TAKE_DOWN,    RECOIL_EFFECT,               95, NORMAL,       100, 20
 	move THRASH,       THRASH_PETAL_DANCE_EFFECT,   90, NORMAL,       100, 20
-	move DOUBLE_EDGE,  RECOIL_EFFECT,              120, NORMAL,       100, 10
+	move DOUBLE_EDGE,  RECOIL_EFFECT,              120, NORMAL,       100, 15
 	move TAIL_WHIP,    DEFENSE_DOWN1_EFFECT,         0, BIRD,         100, 30
 	move POISON_STING, POISON_SIDE_EFFECT1,         35, POISON,       100, 35
 	move TWINEEDLE,    TWINEEDLE_EFFECT,            40, BUG,          100, 20
@@ -68,7 +68,7 @@ Moves:
 	move WATER_GUN,    NO_ADDITIONAL_EFFECT,        40, WATER,        100, 25
 	move HYDRO_PUMP,   NO_ADDITIONAL_EFFECT,       120, WATER,         85, 10
 	move SURF,         NO_ADDITIONAL_EFFECT,        95, WATER,        100, 15
-	move ICE_BEAM,     FREEZE_SIDE_EFFECT,          95, ICE,          100, 10
+	move ICE_BEAM,     FREEZE_SIDE_EFFECT,          95, ICE,          100, 15
 	move BLIZZARD,     FREEZE_SIDE_EFFECT,         120, ICE,           85,  5
 	move PSYBEAM,      CONFUSION_SIDE_EFFECT,       65, PSYCHIC_TYPE, 100, 20
 	move BUBBLEBEAM,   SPEED_DOWN_SIDE_EFFECT,      65, WATER,        100, 20
@@ -101,10 +101,10 @@ Moves:
 	move ROCK_THROW,   NO_ADDITIONAL_EFFECT,        50, ROCK,         95, 25
 	move EARTHQUAKE,   NO_ADDITIONAL_EFFECT,       100, GROUND,       100, 10
 	move FISSURE,      OHKO_EFFECT,                  1, GROUND,        30,  5
-	move DIG,          CHARGE_EFFECT,               70, GROUND,       100, 15
+	move DIG,          CHARGE_EFFECT,               70, GROUND,       100, 20
 	move TOXIC,        POISON_EFFECT,                0, POISON,        85, 10
 	move CONFUSION,    CONFUSION_SIDE_EFFECT,       50, PSYCHIC_TYPE, 100, 25
-	move PSYCHIC_M,    SPECIAL_DOWN_SIDE_EFFECT,    90, PSYCHIC_TYPE, 100, 10
+	move PSYCHIC_M,    SPECIAL_DOWN_SIDE_EFFECT,    90, PSYCHIC_TYPE, 100, 15
 	move HYPNOSIS,     SLEEP_EFFECT,                 0, PSYCHIC_TYPE,  60, 20
 	move MEDITATE,     ATTACK_UP1_EFFECT,            0, BIRD,   	  100, 40
 	move AGILITY,      SPEED_UP2_EFFECT,             0, BIRD,         100, 30
@@ -130,8 +130,8 @@ Moves:
 	move BIDE,         BIDE_EFFECT,                  0, BIRD,         100, 10
 	move METRONOME,    METRONOME_EFFECT,             0, BIRD,         100, 10
 	move MIRROR_MOVE,  MIRROR_MOVE_EFFECT,           0, FLYING,       100, 20
-	move SELFDESTRUCT, EXPLODE_EFFECT,             130, NORMAL,       100,  5
-	move EGG_BOMB,     NO_ADDITIONAL_EFFECT,       100, GRASS,        100, 10
+	move SELFDESTRUCT, EXPLODE_EFFECT,             200, NORMAL,       100,  5
+	move EGG_BOMB,     NO_ADDITIONAL_EFFECT,       100, GRASS,        100, 15
 	move LICK,         PARALYZE_SIDE_EFFECT2,       40, GHOST,        100, 30
 	move SMOG,         POISON_SIDE_EFFECT2,         40, POISON,        80, 20
 	move SLUDGE,       POISON_SIDE_EFFECT2,         90, POISON,       100, 20
@@ -153,7 +153,7 @@ Moves:
 	move BARRAGE,      TWO_TO_FIVE_ATTACKS_EFFECT,  20, NORMAL,       100, 20
 	move LEECH_LIFE,   DRAIN_HP_EFFECT,             50, BUG,          100, 25
 	move LOVELY_KISS,  SLEEP_EFFECT,                 0, BIRD,          75, 10
-	move SKY_ATTACK,   NO_ADDITIONAL_EFFECT,        120, FLYING,       85, 5
+	move SKY_ATTACK,   NO_ADDITIONAL_EFFECT,        120, FLYING,       85, 10
 	move TRANSFORM,    TRANSFORM_EFFECT,             0, BIRD,         100, 10
 	move BUBBLE,       SPEED_DOWN_SIDE_EFFECT,      10, WATER,        100, 30
 	move DIZZY_PUNCH,  CONFUSION_SIDE_EFFECT,       70, NORMAL,       100, 20
@@ -163,8 +163,8 @@ Moves:
 	move SPLASH,       SPLASH_EFFECT,                0, BIRD,         100, 40
 	move ACID_ARMOR,   DEFENSE_UP2_EFFECT,           0, BIRD,         100, 40
 	move CRABHAMMER,   NO_ADDITIONAL_EFFECT,       110, WATER,        100, 10
-	move EXPLOSION,    EXPLODE_EFFECT,             170, NORMAL,       100,  5
-	move FURY_SWIPES,  TWO_TO_FIVE_ATTACKS_EFFECT,  20, NORMAL,       100, 15
+	move EXPLOSION,    EXPLODE_EFFECT,             250, NORMAL,       100,  5
+	move FURY_SWIPES,  TWO_TO_FIVE_ATTACKS_EFFECT,  20, NORMAL,       100, 20
 	move BONEMERANG,   ATTACK_TWICE_EFFECT,         50, GROUND,        90, 20
 	move REST,         HEAL_EFFECT,                  0, BIRD,         100, 10
 	move ROCK_SLIDE,   FLINCH_SIDE_EFFECT1,         75, ROCK,          95, 15

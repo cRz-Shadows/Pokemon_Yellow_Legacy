@@ -157,6 +157,7 @@ These videos also provide an overview of the hack and the ideology behind it:
 - Veganlies2me - [Adding Gender Selection (original tutorial done by Mateo)](https://github.com/pret/pokered/wiki/Adding-Gender-Selection-(original-tutorial-done-by-Mateo))
 - etdv-thevoid - [(Removed) Fourth palette for party icons](https://github.com/etdv-thevoid/Pokemon_Yellow_Legacy/tree/mon-icon-pal-fix)
 - SatoMew (presumably more people worked on these but satomew is the only page author) - [Bugs and Glitches](https://github.com/pret/pokered/wiki/%5BARCHIVED%5D-Bugs-and-Glitches)
+- rjd1922 - [Suggested corrections](https://github.com/cRz-Shadows/Pokemon_Yellow_Legacy/commit/8c927a551da31c750b81fa1baad1c5b376128331)
 
 
 ### Other Credits:

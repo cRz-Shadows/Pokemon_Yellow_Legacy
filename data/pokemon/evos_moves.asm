@@ -2295,7 +2295,9 @@ NidorinaEvosMoves:
 	db 21, HEADBUTT
 	db 24, DIG
 	db 27, TAIL_WHIP
+	db 32, SLUDGE
 	db 36, FURY_SWIPES
+	db 40, EARTHQUAKE
 	db 0
 
 GeodudeEvosMoves:
