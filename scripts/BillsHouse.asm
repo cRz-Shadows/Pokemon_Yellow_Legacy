@@ -280,3 +280,7 @@ BillsHouseBillCheckOutMyRarePokemonText:
 	text_asm
 	farcall BillsHousePrintBillCheckOutMyRarePokemonText
 	jp TextScriptEnd
+
+BillsHouseMachineText:
+  text_far _BillsHouseMachineText
+  text_end

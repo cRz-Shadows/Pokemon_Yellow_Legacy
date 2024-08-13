@@ -57,6 +57,6 @@ HiddenItemCoords:
 	hidden_item POKEMON_TOWER_5F,               4,  12
 	hidden_item VERMILION_CITY,                14,  11
 	hidden_item CELADON_CITY,                  48,  15
-	hidden_item SAFARI_ZONE_GATE,              10,   1 ; inaccessible
+	; hidden_item SAFARI_ZONE_GATE,              10,   1
 	hidden_item POKEMON_MANSION_1F,             8,  16
 	db -1 ; end
