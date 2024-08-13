@@ -91,3 +91,8 @@ _BillsHouseBillCheckOutMyRarePokemonText::
 	cont "some of my rare"
 	cont "#MON on my PC!"
 	done
+
+_BillsHouseMachineText::
+  text "Its some kind of"
+  line "machine."
+  done
