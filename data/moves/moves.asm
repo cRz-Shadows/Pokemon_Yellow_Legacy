@@ -12,7 +12,7 @@ Moves:
 ; Characteristics of each move.
 	table_width MOVE_LENGTH, Moves
 	move POUND,        NO_ADDITIONAL_EFFECT,        40, NORMAL,       100, 35
-	move KARATE_CHOP,  NO_ADDITIONAL_EFFECT,        50, FIGHTING,     95, 25
+	move KARATE_CHOP,  NO_ADDITIONAL_EFFECT,        50, FIGHTING,     100, 25
 	move DOUBLESLAP,   TWO_TO_FIVE_ATTACKS_EFFECT,  20, NORMAL,       100, 35
 	move COMET_PUNCH,  TWO_TO_FIVE_ATTACKS_EFFECT,  25, NORMAL,       100, 25
 	move MEGA_PUNCH,   NO_ADDITIONAL_EFFECT,        80, NORMAL,        85, 20
@@ -155,7 +155,7 @@ Moves:
 	move LOVELY_KISS,  SLEEP_EFFECT,                 0, BIRD,          75, 10
 	move SKY_ATTACK,   NO_ADDITIONAL_EFFECT,        120, FLYING,       85, 10
 	move TRANSFORM,    TRANSFORM_EFFECT,             0, BIRD,         100, 10
-	move BUBBLE,       SPEED_DOWN_SIDE_EFFECT,      10, WATER,        100, 30
+	move BUBBLE,       SPEED_DOWN_SIDE_EFFECT,      20, WATER,        100, 30
 	move DIZZY_PUNCH,  CONFUSION_SIDE_EFFECT,       70, NORMAL,       100, 20
 	move SPORE,        SLEEP_EFFECT,                 0, GRASS,        100, 15
 	move FLASH,        ACCURACY_DOWN1_EFFECT,        0, BIRD,          70, 20
