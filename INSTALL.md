@@ -141,8 +141,8 @@ Now you're ready to [build **pokeyellow**](#build-pokeyellow).
 To download the **pokeyellow** source files:
 
 ```bash
-git clone https://github.com/pret/pokeyellow
-cd pokeyellow
+git clone https://github.com/cRz-Shadows/Pokemon_Yellow_Legacy.git
+cd Pokemon_Yellow_Legacy
 ```
 
 To build **pokeyellow.gbc**:
