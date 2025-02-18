@@ -376,7 +376,7 @@ _CinnabarGymQuizShortIntroText::
 
 _CinnabarQuizQuestionsText1::
 	text "CATERPIE evolves"
-	line "into BUTTERFREE?"
+	line "into METAPOD?"
 	done
 
 _CinnabarQuizQuestionsText2::
@@ -391,15 +391,15 @@ _CinnabarQuizQuestionsText3::
 	done
 
 _CinnabarQuizQuestionsText4::
-	text "Are thunder moves"
+	text "Are electric moves"
 	line "effective against"
-	cont "ground element-"
-	cont "type #MON?"
+	cont "GROUND-type"
+	cont "#MON?"
 	done
 
 _CinnabarQuizQuestionsText5::
 	text "#MON of the"
-	line "same kind and"
+	line "same species and"
 	cont "level are not"
 	cont "identical?"
 	done
