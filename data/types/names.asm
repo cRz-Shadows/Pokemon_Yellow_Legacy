@@ -23,7 +23,7 @@ ENDR
 	dw .Ghost
 	dw .Ice
 	dw .Dragon
-	dw . Dark
+	dw .Dark
 	dw .Fairy
 	dw .Typeless
 
@@ -41,7 +41,6 @@ ENDR
 .Ice:      db "ICE@"
 .Ground:   db "GROUND@"
 .Rock:     db "ROCK@"
-.Bird:     db "BIRD@"
 .Bug:      db "BUG@"
 .Ghost:    db "GHOST@"
 .Dragon:   db "DRAGON@"
