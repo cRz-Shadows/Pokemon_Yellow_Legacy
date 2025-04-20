@@ -11,6 +11,8 @@ BillsHouse_Object:
 	warp_event  3,  7, LAST_MAP, 1
 
 	def_bg_events
+	bg_event  1,  2, TEXT_BILLSHOUSE_MACHINE
+	bg_event  6,  2, TEXT_BILLSHOUSE_MACHINE
 
 	def_object_events
 	object_event  6,  5, SPRITE_KABUTO, STAY, NONE, TEXT_BILLSHOUSE_BILL_POKEMON
