@@ -534,8 +534,9 @@ _HandleMidJump::
 .finishedJump
 	ld a, 3
 	ld [wNumberOfNoRandomBattleStepsLeft], a
-	ld hl, wd72c
-	set 0, [hl] ; set bit for no encounters
+	ld a, [wd72c]
+	set 0, a ; set bit for no encounters
+	ld [wd72c], a
 	ld a, 8
 	ld [wNoSprintSteps], a
 	ld a, [wWalkCounter]
