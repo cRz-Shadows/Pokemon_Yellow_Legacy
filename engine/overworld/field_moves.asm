@@ -24,7 +24,7 @@ TrySurf:
 	ld hl, wd728
 	bit 1, [hl]
 	res 1, [hl]
-	jr z, .no
+	jr z, .no2
 	call InitializeFieldMoveTextBox
 	ld hl, PromptToSurfText
 	call PrintText
