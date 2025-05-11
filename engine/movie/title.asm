@@ -191,7 +191,7 @@ ENDC
 	ld a, HIGH(vBGMap1)
 	call TitleScreenCopyTileMapToVRAM
 	call Delay3
-	call LoadGBPal
+	call GBPalNormal
 	ldh a, [hJoyHeld]
 	ld b, a
 	and D_UP | SELECT | B_BUTTON
