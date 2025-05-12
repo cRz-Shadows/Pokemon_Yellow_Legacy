@@ -260,6 +260,7 @@ BillsHouse_TextPointers:
 	dw_const BillsHouseBillSSTicketText,              TEXT_BILLSHOUSE_BILL_SS_TICKET
 	dw_const BillsHouseBillCheckOutMyRarePokemonText, TEXT_BILLSHOUSE_BILL_CHECK_OUT_MY_RARE_POKEMON
 	dw_const BillsHouseBillDontLeaveText,             TEXT_BILLSHOUSE_BILL_DONT_LEAVE
+	dw_const BillsHouseMachineText,                   TEXT_BILLSHOUSE_MACHINE
 
 BillsHouseBillDontLeaveText:
 	text_far _BillsHouseBillDontLeaveText
@@ -279,3 +280,7 @@ BillsHouseBillCheckOutMyRarePokemonText:
 	text_asm
 	farcall BillsHousePrintBillCheckOutMyRarePokemonText
 	jp TextScriptEnd
+
+BillsHouseMachineText:
+  text_far _BillsHouseMachineText
+  text_end
