@@ -162,9 +162,9 @@ TryingToLearn:
 	ld b, 0
 	add hl, bc
 	ld a, [hl]
-	push af
-	push bc
-	call IsMoveHM
+;	push af
+;	push bc
+;	call IsMoveHM
 	pop bc
 	pop de
 	ld a, d

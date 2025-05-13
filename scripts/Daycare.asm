@@ -36,9 +36,9 @@ DaycareGentlemanText:
 	pop af
 	ld hl, .AllRightThenText
 	jp c, .done
-	callfar KnowsHMMove
-	ld hl, .CantAcceptMonWithHMText
-	jp c, .done
+;	callfar KnowsHMMove
+;	ld hl, .CantAcceptMonWithHMText
+;	jp c, .done
 	xor a
 	ld [wPartyAndBillsPCSavedMenuItem], a
 	ld a, [wWhichPokemon]
