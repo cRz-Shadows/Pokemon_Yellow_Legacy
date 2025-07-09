@@ -104,8 +104,10 @@ DaycareGentlemanText:
 	ld [hl], a
 	ld a, [wMaxLevel]
 	ld d, a
-;;;
 .skipCalcExp
+	push de
+	ld a, [wMaxLevel]
+	ld d, a
 	xor a
 	ld [wDayCareNumLevelsGrown], a
 	ld hl, wDayCareMonBoxLevel
@@ -113,17 +115,33 @@ DaycareGentlemanText:
 	ld [wDayCareStartLevel], a
 	cp d
 	ld [hl], d
+	pop de
+	jr c, .CheckGrowth
+	jr .monCapped
+.CheckGrowth
+	ld b, a ; still holds wDayCareStartLevel
+	ld a, d ; wMaxLevel
+	sub b   ; a = levels gained, sets zero flag
+	ld [wDayCareNumLevelsGrown], a
 	ld hl, .MonNeedsMoreTimeText
 	jr z, .next
-	ld a, [wDayCareStartLevel]
-	ld b, a
-	ld a, d
-	sub b
-	ld [wDayCareNumLevelsGrown], a
 	ld hl, .MonHasGrownText
-
 .next
 	call PrintText
+	; Grew to reach level cap check
+	ld a, [wDayCareNumLevelsGrown]
+	ld b, a
+	ld a, [wDayCareStartLevel]
+	add b
+	ld b, a ; b = start level + levels grown
+	ld a, [wMaxLevel]
+	cp b
+	jr nz, .noCapMessage
+.monCapped
+	ld hl, .MonAtCapText
+	call PrintText
+.noCapMessage
+;;;
 	ld a, [wPartyCount]
 	cp PARTY_LENGTH
 	ld hl, .NoRoomForMonText
@@ -309,4 +327,8 @@ DaycareGentlemanText:
 
 .NotEnoughMoneyText:
 	text_far _DaycareGentlemanNotEnoughMoneyText
+	text_end
+
+.MonAtCapText:
+	text_far _DayCareMonAtCapText
 	text_end

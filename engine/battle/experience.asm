@@ -164,8 +164,33 @@ GainExperience:
 	ld a, [wBoostExpByExpAll] ; get using ExpAll flag
 	and a ; check the flag
 	jr nz, .skipExpText ; if there's EXP. all, skip showing any text
-	ld hl, GainedText ;there's no EXP. all, load the text to show
+;;; Hard mode: Dont give gained EXP message to mons at level cap
+	push bc ; exp is stored in bcd
+	push de
+	ld d, MAX_LEVEL
+	ld a, [wDifficulty]
+	and a
+	jr z, .notHardMode
+	callfar GetLevelCap
+	ld a, [wMaxLevel]
+	ld d, a
+.notHardMode
+	ld a, [wWhichPokemon]         ; a = index (0–5) of Pokémon gaining EXP
+	ld hl, wPartyMon1Level        ; hl = address of level for party slot 0
+	ld bc, PARTYMON_STRUCT_LENGTH ; bc = size of each party mon struct
+	call AddNTimes                ; hl += bc * a
+	ld a, [hl]                    ; a = level of the Pokémon gaining EXP
+	cp d
+	pop de ; restore experience value
+	pop bc
+	jr nz, .notAtCap
+	ld hl, AtLevelCapText
+	jr .printText
+.notAtCap
+	ld hl, GainedText
+.printText
 	call PrintText
+;;;
 .skipExpText
 	xor a ; PLAYER_PARTY_DATA
 	ld [wMonDataLocation], a
@@ -420,6 +445,10 @@ GrewLevelText:
 	sound_level_up
 	text_end
 
+AtLevelCapText:
+	text_far _AtLevelCapText
+	text_end	
+
 AnimateEXPBarAgain:
 	call IsCurrentMonBattleMon
 	ret nz
@@ -435,6 +464,19 @@ AnimateEXPBarAgain:
 AnimateEXPBar:
 	call IsCurrentMonBattleMon
 	ret nz
+	;;; Hard Mode, no exp increase sound at level cap
+	ld d, MAX_LEVEL
+	ld a, [wDifficulty] ; Check if player is on hard mode
+	and a
+	jr z, .next ; no level caps if not on hard mode
+	callfar GetLevelCap
+	ld a, [wMaxLevel]
+	ld d, a
+.next
+	ld a, [wBattleMonLevel]
+	cp d
+	ret z
+	;;;
 	ld a, SFX_HEAL_HP
 	call PlaySoundWaitForCurrent
 	ld hl, CalcEXPBarPixelLength
