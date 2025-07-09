@@ -215,7 +215,6 @@ SpecialTrainerMoves:
 	db SABRINA, 2 ; db $FF, 43, ABRA,  42, MR_MIME, 43, KADABRA,  43, ALAKAZAM, 0
 	db 1, 1, PSYCHIC_M
 	db 2, 1, SUBSTITUTE
-	db 2, 1, LIGHT_SCREEN
 	db 2, 2, MIMIC
 	db 2, 3, SUBSTITUTE
 	db 2, 4, PSYCHIC_M
