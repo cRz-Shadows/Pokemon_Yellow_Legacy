@@ -121,14 +121,14 @@ FuchsiaGymKogaText:
 	jr nz, .afterBeat
 	call z, FuchsiaGymReceiveTM06
 	call DisableWaitingAfterTextDisplay
-	jr .todone
+	jp TextScriptEnd
 .afterBeat
 	ld a, [wGameStage] ; Check if player has beat the game
 	and a
 	jr nz, .KogaRematch
 	ld hl, .PostBattleAdviceText
 	call PrintText
-	jr .todone
+	jp TextScriptEnd
 .beforeBeat
 	ld hl, .BeforeBattleText
 	call PrintText
@@ -143,8 +143,6 @@ FuchsiaGymKogaText:
 	cp 5
 	jr nc, .Koga6thGym
 	jr .Koga5thGym
-.todone
-	jr .done
 .KogaRematch
 	ld hl, .PreBattleRematch1Text
 	call PrintText
@@ -166,7 +164,7 @@ FuchsiaGymKogaText:
 .refused
 	ld hl, .PreBattleRematchRefusedText
 	call PrintText
-	jr .done
+	jp TextScriptEnd
 .Koga6thGym
 	call Delay3
 	ld a, OPP_KOGA
@@ -190,7 +188,6 @@ FuchsiaGymKogaText:
 .endBattle
 	ld a, SCRIPT_FUCHSIAGYM_KOGA_POST_BATTLE
 	ld [wFuchsiaGymCurScript], a
-.done
 	jp TextScriptEnd
 
 .BeforeBattleText:

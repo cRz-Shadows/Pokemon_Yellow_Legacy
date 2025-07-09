@@ -114,14 +114,14 @@ PewterGymBrockText:
 	jr nz, .afterBeat
 	call z, PewterGymScriptReceiveTM34
 	call DisableWaitingAfterTextDisplay
-	jr .done
+	jp TextScriptEnd
 .afterBeat
 	ld a, [wGameStage] ; Check if player has beat the game
 	and a
 	jr nz, .BrockRematch
 	ld hl, .PostBattleAdviceText
 	call PrintText
-	jr .done
+	jp TextScriptEnd
 .beforeBeat
 	ld hl, .PreBattleText
 	call PrintText
@@ -161,12 +161,11 @@ PewterGymBrockText:
 .refused
 	ld hl, .PreBattleRematchRefusedText
 	call PrintText
-	jr .done
+	jp TextScriptEnd
 .endBattle
 	ld a, SCRIPT_PEWTERGYM_BROCK_POST_BATTLE
 	ld [wPewterGymCurScript], a
 	ld [wCurMapScript], a
-.done
 	jp TextScriptEnd
 
 .PreBattleText:
