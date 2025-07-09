@@ -4133,49 +4133,11 @@ CheckForDisobedience:
 	ld a, [wPlayerID]
 	cp [hl]
 	jr nz, .monIsTraded
-
-	ld a, [wDifficulty] ; Check if player is on hard mode
-	and a
-	jr z, .NormalMode2
-; what level might disobey?
-	ld a, [wGameStage] ; Check if player has beat the game
-	and a
-	ld a, 101
-	jr nz, .next
-	farcall GetBadgesObtained
-	ld a, [wNumSetBits]
-	cp 8
-	ld a, 65 ; Jolteon/Flareon/Vaporeon's level
-	jr nc, .next
-	cp 7
-	ld a, 55 ; Rhydon's level
-	jr nc, .next
-	cp 6
-	ld a, 53 ; Magmar's level
-	jr nc, .next
-	cp 5
-	ld a, 50 ; Alakazam's level
-	jr nc, .next
-    cp 4
-	ld a, 43 ; Venomoth's level
-	jr nc, .next
-	cp 3
-	ld a, 35 ; Vileplume's level
-	jr nc, .next
-	cp 2
-    ld a, 24 ; Bit below Raichu's level
-	jr nc, .next
-	cp 1
-	ld a, 21 ; Starmie's level
-	jr nc, .next
-	ld a, 12 ; Onix's level
-	jp .next
-.NormalMode2
 	inc hl
 	ld a, [wPlayerID + 1]
 	cp [hl]
-	jp z, .canUseMove ; on normal mode non traded pokemon will always obey
-	; it was traded
+	jp z, .canUseMove
+; it was traded
 .monIsTraded
 	ld hl, wObtainedBadges
 	bit BIT_EARTHBADGE, [hl]
