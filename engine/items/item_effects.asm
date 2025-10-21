@@ -1474,49 +1474,21 @@ ItemUseMedicine:
 	push hl
 	ld bc, wPartyMon1Level - wPartyMon1
 	add hl, bc ; hl now points to level
-	push hl
+;;; Hard Mode
+	push hl ; store mon's level
 	ld b, MAX_LEVEL
-
-	ld a, [wDifficulty] ; Check if player is on hard mode
+	ld a, [wDifficulty]
 	and a
 	jr z, .next1 ; no level caps if not on hard mode
-
-	ld a, [wGameStage] ; Check if player has beat the game
-	and a
-	jr nz, .next1
-	farcall GetBadgesObtained
-	ld a, [wNumSetBits]
-	cp 8
-	ld b, 65 ; Jolteon/Flareon/Vaporeon's level
-	jr nc, .next1
-	cp 7
-	ld b, 55 ; Rhydon's level
-	jr nc, .next1
-	cp 6
-	ld b, 53 ; Magmar's level
-	jr nc, .next1
-	cp 5
-	ld b, 50 ; Alakazam's level
-	jr nc, .next1
-    cp 4
-	ld b, 43 ; Venomoth's level
-	jr nc, .next1
-	cp 3
-	ld b, 35 ; Vileplume's level
-	jr nc, .next1
-	cp 2
-    ld b, 24 ; Bit below Raichu's level
-	jr nc, .next1
-	cp 1
-	ld b, 21 ; Starmie's level
-	jr nc, .next1
-	ld b, 12 ; Onix's level
+	callfar GetLevelCap
+	ld a, [wMaxLevel]
+	ld b, a
 .next1
-
-	pop hl
+	pop hl ; retrieve mon's level
 	ld a, [hl] ; a = level
 	cp b ; MAX_LEVEL on normal mode, level cap on hard mode
-	jr z, .vitaminNoEffect ; can't raise level above 100
+	jr nc, .vitaminNoEffect ; can't raise level above cap ; Carry is better than zero here.
+;;;
 	inc a
 	ld [hl], a ; store incremented level
 	ld [wCurEnemyLVL], a

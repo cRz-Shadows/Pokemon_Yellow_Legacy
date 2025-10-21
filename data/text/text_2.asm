@@ -1231,6 +1231,12 @@ _HitXTimesText::
 	text " times!"
 	prompt
 
+_AtLevelCapText::
+	text_ram wcd6d
+	text " is at"
+	line "the level cap!"
+	prompt
+
 _GainedText::
 	text_ram wcd6d
 	text " gained"

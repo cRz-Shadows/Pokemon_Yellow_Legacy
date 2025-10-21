@@ -123,43 +123,15 @@ GainExperience:
 	ld [wd0b5], a
 	call GetMonHeader
 	ld d, MAX_LEVEL
-
-	ld a, [wDifficulty] ; Check if player is on hard mode
+;;; Hard Mode
+    ld a, [wDifficulty] ; Check if player is on hard mode
 	and a
 	jr z, .next1 ; no level caps if not on hard mode
-
-	ld a, [wGameStage] ; Check if player has beat the game
-	and a
-	ld d, 100
-	jr nz, .next1
-	call GetBadgesObtained
-	ld a, [wNumSetBits]
-	cp 8
-	ld d, 65 ; Jolteon/Flareon/Vaporeon's level
-	jr nc, .next1
-	cp 7
-	ld d, 55 ; Rhydon's level
-	jr nc, .next1
-	cp 6
-	ld d, 53 ; Magmar's level
-	jr nc, .next1
-	cp 5
-	ld d, 50 ; Alakazam's level
-	jr nc, .next1
-    cp 4
-	ld d, 43 ; Venomoth's level
-	jr nc, .next1
-	cp 3
-	ld d, 35 ; Vileplume's level
-	jr nc, .next1
-	cp 2
-    ld d, 24 ; Bit below Raichu's level
-	jr nc, .next1
-	cp 1
-	ld d, 21 ; Starmie's level
-	jr nc, .next1
-	ld d, 12 ; Onix's level
+	call GetLevelCap
+	ld a, [wMaxLevel]
+	ld d, a
 .next1
+;;;
 	callfar CalcExperience ; get max exp
 ; compare max exp with current exp
 	ldh a, [hExperience]
@@ -192,8 +164,33 @@ GainExperience:
 	ld a, [wBoostExpByExpAll] ; get using ExpAll flag
 	and a ; check the flag
 	jr nz, .skipExpText ; if there's EXP. all, skip showing any text
-	ld hl, GainedText ;there's no EXP. all, load the text to show
+;;; Hard mode: Dont give gained EXP message to mons at level cap
+	push bc ; exp is stored in bcd
+	push de
+	ld d, MAX_LEVEL
+	ld a, [wDifficulty]
+	and a
+	jr z, .notHardMode
+	callfar GetLevelCap
+	ld a, [wMaxLevel]
+	ld d, a
+.notHardMode
+	ld a, [wWhichPokemon]         ; a = index (0–5) of Pokémon gaining EXP
+	ld hl, wPartyMon1Level        ; hl = address of level for party slot 0
+	ld bc, PARTYMON_STRUCT_LENGTH ; bc = size of each party mon struct
+	call AddNTimes                ; hl += bc * a
+	ld a, [hl]                    ; a = level of the Pokémon gaining EXP
+	cp d
+	pop de ; restore experience value
+	pop bc
+	jr nz, .notAtCap
+	ld hl, AtLevelCapText
+	jr .printText
+.notAtCap
+	ld hl, GainedText
+.printText
 	call PrintText
+;;;
 .skipExpText
 	xor a ; PLAYER_PARTY_DATA
 	ld [wMonDataLocation], a
@@ -448,6 +445,10 @@ GrewLevelText:
 	sound_level_up
 	text_end
 
+AtLevelCapText:
+	text_far _AtLevelCapText
+	text_end	
+
 AnimateEXPBarAgain:
 	call IsCurrentMonBattleMon
 	ret nz
@@ -463,6 +464,19 @@ AnimateEXPBarAgain:
 AnimateEXPBar:
 	call IsCurrentMonBattleMon
 	ret nz
+	;;; Hard Mode, no exp increase sound at level cap
+	ld d, MAX_LEVEL
+	ld a, [wDifficulty] ; Check if player is on hard mode
+	and a
+	jr z, .next ; no level caps if not on hard mode
+	callfar GetLevelCap
+	ld a, [wMaxLevel]
+	ld d, a
+.next
+	ld a, [wBattleMonLevel]
+	cp d
+	ret z
+	;;;
 	ld a, SFX_HEAL_HP
 	call PlaySoundWaitForCurrent
 	ld hl, CalcEXPBarPixelLength
@@ -520,14 +534,37 @@ IsCurrentMonBattleMon:
 ; OUTPUT:
 ; a = set bits in wObtainedBadges
 GetBadgesObtained::
-	push hl
-	push bc
 	push de
 	ld hl, wObtainedBadges
 	ld b, $1
 	call CountSetBits
 	pop de
-	pop bc
-	pop hl
-	ld a, [wNumSetBits]
 	ret
+
+; returns the level cap in wMaxLevel
+GetLevelCap::	
+	ld a, [wGameStage] ; Check if player has beat the game
+	and a
+	ld a, 100
+	jr nz, .storeValue
+	call GetBadgesObtained
+	ld a, [wNumSetBits]
+	ld hl, BadgeLevelRestrictions
+	ld b, 0
+	ld c, a
+	add hl, bc
+	ld a, [hl]
+.storeValue
+	ld [wMaxLevel], a
+	ret
+
+BadgeLevelRestrictions:
+    db 12 ; Onix
+    db 21 ; Starmie
+    db 24 ; Raichu
+    db 35 ; Vileplume
+    db 43 ; Venomoth
+    db 50 ; Alakazam
+    db 53 ; Magmar
+    db 55 ; Rhydon
+    db 65 ; Champion's starter
