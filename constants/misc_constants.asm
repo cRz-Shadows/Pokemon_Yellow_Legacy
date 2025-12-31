@@ -8,14 +8,8 @@ DEF TRUE  EQU 1
 	const FLAG_SET   ; 1
 	const FLAG_TEST  ; 2
 
-; wOptions
-DEF TEXT_DELAY_FAST   EQU %001 ; 1
-DEF TEXT_DELAY_MEDIUM EQU %011 ; 3
-DEF TEXT_DELAY_SLOW   EQU %101 ; 5
+; input
+DEF NO_INPUT EQU 0
 
-	const_def 6
-	const BIT_BATTLE_SHIFT     ; 6
-	const BIT_BATTLE_ANIMATION ; 7
-
-; wd732 flags
-DEF BIT_DEBUG_MODE EQU 1
+; SGB command MLT_REQ can be used to detect SGB hardware
+DEF JOYP_SGB_MLT_REQ EQU %00000011

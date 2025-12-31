@@ -69,9 +69,9 @@ MoveRelearnerText1:
 	jr c, .exit  ; exit if player chose cancel
 	push bc
 	; Save the selected move id.
-	ld a, [wcf91]
+	ld a, [wCurListMenuItem]
 	ld [wMoveNum], a
-	ld [wd11e],a
+	ld [wNamedObjectIndex],a
 	call GetMoveName
 	call CopyToStringBuffer ; copy name to wcf4b
 	pop bc

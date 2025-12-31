@@ -34,10 +34,10 @@ PokemonFanClubScript_59a39:
 	ret
 
 PokemonFanClubScript_59a44:
-	ld a, [wd472]
+	ld a, [wd471]
 	bit 7, a
 	ret z
-	callfar CheckPikachuFaintedOrStatused
+	callfar CheckPikachuStatusCondition
 	ret c
 	ld a, SCRIPT_POKEMONFANCLUB_SCRIPT1
 	ld [wPokemonFanClubCurScript], a
@@ -238,11 +238,11 @@ PokemonFanClubChairmanText:
 .print
 	xor a
 	ld [wUpdateSpritesEnabled], a
-	ld hl, wd730
-	set 6, [hl]
+	ld hl, wStatusFlags5
+	set BIT_NO_TEXT_DELAY, [hl]
 	callfar PrintFanClubPortrait
-	ld hl, wd730
-	res 6, [hl]
+	ld hl, wStatusFlags5
+	res BIT_NO_TEXT_DELAY, [hl]
 	call GBPalWhiteOutWithDelay3
 	call ReloadTilesetTilePatterns
 	call RestoreScreenTilesAndReloadTilePatterns

@@ -1,8 +1,8 @@
 SeafoamIslandsB3F_Script:
 	call EnableAutoTextBoxDrawing
-	ld hl, wFlags_0xcd60
-	bit 7, [hl]
-	res 7, [hl]
+	ld hl, wMiscFlags
+	bit BIT_PUSHED_BOULDER, [hl]
+	res BIT_PUSHED_BOULDER, [hl]
 	jr z, .noBoulderWasPushed
 	ld hl, Seafoam4HolesCoords
 	call CheckBoulderCoords
@@ -36,8 +36,8 @@ SeafoamIslandsB3F_Script:
 	ld [wDungeonWarpDestinationMap], a
 	ld hl, Seafoam4HolesCoords
 	call IsPlayerOnDungeonWarp
-	ld a, [wd732]
-	bit 4, a
+	ld a, [wStatusFlags6]
+	bit BIT_DUNGEON_WARP, a
 	ret nz
 .runCurrentMapScript
 	ld hl, SeafoamIslandsB3F_ScriptPointers
@@ -72,16 +72,16 @@ SeafoamIslandsB3FDefaultScript:
 	dec a
 	ld [wSimulatedJoypadStatesIndex], a
 	call StartSimulatingJoypadStates
-	ld hl, wFlags_D733
-	set 2, [hl]
+	ld hl, wStatusFlags7
+	set BIT_FORCED_WARP, [hl]
 	ld a, SCRIPT_SEAFOAMISLANDSB3F_OBJECT_MOVING1
 	ld [wSeafoamIslandsB3FCurScript], a
 	ret
 
 RLEList_ForcedSurfingStrongCurrentNearSteps:
-	db D_DOWN | B_BUTTON, 6
-	db D_RIGHT | B_BUTTON, 5
-	db D_DOWN | B_BUTTON, 3
+	db PAD_DOWN | PAD_B, 6
+	db PAD_RIGHT | PAD_B, 5
+	db PAD_DOWN | PAD_B, 3
 	db -1 ; end
 
 SeafoamIslandsB3FObjectMoving1Script:
@@ -112,26 +112,26 @@ SeafoamIslandsB3FMoveObjectScript:
 	ld [wSimulatedJoypadStatesIndex], a
 	xor a
 	ld [wSpritePlayerStateData2MovementByte1], a
-	ld hl, wd730
-	set 7, [hl]
-	ld hl, wFlags_D733
-	set 2, [hl]
+	ld hl, wStatusFlags5
+	set BIT_SCRIPTED_MOVEMENT_STATE, [hl]
+	ld hl, wStatusFlags7
+	set BIT_FORCED_WARP, [hl]
 	ld a, SCRIPT_SEAFOAMISLANDSB3F_OBJECT_MOVING2
 .playerNotInStrongCurrent
 	ld [wSeafoamIslandsB3FCurScript], a
 	ret
 
 .RLEList_StrongCurrentNearRightBoulder:
-	db D_DOWN, 6
-	db D_RIGHT, 2
-	db D_DOWN, 4
-	db D_LEFT, 1
+	db PAD_DOWN, 6
+	db PAD_RIGHT, 2
+	db PAD_DOWN, 4
+	db PAD_LEFT, 1
 	db -1 ; end
 
 .RLEList_StrongCurrentNearLeftBoulder:
-	db D_DOWN, 6
-	db D_RIGHT, 2
-	db D_DOWN, 4
+	db PAD_DOWN, 6
+	db PAD_RIGHT, 2
+	db PAD_DOWN, 4
 	db -1 ; end
 
 SeafoamIslandsB3FObjectMoving2Script:

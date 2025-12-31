@@ -154,10 +154,10 @@ AnimatePikachuShadow:
 	ld hl, wPikachuMovementFlags
 	bit 6, [hl]
 	res 6, [hl]
-	ld hl, wd736
-	res 6, [hl]
+	ld hl, wMovementFlags
+	res BIT_LEDGE_OR_FISHING, [hl]
 	ret z
-	set 6, [hl]
+	set BIT_LEDGE_OR_FISHING, [hl]
 	call LoadPikachuShadowOAMData
 	ret
 
@@ -883,7 +883,7 @@ LoadPikachuShadowOAMData:
 .OAMData:
 	db 2
 	db $0c, $00, $ff, 0
-	db $0c, $08, $ff, 1 << OAM_X_FLIP
+	db $0c, $08, $ff, OAM_XFLIP
 
 .LoadOAMData:
 	ld a, e

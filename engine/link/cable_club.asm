@@ -56,8 +56,8 @@ CableClub_DoBattleOrTradeAgain:
 	ld [hli], a
 	dec b
 	jr nz, .zeroPlayerDataPatchListLoop
-	ld hl, wGrassRate
-	ld bc, wTrainerHeaderPtr - wGrassRate
+	ld hl, wLinkEnemyTrainerName
+	ld bc, wTrainerHeaderPtr - wLinkEnemyTrainerName
 .zeroEnemyPartyLoop
 	xor a
 	ld [hli], a
@@ -109,17 +109,17 @@ CableClub_DoBattleOrTradeAgain:
 	call Delay3
 	xor a
 	ldh [hSerialSendData], a
-	ld a, START_TRANSFER_INTERNAL_CLOCK
+	ld a, SC_START | SC_INTERNAL
 	ldh [rSC], a
 	call DelayFrame
 	xor a
 	ldh [hSerialSendData], a
-	ld a, START_TRANSFER_INTERNAL_CLOCK
+	ld a, SC_START | SC_INTERNAL
 	ldh [rSC], a
 .skipSendingTwoZeroBytes
 	call Delay3
 	call StopAllMusic
-	ld a, (1 << SERIAL)
+	ld a, IE_SERIAL
 	ldh [rIE], a
 	ld hl, wSerialRandomNumberListBlock
 	ld de, wSerialOtherGameboyRandomNumberListBlock
@@ -139,7 +139,7 @@ CableClub_DoBattleOrTradeAgain:
 	ld bc, 200
 	vc_hook Wireless_ExchangeBytes_patch_lists
 	call Serial_ExchangeBytes
-	ld a, (1 << SERIAL) | (1 << TIMER) | (1 << VBLANK)
+	ld a, IE_SERIAL | IE_TIMER | IE_VBLANK
 	ldh [rIE], a
 	ldh a, [hSerialConnectionStatus]
 	cp USING_INTERNAL_CLOCK
@@ -256,9 +256,9 @@ CableClub_DoBattleOrTradeAgain:
 	dec c
 	jr nz, .unpatchEnemyMonsLoop
 	ld a, LOW(wEnemyMonOT)
-	ld [wUnusedCF8D], a
+	ld [wUnusedNamePointer], a
 	ld a, HIGH(wEnemyMonOT)
-	ld [wUnusedCF8D + 1], a
+	ld [wUnusedNamePointer + 1], a
 	xor a
 	ld [wTradeCenterPointerTableIndex], a
 	call StopAllMusic
@@ -280,7 +280,7 @@ CableClub_DoBattleOrTradeAgain:
 	ld b, SET_PAL_OVERWORLD
 	call RunPaletteCommand
 	ld hl, wOptions
-	res 7, [hl]
+	res BIT_BATTLE_ANIMATION, [hl]
 	ld a, [wLetterPrintingDelayFlags]
 	push af
 	xor a
@@ -339,7 +339,7 @@ TradeCenter_SelectMon:
 	ld [wMenuWatchMovingOutOfBounds], a
 	inc a
 	ld [wWhichTradeMonSelectionMenu], a
-	ld a, D_DOWN | D_LEFT | A_BUTTON
+	ld a, PAD_DOWN | PAD_LEFT | PAD_A
 	ld [wMenuWatchedKeys], a
 	ld a, [wEnemyPartyCount]
 	ld [wMaxMenuItem], a
@@ -349,13 +349,13 @@ TradeCenter_SelectMon:
 	ld [wTopMenuItemX], a
 .enemyMonMenu_HandleInput
 	ld hl, hUILayoutFlags
-	set 1, [hl]
+	set BIT_DOUBLE_SPACED_MENU, [hl]
 	call HandleMenuInput
 	ld hl, hUILayoutFlags
-	res 1, [hl]
+	res BIT_DOUBLE_SPACED_MENU, [hl]
 	and a
 	jp z, .getNewInput
-	bit BIT_A_BUTTON, a
+	bit B_PAD_A, a
 	jr z, .enemyMonMenu_ANotPressed
 ; if A button pressed
 	ld a, [wMaxMenuItem]
@@ -374,7 +374,7 @@ TradeCenter_SelectMon:
 	call TradeCenter_DisplayStats
 	jp .getNewInput
 .enemyMonMenu_ANotPressed
-	bit BIT_D_LEFT, a
+	bit B_PAD_LEFT, a
 	jr z, .enemyMonMenu_LeftNotPressed
 ; if Left pressed, switch back to the player mon menu
 	xor a ; player mon menu
@@ -394,14 +394,14 @@ TradeCenter_SelectMon:
 	ld [wCurrentMenuItem], a
 	jr .playerMonMenu
 .enemyMonMenu_LeftNotPressed
-	bit BIT_D_DOWN, a
+	bit B_PAD_DOWN, a
 	jp z, .getNewInput
 	jp .selectedCancelMenuItem ; jump if Down pressed
 .playerMonMenu
 	xor a ; player mon menu
 	ld [wWhichTradeMonSelectionMenu], a
 	ld [wMenuWatchMovingOutOfBounds], a
-	ld a, D_DOWN | D_RIGHT | A_BUTTON
+	ld a, PAD_DOWN | PAD_RIGHT | PAD_A
 	ld [wMenuWatchedKeys], a
 	ld a, [wPartyCount]
 	ld [wMaxMenuItem], a
@@ -414,15 +414,15 @@ TradeCenter_SelectMon:
 	call ClearScreenArea
 .playerMonMenu_HandleInput
 	ld hl, hUILayoutFlags
-	set 1, [hl]
+	set BIT_DOUBLE_SPACED_MENU, [hl]
 	call HandleMenuInput
 	ld hl, hUILayoutFlags
-	res 1, [hl]
+	res BIT_DOUBLE_SPACED_MENU, [hl]
 	and a ; was anything pressed?
 	jr nz, .playerMonMenu_SomethingPressed
 	jp .getNewInput
 .playerMonMenu_SomethingPressed
-	bit BIT_A_BUTTON, a
+	bit B_PAD_A, a
 	jr z, .playerMonMenu_ANotPressed
 	jp .chosePlayerMon ; jump if A button pressed
 ; unreachable code
@@ -432,7 +432,7 @@ TradeCenter_SelectMon:
 	call TradeCenter_DisplayStats
 	jp .getNewInput
 .playerMonMenu_ANotPressed
-	bit BIT_D_RIGHT, a
+	bit B_PAD_RIGHT, a
 	jr z, .playerMonMenu_RightNotPressed
 ; if Right pressed, switch to the enemy mon menu
 	ld a, $1 ; enemy mon menu
@@ -454,7 +454,7 @@ TradeCenter_SelectMon:
 .notPastLastEnemyMon
 	jp .enemyMonMenu
 .playerMonMenu_RightNotPressed
-	bit BIT_D_DOWN, a
+	bit B_PAD_DOWN, a
 	jr z, .getNewInput
 	jp .selectedCancelMenuItem ; jump if Down pressed
 .getNewInput
@@ -488,16 +488,16 @@ TradeCenter_SelectMon:
 	ld a, 16
 	ld [wTopMenuItemY], a
 .selectStatsMenuItem
-	ld a, " "
+	ld a, ' '
 	ldcoord_a 11, 16
-	ld a, D_RIGHT | B_BUTTON | A_BUTTON
+	ld a, PAD_RIGHT | PAD_B | PAD_A
 	ld [wMenuWatchedKeys], a
 	ld a, 1
 	ld [wTopMenuItemX], a
 	call HandleMenuInput
-	bit 4, a ; Right pressed?
+	bit B_PAD_RIGHT, a
 	jr nz, .selectTradeMenuItem
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jr z, .displayPlayerMonStats
 .cancelPlayerMonChoice
 	pop af
@@ -505,16 +505,16 @@ TradeCenter_SelectMon:
 	call LoadScreenTilesFromBuffer1
 	jp .playerMonMenu
 .selectTradeMenuItem
-	ld a, " "
+	ld a, ' '
 	ldcoord_a 1, 16
-	ld a, D_LEFT | B_BUTTON | A_BUTTON
+	ld a, PAD_LEFT | PAD_B | PAD_A
 	ld [wMenuWatchedKeys], a
 	ld a, 11
 	ld [wTopMenuItemX], a
 	call HandleMenuInput
-	bit BIT_D_LEFT, a
+	bit B_PAD_LEFT, a
 	jr nz, .selectStatsMenuItem
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jr nz, .cancelPlayerMonChoice
 	jr .choseTrade
 .displayPlayerMonStats
@@ -553,29 +553,29 @@ TradeCenter_SelectMon:
 	ld l, a
 	ld a, [wMenuCursorLocation + 1]
 	ld h, a
-	ld a, " "
+	ld a, ' '
 	ld [hl], a
 .cancelMenuItem_Loop
-	ld a, "▶" ; filled arrow cursor
+	ld a, '▶' ; filled arrow cursor
 	ldcoord_a 1, 16
 .cancelMenuItem_JoypadLoop
 	call JoypadLowSensitivity
 	ldh a, [hJoy5]
 	and a ; pressed anything?
 	jr z, .cancelMenuItem_JoypadLoop
-	bit BIT_A_BUTTON, a
+	bit B_PAD_A, a
 	jr nz, .cancelMenuItem_APressed
-	bit BIT_D_UP, a
+	bit B_PAD_UP, a
 	jr z, .cancelMenuItem_JoypadLoop
 ; if Up pressed
-	ld a, " "
+	ld a, ' '
 	ldcoord_a 1, 16
 	ld a, [wPartyCount]
 	dec a
 	ld [wCurrentMenuItem], a
 	jp .playerMonMenu
 .cancelMenuItem_APressed
-	ld a, "▷" ; unfilled arrow cursor
+	ld a, '▷' ; unfilled arrow cursor
 	ldcoord_a 1, 16
 	ld a, $f
 	ld [wSerialExchangeNybbleSendData], a
@@ -591,9 +591,9 @@ ReturnToCableClubRoom:
 	ld a, [hl]
 	push af
 	push hl
-	res 0, [hl]
+	res BIT_FONT_LOADED, [hl]
 	xor a
-	ld [wd72d], a
+	ld [wStatusFlags3], a ; clears BIT_INIT_TRADE_CENTER_FACING
 	dec a
 	ld [wDestinationWarpID], a
 	call LoadMapData
@@ -624,7 +624,7 @@ TradeCenter_PlaceSelectedEnemyMonMenuCursor:
 	hlcoord 1, 9
 	ld bc, SCREEN_WIDTH
 	call AddNTimes
-	ld [hl], "▷" ; cursor
+	ld [hl], '▷' ; cursor
 	ret
 
 TradeCenter_DisplayStats:
@@ -666,7 +666,7 @@ TradeCenter_PrintPartyListNames:
 	ld a, [de]
 	cp $ff
 	ret z
-	ld [wd11e], a
+	ld [wNamedObjectIndex], a
 	push bc
 	push hl
 	push de
@@ -702,9 +702,9 @@ TradeCenter_Trade:
 	ld b, 0
 	add hl, bc
 	ld a, [hl]
-	ld [wd11e], a
+	ld [wNamedObjectIndex], a
 	call GetMonName
-	ld hl, wcd6d
+	ld hl, wNameBuffer
 	ld de, wNameOfPlayerMonToBeTraded
 	ld bc, NAME_LENGTH
 	call CopyData
@@ -714,7 +714,7 @@ TradeCenter_Trade:
 	ld b, 0
 	add hl, bc
 	ld a, [hl]
-	ld [wd11e], a
+	ld [wNamedObjectIndex], a
 	call GetMonName
 	ld hl, WillBeTradedText
 	bccoord 1, 14
@@ -798,7 +798,7 @@ TradeCenter_Trade:
 	add hl, bc
 	ld a, [hl]
 	ld [wTradedPlayerMonSpecies], a
-	callabd_ModifyPikachuHappiness PIKAHAPPY_TRADE
+	farcall_ModifyPikachuHappiness PIKAHAPPY_TRADE
 	xor a
 	ld [wRemoveMonFromBox], a
 	call RemovePokemon
@@ -810,7 +810,7 @@ TradeCenter_Trade:
 	ld e, a
 	add hl, de
 	ld a, [hl]
-	ld [wcf91], a
+	ld [wCurPartySpecies], a
 	ld hl, wEnemyMons
 	ld a, c
 	ld bc, wEnemyMon2 - wEnemyMon1
@@ -822,7 +822,7 @@ TradeCenter_Trade:
 	ld a, [wPartyCount]
 	dec a
 	ld [wWhichPokemon], a
-	ld a, $1
+	ld a, TRUE
 	ld [wForceEvolution], a
 	ld a, [wTradingWhichEnemyMon]
 	ld hl, wEnemyPartySpecies
@@ -843,7 +843,7 @@ TradeCenter_Trade:
 	call ClearScreen
 	call LoadHpBarAndStatusTilePatterns
 	xor a
-	ld [wUnusedCC5B], a
+	ld [wUnusedFlag], a
 	ldh a, [hSerialConnectionStatus]
 	cp USING_EXTERNAL_CLOCK
 	jr z, .usingExternalClock
@@ -867,7 +867,7 @@ TradeCenter_Trade:
 	hlcoord 1, 14
 	ld de, TradeCompleted
 	call PlaceString
-	predef SaveSAVtoSRAM2
+	predef SavePartyAndDexData ; this allows reset into Pokecenter
 	vc_hook Trade_save_game_end
 	ld c, 50
 	call DelayFrames
@@ -956,7 +956,7 @@ CableClub_TextBoxBorder:
 	push hl
 	ld a, $7b ; border left vertical line tile
 	ld [hli], a
-	ld a, " "
+	ld a, ' '
 	call CableClub_DrawHorizontalLine
 	ld [hl], $77 ; border right vertical line tile
 	pop hl

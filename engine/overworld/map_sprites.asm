@@ -14,7 +14,7 @@ _InitMapSprites::
 ; if the map is an inside map (i.e. mapID >= FIRST_INDOOR_MAP)
 	call LoadSpriteSetFromMapHeader
 	call LoadMapSpriteTilePatterns
-	call Func_14150
+	call LoadMapSpritesImageBaseOffset
 	ret
 
 ; Loads sprite set for outside maps (cities and routes) and sets VRAM slots.
@@ -27,7 +27,7 @@ InitOutsideMapSprites:
 ; if so, choose the appropriate one
 	ld b, a ; b = spriteSetID
 	ld a, [wFontLoaded]
-	bit 0, a ; reloading upper half of tile patterns after displaying text?
+	bit BIT_FONT_LOADED, a ; reloading upper half of tile patterns after displaying text?
 	jr nz, .loadSpriteSet ; if so, forcibly reload the sprite set
 	ld a, [wSpriteSetID]
 	cp b ; has the sprite set ID changed?
@@ -46,7 +46,7 @@ InitOutsideMapSprites:
 	call CopyData ; copy it to wSpriteSet
 	call LoadMapSpriteTilePatterns
 .skipLoadingSpriteSet
-	call Func_14150
+	call LoadMapSpritesImageBaseOffset
 	scf
 	ret
 
@@ -59,7 +59,7 @@ LoadSpriteSetFromMapHeader:
 ; (since the Red sprite always has the first VRAM tile pattern slot and the
 ; Pikachu sprite reserves the second slot) is the VRAM tile pattern slot.
 	ld hl, wSpriteSet
-	ld bc, (wSpriteSetID - wSpriteSet)
+	ld bc, wSpriteSetID - wSpriteSet
 	xor a
 	call FillMemory
 	ld a, SPRITE_PIKACHU ; load Pikachu separately
@@ -73,14 +73,14 @@ LoadSpriteSetFromMapHeader:
 	jr z, .continue ; if the sprite slot is not used
 	ld c, a
 	call CheckForFourTileSprite ; is this a four tile sprite?
-	jr nc, .isFourTileSprite
+	jr nc, .isNotFourTileSprite
 ; loop through the space reserved for four tile picture IDs
 	ld de, wSpriteSet + 9
 	ld b, 2
 	call CheckIfPictureIDAlreadyLoaded
 	jr .continue
 
-.isFourTileSprite
+.isNotFourTileSprite
 ; loop through the space reserved for regular picture IDs
 	ld de, wSpriteSet
 	ld b, 9
@@ -170,7 +170,7 @@ ReloadWalkingTilePatterns:
 
 LoadStillTilePattern:
 	ld a, [wFontLoaded]
-	bit 0, a ; reloading upper half of tile patterns after displaying text?
+	bit BIT_FONT_LOADED, a ; reloading upper half of tile patterns after displaying text?
 	ret nz ; if so, skip loading data into the lower half
 	call ReadSpriteSheetData
 	ret nc
@@ -186,7 +186,7 @@ LoadWalkingTilePattern:
 	ld d, h
 	ld e, l
 	call GetSpriteVRAMAddress
-	set 3, h ; add $80 tiles to hl
+	set 3, h ; add $800 ($80 tiles) to hl (1 << 3 == $8)
 	call CopyVideoDataAlternate
 	ret
 
@@ -247,7 +247,7 @@ ReadSpriteSheetData:
 	scf
 	ret
 
-Func_14150:
+LoadMapSpritesImageBaseOffset:
 	ld a, $1
 	ld [wSpritePlayerStateData2ImageBaseOffset], a ; vram slot for player
 	ld a, $2
@@ -259,7 +259,7 @@ Func_14150:
 	ld a, [hl] ; [x#SPRITESTATEDATA1_PICTUREID]
 	and a ; is the sprite unused?
 	jr z, .spriteUnused
-	call Func_14179
+	call GetSpriteImageBaseOffset
 	push hl
 	ld de, wSpritePlayerStateData2ImageBaseOffset - wSpriteStateData1
 	add hl, de ; [x#SPRITESTATEDATA2_IMAGEBASEOFFSET]
@@ -273,7 +273,7 @@ Func_14150:
 	jr nz, .loop
 	ret
 
-Func_14179:
+GetSpriteImageBaseOffset:
 	push de
 	push bc
 	ld c, a  ; c = picture ID

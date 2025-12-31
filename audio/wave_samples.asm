@@ -12,7 +12,7 @@
 ; these are the definitions for the channel 3 instruments
 ; each instrument definition is made up of 32 points (nibbles) that form
 ; the graph of the wave
-; the current instrument is copied to rWave_0--rWave_f
+; the current instrument is copied to _AUD3WAVERAM
 .wave0
 	dn  0,  2,  4,  6,  8, 10, 12, 14, 15, 15, 15, 14, 14, 13, 13, 12, 12, 11, 10,  9,  8,  7,  6,  5,  4,  4,  3,  3,  2,  2,  1,  1
 
@@ -30,3 +30,5 @@
 
 ; duty 5 reads from sfx data
 .wave5
+; in audio 1: (used by audio/music/lavender.asm and audio/music/pokemontower.asm)
+;	dn 14, 13,  0,  0,  9,  0, 15,  0,  7,  7, 14, 12,  0,  2, 14,  8, 13, 12,  8,  1, 12,  1, 14, 11,  0,  0,  4, 11, 11,  1, 14, 11

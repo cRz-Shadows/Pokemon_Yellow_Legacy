@@ -45,6 +45,9 @@ DEF PC_ITEM_CAPACITY  EQU 50
 	const DIFFICULTY_SELECTION_MENU ; 8
 DEF NUM_TWO_OPTION_MENUS EQU const_value
 
+; wTwoOptionMenuID
+DEF BIT_SECOND_MENU_OPTION_DEFAULT EQU 7
+
 ; menu exit method constants for list menus and the buy/sell/quit menu
 DEF CHOSE_MENU_ITEM   EQU 1 ; pressed A
 DEF CANCELLED_MENU    EQU 2 ; pressed B

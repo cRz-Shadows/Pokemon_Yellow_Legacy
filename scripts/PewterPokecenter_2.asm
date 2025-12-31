@@ -59,10 +59,10 @@ PewterJigglypuff::
 	ld c, 48
 	call DelayFrames
 	call PlayDefaultMusic
-	ld a, [wd472]
+	ld a, [wd471]
 	bit 7, a
 	ret z
-	callfar CheckPikachuFaintedOrStatused
+	callfar CheckPikachuStatusCondition
 	ret c
 	call DisablePikachuFollowingPlayer
 	ret

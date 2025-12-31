@@ -9,7 +9,7 @@ CinnabarGymQuiz::
 	text_asm
 	xor a
 	ld [wOpponentAfterWrongAnswer], a
-	ld hl, wd475
+	ld hl, wd474
 	res 7, [hl]
 	ld a, [wHiddenObjectFunctionArgument]
 	push af
@@ -94,7 +94,7 @@ CinnabarGymQuiz_AskQuestion:
 	cp c
 	jr nz, .wrongAnswer
 	ld hl, wCurrentMapScriptFlags
-	set 5, [hl]
+	set BIT_CUR_MAP_LOADED_1, [hl]
 	ldh a, [hGymGateIndex]
 	ldh [hBackupGymGateIndex], a
 	ld hl, CinnabarGymQuizCorrectText
@@ -125,7 +125,7 @@ CinnabarGymQuiz_AskQuestion:
 	ldh a, [hGymGateIndex]
 	add $2
 	ld [wOpponentAfterWrongAnswer], a
-	ld hl, wd475
+	ld hl, wd474
 	set 7, [hl]
 	ret
 

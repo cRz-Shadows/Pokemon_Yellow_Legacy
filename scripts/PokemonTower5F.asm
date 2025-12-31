@@ -17,8 +17,8 @@ PokemonTower5FDefaultScript:
 	ld hl, PokemonTower5FPurifiedZoneCoords
 	call ArePlayerCoordsInArray
 	jr c, .in_purified_zone
-	ld hl, wd72e
-	res 4, [hl]
+	ld hl, wStatusFlags4
+	res BIT_NO_BATTLES, [hl]
 	ResetEvent EVENT_IN_PURIFIED_ZONE
 	jp CheckFightingMapTrainers
 .in_purified_zone
@@ -26,17 +26,17 @@ PokemonTower5FDefaultScript:
 	ret nz
 	xor a
 	ldh [hJoyHeld], a
-	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_CTRL_PAD
 	ld [wJoyIgnore], a
-	ld hl, wd72e
-	set 4, [hl]
+	ld hl, wStatusFlags4
+	set BIT_NO_BATTLES, [hl]
 	predef HealParty
 	call GBFadeOutToWhite
 	call Delay3
 	call Delay3
 	call GBFadeInFromWhite
 	ld a, TEXT_POKEMONTOWER5F_PURIFIEDZONE
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	xor a
 	ld [wJoyIgnore], a

@@ -32,7 +32,7 @@ IF DEF(_DEBUG)
 	call DebugPressedOrHeldB
 	ret nz
 ENDC
-	CheckEvent EVENT_BEAT_POKEMONTOWER_7_TRAINER_0
+	CheckEvent EVENT_BEAT_POKEMONTOWER_7_JESSIE_JAMES
 	call z, PokemonTower7FScript_60d2a
 	ret
 
@@ -40,14 +40,14 @@ PokemonTower7FScript_60d2a:
 	ld a, [wYCoord]
 	cp $c
 	ret nz
-	ResetEvent EVENT_BEAT_POKEMONTOWER_7_TRAINER_1
+	ResetEvent EVENT_POKEMONTOWER_7_JESSIE_JAMES_ON_LEFT
 	ld a, [wXCoord]
 	cp $a
 	jr z, .asm_60d47
 	ld a, [wXCoord] ; why?
 	cp $b
 	ret nz
-	SetEvent EVENT_BEAT_POKEMONTOWER_7_TRAINER_1
+	SetEvent EVENT_POKEMONTOWER_7_JESSIE_JAMES_ON_LEFT
 .asm_60d47
 	call StopAllMusic
 	ld c, BANK(Music_MeetJessieJames)
@@ -55,7 +55,7 @@ PokemonTower7FScript_60d2a:
 	call PlayMusic
 	xor a
 	ldh [hJoyHeld], a
-	ld a, ~(A_BUTTON | B_BUTTON)
+	ld a, PAD_SELECT | PAD_START | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, HS_POKEMON_TOWER_7F_JESSIE
 	call PokemonTower7FScript_ShowObject
@@ -64,9 +64,9 @@ PokemonTower7FScript_60d2a:
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	ld a, TEXT_POKEMONTOWER7F_TEXT4
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, SCRIPT_POKEMONTOWER7F_SCRIPT1
 	call PokemonTower7FSetScript
@@ -82,29 +82,29 @@ PokemonTower7FMovementData_60d7b:
 
 PokemonTower7FScript1:
 	ld de, PokemonTower7FMovementData_60d7b
-	CheckEvent EVENT_BEAT_POKEMONTOWER_7_TRAINER_1
+	CheckEvent EVENT_POKEMONTOWER_7_JESSIE_JAMES_ON_LEFT
 	jr z, .asm_60d8c
 	ld de, PokemonTower7FMovementData_60d7a
 .asm_60d8c
 	ld a, POKEMONTOWER7F_JESSIE
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hSpriteIndex], a
 	call MoveSprite
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, SCRIPT_POKEMONTOWER7F_SCRIPT2
 	call PokemonTower7FSetScript
 	ret
 
 PokemonTower7FScript2:
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
-	ld a, [wd730]
-	bit 0, a
+	ld a, [wStatusFlags5]
+	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
 PokemonTower7FScript3:
 	ld a, SPRITE_FACING_DOWN
 	ld [wSprite01StateData1FacingDirection], a
-	CheckEvent EVENT_BEAT_POKEMONTOWER_7_TRAINER_1
+	CheckEvent EVENT_POKEMONTOWER_7_JESSIE_JAMES_ON_LEFT
 	jr z, .asm_60dba
 	ld a, SPRITE_FACING_RIGHT
 	ld [wSprite01StateData1FacingDirection], a
@@ -113,45 +113,45 @@ PokemonTower7FScript3:
 	ld [wSprite01StateData1MovementStatus], a
 PokemonTower7FScript4:
 	ld de, PokemonTower7FMovementData_60d7a
-	CheckEvent EVENT_BEAT_POKEMONTOWER_7_TRAINER_1
+	CheckEvent EVENT_POKEMONTOWER_7_JESSIE_JAMES_ON_LEFT
 	jr z, .asm_60dcc
 	ld de, PokemonTower7FMovementData_60d7b
 .asm_60dcc
 	ld a, POKEMONTOWER7F_JAMES
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hSpriteIndex], a
 	call MoveSprite
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, SCRIPT_POKEMONTOWER7F_SCRIPT5
 	call PokemonTower7FSetScript
 	ret
 
 PokemonTower7FScript5:
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
-	ld a, [wd730]
-	bit 0, a
+	ld a, [wStatusFlags5]
+	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
 PokemonTower7FScript6:
 	ld a, $2
 	ld [wSprite02StateData1MovementStatus], a
 	ld a, SPRITE_FACING_LEFT
 	ld [wSprite02StateData1FacingDirection], a
-	CheckEvent EVENT_BEAT_POKEMONTOWER_7_TRAINER_1
+	CheckEvent EVENT_POKEMONTOWER_7_JESSIE_JAMES_ON_LEFT
 	jr z, .asm_60dff
 	ld a, SPRITE_FACING_DOWN
 	ld [wSprite02StateData1FacingDirection], a
 .asm_60dff
 	call Delay3
-	ld a, ~(A_BUTTON | B_BUTTON)
+	ld a, PAD_SELECT | PAD_START | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, TEXT_POKEMONTOWER7F_TEXT5
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 PokemonTower7FScript7:
-	ld hl, wd72d
-	set 6, [hl]
-	set 7, [hl]
+	ld hl, wStatusFlags3
+	set BIT_TALKED_TO_TRAINER, [hl]
+	set BIT_PRINT_END_BATTLE_TEXT, [hl]
 	ld hl, PokemonTower7FJessieJamesEndBattleText
 	ld de, PokemonTower7FJessieJamesEndBattleText
 	call SaveEndBattleTextPointers
@@ -167,7 +167,7 @@ PokemonTower7FScript7:
 	ret
 
 PokemonTower7FScript8:
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, [wIsInBattle]
 	cp $ff
@@ -178,12 +178,12 @@ PokemonTower7FScript8:
 	xor a
 	ld [wSprite01StateData1FacingDirection], a
 	ld [wSprite02StateData1FacingDirection], a
-	ld a, ~(A_BUTTON | B_BUTTON)
+	ld a, PAD_SELECT | PAD_START | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	ld a, TEXT_POKEMONTOWER7F_TEXT6
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	xor a
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
@@ -191,14 +191,14 @@ PokemonTower7FScript8:
 	ld c, BANK(Music_MeetJessieJames)
 	ld a, MUSIC_MEET_JESSIE_JAMES
 	call PlayMusic
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, SCRIPT_POKEMONTOWER7F_SCRIPT9
 	call PokemonTower7FSetScript
 	ret
 
 PokemonTower7FScript9:
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	call GBFadeOutToBlack
 	ld a, HS_POKEMON_TOWER_7F_JESSIE
@@ -217,7 +217,7 @@ PokemonTower7FScript10:
 	xor a
 	ldh [hJoyHeld], a
 	ld [wJoyIgnore], a
-	SetEvent EVENT_BEAT_POKEMONTOWER_7_TRAINER_0
+	SetEvent EVENT_BEAT_POKEMONTOWER_7_JESSIE_JAMES
 	ld a, SCRIPT_POKEMONTOWER7F_SCRIPT0
 	call PokemonTower7FSetScript
 	ret
@@ -235,7 +235,7 @@ PokemonTower7FScript_HideObject:
 	ret
 
 PokemonTower7FWarpToMrFujiHouseScript:
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, HS_POKEMON_TOWER_7F_MR_FUJI
 	ld [wMissableObjectIndex], a
@@ -248,8 +248,8 @@ PokemonTower7FWarpToMrFujiHouseScript:
 	ld [wDestinationWarpID], a
 	ld a, LAVENDER_TOWN
 	ld [wLastMap], a
-	ld hl, wd72d
-	set 3, [hl]
+	ld hl, wStatusFlags3
+	set BIT_WARP_FROM_CUR_SCRIPT, [hl]
 	ld a, SCRIPT_POKEMONTOWER7F_SCRIPT0
 	ld [wPokemonTower7FCurScript], a
 	ret

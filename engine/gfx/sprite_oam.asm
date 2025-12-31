@@ -2,7 +2,7 @@ PrepareOAMData::
 ; Determine OAM data for currently visible
 ; sprites and write it to wShadowOAM.
 ; Yellow code has been changed to use registers more efficiently
-; as well as tweaking the code to show gbc palettes
+; as well as tweaking the code to show cgb palettes
 
 	ld a, [wUpdateSpritesEnabled]
 	dec a
@@ -113,13 +113,13 @@ PrepareOAMData::
 	inc hl
 	inc e
 	ld a, [hl]
-	bit 1, a ; is the tile allowed to set the sprite priority bit?
+	bit BIT_SPRITE_UNDER_GRASS, a
 	jr z, .skipPriority
 	ldh a, [hSpritePriority]
 	or [hl]
 .skipPriority
 	and $f0
-	bit OAM_OBP_NUM, a
+	bit B_OAM_PAL1, a
 	jr z, .spriteusesOBP0
 	or OAM_HIGH_PALS
 .spriteusesOBP0
@@ -139,8 +139,8 @@ PrepareOAMData::
 
 	; Clear unused OAM.
 .asm_4a41
-	ld a, [wd736]
-	bit 6, a ; jumping down ledge or fishing animation?
+	ld a, [wMovementFlags]
+	bit BIT_LEDGE_OR_FISHING, a
 	ld c, $a0
 	jr z, .clear
 

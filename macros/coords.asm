@@ -1,4 +1,4 @@
-MACRO validate_coords
+MACRO? validate_coords
 	IF _NARG >= 4
 		IF \1 >= \3
 			fail "x coord out of range"
@@ -11,11 +11,19 @@ MACRO validate_coords
 	ENDC
 ENDM
 
-DEF hlcoord EQUS "coord hl,"
-DEF bccoord EQUS "coord bc,"
-DEF decoord EQUS "coord de,"
+MACRO? hlcoord
+	coord hl, \#
+ENDM
 
-MACRO coord
+MACRO? bccoord
+	coord bc, \#
+ENDM
+
+MACRO? decoord
+	coord de, \#
+ENDM
+
+MACRO? coord
 ; register, x, y[, origin]
 	validate_coords \2, \3
 	IF _NARG >= 4
@@ -25,36 +33,52 @@ MACRO coord
 	ENDC
 ENDM
 
-DEF hlbgcoord EQUS "bgcoord hl,"
-DEF bcbgcoord EQUS "bgcoord bc,"
-DEF debgcoord EQUS "bgcoord de,"
+MACRO? hlbgcoord
+	bgcoord hl, \#
+ENDM
 
-MACRO bgcoord
+MACRO? bcbgcoord
+	bgcoord bc, \#
+ENDM
+
+MACRO? debgcoord
+	bgcoord de, \#
+ENDM
+
+MACRO? bgcoord
 ; register, x, y[, origin]
-	validate_coords \2, \3, BG_MAP_WIDTH, BG_MAP_HEIGHT
+	validate_coords \2, \3, TILEMAP_WIDTH, TILEMAP_HEIGHT
 	IF _NARG >= 4
-		ld \1, (\3) * BG_MAP_WIDTH + (\2) + \4
+		ld \1, (\3) * TILEMAP_WIDTH + (\2) + \4
 	ELSE
-		ld \1, (\3) * BG_MAP_WIDTH + (\2) + vBGMap0
+		ld \1, (\3) * TILEMAP_WIDTH + (\2) + vBGMap0
 	ENDC
 ENDM
 
-DEF hlowcoord EQUS "owcoord hl,"
-DEF bcowcoord EQUS "owcoord bc,"
-DEF deowcoord EQUS "owcoord de,"
+MACRO? hlowcoord
+	owcoord hl, \#
+ENDM
 
-MACRO owcoord
+MACRO? bcowcoord
+	owcoord bc, \#
+ENDM
+
+MACRO? deowcoord
+	owcoord de, \#
+ENDM
+
+MACRO? owcoord
 ; register, x, y, map width
 	ld \1, wOverworldMap + ((\2) + 3) + (((\3) + 3) * ((\4) + (3 * 2)))
 ENDM
 
-MACRO event_displacement
+MACRO? event_displacement
 ; map width, x blocks, y blocks
 	dw (wOverworldMap + 7 + (\1) + ((\1) + 6) * ((\3) >> 1) + ((\2) >> 1))
 	db \3, \2
 ENDM
 
-MACRO dwcoord
+MACRO? dwcoord
 ; x, y
 	validate_coords \1, \2
 	IF _NARG >= 3
@@ -64,7 +88,7 @@ MACRO dwcoord
 	ENDC
 ENDM
 
-MACRO ldcoord_a
+MACRO? ldcoord_a
 ; x, y[, origin]
 	validate_coords \1, \2
 	IF _NARG >= 3
@@ -74,7 +98,7 @@ MACRO ldcoord_a
 	ENDC
 ENDM
 
-MACRO lda_coord
+MACRO? lda_coord
 ; x, y[, origin]
 	validate_coords \1, \2
 	IF _NARG >= 3
@@ -84,7 +108,7 @@ MACRO lda_coord
 	ENDC
 ENDM
 
-MACRO dbmapcoord
+MACRO? dbmapcoord
 ; x, y
 	db \2, \1
 ENDM

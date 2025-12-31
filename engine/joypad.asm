@@ -37,8 +37,8 @@ _Joypad::
 
 	ldh a, [hJoyInput]
 	ld b, a
-	and A_BUTTON + B_BUTTON + SELECT + START + D_UP
-	cp A_BUTTON + B_BUTTON + SELECT + START ; soft reset
+	and PAD_BUTTONS | PAD_UP
+	cp PAD_BUTTONS ; soft reset
 	jp z, TrySoftReset
 
 	ldh a, [hJoyLast]
@@ -53,8 +53,8 @@ _Joypad::
 	ld a, b
 	ldh [hJoyLast], a
 
-	ld a, [wd730]
-	bit 5, a
+	ld a, [wStatusFlags5]
+	bit BIT_DISABLE_JOYPAD, a
 	jr nz, DiscardButtonPresses
 
 	ldh a, [hJoyLast]

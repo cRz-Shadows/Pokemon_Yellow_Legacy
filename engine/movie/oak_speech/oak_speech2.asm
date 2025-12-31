@@ -30,7 +30,7 @@ ChoosePlayerName:
 	ld [wNamingScreenType], a
 	call DisplayNamingScreen
 	ld a, [wStringBuffer]
-	cp "@"
+	cp '@'
 	jr z, .customName
 	call ClearScreen
 	call Delay3
@@ -69,12 +69,12 @@ ChooseRivalName:
 	ld [wNamingScreenType], a
 	call DisplayNamingScreen
 	ld a, [wStringBuffer]
-	cp "@"
+	cp '@'
 	jr z, .customName
 	call ClearScreen
 	call Delay3
 	ld de, Rival1Pic
-	ld b, $13
+	ld b, BANK(Rival1Pic)
 	call IntroDisplayPicCenteredOrUpperRight
 .done
 	ld hl, HisNameIsText
@@ -92,7 +92,7 @@ OakSpeechSlidePicLeft:
 	ld c, 10
 	call DelayFrames
 	pop de
-	ld hl, wcd6d
+	ld hl, wNameBuffer
 	ld bc, NAME_LENGTH
 	call CopyData
 	call Delay3
@@ -197,7 +197,7 @@ DisplayIntroNameTextBox:
 	ld [wLastMenuItem], a
 	inc a
 	ld [wTopMenuItemX], a
-	ld [wMenuWatchedKeys], a ; A_BUTTON
+	ld [wMenuWatchedKeys], a ; PAD_A
 	inc a
 	ld [wTopMenuItemY], a
 	inc a
@@ -219,7 +219,7 @@ GetDefaultName:
 	ld e, l
 .innerLoop
 	ld a, [hli]
-	cp "@"
+	cp '@'
 	jr nz, .innerLoop
 	ld a, b
 	cp c
@@ -229,7 +229,7 @@ GetDefaultName:
 .foundName
 	ld h, d
 	ld l, e
-	ld de, wcd6d
+	ld de, wNameBuffer
 	ld bc, NAME_BUFFER_LENGTH
 	jp CopyData
 

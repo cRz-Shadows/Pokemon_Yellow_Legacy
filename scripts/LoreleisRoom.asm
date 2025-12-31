@@ -11,11 +11,11 @@ LoreleisRoom_Script:
 LoreleiShowOrHideExitBlock:
 ; Blocks or clears the exit to the next room.
 	ld hl, wCurrentMapScriptFlags
-	bit 5, [hl]
-	res 5, [hl]
+	bit BIT_CUR_MAP_LOADED_1, [hl]
+	res BIT_CUR_MAP_LOADED_1, [hl]
 	ret z
-	ld hl, wBeatLorelei
-	set 1, [hl]
+	ld hl, wElite4Flags
+	set BIT_STARTED_ELITE_4, [hl]
 	ld a, [wGameStage] ; Check if player has beat the game
 	and a
 	jr nz, .Rematch
@@ -54,7 +54,7 @@ LoreleisRoomNoopScript:
 LoreleiScriptWalkIntoRoom:
 ; Walk six steps upward.
 	ld hl, wSimulatedJoypadStatesEnd
-	ld a, D_UP
+	ld a, PAD_UP
 	ld [hli], a
 	ld [hli], a
 	ld [hli], a
@@ -85,9 +85,9 @@ LoreleisRoomDefaultScript:
 	jr z, LoreleiScriptWalkIntoRoom
 .stopPlayerFromLeaving
 	ld a, TEXT_LORELEISROOM_DONT_RUN_AWAY
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID  ; "Don't run away!"
-	ld a, D_UP | B_BUTTON
+	ld a, PAD_UP | PAD_B
 	ld [wSimulatedJoypadStatesEnd], a
 	ld a, $1
 	ld [wSimulatedJoypadStatesIndex], a
@@ -125,7 +125,7 @@ LoreleisRoomLoreleiEndBattleScript:
 	jr nz, .Rematch
 	ld a, TEXT_LORELEISROOM_LORELEI
 .continue
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	jp DisplayTextID
 .Rematch
 	ld a, TEXT_LORELEISROOM_LORELEI_REMATCH

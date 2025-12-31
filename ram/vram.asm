@@ -5,8 +5,8 @@ UNION
 vChars0:: ds $80 tiles
 vChars1:: ds $80 tiles
 vChars2:: ds $80 tiles
-vBGMap0:: ds BG_MAP_WIDTH * BG_MAP_HEIGHT
-vBGMap1:: ds BG_MAP_WIDTH * BG_MAP_HEIGHT
+vBGMap0:: ds TILEMAP_AREA
+vBGMap1:: ds TILEMAP_AREA
 
 NEXTU
 ; battle/menu
@@ -29,3 +29,5 @@ vTitleLogo::  ds $80 tiles
 vTitleLogo2:: ds 30 tiles
 
 ENDU
+
+ENDSECTION

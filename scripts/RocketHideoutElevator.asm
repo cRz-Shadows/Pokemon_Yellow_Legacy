@@ -1,12 +1,12 @@
 RocketHideoutElevator_Script:
 	ld hl, wCurrentMapScriptFlags
-	bit 5, [hl]
-	res 5, [hl]
+	bit BIT_CUR_MAP_LOADED_1, [hl]
+	res BIT_CUR_MAP_LOADED_1, [hl]
 	push hl
 	call nz, RocketHideoutElevatorStoreWarpEntriesScript
 	pop hl
-	bit 7, [hl]
-	res 7, [hl]
+	bit BIT_CUR_MAP_USED_ELEVATOR, [hl]
+	res BIT_CUR_MAP_USED_ELEVATOR, [hl]
 	call nz, RocketHideoutElevatorShakeScript
 	xor a
 	ld [wAutoTextBoxDrawingControl], a
@@ -32,7 +32,7 @@ RocketHideoutElevatorStoreWarpEntriesScript:
 	ret
 
 RocketHideoutElevatorScript:
-	ld hl, RocketHideoutElavatorFloors
+	ld hl, RocketHideoutElevatorFloors
 	call LoadItemList
 	ld hl, RocketHideoutElevatorWarpMaps
 	ld de, wElevatorWarpMaps
@@ -40,7 +40,7 @@ RocketHideoutElevatorScript:
 	call CopyData
 	ret
 
-RocketHideoutElavatorFloors:
+RocketHideoutElevatorFloors:
 	db 3 ; #
 	db FLOOR_B1F
 	db FLOOR_B2F

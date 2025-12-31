@@ -5,7 +5,7 @@ DoClearSaveDialogue:
 	call LoadTextBoxTilePatterns
 	ld hl, ClearSaveDataText
 	call PrintText
-	ld a, B_BUTTON
+	ld a, PAD_B
 	ld [wJoyIgnore], a
 	hlcoord 14, 7
 	lb bc, 8, 15
@@ -19,7 +19,7 @@ DoClearSaveDialogue:
 	ld a, [wCurrentMenuItem]
 	and a
 	jp z, Init
-	farcall ClearSAV
+	farcall ClearAllSRAMBanks
 	jp Init
 
 ClearSaveDataText:

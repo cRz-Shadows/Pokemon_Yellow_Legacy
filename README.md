@@ -45,6 +45,8 @@ These videos also provide an overview of the hack and the ideology behind it:
 - [**Wiki**][wiki] (includes [tutorials][tutorials])
 - **Discord:** [pret][discord]
 - **IRC:** [libera#pret][irc]
+- [**Symbols**][symbols]
+- [**Tools**][tools]
 
 
 ## Credits For Yellow Legacy:
@@ -179,5 +181,7 @@ These videos also provide an overview of the hack and the ideology behind it:
 [tutorials]: https://github.com/pret/pokeyellow/wiki/Tutorials
 [discord]: https://discord.gg/d5dubZ3
 [irc]: https://web.libera.chat/?#pret
+[symbols]: https://github.com/pret/pokeyellow/tree/symbols
+[tools]: https://github.com/pret/gb-asm-tools
 [ci]: https://github.com/pret/pokeyellow/actions
 [ci-badge]: https://github.com/pret/pokecrystal/actions/workflows/main.yml/badge.svg

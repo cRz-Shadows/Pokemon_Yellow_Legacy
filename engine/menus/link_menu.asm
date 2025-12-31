@@ -5,26 +5,26 @@ Func_f531b::
 	ld [wBuffer], a
 	xor a
 	ld [wUnknownSerialFlag_d499], a
-	coord hl, 0, 0
+	hlcoord 0, 0
 	lb bc, 4, 5
 	call TextBoxBorder
 	ld de, Text_f5791
-	coord hl, 1, 2
+	hlcoord 1, 2
 	call PlaceString
-	coord hl, 8, 0
+	hlcoord 8, 0
 	lb bc, 8, 10
 	call TextBoxBorder
-	coord hl, 10, 2
+	hlcoord 10, 2
 	ld de, Text_f579c
 	call PlaceString
-	coord hl, 0, 10
+	hlcoord 0, 10
 	lb bc, 6, 18
 	call TextBoxBorder
 	call UpdateSprites
 	xor a
-	ld [wUnusedCD37], a
-	ld [wd72d], a
-	ld [wd11e], a
+	ld [wUnusedLinkMenuByte], a
+	ld [wCableClubDestinationMap], a
+	ld [wNamedObjectIndex], a
 	ld hl, wTopMenuItemY
 	ld a, $2
 	ld [hli], a
@@ -90,7 +90,7 @@ Func_f531b::
 	jr z, .asm_f53df
 .asm_f53d1
 	ld a, $1
-	ld [wd11e], a
+	ld [wNamedObjectIndex], a
 	ld a, b
 	ld [wLinkMenuSelectionSendBuffer], a
 	and $3
@@ -109,10 +109,10 @@ Func_f531b::
 	call Serial_SendZeroByte
 	dec b
 	jr nz, .loop
-	ld b, " "
-	ld c, " "
-	ld d, " "
-	ld e, "▷"
+	ld b, ' '
+	ld c, ' '
+	ld d, ' '
+	ld e, '▷'
 	ld a, [wLinkMenuSelectionSendBuffer]
 	bit 3, a
 	jr nz, .asm_f541a
@@ -310,21 +310,21 @@ PetitCup::
 	jp z, DuplicateSpecies
 	dec hl
 	ld a, [hl]
-	ld [wcf91], a
+	ld [wCurPartySpecies], a
 	push hl
 	callfar Func_3b10f
 	pop hl
 	jp c, asm_f56ad
 	inc hl
 	ld a, [hl]
-	ld [wcf91], a
+	ld [wCurPartySpecies], a
 	push hl
 	callfar Func_3b10f
 	pop hl
 	jp c, asm_f56ad
 	inc hl
 	ld a, [hl]
-	ld [wcf91], a
+	ld [wCurPartySpecies], a
 	push hl
 	callfar Func_3b10f
 	pop hl
@@ -343,22 +343,22 @@ PetitCup::
 	ld hl, PokedexEntryPointers
 	add hl, bc
 	add hl, bc
-	ld de, wcd6d
+	ld de, wNameBuffer
 	ld bc, $2
 	ld a, BANK(PokedexEntryPointers)
 	call FarCopyData
-	ld hl, wcd6d
+	ld hl, wNameBuffer
 	ld a, [hli]
 	ld h, [hl]
 	ld l, a
-	ld de, wcd6d
+	ld de, wNameBuffer
 	ld bc, $14
 	ld a, BANK(PokedexEntryPointers)
 	call FarCopyData
-	ld hl, wcd6d
+	ld hl, wNameBuffer
 .loop2
 	ld a, [hli]
-	cp "@"
+	cp '@'
 	jr nz, .loop2
 	ld a, [hli]
 	cp $7
@@ -483,7 +483,7 @@ asm_f5689::
 	pop af
 	pop bc
 	pop hl
-	ld [wd11e], a
+	ld [wNamedObjectIndex], a
 	call GetMonName
 	ld hl, ColosseumHeightText
 	call PrintText
@@ -494,7 +494,7 @@ asm_f569b::
 	pop af
 	pop bc
 	pop hl
-	ld [wd11e], a
+	ld [wNamedObjectIndex], a
 	call GetMonName
 	ld hl, ColosseumWeightText
 	call PrintText
@@ -503,7 +503,7 @@ asm_f569b::
 
 asm_f56ad::
 	ld a, [hl]
-	ld [wd11e], a
+	ld [wNamedObjectIndex], a
 	call GetMonName
 	ld hl, ColosseumEvolvedText
 	call PrintText
@@ -513,7 +513,7 @@ asm_f56ad::
 Func_f56bd::
 	xor a
 	ldh [hAutoBGTransferEnabled], a
-	coord hl, 1, 11
+	hlcoord 1, 11
 	lb bc, 6, 18
 	call ClearScreenArea
 	ld a, [wCurrentMenuItem]
@@ -530,7 +530,7 @@ Func_f56bd::
 	ld l, a
 	ld d, h
 	ld e, l
-	coord hl, 1, 12
+	hlcoord 1, 12
 	call PlaceString
 .asm_f56e6
 	call Delay3
@@ -635,8 +635,8 @@ ColosseumIneligibleText::
 LinkMenu:
 	xor a
 	ld [wLetterPrintingDelayFlags], a
-	ld hl, wd72e
-	set 6, [hl]
+	ld hl, wStatusFlags4
+	set BIT_LINK_CONNECTED, [hl]
 	ld hl, TextTerminator_f5a16
 	call PrintText
 	call SaveScreenTilesToBuffer1
@@ -650,25 +650,31 @@ LinkMenu:
 	ld de, TradeCenterText
 	call PlaceString
 	xor a
-	ld [wUnusedCD37], a
-	ld [wd72d], a
-	ld [wd11e], a
+	ld [wUnusedLinkMenuByte], a
+	ld [wCableClubDestinationMap], a
+	ld [wNamedObjectIndex], a
 	ld hl, wTopMenuItemY
-	ld a, $5
+	ld a, 5
 	ld [hli], a
-	ld a, $6
+	ASSERT wTopMenuItemY + 1 == wTopMenuItemX
+	ld a, 6
 	ld [hli], a
+	ASSERT wTopMenuItemX + 1 == wCurrentMenuItem
 	xor a
 	ld [hli], a
 	inc hl
-	ld a, $3
+	ASSERT wCurrentMenuItem + 2 == wMaxMenuItem
+	ld a, 3
 	ld [hli], a
+	ASSERT wMaxMenuItem + 1 == wMenuWatchedKeys
+	ASSERT 2 == PAD_B
 	ld [hli], a
+	ASSERT wMenuWatchedKeys + 1 == wLastMenuItem
 	xor a
 	ld [hl], a
 .waitForInputLoop
 	call HandleMenuInput
-	and A_BUTTON | B_BUTTON
+	and PAD_A | PAD_B
 	add a
 	add a
 	ld b, a
@@ -716,7 +722,7 @@ LinkMenu:
 	jr z, .doneChoosingMenuSelection
 .useEnemyMenuSelection
 	ld a, $1
-	ld [wd11e], a
+	ld [wNamedObjectIndex], a
 	ld a, b
 	ld [wLinkMenuSelectionSendBuffer], a
 	and $3
@@ -727,15 +733,15 @@ LinkMenu:
 	jr nz, .skipStartingTransfer
 	call DelayFrame
 	call DelayFrame
-	ld a, START_TRANSFER_INTERNAL_CLOCK
+	ld a, SC_START | SC_INTERNAL
 	ldh [rSC], a
 .skipStartingTransfer
-	ld b, " "
-	ld c, " "
-	ld d, " "
-	ld e, "▷"
+	ld b, ' '
+	ld c, ' '
+	ld d, ' '
+	ld e, '▷'
 	ld a, [wLinkMenuSelectionSendBuffer]
-	and (B_BUTTON << 2) ; was B button pressed?
+	and PAD_B << 2 ; was B button pressed?
 	jr nz, .updateCursorPosition
 ; A button was pressed
 	ld a, [wCurrentMenuItem]
@@ -756,7 +762,7 @@ LinkMenu:
 	call Func_f59ec
 	call LoadScreenTilesFromBuffer1
 	ld a, [wLinkMenuSelectionSendBuffer]
-	and (B_BUTTON << 2) ; was B button pressed?
+	and PAD_B << 2 ; was B button pressed?
 	jr nz, .choseCancel ; cancel if B pressed
 	ld a, [wCurrentMenuItem]
 	cp $2
@@ -769,12 +775,12 @@ LinkMenu:
 	jr nz, .next
 	ld a, TRADE_CENTER
 .next
-	ld [wd72d], a
+	ld [wCableClubDestinationMap], a
 	ld hl, ColosseumPleaseWaitText
 	call PrintText
 	ld c, 50
 	call DelayFrames
-	ld hl, wd732
+	ld hl, wStatusFlags6
 	res BIT_DEBUG_MODE, [hl]
 	ld a, [wDefaultMap]
 	ld [wDestinationMap], a
@@ -796,19 +802,19 @@ LinkMenu:
 	ld hl, ColosseumCanceledText
 	vc_hook Wireless_net_stop
 	call PrintText
-	ld hl, wd72e
-	res 6, [hl]
+	ld hl, wStatusFlags4
+	res BIT_LINK_CONNECTED, [hl]
 	vc_hook Wireless_net_end
 	ret
 
 .asm_f5963
-	ld a, [wd11e]
+	ld a, [wNamedObjectIndex]
 	and a
 	jr nz, .asm_f5974
-	ld b, " "
-	ld c, " "
-	ld d, "▷"
-	ld e, " "
+	ld b, ' '
+	ld c, ' '
+	ld d, '▷'
+	ld e, ' '
 	call Func_f59ec
 .asm_f5974
 	xor a
@@ -847,13 +853,13 @@ LinkMenu:
 	xor a
 	ld [wUnknownSerialCounter], a
 	ld [wUnknownSerialCounter+1], a
-	ld a, [wd11e]
+	ld a, [wNamedObjectIndex]
 	and a
 	jr z, .asm_f59cd
-	ld b, " "
-	ld c, " "
-	ld d, " "
-	ld e, "▷"
+	ld b, ' '
+	ld c, ' '
+	ld d, ' '
+	ld e, '▷'
 	call Func_f59ec
 	jp .choseCancel
 
@@ -863,10 +869,10 @@ LinkMenu:
 	jp .choseCancel
 
 .asm_f59d6
-	ld b, " "
-	ld c, " "
-	ld d, "▷"
-	ld e, " "
+	ld b, ' '
+	ld c, ' '
+	ld d, '▷'
+	ld e, ' '
 	call Func_f59ec
 	call Func_f531b
 	jp c, .choseCancel

@@ -41,11 +41,11 @@ ViridianGymDefaultScript:
 	cp $ff
 	jp z, CheckFightingMapTrainers
 	call StartSimulatingJoypadStates
-	ld hl, wd736
-	set 7, [hl]
+	ld hl, wMovementFlags
+	set BIT_SPINNING, [hl]
 	ld a, SFX_ARROW_TILES
 	call PlaySound
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, SCRIPT_VIRIDIANGYM_PLAYER_SPINNING
 	ld [wCurMapScript], a
@@ -67,51 +67,51 @@ ViridianGymArrowTilePlayerMovement:
 	db -1 ; end
 
 ViridianGymArrowMovement1:
-	db D_UP, 9
+	db PAD_UP, 9
 	db -1 ; end
 
 ViridianGymArrowMovement2:
-	db D_LEFT, 8
+	db PAD_LEFT, 8
 	db -1 ; end
 
 ViridianGymArrowMovement3:
-	db D_DOWN, 9
+	db PAD_DOWN, 9
 	db -1 ; end
 
 ViridianGymArrowMovement4:
-	db D_RIGHT, 6
+	db PAD_RIGHT, 6
 	db -1 ; end
 
 ViridianGymArrowMovement5:
-	db D_DOWN, 2
+	db PAD_DOWN, 2
 	db -1 ; end
 
 ViridianGymArrowMovement6:
-	db D_DOWN, 7
+	db PAD_DOWN, 7
 	db -1 ; end
 
 ViridianGymArrowMovement7:
-	db D_RIGHT, 8
+	db PAD_RIGHT, 8
 	db -1 ; end
 
 ViridianGymArrowMovement8:
-	db D_RIGHT, 9
+	db PAD_RIGHT, 9
 	db -1 ; end
 
 ViridianGymArrowMovement9:
-	db D_UP, 8
+	db PAD_UP, 8
 	db -1 ; end
 
 ViridianGymArrowMovement10:
-	db D_UP, 6
+	db PAD_UP, 6
 	db -1 ; end
 
 ViridianGymArrowMovement11:
-	db D_LEFT, 6
+	db PAD_LEFT, 6
 	db -1 ; end
 
 ViridianGymArrowMovement12:
-	db D_LEFT, 12
+	db PAD_LEFT, 12
 	db -1 ; end
 
 ViridianGymPlayerSpinningScript:
@@ -120,8 +120,8 @@ ViridianGymPlayerSpinningScript:
 	jr nz, .ViridianGymLoadSpinnerArrow
 	xor a
 	ld [wJoyIgnore], a
-	ld hl, wd736
-	res 7, [hl]
+	ld hl, wMovementFlags
+	res BIT_SPINNING, [hl]
 	ld a, SCRIPT_VIRIDIANGYM_DEFAULT
 	ld [wCurMapScript], a
 	ret
@@ -132,25 +132,25 @@ ViridianGymGiovanniPostBattle:
 	ld a, [wIsInBattle]
 	cp $ff
 	jp z, ViridianGymResetScripts
-	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 ; fallthrough
 ViridianGymReceiveTM27:
 	ld a, TEXT_VIRIDIANGYM_GIOVANNI_EARTH_BADGE_INFO
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	SetEvent EVENT_BEAT_VIRIDIAN_GYM_GIOVANNI
 	lb bc, TM_FISSURE, 1
 	call GiveItem
 	jr nc, .bag_full
 	ld a, TEXT_VIRIDIANGYM_GIOVANNI_RECEIVED_TM27
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	SetEvent EVENT_GOT_TM27
 	jr .gym_victory
 .bag_full
 	ld a, TEXT_VIRIDIANGYM_GIOVANNI_TM27_NO_ROOM
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 .gym_victory
 	ld hl, wObtainedBadges
@@ -232,9 +232,9 @@ ViridianGymGiovanniText:
 	call PlayMusic
 	ld hl, .PreBattleText
 	call PrintText
-	ld hl, wd72d
-	set 6, [hl]
-	set 7, [hl]
+	ld hl, wStatusFlags3
+	set BIT_TALKED_TO_TRAINER, [hl]
+	set BIT_PRINT_END_BATTLE_TEXT, [hl]
 	ld hl, .ReceivedEarthBadgeText
 	ld de, .ReceivedEarthBadgeText
 	call SaveEndBattleTextPointers
