@@ -95,3 +95,9 @@ _DaycareGentlemanNotEnoughMoneyText::
 	text "Hey, you don't"
 	line "have enough ¥!"
 	done
+
+_DayCareMonAtCapText::
+	text "This #MON is"
+	line "too strong for me"
+	cont "to train further."
+	prompt
