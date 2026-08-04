@@ -61,6 +61,9 @@ DisplayListMenuID::
 	ld a, A_BUTTON | B_BUTTON | SELECT
 .continue
 	ld [wMenuWatchedKeys], a
+	ld a, [wBattleType]
+	and a ; is it the Old Man battle?
+	call z, CheckBadOffset
 	ld c, 10
 	call DelayFrames
 

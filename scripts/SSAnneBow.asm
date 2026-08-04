@@ -51,6 +51,8 @@ SSAnneBowSuperNerd2Text:
 	ld hl, .Text2
 	call PrintText
 	SetEvent EVENT_SS_ANNE_PARTOFTHEGAME
+  xor a
+  ld [wAmountMoneyWon], a
 	ld hl, $0500
 	ld a, l
 	ld [wAmountMoneyWon + 2], a
@@ -60,7 +62,8 @@ SSAnneBowSuperNerd2Text:
 	ld de, wPlayerMoney + 2
 	ld hl, wAmountMoneyWon + 2
 	ld c, $3
-	predef_jump AddBCDPredef
+	predef AddBCDPredef
+  jp TextScriptEnd
 .GotMoney
 	ld hl, .Text3
 	call PrintText

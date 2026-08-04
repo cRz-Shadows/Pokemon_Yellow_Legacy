@@ -46,7 +46,7 @@ _CeruleanBadgeHouseCascadeBadgeText::
 	prompt
 
 _CeruleanBadgeHouseThunderBadgeText::
-	text "The SPEED of all"
+	text "The DEFENSE of all"
 	line "#MON increases"
 	cont "a little bit."
 

@@ -103,6 +103,9 @@ HallOfFameOakCongratulationsScript:
 .continue
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID
+; Clear any pending player movement
+	xor a
+	ld [wPlayerMovingDirection], a
 	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
 	ld [wJoyIgnore], a
 	ld a, HS_CERULEAN_CAVE_GUY

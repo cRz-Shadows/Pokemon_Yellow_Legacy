@@ -33,6 +33,7 @@ INCLUDE "engine/battle/move_effects/drain_hp.asm"
 INCLUDE "engine/menus/players_pc.asm"
 INCLUDE "engine/pokemon/remove_mon.asm"
 INCLUDE "engine/events/display_pokedex.asm"
+INCLUDE "engine/menus/custom_list_menu.asm"
 
 
 SECTION "bank3", ROMX
