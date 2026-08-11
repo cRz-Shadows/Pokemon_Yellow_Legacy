@@ -4,6 +4,9 @@ These instructions explain how to set up the tools required to build **pokeyello
 
 If you run into trouble, ask for help on IRC or Discord (see [README.md](README.md)).
 
+> [!NOTE]
+> The latest release from RGBDS is **incompatible with this repository**. You will want to use **specifically version 0.6.1**. Each environment below contains a link to instructions on installing RGBDS for that system, or check out the [github release](https://github.com/gbdev/rgbds/releases/tag/v0.6.1) to install on your own.
+
 
 ## Windows 10
 
@@ -42,7 +45,7 @@ Run setup and leave the default settings. At the "**Select Packages**" step, cho
 
 Double click on the text that says "**Skip**" next to each package to select the most recent version to install.
 
-Then follow the [**rgbds** install instructions](https://rgbds.gbdev.io/install#pre-built) for Windows with Cygwin to install **rgbds 0.6.1**.
+Then follow the [**rgbds** install instructions](https://rgbds.gbdev.io/install/windows) for Windows with Cygwin to install **rgbds 0.6.1**.
 
 **Note:** If you already have an installed rgbds older than 0.6.0, you will need to update to 0.6.0 or 0.6.1. Ignore this if you have never installed rgbds before. If a version newer than 0.6.1 does not work, try downloading 0.6.1.
 
@@ -65,9 +68,17 @@ Now you're ready to [build **pokeyellow**](#build-pokeyellow).
 
 Install [**Homebrew**](https://brew.sh/). Follow the official instructions.
 
-Open **Terminal** and prepare to enter commands.
+Open **Terminal** and enter this command:
 
-Then follow the [**rgbds** instructions](https://rgbds.gbdev.io/install#pre-built) for macOS to install **rgbds 0.6.1**.
+```bash
+brew install make git gcc
+```
+
+Then follow the [**rgbds** instructions](https://rgbds.gbdev.io/install/macos) for macOS to install **rgbds 0.6.1 from prebuilt binaries**.
+
+> [!WARNING]
+> Brew [has rgbds](ttps://formulae.brew.sh/formula/rgbds), but it is _a much higher version_ and throws an error when building this repository. You must use the prebuilt binaries for **0.6.1** instead
+
 
 Now you're ready to [build **pokeyellow**](#build-pokeyellow).
 
@@ -84,7 +95,7 @@ To install the software required for **pokeyellow**:
 sudo apt-get install make gcc git
 ```
 
-Then follow the [**rgbds** instructions](https://rgbds.gbdev.io/install#building-from-source) to build **rgbds 0.6.1** from source.
+Then follow the [**rgbds** instructions](https://rgbds.gbdev.io/install/source) to build **rgbds 0.6.1** from source.
 
 ### OpenSUSE
 
@@ -94,17 +105,20 @@ To install the software required for **pokeyellow**:
 sudo zypper install make gcc git
 ```
 
-Then follow the [**rgbds** instructions](https://rgbds.gbdev.io/install#building-from-source) to build **rgbds 0.6.1** from source.
+Then follow the [**rgbds** instructions](https://rgbds.gbdev.io/install/source) to build **rgbds 0.6.1** from source.
 
 ### Arch Linux
 
 To install the software required for **pokeyellow**:
 
 ```bash
-sudo pacman -S make gcc git rgbds
+sudo pacman -S make gcc git
 ```
 
-If you want to compile and install **rgbds** yourself instead, then follow the [**rgbds** instructions](https://rgbds.gbdev.io/install#building-from-source) to build **rgbds 0.6.1** from source.
+Then follow the [**rgbds** instructions](https://rgbds.gbdev.io/install/source) to build **rgbds 0.6.1** from source.
+
+> [!WARNING]
+> Arch has a [package for rgbds](https://archlinux.org/packages/extra/x86_64/rgbds/), but it is _a much higher version_ and throws an error when building this repository.
 
 ### Termux
 
@@ -120,7 +134,7 @@ To install **rgbds**:
 sudo apt install rgbds
 ```
 
-If you want to compile and install **rgbds** yourself instead, then follow the [**rgbds** instructions](https://rgbds.gbdev.io/install#building-from-source) to build **rgbds 0.6.1** from source.
+If you want to compile and install **rgbds** yourself instead, then follow the [**rgbds** instructions](https://rgbds.gbdev.io/install/source) to build **rgbds 0.6.1** from source.
 
 ### Other distros
 
@@ -131,7 +145,7 @@ If your distro is not listed here, try to find the required software in its repo
 - `git`
 - `rgbds`
 
-If `rgbds` is not available, you'll need to follow the [**rgbds** instructions](https://rgbds.gbdev.io/install#building-from-source) to build **rgbds 0.6.1** from source.
+If `rgbds` is not available, you'll need to follow the [**rgbds** instructions](https://rgbds.gbdev.io/install/source) to build **rgbds 0.6.1** from source.
 
 Now you're ready to [build **pokeyellow**](#build-pokeyellow).
 
