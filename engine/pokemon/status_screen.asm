@@ -45,8 +45,8 @@ DrawHP_:
 	push hl
 	call DrawHPBar
 	pop hl
-	ld a, [hUILayoutFlags]
-	bit 0, a
+	ldh a, [hUILayoutFlags]
+	bit BIT_PARTY_MENU_HP_BAR, a
 	jr z, .printFractionBelowBar
 	ld bc, $9 ; right of bar
 	jr .printFraction
@@ -57,7 +57,7 @@ DrawHP_:
 	ld de, wLoadedMonHP
 	lb bc, 2, 3
 	call PrintNumber
-	ld a, "/"
+	ld a, '/'
 	ld [hli], a
 	ld de, wLoadedMonMaxHP
 	lb bc, 2, 3
@@ -76,16 +76,16 @@ StatusScreen:
 ; mon is in a box or daycare
 	ld a, [wLoadedMonBoxLevel]
 	ld [wLoadedMonLevel], a
-	ld [wCurEnemyLVL], a
+	ld [wCurEnemyLevel], a
 	ld hl, wLoadedMonHPExp - 1
 	ld de, wLoadedMonStats
 	ld b, $1
 	call CalcStats ; Recalculate stats
 .DontRecalculate
-	ld hl, wd72c
-	set 1, [hl]
+	ld hl, wStatusFlags2
+	set BIT_NO_AUDIO_FADE_OUT, [hl]
 	ld a, $33
-	ld [rNR50], a ; Reduce the volume
+	ldh [rAUDVOL], a ; Reduce the volume
 	call GBPalWhiteOutWithDelay3
 	call ClearScreen
 	call UpdateSprites
@@ -111,10 +111,10 @@ StatusScreen:
 	call DrawLineBox ; Draws the box around name, HP and status
 	ld de, -6
 	add hl, de
-	ld [hl], "<DOT>"
+	ld [hl], '<DOT>'
 	dec hl
-	ld [hl], "№"
-	coord hl, 19, 9
+	ld [hl], '№'
+	hlcoord 19, 9
 	lb bc, 8, 6
 	call DrawLineBox ; Draws the box around types, ID No. and OT
 	coord hl, 10, 9
@@ -132,10 +132,10 @@ StatusScreen:
 	call Joypad
 	
 	ld a, [hJoyHeld]
-	and SELECT | START
+	and PAD_SELECT | PAD_START
 	jr z, .noblank
 	push hl
-	ld a, " "
+	ld a, ' '
 	ld [hli], a
 	ld [hli], a
 	ld [hli], a
@@ -147,13 +147,13 @@ StatusScreen:
 .noblank
 	
 	ld a, [hJoyHeld]
-	bit BIT_SELECT, a
+	bit B_PAD_SELECT, a
 	jr z, .checkstart
 	ld de, wLoadedMonHPExp
 	lb bc, 2, 5
 	jr .printnum
 .checkstart	;print DVs if start is held
-	bit BIT_START, a
+	bit B_PAD_START, a
 	jr z, .doregular
 	ld de, wDVCalcVar2 + 4
 	lb bc, 1, 2
@@ -179,11 +179,11 @@ StatusScreen:
 	coord hl, 14, 2
 	call PrintLevel ; Pokémon level
 	ld a, [wMonHIndex]
-	ld [wd11e], a
-	ld [wd0b5], a
+	ld [wPokedexNum], a
+	ld [wCurSpecies], a
 	predef IndexToPokedex
-	coord hl, 3, 7
-	ld de, wd11e
+	hlcoord 3, 7
+	ld de, wPokedexNum
 	lb bc, LEADING_ZEROES | 1, 3
 	call PrintNumber ; Pokémon no.
 	coord hl, 11, 10
@@ -215,21 +215,21 @@ StatusScreen:
 	jr z, .playRegularCry
 	cp BOX_DATA
 	jr z, .checkBoxData
-	callfar IsThisPartymonStarterPikachu_Party
+	callfar IsThisPartyMonStarterPikachu
 	jr nc, .playRegularCry
 	jr .playPikachuSoundClip
 .checkBoxData
-	callfar IsThisPartymonStarterPikachu_Box
+	callfar IsThisBoxMonStarterPikachu
 	jr nc, .playRegularCry
 .playPikachuSoundClip
-	ld e, 16
+	ldpikacry e, PikachuCry17
 	callfar PlayPikachuSoundClip
 	jr .continue
 .playRegularCry
-	ld a, [wcf91]
-	call PlayCry ; play Pokémon cry
+	ld a, [wCurPartySpecies]
+	call PlayCry
 .continue
-	call WaitForTextScrollButtonPress ; wait for button
+	call WaitForTextScrollButtonPress
 	pop af
 	ld [hTileAnimations], a
 	ret
@@ -411,13 +411,13 @@ StatusScreen2:
 	ld b, a ; Number of moves ?
 	hlcoord 11, 10
 	ld de, SCREEN_WIDTH * 2
-	ld a, "<BOLD_P>"
+	ld a, '<BOLD_P>'
 	call StatusScreen_PrintPP ; Print "PP"
 	ld a, b
 	and a
 	jr z, .InitPP
 	ld c, a
-	ld a, "-"
+	ld a, '-'
 	call StatusScreen_PrintPP ; Fill the rest with --
 .InitPP
 	ld hl, wLoadedMonMoves
@@ -446,7 +446,7 @@ StatusScreen2:
 	ld bc, wPartyMon1PP - wPartyMon1Moves - 1
 	add hl, bc
 	ld a, [hl]
-	and $3f
+	and PP_MASK
 	ld [wStatusScreenCurrentPP], a
 	ld h, d
 	ld l, e
@@ -454,7 +454,7 @@ StatusScreen2:
 	ld de, wStatusScreenCurrentPP
 	lb bc, 1, 2
 	call PrintNumber
-	ld a, "/"
+	ld a, '/'
 	ld [hli], a
 	ld de, wMaxPP
 	lb bc, 1, 2
@@ -482,7 +482,7 @@ StatusScreen2:
 	ld [wLoadedMonLevel], a ; Increase temporarily if not 100
 .Level100
 	hlcoord 14, 6
-	ld [hl], "<to>"
+	ld [hl], '<to>'
 	inc hl
 	inc hl
 	call PrintLevel
@@ -502,20 +502,20 @@ StatusScreen2:
 	hlcoord 9, 1
 	call StatusScreen_ClearName
 	ld a, [wMonHIndex]
-	ld [wd11e], a
+	ld [wNamedObjectIndex], a
 	call GetMonName
 	hlcoord 9, 1
 	call PlaceString
 	ld a, $1
 	ldh [hAutoBGTransferEnabled], a
 	call Delay3
-	call WaitForTextScrollButtonPress ; wait for button
+	call WaitForTextScrollButtonPress
 	pop af
 	ldh [hTileAnimations], a
-	ld hl, wd72c
-	res 1, [hl]
+	ld hl, wStatusFlags2
+	res BIT_NO_AUDIO_FADE_OUT, [hl]
 	ld a, $77
-	ldh [rNR50], a
+	ldh [rAUDVOL], a
 	call GBPalWhiteOut
 	jp ClearScreen
 
@@ -551,7 +551,7 @@ StatusScreenExpText:
 
 StatusScreen_ClearName:
 	ld bc, 10
-	ld a, " "
+	ld a, ' '
 	jp FillMemory
 
 StatusScreen_PrintPP:

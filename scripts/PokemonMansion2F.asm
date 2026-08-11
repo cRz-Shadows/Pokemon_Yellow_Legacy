@@ -10,8 +10,8 @@ PokemonMansion2F_Script:
 
 Mansion2CheckReplaceSwitchDoorBlocks:
 	ld hl, wCurrentMapScriptFlags
-	bit 5, [hl]
-	res 5, [hl]
+	bit BIT_CUR_MAP_LOADED_1, [hl]
+	res BIT_CUR_MAP_LOADED_1, [hl]
 	ret z
 	CheckEvent EVENT_MANSION_SWITCH_ON
 	jr nz, .switchTurnedOn
@@ -48,7 +48,7 @@ Mansion2Script_Switches::
 	xor a
 	ldh [hJoyHeld], a
 	ld a, TEXT_POKEMONMANSION2F_SWITCH
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	jp DisplayTextID
 
 PokemonMansion2F_ScriptPointers:
@@ -112,7 +112,7 @@ PokemonMansion2FSwitchText:
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	ld hl, wCurrentMapScriptFlags
-	set 5, [hl]
+	set BIT_CUR_MAP_LOADED_1, [hl]
 	ld hl, .PressedText
 	call PrintText
 	ld a, SFX_GO_INSIDE
@@ -194,9 +194,9 @@ PokemonMansion2FOakText:
 	ld a, MUSIC_MEET_MALE_TRAINER
 	call PlayMusic
 
-	ld hl, wd72d
-	set 6, [hl]
-	set 7, [hl]
+	ld hl, wStatusFlags3
+	set BIT_TALKED_TO_TRAINER, [hl]
+	set BIT_PRINT_END_BATTLE_TEXT, [hl]
 	
 	call Delay3
 	ld a, OPP_PROF_OAK
@@ -227,7 +227,7 @@ PokemonMansion2FOakPostBattleScript:
 	jr z, .skip	;Kick out if the player lost.
 
 	ld a, TEXT_POKEMONMANSION2F_OAK_POST_BATTLE
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 
 	call GBFadeOutToBlack
@@ -246,7 +246,7 @@ PokemonMansion2FOakPostBattleScript:
 	call GBFadeInFromBlack
 
 	ld a, TEXT_POKEMONMANSION2F_MEW
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 .skip
 	ld a, $0

@@ -29,7 +29,7 @@ OakPostBattleScript:
 	jr z, .skip	;Kick out if the player lost.
 
 	ld a, TEXT_ROUTE1_OAK_POST_BATTLE
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 
 	call GBFadeOutToBlack
@@ -78,9 +78,9 @@ Route1OakText:
 	ld a, MUSIC_MEET_MALE_TRAINER
 	call PlayMusic
 
-	ld hl, wd72d
-	set 6, [hl]
-	set 7, [hl]
+	ld hl, wStatusFlags3
+	set BIT_TALKED_TO_TRAINER, [hl]
+	set BIT_PRINT_END_BATTLE_TEXT, [hl]
 	
 	call Delay3
 	ld a, OPP_PROF_OAK

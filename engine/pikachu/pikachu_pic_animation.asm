@@ -222,7 +222,7 @@ PikaPicAnimTimerAndJoypad:
 	ret nz
 	call JoypadLowSensitivity
 	ldh a, [hJoyPressed]
-	and A_BUTTON | B_BUTTON
+	and PAD_A | PAD_B
 	ret
 
 CheckPikaPicAnimTimer:
@@ -665,13 +665,13 @@ DecompressRequestPikaPicAnimGFX:
 	jr c, .failed
 	ld a, b
 	call UncompressSpriteFromDE
-	ld a, BANK(sSpriteBuffer1)
-	call SwitchSRAMBankAndLatchClockData
+	ld a, BANK("Sprite Buffers")
+	call OpenSRAM
 	ld hl, sSpriteBuffer1
 	ld de, sSpriteBuffer0
 	ld bc, SPRITEBUFFERSIZE * 2
 	call CopyData
-	call PrepareRTCDataAndDisableSRAM
+	call CloseSRAM
 	ld a, [wPikaPicAnimCurGraphicID]
 	call LookUpTileOffsetForCurrentPikaPicAnimGFX
 	call GetPikaPicVRAMAddressForNewGFX
@@ -845,7 +845,7 @@ PikaPicAnimCommand_thunderbolt:
 .UpdatePal:
 	ld a, b
 	ldh [rBGP], a
-	call UpdateGBCPal_BGP
+	call UpdateCGBPal_BGP
 	call DelayFrames
 	ret
 

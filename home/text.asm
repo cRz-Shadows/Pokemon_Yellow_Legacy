@@ -3,7 +3,7 @@ TextBoxBorder::
 
 	; top row
 	push hl
-	ld a, "┌"
+	ld a, '┌'
 	ld [hli], a
 	inc a ; "─"
 	call .PlaceChars
@@ -17,11 +17,11 @@ TextBoxBorder::
 	; middle rows
 .next
 	push hl
-	ld a, "│"
+	ld a, '│'
 	ld [hli], a
-	ld a, " "
+	ld a, ' '
 	call .PlaceChars
-	ld [hl], "│"
+	ld [hl], '│'
 	pop hl
 
 	ld de, SCREEN_WIDTH
@@ -30,11 +30,11 @@ TextBoxBorder::
 	jr nz, .next
 
 	; bottom row
-	ld a, "└"
+	ld a, '└'
 	ld [hli], a
-	ld a, "─"
+	ld a, '─'
 	call .PlaceChars
-	ld [hl], "┘"
+	ld [hl], '┘'
 	ret
 
 .PlaceChars::
@@ -51,7 +51,7 @@ PlaceString::
 
 PlaceNextChar::
 	ld a, [de]
-	cp "@"
+	cp '@'
 	jr nz, .NotTerminator
 	ld b, h
 	ld c, l
@@ -59,11 +59,11 @@ PlaceNextChar::
 	ret
 
 .NotTerminator
-	cp "<NEXT>"
+	cp '<NEXT>'
 	jr nz, .NotNext
 	ld bc, 2 * SCREEN_WIDTH
 	ldh a, [hUILayoutFlags]
-	bit 2, a
+	bit BIT_SINGLE_SPACED_LINES, a
 	jr z, .ok
 	ld bc, SCREEN_WIDTH
 .ok
@@ -73,7 +73,7 @@ PlaceNextChar::
 	jp NextChar
 
 .NotNext
-	cp "<LINE>"
+	cp '<LINE>'
 	jr nz, .NotLine
 	pop hl
 	hlcoord 1, 16
@@ -83,26 +83,26 @@ PlaceNextChar::
 .NotLine
 
 ; Check against a dictionary
-	dict "<NULL>",    NullChar
-	dict "<SCROLL>",  _ContTextNoPause
-	dict "<_CONT>",   _ContText
-	dict "<PARA>",    Paragraph
-	dict "<PAGE>",    PageChar
-	dict "<PLAYER>",  PrintPlayerName
-	dict "<RIVAL>",   PrintRivalName
-	dict "#",         PlacePOKe
-	dict "<PC>",      PCChar
-	dict "<ROCKET>",  RocketChar
-	dict "<TM>",      TMChar
-	dict "<TRAINER>", TrainerChar
-	dict "<CONT>",    ContText
-	dict "<……>",      SixDotsChar
-	dict "<DONE>",    DoneText
-	dict "<PROMPT>",  PromptText
-	dict "<PKMN>",    PlacePKMN
-	dict "<DEXEND>",  PlaceDexEnd
-	dict "<TARGET>",  PlaceMoveTargetsName
-	dict "<USER>",    PlaceMoveUsersName
+	dict '<NULL>',    NullChar
+	dict '<SCROLL>',  _ContTextNoPause
+	dict '<_CONT>',   _ContText
+	dict '<PARA>',    Paragraph
+	dict '<PAGE>',    PageChar
+	dict '<PLAYER>',  PrintPlayerName
+	dict '<RIVAL>',   PrintRivalName
+	dict '#',         PlacePOKe
+	dict '<PC>',      PCChar
+	dict '<ROCKET>',  RocketChar
+	dict '<TM>',      TMChar
+	dict '<TRAINER>', TrainerChar
+	dict '<CONT>',    ContText
+	dict '<……>',      SixDotsChar
+	dict '<DONE>',    DoneText
+	dict '<PROMPT>',  PromptText
+	dict '<PKMN>',    PlacePKMN
+	dict '<DEXEND>',  PlaceDexEnd
+	dict '<TARGET>',  PlaceMoveTargetsName
+	dict '<USER>',    PlaceMoveUsersName
 
 	ld [hli], a
 	call PrintLetterDelay
@@ -111,19 +111,19 @@ NextChar::
 	inc de
 	jp PlaceNextChar
 
-NullChar:: ; unused
+NullChar::
 	ld b, h
 	ld c, l
 	pop hl
 	; A "<NULL>" character in a printed string
 	; displays an error message with the current value
-	; of hSpriteIndexOrTextID in decimal format.
+	; of hTextID in decimal format.
 	; This is a debugging leftover.
 	ld de, TextIDErrorText
 	dec de
 	ret
 
-TextIDErrorText:: ; "[hSpriteIndexOrTextID] ERROR."
+TextIDErrorText:: ; "[hTextID] ERROR."
 	text_far _TextIDErrorText
 	text_end
 
@@ -202,7 +202,7 @@ ContCharText::
 	text_end
 
 PlaceDexEnd::
-	ld [hl], "."
+	ld [hl], '.'
 	pop hl
 	ret
 
@@ -210,12 +210,12 @@ PromptText::
 	ld a, [wLinkState]
 	cp LINK_STATE_BATTLING
 	jp z, .ok
-	ld a, "▼"
+	ld a, '▼'
 	ldcoord_a 18, 16
 .ok
 	call ProtectedDelay3
 	call ManualTextScroll
-	ld a, " "
+	ld a, ' '
 	ldcoord_a 18, 16
 
 DoneText::
@@ -229,7 +229,7 @@ DoneText::
 
 Paragraph::
 	push de
-	ld a, "▼"
+	ld a, '▼'
 	ldcoord_a 18, 16
 	call ProtectedDelay3
 	call ManualTextScroll
@@ -244,14 +244,14 @@ Paragraph::
 
 PageChar::
 	ldh a, [hUILayoutFlags]
-	bit 3, a
+	bit BIT_PAGE_CHAR_IS_NEXT, a
 	jr z, .pageChar
-	ld a, "<NEXT>"
+	ld a, '<NEXT>'
 	jp PlaceNextChar.NotTerminator
 
 .pageChar
 	push de
-	ld a, "▼"
+	ld a, '▼'
 	ldcoord_a 18, 16
 	call ProtectedDelay3
 	call ManualTextScroll
@@ -267,13 +267,13 @@ PageChar::
 	jp NextChar
 
 _ContText::
-	ld a, "▼"
+	ld a, '▼'
 	ldcoord_a 18, 16
 	call ProtectedDelay3
 	push de
 	call ManualTextScroll
 	pop de
-	ld a, " "
+	ld a, ' '
 	ldcoord_a 18, 16
 _ContTextNoPause::
 	push de
@@ -285,7 +285,7 @@ _ContTextNoPause::
 
 ; move both rows of text in the normal text box up one row
 ; always called twice in a row
-; first time, copy the two rows of text to the "in between" rows that are usually emtpy
+; first time, copy the two rows of text to the "in between" rows that are usually empty
 ; second time, copy the bottom row of text into the top row of text
 ScrollTextUpOneLine::
 	hlcoord 0, 14 ; top row of text
@@ -298,7 +298,7 @@ ScrollTextUpOneLine::
 	dec b
 	jr nz, .copyText
 	hlcoord 1, 16
-	ld a, " "
+	ld a, ' '
 	ld b, SCREEN_WIDTH - 2
 .clearText
 	ld [hli], a
@@ -322,7 +322,7 @@ ProtectedDelay3::
 TextCommandProcessor::
 	ld a, [wLetterPrintingDelayFlags]
 	push af
-	set 1, a
+	set BIT_TEXT_DELAY, a
 	ld e, a
 	ldh a, [hClearLetterPrintingDelayFlags]
 	xor e
@@ -443,12 +443,12 @@ TextCommand_PROMPT_BUTTON::
 	ld a, [wLinkState]
 	cp LINK_STATE_BATTLING
 	jp z, TextCommand_WAIT_BUTTON
-	ld a, "▼"
+	ld a, '▼'
 	ldcoord_a 18, 16 ; place down arrow in lower right corner of dialogue text box
 	push bc
 	call ManualTextScroll ; blink arrow and wait for A or B to be pressed
 	pop bc
-	ld a, " "
+	ld a, ' '
 	ldcoord_a 18, 16 ; overwrite down arrow with blank space
 	pop hl
 	jp NextTextCommand
@@ -456,7 +456,7 @@ TextCommand_PROMPT_BUTTON::
 TextCommand_SCROLL::
 ; pushes text up two lines and sets the BC cursor to the border tile
 ; below the first character column of the text box.
-	ld a, " "
+	ld a, ' '
 	ldcoord_a 18, 16 ; place blank space in lower right corner of dialogue text box
 	call ScrollTextUpOneLine
 	call ScrollTextUpOneLine
@@ -501,7 +501,7 @@ TextCommand_PAUSE::
 	push bc
 	call Joypad
 	ldh a, [hJoyHeld]
-	and A_BUTTON | B_BUTTON
+	and PAD_A | PAD_B
 	jr nz, .done
 	ld c, 30 ; half a second
 	call DelayFrames
@@ -571,13 +571,13 @@ TextCommand_DOTS::
 	ld l, c
 
 .loop
-	ld a, "…"
+	ld a, '…'
 	ld [hli], a
 	push de
 	call Joypad
 	pop de
 	ldh a, [hJoyHeld] ; joypad state
-	and A_BUTTON | B_BUTTON
+	and PAD_A | PAD_B
 	jr nz, .next ; if so, skip the delay
 	ld c, 10
 	call DelayFrames
@@ -611,7 +611,7 @@ TextCommand_FAR::
 	ld a, [hli]
 
 	ldh [hLoadedROMBank], a
-	ld [MBC1RomBank], a
+	ld [rROMB], a
 
 	push hl
 	ld l, e
@@ -621,7 +621,7 @@ TextCommand_FAR::
 
 	pop af
 	ldh [hLoadedROMBank], a
-	ld [MBC1RomBank], a
+	ld [rROMB], a
 	jp NextTextCommand
 
 TextCommandJumpTable::

@@ -27,6 +27,7 @@
 	const HYPER_POTION  ; $12
 	const SUPER_POTION  ; $13
 	const POTION        ; $14
+; badges use item IDs (see scripts/CeruleanBadgeHouse.asm)
 	const BOULDERBADGE  ; $15
 DEF SAFARI_BAIT EQU BOULDERBADGE ; overload
 	const CASCADEBADGE  ; $16
@@ -52,13 +53,13 @@ DEF SAFARI_ROCK EQU CASCADEBADGE ; overload
 	const DOME_FOSSIL   ; $29
 	const HELIX_FOSSIL  ; $2A
 	const SECRET_KEY    ; $2B
-	const ITEM_2C       ; $2C
+	const ITEM_2C       ; $2C ; unused
 	const BIKE_VOUCHER  ; $2D
 	const X_ACCURACY    ; $2E
 	const LEAF_STONE    ; $2F
 	const CARD_KEY      ; $30
 	const NUGGET        ; $31
-	const ITEM_32       ; $32
+	const ITEM_32       ; $32 ; unused
 	const POKE_DOLL     ; $33
 	const FULL_HEAL     ; $34
 	const REVIVE        ; $35
@@ -94,7 +95,7 @@ DEF SAFARI_ROCK EQU CASCADEBADGE ; overload
 	const MAX_ELIXER    ; $53
 DEF NUM_ITEMS EQU const_value - 1
 
-; elevator floors use item IDs
+; elevator floors use item IDs (see scripts/CeladonMartElevator.asm and scripts/SilphCoElevator.asm)
 	const FLOOR_B2F     ; $54
 	const FLOOR_B1F     ; $55
 	const FLOOR_1F      ; $56
@@ -215,6 +216,9 @@ DEF NUM_TM_HM EQU NUM_TMS + NUM_HMS
 ; These fit in 7 bytes, with one unused bit left over.
 DEF __tmhm_value__ = NUM_TM_HM + 1
 DEF UNUSED_TMNUM EQU __tmhm_value__
+
+DEF MAX_HIDDEN_ITEMS EQU 112
+DEF MAX_HIDDEN_COINS EQU 16
 
 ; used for Time Capsule held item compatibility
 DEF TWISTEDSPOON_GSC EQU $60

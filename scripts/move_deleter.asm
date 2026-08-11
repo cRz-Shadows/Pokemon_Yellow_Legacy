@@ -54,12 +54,12 @@ MoveDeleterText1:
 	pop bc
 	jr c, .exit  ; exit if player chose cancel
 	; Save the selected move id.
-	ld a, [wcf91]
+	ld a, [wCurListMenuItem]
 	ld d, a
 	push de
 	push bc
 	ld [wMoveNum], a
-	ld [wd11e],a
+	ld [wNamedObjectIndex],a
 	call GetMoveName
 	call CopyToStringBuffer ; copy name to wcf4b
 	ld hl, MoveDeleterConfirmText

@@ -32,19 +32,19 @@ Printer_GetMonStats:
 	hlcoord 2, 10
 	ld a, $6e
 	ld [hli], a
-	ld [hl], " "
+	ld [hl], ' '
 
 	hlcoord 2, 11
-	ld [hl], "’"
+	ld [hl], '’'
 
 	hlcoord 4, 11
 	ld de, wLoadedMonMaxHP
 	lb bc, 2, 3
 	call PrintNumber
 
-	ld a, [wMonHeader]
-	ld [wPokeBallAnimData], a
-	ld [wd0b5], a
+	ld a, [wMonHIndex]
+	ld [wPokedexNum], a
+	ld [wCurSpecies], a
 	ld hl, wPartyMonNicks
 	call .GetNamePointer
 	hlcoord 8, 2
@@ -56,11 +56,11 @@ Printer_GetMonStats:
 
 	predef IndexToPokedex
 	hlcoord 2, 8
-	ld [hl], "№"
+	ld [hl], '№'
 	inc hl
 	ld [hl], $f2
 	inc hl
-	ld de, wPokeBallAnimData
+	ld de, wPokedexNum
 	lb bc, $80 | 1, 3
 	call PrintNumber
 
@@ -85,11 +85,11 @@ Printer_GetMonStats:
 	hlcoord 9, 8
 	ld de, .Stats
 	ldh a, [hUILayoutFlags]
-	set 2, a
+	set BIT_SINGLE_SPACED_LINES, a
 	ldh [hUILayoutFlags], a
 	call PlaceString
 	ldh a, [hUILayoutFlags]
-	res 2, a
+	res BIT_SINGLE_SPACED_LINES, a
 	ldh [hUILayoutFlags], a
 
 	hlcoord 16, 8
@@ -151,7 +151,7 @@ Printer_GetMonStats:
 .PlaceMoveName:
 	and a
 	jr z, .no_move
-	ld [wPokeBallAnimData], a
+	ld [wNamedObjectIndex], a
 	call GetMoveName
 	jr .place_string
 
@@ -165,7 +165,7 @@ Printer_GetMonStats:
 	db "OT/@"
 
 .IDNo:
-	db $73, "№/@"
+	db "<ID>№/@"
 
 .Stats:
 	db   "ATTACK"

@@ -1,10 +1,10 @@
 SaveTrainerName::
 	ld hl, wTrainerName
-	ld de, wcd6d
+	ld de, wNameBuffer
 .CopyCharacter
 	ld a, [hli]
 	ld [de], a
 	inc de
-	cp "@"
+	cp '@'
 	jr nz, .CopyCharacter
 	ret

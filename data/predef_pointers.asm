@@ -53,7 +53,7 @@ PredefPointers::
 	add_predef DoubleOrHalveSelectedStats
 	add_predef ShowPokedexMenu
 	add_predef EvolutionAfterBattle
-	add_predef SaveSAVtoSRAM0
+	add_predef SaveMainData
 	add_predef InitOpponent
 	add_predef CableClub_Run
 	add_predef DrawBadges
@@ -61,7 +61,7 @@ PredefPointers::
 	add_predef BattleTransition
 	add_predef CopyTileIDsFromList
 	add_predef PlayIntro
-	add_predef GetMoveSoundB
+	add_predef GetIntroMoveSound
 	add_predef FlashScreen
 	add_predef GetTileAndCoordsInFrontOfPlayer
 	add_predef StatusScreen
@@ -73,7 +73,7 @@ PredefPointers::
 	add_predef UsedCut
 	add_predef ShowPokedexData
 	add_predef WriteMonMoves
-	add_predef SaveSAV
+	add_predef SaveMenu
 	add_predef LoadSGB
 	add_predef MarkTownVisitedAndLoadMissableObjects
 	add_predef SetPartyMonTypes
@@ -90,10 +90,10 @@ PredefPointers::
 	add_predef EmptyFunc ; return immediately
 	add_predef AskName
 	add_predef PewterGuys
-	add_predef SaveSAVtoSRAM2
-	add_predef LoadSAV2
-	add_predef LoadSAV
-	add_predef SaveSAVtoSRAM1
+	add_predef SavePartyAndDexData
+	add_predef LoadPartyAndDexData
+	add_predef TryLoadSaveFile
+	add_predef SaveCurrentBoxData
 	add_predef DoInGameTradeDialogue
 	add_predef HallOfFamePC
 	add_predef DisplayDexRating
@@ -101,7 +101,7 @@ PredefPointers::
 	add_predef EnterMapAnim, $1E ; wrong bank
 	add_predef GetTileTwoStepsInFrontOfPlayer
 	add_predef CheckForCollisionWhenPushingBoulder
-	add_predef PrintStrengthTxt
+	add_predef PrintStrengthText
 	add_predef PickUpItem
 	add_predef PrintMoveType
 	add_predef LoadMovePPs

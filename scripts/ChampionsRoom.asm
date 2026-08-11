@@ -6,7 +6,7 @@ ChampionsRoom_Script:
 	ret
 
 ResetRivalScript:
-	xor a ; SCENE_CHAMPIONSROOM_DEFAULT
+	xor a ; SCRIPT_CHAMPIONSROOM_DEFAULT
 	ld [wJoyIgnore], a
 	ld [wChampionsRoomCurScript], a
 	ret
@@ -29,7 +29,7 @@ ChampionsRoomDefaultScript:
 	ret
 
 ChampionsRoomPlayerEntersScript:
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld hl, wSimulatedJoypadStatesEnd
 	ld de, RivalEntrance_RLEMovement
@@ -42,9 +42,9 @@ ChampionsRoomPlayerEntersScript:
 	ret
 
 RivalEntrance_RLEMovement:
-	db D_UP, 1
-	db D_RIGHT, 1
-	db D_UP, 3
+	db PAD_UP, 1
+	db PAD_RIGHT, 1
+	db PAD_UP, 3
 	db -1 ; end
 
 ChampionsRoomRivalReadyToBattleScript:
@@ -55,17 +55,17 @@ ChampionsRoomRivalReadyToBattleScript:
 	xor a
 	ld [wJoyIgnore], a
 	ld hl, wOptions
-	res 7, [hl]  ; Turn on battle animations to make the battle feel more epic.
+	res BIT_BATTLE_ANIMATION, [hl]  ; Turn on battle animations to make the battle feel more epic.
 	ld a, [wGameStage] ; Check if player has beat the game
 	and a
 	jr nz, .ChampionRematchBattle
 	ld a, TEXT_CHAMPIONSROOM_RIVAL
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	call Delay3
-	ld hl, wd72d
-	set 6, [hl]
-	set 7, [hl]
+	ld hl, wStatusFlags3
+	set BIT_TALKED_TO_TRAINER, [hl]
+	set BIT_PRINT_END_BATTLE_TEXT, [hl]
 	ld hl, RivalDefeatedText
 	ld de, RivalVictoryText
 	call SaveEndBattleTextPointers
@@ -84,12 +84,12 @@ ChampionsRoomRivalReadyToBattleScript:
 	ret
 .ChampionRematchBattle
 	ld a, TEXT_CHAMPIONSROOM_RIVAL_REMATCH_INTRO
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	call Delay3
-	ld hl, wd72d
-	set 6, [hl]
-	set 7, [hl]
+	ld hl, wStatusFlags3
+	set BIT_TALKED_TO_TRAINER, [hl]
+	set BIT_PRINT_END_BATTLE_TEXT, [hl]
 	ld hl, RivalRematchDefeatedText
 	ld de, RivalRematchVictoryText
 	call SaveEndBattleTextPointers
@@ -110,11 +110,11 @@ ChampionsRoomRivalDefeatedScript:
 	and a
 	jr nz, .ChampionRematchDefeated
 	SetEvent EVENT_BEAT_CHAMPION_RIVAL
-	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, TEXT_CHAMPIONSROOM_RIVAL
 .continue
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call ChampionsRoom_DisplayTextID_AllowABSelectStart
 	ld a, CHAMPIONSROOM_RIVAL
 	ldh [hSpriteIndex], a
@@ -123,7 +123,7 @@ ChampionsRoomRivalDefeatedScript:
 	ld [wChampionsRoomCurScript], a
 	ret
 .ChampionRematchDefeated
-	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_RIGHT | PAD_LEFT | PAD_UP | PAD_DOWN
 	ld [wJoyIgnore], a
 	ld a, TEXT_CHAMPIONSROOM_RIVAL_REMATCH_AFTER_BATTLE
 	jr .continue
@@ -131,7 +131,7 @@ ChampionsRoomRivalDefeatedScript:
 ChampionsRoomOakArrivesScript:
 	farcall Music_Cities1AlternateTempo
 	ld a, TEXT_CHAMPIONSROOM_OAK
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call ChampionsRoom_DisplayTextID_AllowABSelectStart
 	ld a, CHAMPIONSROOM_OAK
 	ldh [hSpriteIndex], a
@@ -156,8 +156,8 @@ OakEntranceAfterVictoryMovement:
 	db -1 ; end
 
 ChampionsRoomOakCongratulatesPlayerScript:
-	ld a, [wd730]
-	bit 0, a
+	ld a, [wStatusFlags5]
+	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
 	ld a, PLAYER_DIR_LEFT
 	ld [wPlayerMovingDirection], a
@@ -176,7 +176,7 @@ ChampionsRoomOakCongratulatesPlayerScript:
 	jr nz, .ChampionRematchDefeated
 	ld a, TEXT_CHAMPIONSROOM_OAK_CONGRATULATES_PLAYER
 .continue
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call ChampionsRoom_DisplayTextID_AllowABSelectStart
 	ld a, SCRIPT_CHAMPIONSROOM_OAK_DISAPPOINTED_WITH_RIVAL
 	ld [wChampionsRoomCurScript], a
@@ -196,7 +196,7 @@ ChampionsRoomOakDisappointedWithRivalScript:
 	jr nz, .ChampionRematchDefeated
 	ld a, TEXT_CHAMPIONSROOM_OAK_DISAPPOINTED_WITH_RIVAL
 .continue
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call ChampionsRoom_DisplayTextID_AllowABSelectStart
 	ld a, SCRIPT_CHAMPIONSROOM_OAK_COME_WITH_ME
 	ld [wChampionsRoomCurScript], a
@@ -216,7 +216,7 @@ ChampionsRoomOakComeWithMeScript:
 	jr nz, .ChampionRematchDefeated
 	ld a, TEXT_CHAMPIONSROOM_OAK_COME_WITH_ME
 .continue
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call ChampionsRoom_DisplayTextID_AllowABSelectStart
 	ld de, OakExitChampionsRoomMovement
 	ld a, CHAMPIONSROOM_OAK
@@ -235,8 +235,8 @@ OakExitChampionsRoomMovement:
 	db -1 ; end
 
 ChampionsRoomOakExitsScript:
-	ld a, [wd730]
-	bit 0, a
+	ld a, [wStatusFlags5]
+	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
 	ld a, HS_CHAMPIONS_ROOM_OAK
 	ld [wMissableObjectIndex], a
@@ -246,7 +246,7 @@ ChampionsRoomOakExitsScript:
 	ret
 
 ChampionsRoomPlayerFollowsOakScript:
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld hl, wSimulatedJoypadStatesEnd
 	ld de, WalkToHallOfFame_RLEMovement
@@ -259,8 +259,8 @@ ChampionsRoomPlayerFollowsOakScript:
 	ret
 
 WalkToHallOfFame_RLEMovement:
-	db D_UP, 4
-	db D_LEFT, 1
+	db PAD_UP, 4
+	db PAD_LEFT, 1
 	db -1 ; end
 
 ChampionsRoomCleanupScript:
@@ -274,10 +274,10 @@ ChampionsRoomCleanupScript:
 	ret
 
 ChampionsRoom_DisplayTextID_AllowABSelectStart:
-	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	call DisplayTextID
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ret
 
@@ -346,7 +346,7 @@ ChampionsRoomOakText:
 ChampionsRoomOakCongratulatesPlayerText:
 	text_asm
 	ld a, [wPlayerStarter]
-	ld [wd11e], a
+	ld [wNamedObjectIndex], a
 	call GetMonName
 	ld hl, .Text
 	call PrintText

@@ -9,8 +9,8 @@ RedsHouse1FPrintMomText::
 	SetEvent EVENT_MOM_CONGRATULATE_CHAMPION
 	jr .done
 .continue
-	ld a, [wd72e]
-	bit 3, a ; received a Pokémon from Oak?
+	ld a, [wStatusFlags4]
+	bit BIT_GOT_STARTER, a
 	jp nz, RedsHouse1FMomHealScript
 	ld hl, .WakeUpText
 	call PrintText

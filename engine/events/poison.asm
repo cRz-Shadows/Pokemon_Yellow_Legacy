@@ -1,12 +1,13 @@
 ApplyOutOfBattlePoisonDamage:
-	ld a, [wd730]
-	add a
+	ld a, [wStatusFlags5]
+	ASSERT BIT_SCRIPTED_MOVEMENT_STATE == 7
+	add a ; overflows scripted movement state bit into carry flag
 	jp c, .noBlackOut ; no black out if joypad states are being simulated
 	ld a, [wd492]
 	bit 7, a
 	jp nz, .noBlackOut
-	ld a, [wd72e]
-	bit 6, a
+	ld a, [wStatusFlags4]
+	bit BIT_LINK_CONNECTED, a
 	jp nz, .noBlackOut
 	ld a, [wPartyCount]
 	and a
@@ -21,7 +22,7 @@ ApplyOutOfBattlePoisonDamage:
 	ld de, wPartySpecies
 .applyDamageLoop
 	ld a, [hl]
-	and (1 << PSN)
+	and 1 << PSN
 	jr z, .nextMon2 ; not poisoned
 	dec hl
 	dec hl
@@ -50,7 +51,7 @@ ApplyOutOfBattlePoisonDamage:
 	inc hl
 	ld [hl], a
 	ld a, [de]
-	ld [wd11e], a
+	ld [wPokedexNum], a
 	push de
 	ld a, [wWhichPokemon]
 	ld hl, wPartyMonNicks
@@ -59,13 +60,13 @@ ApplyOutOfBattlePoisonDamage:
 	ld [wJoyIgnore], a
 	call EnableAutoTextBoxDrawing
 	ld a, TEXT_MON_FAINTED
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
-	callfar IsThisPartymonStarterPikachu_Party
+	callfar IsThisPartyMonStarterPikachu
 	jr nc, .curMonNotPlayerPikachu
-	ld e, $3
+	ldpikacry e, PikachuCry4
 	callfar PlayPikachuSoundClip
-	calladb_ModifyPikachuHappiness PIKAHAPPY_PSNFNT
+	callfar_ModifyPikachuHappiness PIKAHAPPY_PSNFNT
 .curMonNotPlayerPikachu
 	pop de
 	pop hl
@@ -91,7 +92,7 @@ ApplyOutOfBattlePoisonDamage:
 	ld e, 0
 .countPoisonedLoop
 	ld a, [hl]
-	and (1 << PSN)
+	and 1 << PSN
 	or e
 	ld e, a
 	ld bc, wPartyMon2 - wPartyMon1
@@ -102,7 +103,7 @@ ApplyOutOfBattlePoisonDamage:
 	and a ; are any party members poisoned?
 	jr z, .skipPoisonEffectAndSound
 	ld b, $2
-	predef ChangeBGPalColor0_4Frames ; change BG white to dark grey for 4 frames
+	predef ChangeBGPalColor0_4Frames ; change BG white to dark gray for 4 frames
 	ld a, SFX_POISONED
 	call PlaySound
 .skipPoisonEffectAndSound
@@ -112,10 +113,10 @@ ApplyOutOfBattlePoisonDamage:
 	jr nz, .noBlackOut
 	call EnableAutoTextBoxDrawing
 	ld a, TEXT_BLACKED_OUT
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
-	ld hl, wd72e
-	set 5, [hl]
+	ld hl, wStatusFlags4
+	set BIT_BATTLE_OVER_OR_BLACKOUT, [hl]
 	ld a, $ff
 	jr .done
 .noBlackOut
@@ -131,7 +132,7 @@ Func_c4c7:
 	call Random
 	and $1
 	jr z, .asm_c4de
-	calladb_ModifyPikachuHappiness $6
+	callfar_ModifyPikachuHappiness PIKAHAPPY_WALKING
 .asm_c4de
 	ld hl, wPikachuMood
 	ld a, [hl]
@@ -147,5 +148,5 @@ Func_c4c7:
 	ret nz
 .asm_c4ef
 	xor a
-	ld [wd49c], a
+	ld [wd49b], a
 	ret

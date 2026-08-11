@@ -215,13 +215,13 @@ UpdateHPBar_PrintHPNumber:
 	push hl
 	ld de, $15
 	ldh a, [hUILayoutFlags]
-	bit 0, a
+	bit BIT_PARTY_MENU_HP_BAR, a
 	jr z, .hpBelowBar
 	ld de, $9
 .hpBelowBar
 	add hl, de
 	push hl
-	ld a, " "
+	ld a, ' '
 	ld [hli], a
 	ld [hli], a
 	ld [hli], a

@@ -13,14 +13,14 @@
 ; their meaning at the beginning of the functions's execution.
 PrintBCDNumber::
 	ld b, c ; save flags in b
-	res 7, c
-	res 6, c
-	res 5, c ; c now holds the length
-	bit 5, b
+	res BIT_LEADING_ZEROES, c
+	res BIT_LEFT_ALIGN, c
+	res BIT_MONEY_SIGN, c ; c now holds the length
+	bit BIT_MONEY_SIGN, b
 	jr z, .loop
-	bit 7, b
+	bit BIT_LEADING_ZEROES, b
 	jr nz, .loop
-	ld [hl], "¥"
+	ld [hl], '¥'
 	inc hl
 .loop
 	ld a, [de]
@@ -31,19 +31,19 @@ PrintBCDNumber::
 	inc de
 	dec c
 	jr nz, .loop
-	bit 7, b ; were any non-zero digits printed?
+	bit BIT_LEADING_ZEROES, b
 	jr z, .done ; if so, we are done
 .numberEqualsZero ; if every digit of the BCD number is zero
-	bit 6, b ; left or right alignment?
+	bit BIT_LEFT_ALIGN, b
 	jr nz, .skipRightAlignmentAdjustment
 	dec hl ; if the string is right-aligned, it needs to be moved back one space
 .skipRightAlignmentAdjustment
-	bit 5, b
+	bit BIT_MONEY_SIGN, b
 	jr z, .skipCurrencySymbol
-	ld [hl], "¥"
+	ld [hl], '¥'
 	inc hl
 .skipCurrencySymbol
-	ld [hl], "0"
+	ld [hl], '0'
 	call PrintLetterDelay
 	inc hl
 .done
@@ -54,24 +54,24 @@ PrintBCDDigit::
 	and a
 	jr z, .zeroDigit
 .nonzeroDigit
-	bit 7, b ; have any non-space characters been printed?
+	bit BIT_LEADING_ZEROES, b
 	jr z, .outputDigit
 ; if bit 7 is set, then no numbers have been printed yet
-	bit 5, b ; print the currency symbol?
+	bit BIT_MONEY_SIGN, b
 	jr z, .skipCurrencySymbol
-	ld [hl], "¥"
+	ld [hl], '¥'
 	inc hl
-	res 5, b
+	res BIT_MONEY_SIGN, b
 .skipCurrencySymbol
-	res 7, b ; unset 7 to indicate that a nonzero digit has been reached
+	res BIT_LEADING_ZEROES, b
 .outputDigit
-	add "0"
+	add '0'
 	ld [hli], a
 	jp PrintLetterDelay
 .zeroDigit
-	bit 7, b ; either printing leading zeroes or already reached a nonzero digit?
+	bit BIT_LEADING_ZEROES, b
 	jr z, .outputDigit ; if so, print a zero digit
-	bit 6, b ; left or right alignment?
+	bit BIT_LEFT_ALIGN, b
 	ret nz
 	inc hl ; if right-aligned, "print" a space by advancing the pointer
 	ret

@@ -38,7 +38,7 @@ SubstituteEffect_:
 	pop bc
 	jr c, .notEnoughHP ; underflow means user would be left with negative health
 .userHasZeroOrMoreHP
-	ldi [hl], a ; save resulting HP after subtraction into current HP
+	ld [hli], a ; save resulting HP after subtraction into current HP
 	ld [hl], d
 	ld h, b
 	ld l, c

@@ -10,8 +10,8 @@ LancesRoom_Script:
 
 LanceShowOrHideEntranceBlocks:
 	ld hl, wCurrentMapScriptFlags
-	bit 5, [hl]
-	res 5, [hl]
+	bit BIT_CUR_MAP_LOADED_1, [hl]
+	res BIT_CUR_MAP_LOADED_1, [hl]
 	ret z
 	CheckEvent EVENT_LANCES_ROOM_LOCK_DOOR
 	jr nz, .closeEntrance
@@ -67,7 +67,7 @@ LancesRoomDefaultScript:
 	jr nz, .Rematch
 	ld a, TEXT_LANCESROOM_LANCE
 .continue
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	jp DisplayTextID
 .notStandingNextToLance
 	cp $5  ; Is player standing on the entrance staircase?
@@ -75,7 +75,7 @@ LancesRoomDefaultScript:
 	CheckAndSetEvent EVENT_LANCES_ROOM_LOCK_DOOR
 	ret nz
 	ld hl, wCurrentMapScriptFlags
-	set 5, [hl]
+	set BIT_CUR_MAP_LOADED_1, [hl]
 	ld a, SFX_GO_INSIDE
 	call PlaySound
 	jp LanceShowOrHideEntranceBlocks
@@ -101,7 +101,7 @@ LancesRoomLanceEndBattleScript:
 	jr nz, .Rematch
 	ld a, TEXT_LANCESROOM_LANCE
 .continue
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	jp DisplayTextID
 .Rematch
 	ld a, TEXT_LANCESROOM_LANCE_REMATCH
@@ -109,7 +109,7 @@ LancesRoomLanceEndBattleScript:
 
 WalkToLance:
 ; Moves the player down the hallway to Lance's room.
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld hl, wSimulatedJoypadStatesEnd
 	ld de, WalkToLance_RLEList
@@ -123,10 +123,10 @@ WalkToLance:
 	ret
 
 WalkToLance_RLEList:
-	db D_UP, 13
-	db D_LEFT, 12
-	db D_DOWN, 7
-	db D_LEFT, 6
+	db PAD_UP, 13
+	db PAD_LEFT, 12
+	db PAD_DOWN, 7
+	db PAD_LEFT, 6
 	db -1 ; end
 
 LancesRoomPlayerIsMovingScript:

@@ -46,12 +46,12 @@ ViridianCityCheckGymOpenScript:
 	cp 32
 	ret nz
 	ld a, TEXT_VIRIDIANCITY_GYM_LOCKED
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	call StartSimulatingJoypadStates
 	ld a, $1
 	ld [wSimulatedJoypadStatesIndex], a
-	ld a, D_DOWN | B_BUTTON
+	ld a, PAD_DOWN | PAD_B
 	ld [wSimulatedJoypadStatesEnd], a
 	xor a
 	ld [wSpritePlayerStateData1FacingDirection], a
@@ -78,7 +78,7 @@ ViridianCityCheckSleepingOldMan:
 	cp 19
 	ret nz
 	ld a, TEXT_VIRIDIANCITY_OLD_MAN_SLEEPY
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	xor a
 	ldh [hJoyHeld], a
@@ -101,7 +101,7 @@ ViridianCityOldManStartCatchTrainingScript:
 	ld a, BATTLE_TYPE_OLD_MAN
 	ld [wBattleType], a
 	ld a, 5
-	ld [wCurEnemyLVL], a
+	ld [wCurEnemyLevel], a
 	ld a, RATTATA
 	ld [wCurOpponent], a
 	ret
@@ -125,7 +125,7 @@ ViridianCityOldManEndCatchTrainingScript:
 	xor a
 	ld [wJoyIgnore], a
 	ld a, TEXT_VIRIDIANCITY_OLD_MAN_YOU_NEED_TO_WEAKEN_THE_TARGET
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	xor a
 	ld [wBattleType], a
@@ -158,7 +158,7 @@ ViridianCityMovePlayerDownScript:
 	call StartSimulatingJoypadStates
 	ld a, $1
 	ld [wSimulatedJoypadStatesIndex], a
-	ld a, D_DOWN | B_BUTTON
+	ld a, PAD_DOWN | PAD_B
 	ld [wSimulatedJoypadStatesEnd], a
 	xor a
 	ld [wSpritePlayerStateData1FacingDirection], a
@@ -175,16 +175,16 @@ ViridianCityCheckWaitingOldMan:
 	cp 19
 	ret nz
 	ld a, VIRIDIANCITY_OLD_MAN2
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hSpriteIndex], a
 	ld a, SPRITE_FACING_RIGHT
 	ldh [hSpriteFacingDirection], a
 	call SetSpriteFacingDirectionAndDelay
 	ld a, SPRITE_FACING_LEFT
 	ld [wSpritePlayerStateData1FacingDirection], a
 	ld a, TEXT_VIRIDIANCITY_OLD_MAN2
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
-	ld a, D_UP | D_DOWN | D_LEFT | D_RIGHT | START | SELECT
+	ld a, PAD_SELECT | PAD_START | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ret
 
@@ -192,7 +192,7 @@ ViridianCityOldManInitialCatchTrainingScript:
 	call ViridianCityOldManStartCatchTrainingScript.SetupSprite
 	call ViridianCityOldManStartCatchTrainingScript.SetupBattle
 	SetEvent EVENT_INITIAL_CATCH_TRAINING
-	ld a, D_UP | D_DOWN | D_LEFT | D_RIGHT | START | SELECT
+	ld a, PAD_SELECT | PAD_START | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, SCRIPT_VIRIDIANCITY_OLD_MAN_END_INITIAL_CATCH_TRAINING
 	ld [wViridianCityCurScript], a
@@ -203,10 +203,10 @@ ViridianCityOldManEndInitialCatchTrainingScript:
 	call UpdateSprites
 	call Delay3
 	SetEvent EVENT_COMPLETED_CATCH_TRAINING
-	ld a, D_UP | D_DOWN | D_LEFT | D_RIGHT | START | SELECT
+	ld a, PAD_SELECT | PAD_START | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, TEXT_VIRIDIANCITY_OLD_MAN2
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	xor a
 	ld [wBattleType], a
@@ -225,7 +225,7 @@ ViridianCityPostInitialCatchTraining:
 	ld de, ViridianCityOldManMovementData1
 .move_old_man
 	ld a, VIRIDIANCITY_OLD_MAN2
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hSpriteIndex], a
 	call MoveSprite
 	ld a, SCRIPT_VIRIDIANCITY_OLD_MAN_MOVING_DOWN
 	ld [wViridianCityCurScript], a
@@ -243,8 +243,8 @@ ViridianCityOldManMovementData2:
 	db $ff
 
 ViridianCityOldManMovingDownScript:
-	ld a, [wd730]
-	bit 0, a
+	ld a, [wStatusFlags5]
+	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
 	ld a, HS_OLD_MAN_2
 	ld [wMissableObjectIndex], a

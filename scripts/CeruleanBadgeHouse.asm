@@ -1,5 +1,5 @@
 CeruleanBadgeHouse_Script:
-	ld a, TRUE
+	ld a, 1 << BIT_NO_AUTO_TEXT_BOX
 	ld [wAutoTextBoxDrawingControl], a
 	dec a
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
@@ -34,7 +34,7 @@ CeruleanBadgeHouseMiddleAgedManText:
 	call DisplayListMenuID
 	jr c, .done
 	ld hl, CeruleanBadgeHouseBadgeTextPointers
-	ld a, [wcf91]
+	ld a, [wCurItem]
 	sub BOULDERBADGE
 	add a
 	ld d, $0
@@ -53,8 +53,8 @@ CeruleanBadgeHouseMiddleAgedManText:
 	jp TextScriptEnd
 
 .BadgeItemList:
-	table_width 1, .BadgeItemList
 	db NUM_BADGES ; #
+	table_width 1
 	db BOULDERBADGE
 	db CASCADEBADGE
 	db THUNDERBADGE
@@ -63,8 +63,8 @@ CeruleanBadgeHouseMiddleAgedManText:
 	db MARSHBADGE
 	db VOLCANOBADGE
 	db EARTHBADGE
+	assert_table_length NUM_BADGES
 	db -1 ; end
-	assert_table_length NUM_BADGES + 2
 
 .Text:
 	text_far _CeruleanBadgeHouseMiddleAgedManText
@@ -79,7 +79,7 @@ CeruleanBadgeHouseMiddleAgedManText:
 	text_end
 
 CeruleanBadgeHouseBadgeTextPointers:
-	table_width 2, CeruleanBadgeHouseBadgeTextPointers
+	table_width 2
 	dw CeruleanBadgeHouseBoulderBadgeText
 	dw CeruleanBadgeHouseCascadeBadgeText
 	dw CeruleanBadgeHouseThunderBadgeText

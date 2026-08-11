@@ -1,7 +1,7 @@
 ; uses an item
 ; UseItem is used with dummy items to perform certain other functions as well
 ; INPUT:
-; [wcf91] = item ID
+; [wCurItem] = item ID
 ; OUTPUT:
 ; [wActionResultOrTookBattleTurn] = success
 ; 00: unsuccessful
@@ -13,7 +13,7 @@ UseItem::
 ; confirms the item toss and then tosses the item
 ; INPUT:
 ; hl = address of inventory (either wNumBagItems or wNumBoxItems)
-; [wcf91] = item ID
+; [wCurItem] = item ID
 ; [wWhichPokemon] = index of item within inventory
 ; [wItemQuantity] = quantity to toss
 ; OUTPUT:
@@ -23,17 +23,17 @@ TossItem::
 	push af
 	ld a, BANK(TossItem_)
 	ldh [hLoadedROMBank], a
-	ld [MBC1RomBank], a
+	ld [rROMB], a
 	call TossItem_
 	pop de
 	ld a, d
 	ldh [hLoadedROMBank], a
-	ld [MBC1RomBank], a
+	ld [rROMB], a
 	ret
 
 ; checks if an item is a key item
 ; INPUT:
-; [wcf91] = item ID
+; [wCurItem] = item ID
 ; OUTPUT:
 ; [wIsKeyItem] = result
 ; 00: item is not key item

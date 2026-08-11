@@ -1,6 +1,6 @@
 ; Used in wram.asm
 
-MACRO flag_array
+MACRO? flag_array
 	ds ((\1) + 7) / 8
 ENDM
 
@@ -23,7 +23,7 @@ MACRO box_struct
 \1DefenseExp:: dw
 \1SpeedExp::   dw
 \1SpecialExp:: dw
-\1DVs::        ds 2
+\1DVs::        dw
 \1PP::         ds NUM_MOVES
 ENDM
 
@@ -49,7 +49,7 @@ MACRO battle_struct
 \1Type2::      db
 \1CatchRate::  db
 \1Moves::      ds NUM_MOVES
-\1DVs::        ds 2
+\1DVs::        dw
 \1Level::      db
 \1Stats::
 \1MaxHP::      dw

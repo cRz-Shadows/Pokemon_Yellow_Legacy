@@ -9,14 +9,13 @@ UncompressMonSprite::
 	ld a, [hl]
 	ld [wSpriteInputPtr+1], a
 ; define (by index number) the bank that a pokemon's image is in
-; index = MEW:             bank $1
 ; index = FOSSIL_KABUTOPS: bank $B
 ;       index < $1F:       bank $9 ("Pics 1")
 ; $1F ≤ index < $4A:       bank $A ("Pics 2")
 ; $4A ≤ index < $74:       bank $B ("Pics 3")
 ; $74 ≤ index < $99:       bank $C ("Pics 4")
 ; $99 ≤ index:             bank $D ("Pics 5")
-	ld a, [wcf91]
+	ld a, [wCurPartySpecies]
 	ld b, a
 	cp FOSSIL_KABUTOPS
 	ld a, BANK(FossilKabutopsPic)
@@ -88,8 +87,8 @@ LoadUncompressedSpriteData::
 	add a
 	add a     ; 8*(7*((8-w)/2) + 7-h) ; combined overall offset (in bytes)
 	ldh [hSpriteOffset], a
-	ld a, $0
-	call SwitchSRAMBankAndLatchClockData
+	ld a, BANK("Sprite Buffers")
+	call OpenSRAM
 	ld hl, sSpriteBuffer0
 	call ZeroSpriteBuffer   ; zero buffer 0
 	ld de, sSpriteBuffer1
@@ -100,7 +99,7 @@ LoadUncompressedSpriteData::
 	ld de, sSpriteBuffer2
 	ld hl, sSpriteBuffer1
 	call AlignSpriteDataCentered    ; copy and align buffer 2 to 1 (containing the LSB of the 2bpp sprite)
-	call PrepareRTCDataAndDisableSRAM
+	call CloseSRAM
 	pop de
 	jp InterlaceMergeSpriteBuffers
 
@@ -124,7 +123,7 @@ AlignSpriteDataCentered::
 	dec c
 	jr nz, .columnInnerLoop
 	pop hl
-	ld bc, 7*8    ; 7 tiles
+	ld bc, 7 * 8  ; 7 tiles
 	add hl, bc    ; advance one full column
 	pop af
 	dec a
@@ -147,13 +146,13 @@ ZeroSpriteBuffer::
 ; in the resulting sprite, the rows of the two source sprites are interlaced
 ; de: output address
 InterlaceMergeSpriteBuffers::
-	ld a, $0
-	call SwitchSRAMBankAndLatchClockData
+	ld a, BANK("Sprite Buffers")
+	call OpenSRAM
 	push de
 	ld hl, sSpriteBuffer2 + (SPRITEBUFFERSIZE - 1) ; destination: end of buffer 2
 	ld de, sSpriteBuffer1 + (SPRITEBUFFERSIZE - 1) ; source 2: end of buffer 1
 	ld bc, sSpriteBuffer0 + (SPRITEBUFFERSIZE - 1) ; source 1: end of buffer 0
-	ld a, SPRITEBUFFERSIZE/2 ; $c4
+	ld a, SPRITEBUFFERSIZE / 2 ; $c4
 	ldh [hSpriteInterlaceCounter], a
 .interlaceLoop
 	ld a, [de]
@@ -175,7 +174,7 @@ InterlaceMergeSpriteBuffers::
 	ld a, [wSpriteFlipped]
 	and a
 	jr z, .notFlipped
-	ld bc, 2*SPRITEBUFFERSIZE
+	ld bc, 2 * SPRITEBUFFERSIZE
 	ld hl, sSpriteBuffer1
 .swapLoop
 	swap [hl]    ; if flipped swap nybbles in all bytes
@@ -187,8 +186,8 @@ InterlaceMergeSpriteBuffers::
 .notFlipped
 	pop hl
 	ld de, sSpriteBuffer1
-	ld c, (2*SPRITEBUFFERSIZE)/16 ; $31, number of 16 byte chunks to be copied
+	ld c, (2 * SPRITEBUFFERSIZE) / 16 ; $31, number of 16 byte chunks to be copied
 	ldh a, [hLoadedROMBank]
 	ld b, a
 	call CopyVideoData
-	jp PrepareRTCDataAndDisableSRAM
+	jp CloseSRAM

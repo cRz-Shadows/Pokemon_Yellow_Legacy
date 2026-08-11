@@ -16,7 +16,7 @@ hPreviousTileset::
 hRLEByteValue::
 	db
 
-hSpriteIndexOrTextID:: ; DisplayTextID's argument
+hTextID:: ; DisplayTextID's argument
 hPartyMonIndex::
 	db
 
@@ -173,7 +173,7 @@ hMoney:: ds 3 ; BCD number
 NEXTU
 ; some code zeroes this for no reason when writing a coin amount
 hUnusedCoinsByte:: db
-hCoins:: ds 2 ; BCD number
+hCoins:: dw ; BCD number
 ENDU
 
 hDivideBCDDivisor::
@@ -397,6 +397,7 @@ hClearLetterPrintingDelayFlags:: db
 
 ; bit 0: draw HP fraction to the right of bar instead of below (for party menu)
 ; bit 1: menu is double spaced
+; bit 2: text is single spaced
 hUILayoutFlags:: db
 
 hFieldMoveMonMenuTopMenuItemX:: db
@@ -405,5 +406,7 @@ hPikachuSpriteVRAMOffset:: db
 
 	ds 1
 
-; 0 if DMG, != 0 if GBC
-hGBC:: db
+; 0 if DMG, != 0 if CGB
+hOnCGB:: db
+
+ENDSECTION

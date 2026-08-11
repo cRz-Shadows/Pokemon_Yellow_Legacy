@@ -3,7 +3,7 @@
 Audio4_PlaySound::
 	ld [wSoundID], a
 	ld a, [wSoundID]
-	cp $ff
+	cp SFX_STOP_ALL_MUSIC
 	jp z, .stopAllAudio
 	cp MAX_SFX_ID_4
 	jp z, .playSfx
@@ -180,10 +180,10 @@ Audio4_PlaySound::
 	ld a, [wSavedVolume]
 	and a
 	jr nz, .done
-	ldh a, [rNR50]
+	ldh a, [rAUDVOL]
 	ld [wSavedVolume], a
 	ld a, $77
-	ldh [rNR50], a ; full volume
+	ldh [rAUDVOL], a ; full volume
 .done
 	ret
 

@@ -29,9 +29,9 @@ SurfingPikachuMinigame::
 	ldh [rBGP], a
 	ldh [rOBP0], a
 	ldh [rOBP1], a
-	call UpdateGBCPal_BGP
-	call UpdateGBCPal_OBP0
-	call UpdateGBCPal_OBP1
+	call UpdateCGBPal_BGP
+	call UpdateCGBPal_OBP0
+	call UpdateCGBPal_OBP1
 	call ClearObjectAnimationBuffers
 	call ClearSprites
 	xor a
@@ -89,12 +89,12 @@ SurfingPikachu_CheckPressedSelect:
 	bit 1, [hl]
 	ret z
 	ldh a, [hJoyPressed]
-	and SELECT
+	and PAD_SELECT
 	ret
 
 Func_f80b7:
 	ldh a, [hJoyPressed]
-	and START
+	and PAD_START
 	ret z
 	ld hl, wc5e2
 	ld a, [hl]
@@ -257,8 +257,8 @@ SurfingPikachuMinigame_LoadGFXAndLayout:
 	ldh [rOBP0], a
 	ld a, $e0
 	ldh [rOBP1], a
-	call UpdateGBCPal_OBP0
-	call UpdateGBCPal_OBP1
+	call UpdateCGBPal_OBP0
+	call UpdateCGBPal_OBP1
 	ret
 
 SurfingPikachuMinigame_SetBGPals:
@@ -267,13 +267,13 @@ SurfingPikachuMinigame_SetBGPals:
 	jr nz, .sgb
 	ld a, $d0
 	ldh [rBGP], a
-	call UpdateGBCPal_BGP
+	call UpdateCGBPal_BGP
 	ret
 
 .sgb
 	ld a, $e4
 	ldh [rBGP], a
-	call UpdateGBCPal_BGP
+	call UpdateCGBPal_BGP
 	ret
 
 Func_f81ff:
@@ -600,7 +600,7 @@ SurfingMinigame_WaitLast:
 SurfingMinigame_ExitOnPressA:
 	call SurfingMinigame_UpdateLYOverrides
 	ldh a, [hJoyPressed]
-	and A_BUTTON
+	and PAD_A
 	ret z
 	ld hl, wSurfingMinigameRoutineNumber
 	set 7, [hl]
@@ -621,7 +621,7 @@ SurfingMinigame_GameOver:
 
 .wait_press_a
 	ldh a, [hJoyPressed]
-	and A_BUTTON
+	and PAD_A
 	ret z
 	ld hl, wSurfingMinigameRoutineNumber
 	set 7, [hl]
@@ -846,10 +846,10 @@ Func_f8579:
 SurfingMinigame_DPadAction:
 	ld de, hJoy5
 	ld a, [de]
-	and D_LEFT
+	and PAD_LEFT
 	jr nz, .d_left
 	ld a, [de]
-	and D_RIGHT
+	and PAD_RIGHT
 	jr nz, .d_right
 	ret
 
@@ -1453,7 +1453,7 @@ SurfingMinigame_DrawHP:
 
 SurfingMinigame_DrawResultsScreen:
 	ld hl, wTileMap
-	ld bc, SCREEN_WIDTH * SCREEN_HEIGHT
+	ld bc, SCREEN_AREA
 	xor a
 	call FillMemory
 	ld hl, .BeachTilemap
@@ -1470,7 +1470,7 @@ SurfingMinigame_DrawResultsScreen:
 	ret
 
 .BeachTilemap:
-INCBIN "gfx/surfing_pikachu/unknown_f8946.map"
+INCBIN "gfx/surfing_pikachu/unknown_f8946.tilemap"
 .BeachTilemapEnd:
 
 .PlaceTextbox:
@@ -1723,7 +1723,7 @@ DidPlayerGetAHighScore:
 
 SurfingMinigame_PlayPikaCryIfSurfingPikaInParty:
 	push de
-	callfar IsSurfingPikachuInThePlayersParty
+	callfar IsSurfingStarterPikachuInParty
 	pop de
 	ret nc
 	callfar PlayPikachuSoundClip
@@ -2376,8 +2376,8 @@ SurfingPikachuMinigameIntro:
 	ldh [rOBP0], a
 	ld a, $e0
 	ldh [rOBP1], a
-	call UpdateGBCPal_OBP0
-	call UpdateGBCPal_OBP1
+	call UpdateCGBPal_OBP0
+	call UpdateCGBPal_OBP1
 	call DelayFrame
 	ld a, MUSIC_SURFING_PIKACHU
 	ld c, BANK(Music_SurfingPikachu)
@@ -2396,7 +2396,7 @@ SurfingPikachuMinigameIntro:
 
 DrawSurfingPikachuMinigameIntroBackground:
 	ld hl, wTileMap
-	ld bc, SCREEN_WIDTH * SCREEN_HEIGHT
+	ld bc, SCREEN_AREA
 	ld a, $ff
 	call FillMemory
 	ld hl, Tilemap_f90bc
@@ -2455,10 +2455,10 @@ DrawSurfingPikachuMinigameIntroBackground:
 	jr nz, .fill_row
 	ret
 
-Tilemap_f90bc: INCBIN "gfx/surfing_pikachu/unknown_f90bc.map"
-Tilemap_f91ac: INCBIN "gfx/surfing_pikachu/unknown_f91ac.map"
-Tilemap_f91bb: INCBIN "gfx/surfing_pikachu/unknown_f91bb.map"
-Tilemap_f91c8: INCBIN "gfx/surfing_pikachu/unknown_f91c8.map"
+Tilemap_f90bc: INCBIN "gfx/surfing_pikachu/unknown_f90bc.tilemap"
+Tilemap_f91ac: INCBIN "gfx/surfing_pikachu/unknown_f91ac.tilemap"
+Tilemap_f91bb: INCBIN "gfx/surfing_pikachu/unknown_f91bb.tilemap"
+Tilemap_f91c8: INCBIN "gfx/surfing_pikachu/unknown_f91c8.tilemap"
 
 SurfingMinigame_UpdateLYOverrides:
 	ld hl, wLYOverrides + $10
@@ -2518,9 +2518,9 @@ SurfingPikachuMinigame_BlankPals:
 	ldh [rBGP], a
 	ldh [rOBP0], a
 	ldh [rOBP1], a
-	call UpdateGBCPal_BGP
-	call UpdateGBCPal_OBP0
-	call UpdateGBCPal_OBP1
+	call UpdateCGBPal_BGP
+	call UpdateCGBPal_OBP0
+	call UpdateCGBPal_OBP1
 	ret
 
 SurfingPikachuMinigame_NormalPals:
@@ -2529,14 +2529,14 @@ SurfingPikachuMinigame_NormalPals:
 	ldh [rOBP0], a
 	ld a, $e0
 	ldh [rOBP1], a
-	call UpdateGBCPal_BGP
-	call UpdateGBCPal_OBP0
-	call UpdateGBCPal_OBP1
+	call UpdateCGBPal_BGP
+	call UpdateCGBPal_OBP0
+	call UpdateCGBPal_OBP1
 	ret
 
 SurfingPikachu_ClearTileMap:
 	ld hl, wTileMap
-	ld bc, SCREEN_WIDTH * SCREEN_HEIGHT
+	ld bc, SCREEN_AREA
 	xor a
 	call FillMemory
 	ret

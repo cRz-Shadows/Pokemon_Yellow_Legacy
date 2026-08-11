@@ -40,7 +40,7 @@ SeafoamIslandsB4FDefaultScript:
 	ld a, [wCoordIndex]
 	cp $3
 	jr nc, .only1UpInputNeeded
-	ld a, NPC_MOVEMENT_UP
+	ld a, PAD_UP
 	ld [wSimulatedJoypadStatesEnd + 1], a
 	ld a, 2
 	jr .forcePlayerUpFromSurfExit
@@ -48,11 +48,11 @@ SeafoamIslandsB4FDefaultScript:
 	ld a, 1
 .forcePlayerUpFromSurfExit
 	ld [wSimulatedJoypadStatesIndex], a
-	ld a, D_UP | B_BUTTON
+	ld a, PAD_UP | PAD_B
 	ld [wSimulatedJoypadStatesEnd], a
 	call StartSimulatingJoypadStates
-	ld hl, wFlags_D733
-	res 2, [hl]
+	ld hl, wStatusFlags7
+	res BIT_FORCED_WARP, [hl]
 	ld a, SCRIPT_SEAFOAMISLANDSB4F_OBJECT_MOVING1
 	ld [wSeafoamIslandsB4FCurScript], a
 	ret
@@ -106,15 +106,15 @@ SeafoamIslandsB4FMoveObjectScript:
 	db -1 ; end
 
 .RLEList_StrongCurrentNearRightBoulder:
-	db D_UP, 3
-	db D_RIGHT, 2
-	db D_UP, 1
+	db PAD_UP, 3
+	db PAD_RIGHT, 2
+	db PAD_UP, 1
 	db -1 ; end
 
 .RLEList_StrongCurrentNearLeftBoulder:
-	db D_UP, 3
-	db D_RIGHT, 3
-	db D_UP, 1
+	db PAD_UP, 3
+	db PAD_RIGHT, 3
+	db PAD_UP, 1
 	db -1 ; end
 
 SeafoamIslandsB4FObjectMoving2Script:
@@ -189,7 +189,7 @@ WeebraPostBattleScript:
 	CheckEvent EVENT_BEAT_WEEBRA
 	jr nz, .dontDoText
 	ld a, TEXT_SEAFOAM_ISLANDS_WEEBRA_END_BATTLE
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	SetEvent EVENT_BEAT_WEEBRA
 .dontDoText

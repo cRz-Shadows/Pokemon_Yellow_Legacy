@@ -30,7 +30,7 @@ IF DEF(_DEBUG)
 	ld a, TEXT_DELAY_MEDIUM
 	ld [wOptions], a
 
-	ld a, A_BUTTON | B_BUTTON | START
+	ld a, PAD_A | PAD_B | PAD_START
 	ld [wMenuWatchedKeys], a
 	xor a
 	ld [wMenuJoypadPollCount], a
@@ -46,7 +46,7 @@ IF DEF(_DEBUG)
 	ld [wMenuWatchMovingOutOfBounds], a
 
 	call HandleMenuInput
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	ld hl, DisplayTitleScreen
 	ret nz
 
@@ -55,7 +55,7 @@ IF DEF(_DEBUG)
 	jp z, TestBattle
 
 	; DEBUG
-	ld hl, wd732
+	ld hl, wStatusFlags6
 	set BIT_DEBUG_MODE, [hl]
 	ld hl, StartNewGameDebug
 	ret
@@ -78,7 +78,7 @@ TestBattle: ; unreferenced except in _DEBUG
 	ld a, 1 << BIT_EARTHBADGE
 	ld [wObtainedBadges], a
 
-	ld hl, wFlags_D733
+	ld hl, wStatusFlags7
 	set BIT_TEST_BATTLE, [hl]
 
 	ld hl, wNumBagItems
@@ -88,7 +88,7 @@ TestBattle: ; unreferenced except in _DEBUG
 	cp -1
 	jr z, .done
 	inc de
-	ld [wcf91], a
+	ld [wCurItem], a
 	ld a, [de]
 	inc de
 	ld [wItemQuantity], a
@@ -131,11 +131,11 @@ Func_fe7ca:
 	push hl
 	push bc
 	dec hl
-	ld a, "▶"
+	ld a, '▶'
 	ld [hl], a
 	ld bc, 11
 	add hl, bc
-	ld a, " "
+	ld a, ' '
 	ld [hl], a
 	push de
 	pop de
@@ -149,19 +149,19 @@ Func_fe7db:
 	pop de
 	pop bc
 	ldh a, [hJoy5]
-	bit BIT_A_BUTTON, a
+	bit B_PAD_A, a
 	jp nz, Func_fe812
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jp nz, Func_fe850
-	bit BIT_SELECT, a
+	bit B_PAD_SELECT, a
 	jp nz, DebugMenu
-	bit BIT_START, a
+	bit B_PAD_START, a
 	jp nz, Func_fe97f
-	bit BIT_D_RIGHT, a
+	bit B_PAD_RIGHT, a
 	jp nz, Func_fe8a1
-	bit BIT_D_UP, a
+	bit B_PAD_UP, a
 	jp nz, Func_fe85d
-	bit BIT_D_DOWN, a
+	bit B_PAD_DOWN, a
 	jp nz, Func_fe880
 	jr Func_fe7db
 
@@ -186,7 +186,7 @@ Func_fe812:
 	; fallthrough
 Func_fe81a:
 	ld [de], a
-	ld [wd11e], a
+	ld [wTempByteValue], a
 	push bc
 	push hl
 	push de
@@ -201,7 +201,7 @@ Func_fe81a:
 	ld de, Text_fed9c
 	call PlaceString
 	pop hl
-	ld a, [wd11e]
+	ld a, [wNamedObjectIndex]
 	and a
 	jr nz, .asm_fe845
 	ld de, Text_feda2
@@ -232,13 +232,13 @@ Func_fe85d:
 	ld [wWhichPokemon], a
 	dec de
 	dec hl
-	ld a, " "
+	ld a, ' '
 	ld [hl], a
 	push bc
 	ld bc, hMovingBGTilesCounter1
 	add hl, bc
 	pop bc
-	ld a, "▶"
+	ld a, '▶'
 	ld [hl], a
 	inc hl
 	push hl
@@ -254,11 +254,11 @@ Func_fe880:
 	ld [wWhichPokemon], a
 	inc de
 	dec hl
-	ld a, " "
+	ld a, ' '
 	ld [hl], a
 	ld bc, SCREEN_WIDTH * 2
 	add hl, bc
-	ld a, "▶"
+	ld a, '▶'
 	ld [hl], a
 	inc hl
 	push hl
@@ -270,11 +270,11 @@ Func_fe8a1:
 	push hl
 	push bc
 	dec hl
-	ld a, " "
+	ld a, ' '
 	ld [hl], a
 	ld bc, 11
 	add hl, bc
-	ld a, "▶"
+	ld a, '▶'
 	ld [hl], a
 	pop bc
 	pop hl
@@ -286,17 +286,17 @@ Func_fe8b0:
 	pop de
 	pop bc
 	ldh a, [hJoy5]
-	bit BIT_A_BUTTON, a
+	bit B_PAD_A, a
 	jp nz, Func_fe8d9
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jp nz, Func_fe902
-	bit BIT_START, a
+	bit B_PAD_START, a
 	jp nz, Func_fe97f
-	bit BIT_D_LEFT, a
+	bit B_PAD_LEFT, a
 	jp nz, Func_fe7ca
-	bit BIT_D_UP, a
+	bit B_PAD_UP, a
 	jp nz, Func_fe912
-	bit BIT_D_DOWN, a
+	bit B_PAD_DOWN, a
 	jp nz, Func_fe93b
 	jr Func_fe8b0
 
@@ -352,7 +352,7 @@ Func_fe912:
 	push hl
 	ld bc, 10
 	add hl, bc
-	ld a, " "
+	ld a, ' '
 	ld [hl], a
 	pop hl
 	ld bc, hMovingBGTilesCounter1
@@ -360,7 +360,7 @@ Func_fe912:
 	push hl
 	ld bc, 10
 	add hl, bc
-	ld a, "▶"
+	ld a, '▶'
 	ld [hl], a
 	call Func_fe964
 	pop hl
@@ -376,7 +376,7 @@ Func_fe93b:
 	push hl
 	ld bc, 10
 	add hl, bc
-	ld a, " "
+	ld a, ' '
 	ld [hl], a
 	pop hl
 	ld bc, SCREEN_WIDTH * 2
@@ -384,7 +384,7 @@ Func_fe93b:
 	push hl
 	ld bc, 10
 	add hl, bc
-	ld a, "▶"
+	ld a, '▶'
 	ld [hl], a
 	call Func_fe964
 	pop hl
@@ -424,17 +424,17 @@ Func_fe97f:
 	ld [wIsInBattle], a
 .asm_fe990
 	ld a, b
-	ld [wcf91], a
+	ld [wCurPartySpecies], a
 	ld a, [hl]
 	ld b, a
 	inc de
 	ld a, [de]
 	and a
 	jr z, .asm_fe9ab
-	ld [wCurEnemyLVL], a
+	ld [wCurEnemyLevel], a
 	xor a
 	ld [wMonDataLocation], a
-	ld a, [wcf91]
+	ld a, [wCurPartySpecies]
 	and a
 	jr z, .asm_fe9ab
 	call AddPartyMon
@@ -487,9 +487,9 @@ Func_fe97f:
 	dec a
 	jr z, .asm_fea40
 	ld a, [wTrainerClass]
-	ld [wd11e], a
+	ld [wTempByteValue], a
 	ld b, a
-	ld de, wd11e
+	ld de, wTempByteValue
 	hlcoord 1, 8
 	push bc
 	lb bc, LEADING_ZEROES | 1, 3
@@ -507,7 +507,7 @@ Func_fe97f:
 	ld a, b
 	and a
 	jr z, .asm_fea65
-	ld de, wd11e
+	ld de, wTempByteValue
 	ld [de], a
 	hlcoord 1, 8
 	push bc
@@ -523,7 +523,7 @@ Func_fe97f:
 .asm_fea65
 	ld a, [wEnemyMonLevel]
 	ld c, a
-	ld de, wd11e
+	ld de, wTempByteValue
 	ld [de], a
 	hlcoord 16, 8
 	push bc
@@ -532,10 +532,10 @@ Func_fe97f:
 	pop bc
 	; fallthrough
 Func_fea78:
-	ld a, " "
+	ld a, ' '
 	ldcoord_a 0, 8
 	ldcoord_a 15, 8
-	ld a, "▶"
+	ld a, '▶'
 	ldcoord_a 0, 4
 	; fallthrough
 Func_fea85:
@@ -543,11 +543,11 @@ Func_fea85:
 	call JoypadLowSensitivity
 	pop bc
 	ldh a, [hJoy5]
-	bit BIT_A_BUTTON, a
+	bit B_PAD_A, a
 	jp nz, Func_fea9d
-	bit BIT_START, a
+	bit B_PAD_START, a
 	jp nz, Func_fec10
-	bit BIT_D_DOWN, a
+	bit B_PAD_DOWN, a
 	jp nz, Func_feae4
 	jr Func_fea85
 
@@ -566,7 +566,7 @@ Func_fea9d:
 	jr nz, .asm_feace
 	ld a, 2
 	ld [wIsInBattle], a
-	ld a, " "
+	ld a, ' '
 	ldcoord_a 4, 3
 	hlcoord 1, 4
 	ld de, Text_fedb2
@@ -575,7 +575,7 @@ Func_fea9d:
 .asm_feace
 	ld a, 1
 	ld [wIsInBattle], a
-	ld a, " "
+	ld a, ' '
 	ldcoord_a 1, 3
 	hlcoord 1, 4
 	ld de, Text_feda8
@@ -583,9 +583,9 @@ Func_fea9d:
 	jp Func_fea85
 
 Func_feae4:
-	ld a, "▶"
+	ld a, '▶'
 	ldcoord_a 0, 8
-	ld a, " "
+	ld a, ' '
 	ldcoord_a 15, 8
 	ldcoord_a 0, 4
 	; fallthrough
@@ -594,15 +594,15 @@ Func_feaf1:
 	call JoypadLowSensitivity
 	pop bc
 	ldh a, [hJoy5]
-	bit BIT_A_BUTTON, a
+	bit B_PAD_A, a
 	jp nz, Func_feb13
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jp nz, Func_feb82
-	bit BIT_START, a
+	bit B_PAD_START, a
 	jp nz, Func_fec10
-	bit BIT_D_RIGHT, a
+	bit B_PAD_RIGHT, a
 	jp nz, Func_febba
-	bit BIT_D_UP, a
+	bit B_PAD_UP, a
 	jp nz, Func_fea78
 	jr Func_feaf1
 
@@ -626,13 +626,13 @@ Func_feb13:
 	; fallthrough
 Func_feb35:
 	ld a, b
-	ld [wd11e], a
-	ld de, wd11e
+	ld [wTempByteValue], a
+	ld de, wTempByteValue
 	hlcoord 1, 8
 	push bc
 	lb bc, LEADING_ZEROES | 1, 3
 	call PrintNumber
-	ld a, [wd11e]
+	ld a, [wTempByteValue]
 	ld [wTrainerClass], a
 	call GetTrainerName
 	hlcoord 5, 8
@@ -649,8 +649,8 @@ Func_feb35:
 	; fallthrough
 Func_feb64:
 	ld a, b
-	ld [wd11e], a
-	ld de, wd11e
+	ld [wTempByteValue], a
+	ld de, wTempByteValue
 	hlcoord 1, 8
 	push bc
 	lb bc, LEADING_ZEROES | 1, 3
@@ -694,9 +694,9 @@ Func_feb82:
 	jp Func_feb64
 
 Func_febba:
-	ld a, " "
+	ld a, ' '
 	ldcoord_a 0, 8
-	ld a, "▶"
+	ld a, '▶'
 	ldcoord_a 15, 8
 	; fallthrough
 Func_febc4:
@@ -704,15 +704,15 @@ Func_febc4:
 	call JoypadLowSensitivity
 	pop bc
 	ldh a, [hJoy5]
-	bit BIT_A_BUTTON, a
+	bit B_PAD_A, a
 	jp nz, Func_febe6
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jp nz, Func_fec01
-	bit BIT_START, a
+	bit B_PAD_START, a
 	jp nz, Func_fec10
-	bit BIT_D_LEFT, a
+	bit B_PAD_LEFT, a
 	jp nz, Func_feae4
-	bit BIT_D_UP, a
+	bit B_PAD_UP, a
 	jp nz, Func_fea78
 	jr Func_febc4
 
@@ -725,7 +725,7 @@ Func_febe6:
 Func_febee:
 	hlcoord 16, 8
 	ld a, c
-	ld de, wCurEnemyLVL
+	ld de, wCurEnemyLevel
 	ld [de], a
 	push bc
 	lb bc, LEADING_ZEROES | 1, 3
@@ -761,11 +761,11 @@ Func_fec10:
 	ld [wTrainerNo], a
 .asm_fec28
 	ld a, c
-	ld [wCurEnemyLVL], a
+	ld [wCurEnemyLevel], a
 	ld a, b
 	ld [wCurOpponent], a
 	xor a
-	ld [wd72d], a
+	ld [wStatusFlags3], a
 	predef InitOpponent
 	xor a
 	ld [wNumRunAttempts], a
@@ -782,9 +782,9 @@ Func_fec10:
 	ldh [rBGP], a
 	ldh [rOBP0], a
 	ldh [rOBP1], a
-	call UpdateGBCPal_BGP
-	call UpdateGBCPal_OBP0
-	call UpdateGBCPal_OBP1
+	call UpdateCGBPal_BGP
+	call UpdateCGBPal_OBP0
+	call UpdateCGBPal_OBP1
 	hlcoord 0, 0
 	lb bc, 1, 18
 	call TextBoxBorder
@@ -817,7 +817,7 @@ Func_fec9b:
 	ld a, [de]
 	cp -1
 	jp z, Func_fed01
-	ld [wd11e], a
+	ld [wTempByteValue], a
 	push hl
 	lb bc, LEADING_ZEROES | 1, 3
 	call PrintNumber
@@ -838,7 +838,7 @@ Func_fec9b:
 	ld d, h
 	ld e, l
 	ld a, [de]
-	ld [wCurEnemyLVL], a
+	ld [wCurEnemyLevel], a
 	pop hl
 	lb bc, LEADING_ZEROES | 1, 3
 	call PrintNumber
@@ -849,7 +849,7 @@ Func_fec9b:
 	jr nc, .asm_fecee
 	inc d
 .asm_fecee
-	ld a, [wCurEnemyLVL]
+	ld a, [wCurEnemyLevel]
 	ld [de], a
 	pop hl
 	ld a, [wWhichPokemon]
@@ -935,29 +935,29 @@ Func_fedfe:
 	ld [hl], a
 	inc a
 	ldh [hJoy7], a
-	ld [wcf91], a
-	ld [wCurEnemyLVL], a
+	ld [wCurPartySpecies], a
+	ld [wCurEnemyLevel], a
 	; fallthrough
 Func_fee23:
 	hlcoord 0, 3
-	ld [hl], " "
+	ld [hl], ' '
 	hlcoord 0, 1
-	ld [hl], "▶"
+	ld [hl], '▶'
 	call Func_fee60
 .asm_fee30
 	call DelayFrame
 	call JoypadLowSensitivity
 	ldh a, [hJoy5]
-	bit BIT_A_BUTTON, a
+	bit B_PAD_A, a
 	jp nz, Func_fee49
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jp nz, Func_fee56
-	bit BIT_D_DOWN, a
+	bit B_PAD_DOWN, a
 	jp nz, Func_fee96
 	jr .asm_fee30
 
 Func_fee49:
-	ld hl, wcf91
+	ld hl, wCurPartySpecies
 	inc [hl]
 	ld a, [hl]
 	cp NUM_POKEMON + 1
@@ -966,7 +966,7 @@ Func_fee49:
 	jr Func_fee23
 
 Func_fee56:
-	ld hl, wcf91
+	ld hl, wCurPartySpecies
 	dec [hl]
 	jr nz, Func_fee23
 	ld [hl], DEX_MEW
@@ -977,45 +977,45 @@ Func_fee60:
 	lb bc, 2, 9
 	call ClearScreenArea
 	hlcoord 1, 1
-	ld de, wcf91
+	ld de, wCurPartySpecies
 	lb bc, LEADING_ZEROES | 1, 3
 	call PrintNumber
 	inc hl
 	push hl
-	ld a, [wcf91]
-	ld [wd11e], a
+	ld a, [wCurPartySpecies]
+	ld [wPokedexNum], a
 	callfar PokedexToIndex
 	call GetMonName
 	pop hl
 	call PlaceString
-	ld a, [wd11e]
-	ld [wd0b5], a
+	ld a, [wPokedexNum]
+	ld [wCurSpecies], a
 	call GetMonHeader
 	ret
 
 Func_fee96:
 	hlcoord 0, 1
-	ld [hl], " "
+	ld [hl], ' '
 	hlcoord 0, 3
-	ld [hl], "▶"
+	ld [hl], '▶'
 	hlcoord 0, 5
-	ld [hl], " "
+	ld [hl], ' '
 	call Func_feee2
 	call Func_feeef
 .asm_feeab
 	call DelayFrame
 	call JoypadLowSensitivity
-	ld hl, wCurEnemyLVL
+	ld hl, wCurEnemyLevel
 	ldh a, [hJoy5]
-	bit BIT_A_BUTTON, a
+	bit B_PAD_A, a
 	jp nz, Func_feed1
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jp nz, Func_feedb
-	bit BIT_START, a
+	bit B_PAD_START, a
 	jp nz, Func_ff12c
-	bit BIT_D_UP, a
+	bit B_PAD_UP, a
 	jp nz, Func_fee23
-	bit BIT_D_DOWN, a
+	bit B_PAD_DOWN, a
 	jp nz, Func_fef60
 	jr .asm_feeab
 
@@ -1035,7 +1035,7 @@ Func_feedb:
 
 Func_feee2:
 	hlcoord 1, 3
-	ld de, wCurEnemyLVL
+	ld de, wCurEnemyLevel
 	lb bc, LEADING_ZEROES | 1, 3
 	call PrintNumber
 	ret
@@ -1044,9 +1044,9 @@ Func_feeef:
 	hlcoord 1, 4
 	lb bc, 8, 11
 	call ClearScreenArea
-	ld a, [wcf91]
+	ld a, [wCurPartySpecies]
 	push af
-	ld [wd11e], a
+	ld [wPokedexNum], a
 	ld hl, BaseStats + 15
 	dec a
 	ld bc, BASE_DATA_SIZE
@@ -1056,8 +1056,8 @@ Func_feeef:
 	ld a, BANK(BaseStats)
 	call FarCopyData
 	callfar PokedexToIndex
-	ld a, [wd11e]
-	ld [wcf91], a
+	ld a, [wPokedexNum]
+	ld [wCurPartySpecies], a
 	xor a
 	ld [wChangeMonPicEnemyTurnSpecies], a
 	ld de, wMoves
@@ -1073,8 +1073,8 @@ Func_feeef:
 	push de
 	push bc
 	push hl
-	ld [wd11e], a
-	ld de, wd11e
+	ld [wTempByteValue], a
+	ld de, wTempByteValue
 	lb bc, LEADING_ZEROES | 1, 3
 	call PrintNumber
 	inc hl
@@ -1089,7 +1089,7 @@ Func_feeef:
 	jr nz, .asm_fef36
 .asm_fef5b
 	pop af
-	ld [wcf91], a
+	ld [wCurPartySpecies], a
 	ret
 
 Func_fef60:
@@ -1107,15 +1107,15 @@ Func_fef68:
 	pop bc
 	pop de
 	ldh a, [hJoy5]
-	bit BIT_A_BUTTON, a
+	bit B_PAD_A, a
 	jp nz, Func_fef92
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jp nz, Func_fef9e
-	bit BIT_START, a
+	bit B_PAD_START, a
 	jp nz, Func_ff12c
-	bit BIT_D_UP, a
+	bit B_PAD_UP, a
 	jp nz, Func_fefa8
-	bit BIT_D_DOWN, a
+	bit B_PAD_DOWN, a
 	jp nz, Func_fefb5
 	jr .asm_fef6b
 
@@ -1173,21 +1173,21 @@ Func_fefc5:
 	pop de
 	pop hl
 	push hl
-	ld [hl], "▶"
+	ld [hl], '▶'
 	ld bc, hMovingBGTilesCounter1
 	add hl, bc
-	ld [hl], " "
+	ld [hl], ' '
 	ld bc, SCREEN_WIDTH * 4
 	add hl, bc
-	ld [hl], " "
+	ld [hl], ' '
 	pop hl
 	inc hl
 	ld a, [de]
-	ld de, wd11e
+	ld de, wTempByteValue
 	ld [de], a
 	lb bc, LEADING_ZEROES | 1, 3
 	call PrintNumber
-	ld a, [wd11e]
+	ld a, [wTempByteValue]
 	and a
 	jr z, .asm_ff002
 	call Func_ff006
@@ -1201,27 +1201,27 @@ Func_fefc5:
 	ret
 
 Func_ff006:
-	ld a, [wcf91]
+	ld a, [wCurPartySpecies]
 	push af
-	ld a, [wd11e]
+	ld a, [wPokedexNum]
 	push af
 	push hl
-	ld a, [wcf91]
-	ld [wd11e], a
+	ld a, [wCurPartySpecies]
+	ld [wPokedexNum], a
 	callfar PokedexToIndex
-	ld a, [wd11e]
-	ld [wcf91], a
+	ld a, [wPokedexNum]
+	ld [wCurPartySpecies], a
 	pop hl
 	pop af
-	ld [wd11e], a
+	ld [wPokedexNum], a
 	push hl
 	callfar Func_3b079
 	pop hl
 	jr c, .asm_ff036
-	ld [hl], "×"
+	ld [hl], '×'
 .asm_ff036
 	pop af
-	ld [wcf91], a
+	ld [wCurPartySpecies], a
 	ret
 
 Func_ff03b:
@@ -1239,15 +1239,15 @@ Func_ff043:
 	pop bc
 	pop de
 	ldh a, [hJoy5]
-	bit BIT_A_BUTTON, a
+	bit B_PAD_A, a
 	jp nz, Func_ff06d
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jp nz, Func_ff072
-	bit BIT_START, a
+	bit B_PAD_START, a
 	jp nz, Func_ff12c
-	bit BIT_D_UP, a
+	bit B_PAD_UP, a
 	jp nz, Func_ff077
-	bit BIT_D_DOWN, a
+	bit B_PAD_DOWN, a
 	jp nz, Func_ff08f
 	jr .asm_ff046
 
@@ -1296,17 +1296,17 @@ Func_ff09e:
 	push de
 	push bc
 	push hl
-	ld [hl], "▶"
+	ld [hl], '▶'
 	ld bc, hMovingBGTilesCounter1
 	add hl, bc
-	ld [hl], " "
+	ld [hl], ' '
 	ld bc, SCREEN_WIDTH * 4
 	add hl, bc
-	ld [hl], " "
+	ld [hl], ' '
 	pop hl
 	inc hl
 	ld a, [de]
-	ld de, wd11e
+	ld de, wTempByteValue
 	ld [de], a
 	lb bc, LEADING_ZEROES | 1, 3
 	call PrintNumber
@@ -1366,17 +1366,17 @@ Text_ff113:
 	next "とくしゅ@" ; special
 
 Func_ff12c:
-	ld a, [wCurEnemyLVL]
+	ld a, [wCurEnemyLevel]
 	ld [wEnemyMonLevel], a
-	ld a, [wcf91]
-	ld [wd11e], a
+	ld a, [wCurPartySpecies]
+	ld [wPokedexNum], a
 	callfar PokedexToIndex
-	ld a, [wd11e]
-	ld [wcf91], a
-	ld [wd0b5], a
+	ld a, [wPokedexNum]
+	ld [wCurPartySpecies], a
+	ld [wCurSpecies], a
 	call GetMonHeader
 	ld hl, wEnemyMon
-	ld a, [wcf91]
+	ld a, [wCurPartySpecies]
 	ld [hli], a
 	ld a, [wLoadedMonStats]
 	ld [hli], a
@@ -1436,7 +1436,7 @@ Func_ff1b9:
 	ld a, 1
 	ldh [hJoy7], a
 	ld a, 2
-	ld [wCurEnemyLVL], a
+	ld [wCurEnemyLevel], a
 	ld hl, Text_ff290
 	call PrintText
 	call YesNoChoice
@@ -1454,44 +1454,44 @@ Func_ff1b9:
 	; fallthrough
 Func_ff1e7:
 	hlcoord 2, 13
-	ld [hl], "ﾞ"
+	ld [hl], 'ﾞ'
 	hlcoord 1, 14
-	ld [hl], "レ"
+	ld [hl], 'レ'
 	inc hl
-	ld [hl], "へ"
+	ld [hl], 'へ'
 	inc hl
-	ld [hl], "ル"
+	ld [hl], 'ル'
 	inc hl
 	inc hl
-	ld de, wCurEnemyLVL
+	ld de, wCurEnemyLevel
 	lb bc, LEADING_ZEROES | 1, 3
 	call PrintNumber
 	call DelayFrame
 	call JoypadLowSensitivity
 	ldh a, [hJoy5]
-	bit BIT_A_BUTTON, a
+	bit B_PAD_A, a
 	jp nz, Func_ff21b
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jp nz, Func_ff227
-	bit BIT_START, a
+	bit B_PAD_START, a
 	jp nz, Func_ff236
 	jr Func_ff1e7
 
 Func_ff21b:
-	ld a, [wCurEnemyLVL]
+	ld a, [wCurEnemyLevel]
 	inc a
 	cp MAX_LEVEL + 1
 	jr c, Func_ff231
 	ld a, 2
 	jr Func_ff231
 Func_ff227:
-	ld a, [wCurEnemyLVL]
+	ld a, [wCurEnemyLevel]
 	dec a
 	cp 2
 	jr nc, Func_ff231
 	ld a, MAX_LEVEL
 Func_ff231:
-	ld [wCurEnemyLVL], a
+	ld [wCurEnemyLevel], a
 	jr Func_ff1e7
 
 Func_ff236:
@@ -1511,16 +1511,16 @@ Func_ff236:
 	push bc
 	push de
 	ld a, c
-	ld [wd11e], a
+	ld [wPokedexNum], a
 	callfar PokedexToIndex
-	ld a, [wd11e]
+	ld a, [wPokedexNum]
 	ld [wEnemyMonSpecies2], a
-	ld [wcf91], a
+	ld [wCurPartySpecies], a
 	xor a
 	ld [wEnemyBattleStatus3], a
 	callfar LoadEnemyMonData
 	ld a, [wEnemyMonSpecies2]
-	ld [wcf91], a
+	ld [wCurPartySpecies], a
 	callfar SendNewMonToBox
 	pop de
 	pop bc
@@ -1558,7 +1558,7 @@ Func_ff295:
 	call Func_ff2f3
 	pop de
 	ld a, d
-	set 7, a
+	set BIT_HAS_CHANGED_BOXES, a
 	ld [wCurrentBoxNum], a
 	push de
 	call Func_ff2d1
@@ -1566,9 +1566,9 @@ Func_ff295:
 	call Func_ff2f3
 	ld a, [wLetterPrintingDelayFlags]
 	push af
-	ld a, 1
+	ld a, 1 << BIT_FAST_TEXT_DELAY
 	ld [wLetterPrintingDelayFlags], a
-	callfar SaveSAVtoSRAM
+	callfar SaveGameData
 	pop af
 	ld [wLetterPrintingDelayFlags], a
 	pop de
@@ -1601,9 +1601,9 @@ Data_ff2eb:
 
 Func_ff2f3:
 	push hl
-	call Func_ff316
+	call DebugEnableSRAM
 	ld a, b
-	ld [MBC1SRamBank], a
+	ld [rRAMB], a
 	ld bc, sBox2 - sBox1
 	call CopyData
 	pop hl
@@ -1615,20 +1615,20 @@ Func_ff2f3:
 	ld bc, sBox5 - sBox1 + 1
 	call Func_ff32a
 	ld [sBox5], a
-	call Func_ff321
+	call DebugDisableSRAM
 	ret
 
-Func_ff316:
-	ld a, 1
-	ld [MBC1SRamBankingMode], a
-	ld a, SRAM_ENABLE
-	ld [MBC1SRamEnable], a
+DebugEnableSRAM: ; duplicate of EnableSRAM
+	ld a, BMODE_ADVANCED
+	ld [rBMODE], a
+	ld a, RAMG_SRAM_ENABLE
+	ld [rRAMG], a
 	ret
 
-Func_ff321:
+DebugDisableSRAM: ; duplicate of DisableSRAM
 	ld a, 0
-	ld [MBC1SRamBankingMode], a
-	ld [MBC1SRamEnable], a
+	ld [rBMODE], a
+	ld [rRAMG], a
 	ret
 
 Func_ff32a:

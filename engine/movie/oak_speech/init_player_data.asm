@@ -10,7 +10,7 @@ InitPlayerData2:
 	ld [wPlayerID + 1], a
 
 	ld a, $ff
-	ld [wUnusedD71B], a
+	ld [wUnusedPlayerDataByte], a
 
 	ld a, 90 ; initialize happiness to 90
 	ld [wPikachuHappiness], a
@@ -39,7 +39,7 @@ DEF START_MONEY EQU $3000
 
 	ld hl, wObtainedBadges
 	ld [hli], a
-
+	ASSERT wObtainedBadges + 1 == wUnusedObtainedBadges
 	ld [hl], a
 
 	ld hl, wPlayerCoins

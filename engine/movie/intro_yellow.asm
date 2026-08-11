@@ -15,7 +15,7 @@ PlayIntroScene:
 	jr nz, .go_to_title_screen
 	call JoypadLowSensitivity
 	ldh a, [hJoyPressed]
-	and A_BUTTON | B_BUTTON | START
+	and PAD_A | PAD_B | PAD_START
 	jr nz, .go_to_title_screen
 	call Func_f98fc
 	ld a, $0
@@ -43,7 +43,7 @@ PlayIntroScene:
 	ldh [hWY], a
 	call ClearObjectAnimationBuffers
 	ld hl, wTileMap
-	ld bc, SCREEN_WIDTH * SCREEN_HEIGHT
+	ld bc, SCREEN_AREA
 	xor a
 	call Bank3E_FillMemory
 	call YellowIntro_BlankOAMBuffer
@@ -143,9 +143,9 @@ YellowIntroScene0:
 	ldh [rOBP0], a
 	ld a, $c4
 	ldh [rOBP1], a
-	call UpdateGBCPal_BGP
-	call UpdateGBCPal_OBP0
-	call UpdateGBCPal_OBP1
+	call UpdateCGBPal_BGP
+	call UpdateCGBPal_OBP0
+	call UpdateCGBPal_OBP1
 	ld a, 130
 	ld [wYellowIntroSceneTimer], a
 	call YellowIntro_NextScene
@@ -198,7 +198,7 @@ YellowIntroScene2_PlaceGraphic:
 	add $10
 	dec b
 	jr nz, .row
-	ldh a, [hGBC]
+	ldh a, [hOnCGB]
 	and a
 	jr z, .dmg_sgb
 	; We can actually set palettes!
@@ -278,7 +278,7 @@ YellowIntroScene4:
 	call YellowIntro_BlankPalsDelay2AndDisableLCD
 	ld c, $5
 	call UpdateMusicCTimes
-	ldh a, [hGBC]
+	ldh a, [hOnCGB]
 	and a
 	jr z, .dmg_sgb
 	; We can actually set palettes!
@@ -458,9 +458,9 @@ YellowIntroScene10:
 	jr nz, .fill_row
 	ret
 
-Unkn_f9b6e: INCBIN "gfx/intro/unknown_f9b6e.map"
-Unkn_f9be6: INCBIN "gfx/intro/unknown_f9be6.map"
-Unkn_f9bf2: INCBIN "gfx/intro/unknown_f9bf2.map"
+Unkn_f9b6e: INCBIN "gfx/intro/unknown_f9b6e.tilemap"
+Unkn_f9be6: INCBIN "gfx/intro/unknown_f9be6.tilemap"
+Unkn_f9bf2: INCBIN "gfx/intro/unknown_f9bf2.tilemap"
 
 YellowIntroScene11:
 	call YellowIntro_CheckFrameTimerDecrement
@@ -566,24 +566,24 @@ YellowIntroScene14:
 	ldh [rOBP0], a
 	and $f0
 	ldh [rOBP1], a
-	call UpdateGBCPal_BGP
-	call UpdateGBCPal_OBP0
-	call UpdateGBCPal_OBP1
+	call UpdateCGBPal_BGP
+	call UpdateCGBPal_OBP0
+	call UpdateCGBPal_OBP1
 	ret
 
 .expired
 	call MaskAllAnimatedObjectStructs
 	call YellowIntro_BlankOAMBuffer
 	ld hl, wTileMap
-	ld bc, $50
+	ld bc, SCREEN_WIDTH * 4
 	ld a, $1
 	call Bank3E_FillMemory
 	hlcoord 0, 4
-	ld bc, CopyVideoDataAlternate
+	ld bc, SCREEN_WIDTH * 10
 	xor a
 	call Bank3E_FillMemory
 	hlcoord 0, 14
-	ld bc, $50
+	ld bc, SCREEN_WIDTH * 4
 	ld a, $1
 	call Bank3E_FillMemory
 	ld a, $1
@@ -596,8 +596,8 @@ YellowIntroScene14:
 	ld a, $e4
 	ldh [rOBP0], a
 	ldh [rBGP], a
-	call UpdateGBCPal_BGP
-	call UpdateGBCPal_OBP0
+	call UpdateCGBPal_BGP
+	call UpdateCGBPal_OBP0
 	lb de, $58, $58
 	ld a, $7
 	call YellowIntro_SpawnAnimatedObjectAndSavePointer
@@ -619,8 +619,8 @@ YellowIntroScene15:
 	ldh a, [rBGP]
 	xor $3
 	ldh [rBGP], a
-	call UpdateGBCPal_BGP
-	call UpdateGBCPal_OBP0
+	call UpdateCGBPal_BGP
+	call UpdateCGBPal_OBP0
 	ret
 
 .expired
@@ -629,8 +629,8 @@ YellowIntroScene15:
 	ld a, $e4
 	ldh [rBGP], a
 	ldh [rOBP0], a
-	call UpdateGBCPal_BGP
-	call UpdateGBCPal_OBP0
+	call UpdateCGBPal_BGP
+	call UpdateCGBPal_OBP0
 	call YellowIntro_NextScene
 YellowIntroScene16:
 	ld de, YellowIntroPalSequence_f9e0a
@@ -638,8 +638,8 @@ YellowIntroScene16:
 	jr c, .expired
 	ldh [rOBP0], a
 	ldh [rBGP], a
-	call UpdateGBCPal_BGP
-	call UpdateGBCPal_OBP0
+	call UpdateCGBPal_BGP
+	call UpdateCGBPal_OBP0
 	ret
 
 .expired
@@ -750,9 +750,9 @@ YellowIntro_BlankPalsDelay2AndDisableLCD:
 	ldh [rBGP], a
 	ldh [rOBP0], a
 	ldh [rOBP1], a
-	call UpdateGBCPal_BGP
-	call UpdateGBCPal_OBP0
-	call UpdateGBCPal_OBP1
+	call UpdateCGBPal_BGP
+	call UpdateCGBPal_OBP0
+	call UpdateCGBPal_OBP1
 	call DelayFrame
 	call DelayFrame
 	call DisableLCD
@@ -773,9 +773,9 @@ Func_f9e9a:
 	ldh [rOBP0], a
 	ld a, $e0
 	ldh [rOBP1], a
-	call UpdateGBCPal_BGP
-	call UpdateGBCPal_OBP0
-	call UpdateGBCPal_OBP1
+	call UpdateCGBPal_BGP
+	call UpdateCGBPal_OBP0
+	call UpdateCGBPal_OBP1
 	ret
 
 YellowIntro_Copy8BitSineWave:
@@ -823,11 +823,11 @@ InitYellowIntroGFXAndMusic:
 	ldh [hAutoBGTransferDest + 1], a
 	call YellowIntro_BlankTileMap
 	ld hl, wTileMap
-	ld bc, SCREEN_WIDTH * SCREEN_HEIGHT
+	ld bc, SCREEN_AREA
 	ld a, $1
 	call Bank3E_FillMemory
 	hlcoord 0, 4
-	ld bc, CopyVideoDataAlternate
+	ld bc, SCREEN_WIDTH * 10
 	xor a
 	call Bank3E_FillMemory
 	ld a, $1
@@ -881,7 +881,7 @@ LoadYellowIntroObjectAnimationDataPointers:
 
 YellowIntro_BlankTileMap:
 	ld hl, wTileMap
-	ld bc, SCREEN_WIDTH * SCREEN_HEIGHT
+	ld bc, SCREEN_AREA
 	ld a, $7f
 	call Bank3E_FillMemory
 	ret
@@ -922,9 +922,9 @@ YellowIntro_BlankPalettes:
 	ldh [rBGP], a
 	ldh [rOBP0], a
 	ldh [rOBP1], a
-	call UpdateGBCPal_BGP
-	call UpdateGBCPal_OBP0
-	call UpdateGBCPal_OBP1
+	call UpdateCGBPal_BGP
+	call UpdateCGBPal_OBP0
+	call UpdateCGBPal_OBP1
 	ret
 
 YellowIntro_AnimatedObjectSpawnStateData:

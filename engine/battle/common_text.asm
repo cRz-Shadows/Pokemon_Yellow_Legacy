@@ -12,9 +12,9 @@ PrintBeginningBattleText:
 	cp BATTLE_TYPE_PIKACHU
 	jr nz, .notPikachuBattle
 	callfar IsPlayerPikachuAsleepInParty
-	ld e, $24
+	ldpikacry e, PikachuCry37
 	jr c, .asm_f4026
-	ld e, $a
+	ldpikacry e, PikachuCry11
 .asm_f4026
 	callfar PlayPikachuSoundClip
 	jr .continue
@@ -48,7 +48,7 @@ PrintBeginningBattleText:
 	ld b, SILPH_SCOPE
 	call IsItemInBag
 	ld a, [wEnemyMonSpecies2]
-	ld [wcf91], a
+	ld [wCurPartySpecies], a
 	cp RESTLESS_SOUL
 	jr z, .isMarowak
 	ld a, b
