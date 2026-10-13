@@ -16,14 +16,14 @@ _SeafoamIslandsB4FDangerSignText::
 _SeafoamIslandsWeebraBattleText1::
 	text "You gotta be"
 	line "pretty strong"
-	cont "to get this far," 
+	cont "to get this far,"
 	cont "huh?"
-	
+
 	para "Then I guess"
 	line "we don't gotta"
 	cont "pull any punches."
 	done
-	
+
 _SeafoamIslandsWeebraEndBattleText1::
 	text "Nice moves!"
 

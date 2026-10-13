@@ -36,7 +36,7 @@ _VermilionGymRematchPreBattle1Text::
 	text "CHAMPION, huh?"
 	line "I've powered up!"
 
-    para "This'll be a"
+	para "This'll be a"
 	line "surge of power"
 	cont "you've never"
 	cont "seen before!"
@@ -49,7 +49,7 @@ _VermilionGymRematchPreBattle1Text::
 _VermilionGymPreRematchBattle2Text::
 	text "That's the"
 	line "spirit!"
-	
+
 	para "No holding back!"
 	done
 
@@ -66,7 +66,7 @@ _VermilionGymRematchPostBattleText::
 	cont "CHAMPION."
 
 	para "Until next time,"
-    line "stay charged!"
+	line "stay charged!"
 	done
 
 _VermilionGymLTSurgeThunderBadgeInfoText::

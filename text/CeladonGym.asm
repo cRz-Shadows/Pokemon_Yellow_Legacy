@@ -50,7 +50,7 @@ _CeladonGymErikaPostBattleAdviceText::
 _CeladonGymRematchPreBattle1Text::
 	text "You've grown much"
 	line "stronger."
-	
+
 	para "It's inspiring!"
 
 	para "How about a"

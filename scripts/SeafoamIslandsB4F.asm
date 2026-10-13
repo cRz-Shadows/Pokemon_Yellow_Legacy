@@ -178,7 +178,7 @@ SeafoamIslandsWeebraText1:
 	call ArePlayerCoordsInArray
 	jp nc, TextScriptEnd ; if weebra has already moved, don't move
 	jr .skip
-	
+
 WeebraPostBattleScript:
 	ld a, [wIsInBattle]
 	inc a
@@ -221,11 +221,11 @@ MovementData_Weebra:
 	db NPC_MOVEMENT_RIGHT
 	db NPC_MOVEMENT_RIGHT
 	db -1 ; end
-	
+
 SeafoamIslandsWeebraBattleText1:
 	text_far _SeafoamIslandsWeebraBattleText1
 	text_end
-	
+
 SeafoamIslandsWeebraEndBattleText1:
 	text_far _SeafoamIslandsWeebraEndBattleText1
 	text_end

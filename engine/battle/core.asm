@@ -469,45 +469,45 @@ MainInBattleLoop:
 
 HandleMovePriority:
 ; This subroutine modifies registers a, hl, bc, and de
-; The player's priority value will be stored in register c and 
+; The player's priority value will be stored in register c and
 ; the enemy's priority value will be stored in register e.
 ; These values will be compared after the 'ret' instruction is called
 
-        ld a, [wPlayerSelectedMove]
-        ld b, a
-        ld hl, PriorityMovesList
-        ld c, 7           ; no priority is 7
+	ld a, [wPlayerSelectedMove]
+	ld b, a
+	ld hl, PriorityMovesList
+	ld c, 7           ; no priority is 7
 .playerPriorityMoveLoop
-        ld a, [hli]       ; load the move ID from priority list and 
+	ld a, [hli]       ; load the move ID from priority list and
                           ; increment address to the priority value address
-        cp b              ; compare with move being used
-        jr z, .playerUsingPriorityMove
-        inc a             ; if at end of list: -1 + 1 = 0xFF + 0x01 = 0
-        jr z, .noPlayerPriorityMove
-        inc hl            ; increment address to the next move
-        jr .playerPriorityMoveLoop
+	cp b              ; compare with move being used
+	jr z, .playerUsingPriorityMove
+	inc a             ; if at end of list: -1 + 1 = 0xFF + 0x01 = 0
+	jr z, .noPlayerPriorityMove
+	inc hl            ; increment address to the next move
+	jr .playerPriorityMoveLoop
 .playerUsingPriorityMove
-        ld c, [hl]        ; get new priority value 
+	ld c, [hl]        ; get new priority value
 .noPlayerPriorityMove
 
-; Now check enemy priority 
-        ld a, [wEnemySelectedMove]
-        ld d, a
-        ld hl, PriorityMovesList
-        ld e, 7           ; no priority is 7
+; Now check enemy priority
+	ld a, [wEnemySelectedMove]
+	ld d, a
+	ld hl, PriorityMovesList
+	ld e, 7           ; no priority is 7
 .enemyPriorityMoveLoop
-        ld a, [hli]       ; load the move ID from priority list and 
+	ld a, [hli]       ; load the move ID from priority list and
                           ; increment address to the priority value address
-        cp d              ; compare with move being used
-        jr z, .enemyUsingPriorityMove
-        inc a             ; if at end of list: -1 + 1 = 0xFF + 0x01 = 0
-        jr z, .noEnemyPriorityMove
-        inc hl            ; increment address to the next move
-        jr .enemyPriorityMoveLoop
+	cp d              ; compare with move being used
+	jr z, .enemyUsingPriorityMove
+	inc a             ; if at end of list: -1 + 1 = 0xFF + 0x01 = 0
+	jr z, .noEnemyPriorityMove
+	inc hl            ; increment address to the next move
+	jr .enemyPriorityMoveLoop
 .enemyUsingPriorityMove
-        ld e, [hl]        ; get new priority value 
+	ld e, [hl]        ; get new priority value
 .noEnemyPriorityMove
-        ret
+	ret
 
 INCLUDE "data/battle/priority_moves.asm"
 
@@ -4156,14 +4156,14 @@ CheckForDisobedience:
 	cp 5
 	ld a, 50 ; Alakazam's level
 	jr nc, .next
-    cp 4
+	cp 4
 	ld a, 43 ; Venomoth's level
 	jr nc, .next
 	cp 3
 	ld a, 35 ; Vileplume's level
 	jr nc, .next
 	cp 2
-    ld a, 24 ; Bit below Raichu's level
+	ld a, 24 ; Bit below Raichu's level
 	jr nc, .next
 	cp 1
 	ld a, 21 ; Starmie's level
@@ -6491,13 +6491,13 @@ LoadEnemyMonData:
 	ld a, [hl]     ; base exp
 	ld [de], a
 	; Nickname code
-    ld a, [wCurOpponent]
-    cp OPP_CRAIG
-    jr nz, .loadSpeciesName
-    ld hl, .CraigMonsNicks
-    ld a, [wWhichPokemon]
-    call SkipFixedLengthTextEntries
-    jr .copyNick
+	ld a, [wCurOpponent]
+	cp OPP_CRAIG
+	jr nz, .loadSpeciesName
+	ld hl, .CraigMonsNicks
+	ld a, [wWhichPokemon]
+	call SkipFixedLengthTextEntries
+	jr .copyNick
 .loadSpeciesName
 	ld a, [wEnemyMonSpecies2]
 	ld [wd11e], a
@@ -6881,9 +6881,9 @@ ApplyBadgeStatBoosts:
 	rr e
 	srl d
 	rr e
-    ld a, [wBattleMonSpecies] ; Check if the species is Pikachu
-    cp PIKACHU
-    jr nz, .continue ; times by 1.25 if its Pikachu
+	ld a, [wBattleMonSpecies] ; Check if the species is Pikachu
+	cp PIKACHU
+	jr nz, .continue ; times by 1.25 if its Pikachu
 	srl d
 	rr e
 .continue

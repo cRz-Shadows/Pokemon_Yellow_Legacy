@@ -34,14 +34,14 @@ _GameCornerPrizeRoomClerkDoYouNeedSomeGameCoinsText::
 	text "That clerk next"
 	line "door is so slow"
 	cont "giving out coins"
-	
+
 	para "that I can make a"
 	line "profit selling"
 	cont "them in bulk."
-	
+
 	para "It's ¥11000 for 500"
 	line "coins."
-	
+
 	para "Want some?"
 	done
 

@@ -1,5 +1,5 @@
 TypeEffects:
-	;  attacker,     defender,     *=	
+	;  attacker,     defender,     *=
 	db NORMAL,       ROCK,         NOT_VERY_EFFECTIVE
 	db NORMAL,		 STEEL,		   NOT_VERY_EFFECTIVE
 	db NORMAL,       GHOST,        NO_EFFECT
@@ -70,7 +70,7 @@ TypeEffects:
 	db FLYING,       GRASS,        SUPER_EFFECTIVE
 	db FLYING,       FIGHTING,     SUPER_EFFECTIVE
 	db FLYING,       BUG,          SUPER_EFFECTIVE
-	db FLYING,       ELECTRIC,     NOT_VERY_EFFECTIVE	
+	db FLYING,       ELECTRIC,     NOT_VERY_EFFECTIVE
 	db FLYING,       ROCK,         NOT_VERY_EFFECTIVE
 	db PSYCHIC_TYPE, FIGHTING,     SUPER_EFFECTIVE
 	db PSYCHIC_TYPE, POISON,       SUPER_EFFECTIVE

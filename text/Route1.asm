@@ -32,7 +32,7 @@ _Route1Youngster1NoRoomText::
 
 _Route1Youngster2Text::
 	text "Do you know"
-	line "about STAT" 
+	line "about STAT"
 	cont "experience?"
 
 	para "When a #MON"
@@ -61,7 +61,7 @@ _Route1SignText::
 
 _OakBeforeBattleText::
 	text "OAK: Oh, my!"
-	
+
 	para "It seems you"
 	line "caught me during"
 	cont "my lunch hour!"

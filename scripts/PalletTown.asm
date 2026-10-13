@@ -296,7 +296,7 @@ PalletTownGirlText:
 	text_end
 
 PalletTownFisherText:
-	text_far _PalletTownFisherText 
+	text_far _PalletTownFisherText
 	text_end
 
 PalletTownOaksLabSignText:

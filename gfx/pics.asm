@@ -383,7 +383,7 @@ SECTION "Trainer Pics 3", ROMX
 JaninePic::        INCBIN "gfx/trainers/janine.pic"
 JoyPic::           INCBIN "gfx/trainers/joy.pic"
 JennyPic::         INCBIN "gfx/trainers/jenny.pic"
-    
+
 
 SECTION "Pics 7", ROMX
 

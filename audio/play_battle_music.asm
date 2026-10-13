@@ -25,7 +25,7 @@ PlayBattleMusic::
 	cp OPP_AGATHA
 	jr z, .GymLeaderBattle
 	cp OPP_PROF_OAK
-	jr z, .finalBattle 
+	jr z, .finalBattle
 	jr .normalTrainerBattle
 .GymLeaderBattle
 	ld a, MUSIC_GYM_LEADER_BATTLE

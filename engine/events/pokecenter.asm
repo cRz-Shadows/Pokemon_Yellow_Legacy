@@ -129,7 +129,7 @@ DisplayPokemonCenterDialogue_::
 .naotenho
 	ld hl, TemPokemonOuNao
 	jp PrintText
-	
+
 TemPokemonOuNao:
 	text_far _TemPokemonOuNao
 	text_end

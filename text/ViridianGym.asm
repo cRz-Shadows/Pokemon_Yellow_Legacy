@@ -231,7 +231,7 @@ _ViridianGymGuidePreBattleText::
 	line "rumor that"
 	cont "this LEADER"
 	cont "is quite wealthy."
-	
+
 	para "You should expect"
 	line "to see a lot"
 	cont "of TM moves if"

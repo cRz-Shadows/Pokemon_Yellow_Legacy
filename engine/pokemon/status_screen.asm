@@ -130,7 +130,7 @@ StatusScreen:
 	add hl, bc
 	call DVParse
 	call Joypad
-	
+
 	ld a, [hJoyHeld]
 	and SELECT | START
 	jr z, .noblank
@@ -145,7 +145,7 @@ StatusScreen:
 	ld [hli], a
 	pop hl
 .noblank
-	
+
 	ld a, [hJoyHeld]
 	bit BIT_SELECT, a
 	jr z, .checkstart
@@ -582,8 +582,8 @@ DVParse:
 	sla a
 	or b
 	ld b, a
-	
-	
+
+
 	ld a, [wLoadedMonDVs]	;get defense dv
 	and $0F
 	ld [hl], a
@@ -593,7 +593,7 @@ DVParse:
 	sla a
 	or b
 	ld b, a
-	
+
 	ld a, [wLoadedMonDVs + 1]	;get speed dv
 	swap a
 	and $0F
@@ -603,7 +603,7 @@ DVParse:
 	sla a
 	or b
 	ld b, a
-	
+
 	ld a, [wLoadedMonDVs + 1]	;get special dv
 	and $0F
 	ld [hl], a
@@ -613,7 +613,7 @@ DVParse:
 	ld b, a
 
 	ld [hl], b	;load hp dv
-	
+
 	pop bc
 	pop hl
 	ret

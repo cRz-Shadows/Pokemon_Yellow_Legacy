@@ -716,7 +716,7 @@ PrepareRelearnableMoveList:: ; I don't know how the fuck you're a single colon i
 	pop de
 	pop bc
 	jr .loop
-.done	
+.done
 
 
 ;joenote - start checking for level-0 moves
@@ -731,7 +731,7 @@ PrepareRelearnableMoveList:: ; I don't know how the fuck you're a single colon i
 	ld a, [hl]	;load move
 	and a
 	jr z, .done2	;if move has id 0, list has reached the end early. move to done2.
-	
+
 	;check if the move is already in the learnable move list
 	push bc
 	push hl
@@ -759,7 +759,7 @@ PrepareRelearnableMoveList:: ; I don't know how the fuck you're a single colon i
 .end_buffer_loop
 	pop hl
 	pop bc
-	
+
 	;Check if move is already known by our mon.
 	push bc
 	ld a, [hl] ; move id
@@ -796,14 +796,14 @@ PrepareRelearnableMoveList:: ; I don't know how the fuck you're a single colon i
 	inc hl	;increment to the next level-0 move
 	inc b	;increment the loop counter
 	jr .loop2
-	
+
 .knowsMove2
 	pop de
 	pop bc
 	inc hl	;increment to the next level-0 move
 	inc b	;increment the loop counter
 	jr .loop2
-	
+
 .done2
 	ld b, 0
 	ld hl, wMoveBuffer + 1
@@ -867,7 +867,7 @@ PrepareLevelUpMoveList:: ; I don't know how the fuck you're a single colon in sh
 	inc b	;increment the loop counter
 	jr .loop2
 .done2
-	
+
 	push bc
 	; Get pointer to evos moves data.
 	ld a, [wWhichPokemon]
@@ -914,7 +914,7 @@ PrepareLevelUpMoveList:: ; I don't know how the fuck you're a single colon in sh
 .debug
 	ret
 
-; shinpokerednote: ADDED: Stores the player's pokemon levels into wStartBattleLevels. 
+; shinpokerednote: ADDED: Stores the player's pokemon levels into wStartBattleLevels.
 ; Used to track the levels at the beginning of battle so when evolving pokemon their learnsets can factor in multiple level-ups.
 StorePKMNLevels:
 	push hl
@@ -927,7 +927,7 @@ StorePKMNLevels:
 	ld de, wStartBattleLevels
 .loopStorePKMNLevels
 	ld a, [hl]
-	ld [de], a	
+	ld [de], a
 	dec b
 	jr z, .doneStorePKMNLevels
 	push bc

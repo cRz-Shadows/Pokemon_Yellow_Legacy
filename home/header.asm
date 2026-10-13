@@ -2,7 +2,7 @@
 
 SECTION "rst0", ROM0[$0000]
 _Bankswitch::
-    jp Bankswitch
+	jp Bankswitch
 
 	ds $08 - @, 0 ; unused
 

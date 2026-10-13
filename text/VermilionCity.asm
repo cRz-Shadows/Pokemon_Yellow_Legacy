@@ -159,7 +159,7 @@ _JennyAcceptedText::
 	done
 
 _JennyAfterBattleText::
-    text "Incredible!"
+	text "Incredible!"
 
 	para "You and SQUIRTLE"
 	line "are unstoppable!"
@@ -167,7 +167,7 @@ _JennyAfterBattleText::
 	para "Keep up the"
 	line "great work,"
 	cont "CHAMPION!"
-    done
+	done
 
 _VermilionCitySignText::
 	text "VERMILION CITY"

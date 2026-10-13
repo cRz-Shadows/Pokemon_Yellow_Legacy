@@ -529,7 +529,7 @@ wSlotMachineSavedROMBank:: db
 wMoveBuffer::
 wRelearnableMoves::
 	ds 164
-; Try not to use this stack. 
+; Try not to use this stack.
 ; A good amount of space is needed to store data for the move relearner.
 ; If it's like, 2, it'll lag like crazy and show garbage from elsewhere.
 
@@ -2000,7 +2000,7 @@ wUnusedD366:: db
 
 wCurMapHeader::
 wCurMapTileset:: db
-wCurMapHeight:: db 
+wCurMapHeight:: db
 wCurMapWidth:: db
 wCurMapDataPtr:: dw
 wCurMapTextPtr:: dw
@@ -2331,7 +2331,7 @@ wPlayerGender::
 	; $00 = male
 	; $01 = female
 		ds 1
-	
+
 	ds 54 ; unused
 
 wObtainedHiddenItemsFlags:: flag_array 112
@@ -2498,7 +2498,7 @@ wFirstLockTrashCanIndex:: db
 wSecondLockTrashCanIndex:: db
 
 	ds 1
-	
+
 wGameStage:: db
 	; $00 = before champion fight
 	; $01 = post game
@@ -2552,7 +2552,7 @@ ENDU
 wTrainerHeaderPtr:: dw
 
 ; Used on the new status screen
-wDVCalcVar1:: 
+wDVCalcVar1::
 	ds 2
 
 wDVCalcVar2::

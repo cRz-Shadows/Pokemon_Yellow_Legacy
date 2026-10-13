@@ -21,38 +21,38 @@ _FuchsiaPokecenterCooltrainerFText::
 
 _NurseJoyBattleText::
 	text "Actually..."
-    line "Before you go,"
+	line "Before you go,"
 
-    para "I've always"
-    line "dreamed of"
+	para "I've always"
+	line "dreamed of"
 
-    para "becoming a"
-    line "#MON MASTER,"
+	para "becoming a"
+	line "#MON MASTER,"
 
-    para "but my duties"
-    line "here make it"
-    
+	para "but my duties"
+	line "here make it"
+
 	para "hard to travel"
-    line "and collect"
-    cont "badges."
+	line "and collect"
+	cont "badges."
 
 	para "It would be a"
-    line "great honor to"
-    cont "test my skills"
+	line "great honor to"
+	cont "test my skills"
 
-    para "against the new"
-    line "CHAMPION."
+	para "against the new"
+	line "CHAMPION."
 
-    para "Could I ask for"
-    line "a battle?"
+	para "Could I ask for"
+	line "a battle?"
 	done
 
 _NurseJoyBattleText2::
-    text "Actually..."
-    line "Before you go,"
+	text "Actually..."
+	line "Before you go,"
 
-    para "Could I ask for"
-    line "another battle?"
+	para "Could I ask for"
+	line "another battle?"
 	done
 
 _NurseJoyRefusedText::
@@ -69,27 +69,27 @@ _NurseJoyAcceptedText::
 
 	para "This means"
 	line "a lot to me."
-	
+
 	para "Let's give it"
-    line "our best shot!"
+	line "our best shot!"
 	done
 
 _NurseJoyAfterBattleText::
-    text "That was amazing!"
+	text "That was amazing!"
 
-    para "Your strength and"
-    line "bond with your"
-    cont "#MON is"
+	para "Your strength and"
+	line "bond with your"
+	cont "#MON is"
 	cont "inspiring."
 
-    para "This battle has"
-    line "taught me so"
+	para "This battle has"
+	line "taught me so"
 	cont "much."
 
 	para "Thank you for"
-    line "this opportunity!"
+	line "this opportunity!"
 
 	para "I hope we can"
-    line "battle again"
-    cont "sometime!"
-    done
+	line "battle again"
+	cont "sometime!"
+	done

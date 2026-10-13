@@ -92,10 +92,10 @@ _ChampionsRoomRivalRematchIntroText::
 	cont "take you down!"
 
 	para "Ready to hand"
-    line "over that title?"
+	line "over that title?"
 
-    para "Let's do this!"
-    line "No holding back!"
+	para "Let's do this!"
+	line "No holding back!"
 	done
 
 _RivalRematchDefeatedText::
@@ -123,7 +123,7 @@ _RivalRematchVictoryText::
 
 _ChampionsRoomRivalRematchAfterBattleText::
 	text "Fine, you win."
-	line "You're the best," 
+	line "You're the best,"
 	cont "<PLAYER>."
 
 	para "But I won't give"
@@ -224,7 +224,7 @@ _ChampionsRoomRematchOakDisappointedWithRivalText::
 
 	para "I had hoped for"
 	line "a better outcome."
-	
+
 	para "but I see you"
 	line "have fallen"
 	cont "short once more!"

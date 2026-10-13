@@ -265,14 +265,14 @@ DisplayChooseQuantityMenu::
 	ld a, [wMaxItemQuantity]
 	ld b, a
 	ld a, [wItemQuantity]
-    add a, 10
-    cp b
-    jr nc, .maxQuantity ; if number goes grater than max, set it to max
-    ld [wItemQuantity], a 
-    jr .handleNewQuantity
+	add a, 10
+	cp b
+	jr nc, .maxQuantity ; if number goes grater than max, set it to max
+	ld [wItemQuantity], a
+	jr .handleNewQuantity
 .maxQuantity
-    ld a, b
-    ld [wItemQuantity], a
+	ld a, b
+	ld [wItemQuantity], a
 	jr .handleNewQuantity
 .incrementQuantity
 	ld a, [wMaxItemQuantity]

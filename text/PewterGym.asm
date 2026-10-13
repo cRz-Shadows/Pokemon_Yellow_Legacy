@@ -41,7 +41,7 @@ _PewterGymBrockPostBattleAdviceText::
 _PewterGymRematchPreBattle1Text::
 	text "Since our last"
 	line "battle, my"
-	
+
 	para "#MON have"
 	line "grown!"
 
@@ -199,7 +199,7 @@ _PewterGymGuideAdviceText::
 	line "it can throw"
 	cont "rocks with high"
 	cont "accuracy!"
-	
+
 	para "His ONIX is"
 	line "all defense!"
 	cont "Watch out for"
@@ -238,7 +238,7 @@ _PewterGymGuyText::
 	line "it can throw"
 	cont "rocks with high"
 	cont "accuracy!"
-	
+
 	para "His ONIX is"
 	line "all defense!"
 	cont "Watch out for"

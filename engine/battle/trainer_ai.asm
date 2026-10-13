@@ -7,7 +7,7 @@ AIEnemyTrainerChooseMoves:
 	ld [hli], a   ; move 2
 	ld [hli], a   ; move 3
 	ld [hl], a    ; move 4
-	
+
 ;;;;;;;;;; shinpokerednote: ADDED: make a backup buffer
 	push hl
 	ld a, $ff
@@ -193,7 +193,7 @@ AIMoveChoiceModification1:
 .notImmune
 	ld a, [wAITargetMonStatus] ; set to the pokemon's current status before it gets healed or before it switches out
 	and a
-	jr nz, .discourage ; if the AI thinks the player has a status, they should avoid using status moves 
+	jr nz, .discourage ; if the AI thinks the player has a status, they should avoid using status moves
 					   ; even if the player heals the status or switches out that turn
 	ld a, [wAIMoveSpamAvoider] ; set if we switched or healed this turn
 	cp 2 ; set to 2 if we switched
@@ -223,7 +223,7 @@ AIMoveChoiceModification1:
 .checkAsleep
 	ld a, [wAITargetMonStatus]
 	and SLP_MASK
-	jp nz, .nextMove ; if we just healed sleep or switched out a sleeping pokemon, 
+	jp nz, .nextMove ; if we just healed sleep or switched out a sleeping pokemon,
 					 ; the AI shouldn't predict this perfectly when deciding whether to use dream eater
 	ld a, [wBattleMonStatus]
 	and SLP_MASK
@@ -299,7 +299,7 @@ CheckSeeded:
 	ld hl, wBattleMonType1
 	jr nz, .noSwitchOut
 	ld hl, wAITargetMonType1 ; stores what the AI thinks the player's type is when a switchout happens
-.noSwitchOut	
+.noSwitchOut
 	ld a, [hl]
 	cp GRASS
 	jr z, .discourage ; leech seed does not affect grass types
@@ -313,7 +313,7 @@ CheckSeeded:
 .discourage
 	pop hl
 	scf
-	ret	
+	ret
 
 ;;;;;;;;;;
 
@@ -362,7 +362,7 @@ CheckStatusImmunity:
 	pop hl
 	pop bc
 	scf
-	ret 
+	ret
 ;;;;;;;;;;
 
 ;;;;;;;;;; PureRGBnote: ADDED: function that allows AI to avoid OHKO moves if they will never do anything to the player's pokemon due to speed differences
@@ -443,12 +443,12 @@ Modifier2PreferredMoves:
 	db -1 ; end
 
 ; PureRGBnote: CHANGED: AKA the "Use Effective damaging moves offensively" subroutine
-; encourages moves that are effective against the player's mon if they do damage. 
+; encourages moves that are effective against the player's mon if they do damage.
 ; discourage damaging moves that are ineffective or not very effective against the player's mon,
 ; unless there's no damaging move that deals at least neutral damage
 ; encourage effective or super effective priority moves if the pokemon is slower than the player's pokemon (but only after obtaining 5 badges)
 ; encourage effective or super effective draining moves to be used at low health
-; PureRGBnote: FIXED: this subroutine won't cause the AI to prefer status moves 
+; PureRGBnote: FIXED: this subroutine won't cause the AI to prefer status moves
 ;                     just because their type is super effective against the opponent. Like spamming agility on a poison pokemon.
 AIMoveChoiceModification3:
 	ld hl, wBuffer - 1 ; temp move selection array (-1 byte offset)
@@ -570,7 +570,7 @@ EncourageDrainingMoveIfLowHealth:
 	ret
 
 ; PureRGBnote: ADDED: AKA the "Apply Status and Heal when needed" subroutine
-; slightly encourage moves with specific effects. 
+; slightly encourage moves with specific effects.
 ; This one will make the opponent want to use status applying moves when you don't have one.
 ; It also makes them want to use dream eater if you're asleep, and want to use a recovery move at low health.
 AIMoveChoiceModification4:
@@ -609,7 +609,7 @@ AIMoveChoiceModification4:
 	and a
 	jr z, .preferMove
 	ld a, [hl]
-	add $5 
+	add $5
 	ld [hl], a ; heavily discourage using a status move right after the player switched or healed
 	jr .nextMove
 .preferMove
@@ -688,7 +688,7 @@ TrainerAI:
 	bit NEEDS_TO_RECHARGE, a
 	ret nz
 	ld a, [wEnemyBattleStatus1]
-	and %01110010 
+	and %01110010
 	ret nz
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -1104,7 +1104,7 @@ AICheckIfHPBelowFractionStore::
 .below
 	ld a, 1
 .done
-	ld [wUnusedC000], a 
+	ld [wUnusedC000], a
 	ret
 
 AICheckIfHPBelowFractionWrapped:
@@ -1202,7 +1202,7 @@ AIBattleUseItemText:
 	text_far _AIBattleUseItemText
 	text_end
 
-;;;;;;;;;; PureRGBnote: ADDED: these wram properties are used to make sure the 
+;;;;;;;;;; PureRGBnote: ADDED: these wram properties are used to make sure the
 ;;;;;;;;;;                     AI doesn't instantly read the player's current pokemon type after a player switches.
 ;;;;;;;;;;                     makes sure the AI doesn't appear to predict all your switch-outs of pokemon.
 StoreBattleMonTypes:
@@ -1218,7 +1218,7 @@ StoreBattleMonTypes:
 
 ; Used by the pureRGB AI
 ;shinpokerednote: ADDED: doubles attack if burned or quadruples speed if paralyzed.
-;It's meant to be run right before healing paralysis or burn so as to 
+;It's meant to be run right before healing paralysis or burn so as to
 ;undo the stat changes.
 UndoBurnParStats:
 	ld hl, wBattleMonStatus
@@ -1230,7 +1230,7 @@ UndoBurnParStats:
 	ld de, wEnemyStatsToDouble
 .checkburn
 	ld a, [hl]		;load statuses
-	and 1 << BRN	;test for burn 
+	and 1 << BRN	;test for burn
 	jr z, .checkpar
 	ld a, $01
 	ld [de], a	;set attack to be doubled to undo the stat change of BRN
@@ -1238,7 +1238,7 @@ UndoBurnParStats:
 	jr .return
 .checkpar
 	ld a, [hl]		;load statuses
-	and 1 << PAR	;test for paralyze 
+	and 1 << PAR	;test for paralyze
 	jr z, .return
 	ld a, $04
 	ld [de], a	;set speed to be doubled (done twice) to undo the stat change of BRN

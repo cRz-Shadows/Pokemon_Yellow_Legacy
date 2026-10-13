@@ -47,7 +47,7 @@ LoadSpinnerArrowTiles::
 	pop af
 	dec a
 	jr nz, .loop
-	call DelayFrame ;Delay a frame because CopySpinnerTiles does not do this 
+	call DelayFrame ;Delay a frame because CopySpinnerTiles does not do this
 	ret
 
 CopySpinnerTiles:
@@ -75,8 +75,8 @@ CopySpinnerTiles:
 	pop de
 .waitVRAM
 	ldh a, [rSTAT]		;read from stat register to get the mode
-	and %10				
-	jr nz, .waitVRAM	
+	and %10
+	jr nz, .waitVRAM
 	ld [hl], e
 	inc l
 	ld [hl], d

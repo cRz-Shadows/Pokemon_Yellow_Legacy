@@ -306,7 +306,7 @@ ItemSortList::
 	db X_SPEED
 	db X_SPECIAL
 	db GUARD_SPEC
-	db DIRE_HIT	
+	db DIRE_HIT
 	; Permanent Raises
 	db RARE_CANDY
 	db HP_UP

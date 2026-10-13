@@ -342,7 +342,7 @@ ReadTileFromVram:
 	;move to proper y coordinate
 	push de
 	ld de, $0020
-.loop	
+.loop
 	sub 1
 	jr c, .endloop
 	add hl, de
