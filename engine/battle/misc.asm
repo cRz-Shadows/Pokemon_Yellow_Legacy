@@ -8,13 +8,13 @@ FormatMovesString:
 	and a ; end of move list?
 	jr z, .printDashLoop ; print dashes when no moves are left
 	push hl
-	ld [wd0b5], a
+	ld [wNameListIndex], a
 	ld a, BANK(MoveNames)
 	ld [wPredefBank], a
 	ld a, MOVE_NAME
 	ld [wNameListType], a
 	call GetName
-	ld hl, wcd6d
+	ld hl, wNameBuffer
 .copyNameLoop
 	ld a, [hli]
 	cp $50
@@ -92,9 +92,9 @@ InitList:
 	ld a, h
 	ld [wListPointer + 1], a
 	ld a, e
-	ld [wUnusedCF8D], a
+	ld [wUnusedNamePointer], a
 	ld a, d
-	ld [wUnusedCF8D + 1], a
+	ld [wUnusedNamePointer + 1], a
 	ld bc, ItemPrices
 	ld a, c
 	ld [wItemPrices], a

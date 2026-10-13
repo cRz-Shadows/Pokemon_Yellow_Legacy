@@ -29,16 +29,16 @@ OakPostBattleScript:
 	jr z, .skip	;Kick out if the player lost.
 
 	ld a, TEXT_ROUTE1_OAK_POST_BATTLE
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 
 	call GBFadeOutToBlack
 	SetEvent EVENT_BEAT_ROUTE_1_OAK
 	ld a, HS_OAKS_LAB_OAK_1
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef ShowObject
 	ld a, HS_ROUTE_1_OAK
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	call UpdateSprites
 	call Delay3
@@ -78,7 +78,7 @@ Route1OakText:
 	ld a, MUSIC_MEET_MALE_TRAINER
 	call PlayMusic
 
-	ld hl, wd72d
+	ld hl, wStatusFlags3
 	set 6, [hl]
 	set 7, [hl]
 

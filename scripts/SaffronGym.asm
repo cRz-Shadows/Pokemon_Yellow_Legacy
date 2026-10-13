@@ -48,20 +48,20 @@ SaffronGymSabrinaPostBattle:
 ; fallthrough
 SaffronGymSabrinaReceiveTM46Script:
 	ld a, TEXT_SAFFRONGYM_SABRINA_MARSH_BADGE_INFO
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	SetEvent EVENT_BEAT_SABRINA
 	lb bc, TM_PSYWAVE, 1
 	call GiveItem
 	jr nc, .BagFull
 	ld a, TEXT_SAFFRONGYM_SABRINA_RECEIVED_TM46
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	SetEvent EVENT_GOT_TM46
 	jr .gymVictory
 .BagFull
 	ld a, TEXT_SAFFRONGYM_SABRINA_TM46_NO_ROOM
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 .gymVictory
 	ld hl, wObtainedBadges
@@ -76,7 +76,7 @@ SaffronGymSabrinaReceiveTM46Script:
 
 SabrinaRematchPostBattle:
 	ld a, TEXT_SAFFRONGYM_REMATCH_POST_BATTLE
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	jp SaffronGymResetScripts
 
@@ -133,7 +133,7 @@ SaffronGymSabrinaText:
 .beforeBeat
 	ld hl, .Text
 	call PrintText
-	ld hl, wd72d
+	ld hl, wStatusFlags3
 	set 6, [hl]
 	set 7, [hl]
 	ld hl, .ReceivedMarshBadgeText

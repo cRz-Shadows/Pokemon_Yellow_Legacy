@@ -49,14 +49,14 @@ RocketHideoutB4FBeatGiovanniScript:
 	ld [wJoyIgnore], a
 	SetEvent EVENT_BEAT_ROCKET_HIDEOUT_GIOVANNI
 	ld a, TEXT_ROCKETHIDEOUTB4F_GIOVANNI_HOPE_WE_MEET_AGAIN
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	call GBFadeOutToBlack
 	ld a, HS_ROCKET_HIDEOUT_B4F_GIOVANNI
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	ld a, HS_ROCKET_HIDEOUT_B4F_ITEM_4
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef ShowObject
 	call UpdateSprites
 	call GBFadeInFromBlack
@@ -108,7 +108,7 @@ RocketHideoutB4FScript_455a5:
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	ld a, TEXT_ROCKETHIDEOUTB4F_TEXT11
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	xor a
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
@@ -137,7 +137,7 @@ RocketHideoutB4FScript4:
 	ld de, RocketHideoutB4FJessieJamesMovementData_45606
 .asm_45617
 	ld a, ROCKETHIDEOUTB4F_JAMES
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call MoveSprite
 	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
 	ld [wJoyIgnore], a
@@ -148,7 +148,7 @@ RocketHideoutB4FScript4:
 RocketHideoutB4FScript5:
 	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
 	ld [wJoyIgnore], a
-	ld a, [wd730]
+	ld a, [wStatusFlags5]
 	bit 0, a
 	ret nz
 RocketHideoutB4FScript6:
@@ -171,7 +171,7 @@ RocketHideoutB4FScript7:
 	ld de, RocketHideoutB4FJessieJamesMovementData_45605
 .asm_4565f
 	ld a, ROCKETHIDEOUTB4F_JESSIE
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call MoveSprite
 	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
 	ld [wJoyIgnore], a
@@ -182,7 +182,7 @@ RocketHideoutB4FScript7:
 RocketHideoutB4FScript8:
 	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
 	ld [wJoyIgnore], a
-	ld a, [wd730]
+	ld a, [wStatusFlags5]
 	bit 0, a
 	ret nz
 	ld a, SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
@@ -199,10 +199,10 @@ RocketHideoutB4FScript9:
 .asm_45697
 	call Delay3
 	ld a, TEXT_ROCKETHIDEOUTB4F_TEXT12
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 RocketHideoutB4FScript10:
-	ld hl, wd72d
+	ld hl, wStatusFlags3
 	set 6, [hl]
 	set 7, [hl]
 	ld hl, RocketHideoutB4FJessieJamesEndBattleText
@@ -237,7 +237,7 @@ RocketHideoutB4FScript11:
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	ld a, TEXT_ROCKETHIDEOUTB4F_TEXT13
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	xor a
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
@@ -277,14 +277,14 @@ RocketHideoutB4FScript13:
 	ret
 
 RocketHideoutB4FScript_ShowObject:
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef ShowObject
 	call UpdateSprites
 	call Delay3
 	ret
 
 RocketHideoutB4FScript_HideObject:
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	ret
 
@@ -350,7 +350,7 @@ RocketHideoutB4FGiovanniText:
 	jp nz, .beat_giovanni
 	ld hl, .ImpressedYouGotHereText
 	call PrintText
-	ld hl, wd72d
+	ld hl, wStatusFlags3
 	set 6, [hl]
 	set 7, [hl]
 	ld hl, .WhatCannotBeText
@@ -391,16 +391,16 @@ RocketHideoutB4FRocketText:
 	jp TextScriptEnd
 
 RocketHideoutB4FRocketBattleText:
-	text_far _RocketHideoutB4FRocket2BattleText
+	text_far _RocketHideoutB4FRocketBattleText
 	text_end
 
 RocketHideoutB4FRocketEndBattleText:
-	text_far _RocketHideoutB4FRocket2EndBattleText
+	text_far _RocketHideoutB4FRocketEndBattleText
 	text_promptbutton
 	text_asm
 	SetEvent EVENT_ROCKET_DROPPED_LIFT_KEY
 	ld a, HS_ROCKET_HIDEOUT_B4F_ITEM_5
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef ShowObject
 	jp TextScriptEnd
 
@@ -411,5 +411,5 @@ RocketHideoutB4FRocketAfterBattleText:
 	jp TextScriptEnd
 
 .Text:
-	text_far _RocketHideoutB4FRocket2AfterBattleText
+	text_far _RocketHideoutB4FRocketAfterBattleText
 	text_end

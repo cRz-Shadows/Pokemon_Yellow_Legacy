@@ -29,8 +29,8 @@ CeruleanMelanieHouseMelanieText:
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	ld a, BULBASAUR
-	ld [wd11e], a
-	ld [wcf91], a
+	ld [wNamedObjectIndex], a
+	ld [wCurPartySpecies], a
 	call GetMonName
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
@@ -45,7 +45,7 @@ CeruleanMelanieHouseMelanieText:
 	ld hl, CeruleanHouse1Text_1cfd3
 	call PrintText
 	ld a, HS_CERULEAN_BULBASAUR
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	SetEvent EVENT_GOT_BULBASAUR_IN_CERULEAN
 .asm_1cfb3

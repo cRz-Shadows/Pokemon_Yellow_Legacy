@@ -10,13 +10,13 @@ NamePointers::
 
 GetName::
 ; arguments:
-; [wd0b5] = which name
+; [wNameListIndex] = which name
 ; [wNameListType] = which list
 ; [wPredefBank] = bank of list
 ;
 ; returns pointer to name in de
-	ld a, [wd0b5]
-	ld [wd11e], a
+	ld a, [wNameListIndex]
+	ld [wNamedObjectIndex], a
 
 	; TM names are separate from item names.
 	; BUG: This applies to all names instead of just items.
@@ -35,7 +35,7 @@ GetName::
 ;joenote - do some stuff if the item is a machine
 	jr c, .notMachine
 	sub (HM01 - 1)	;need to shift things because tm and hm constants are offset by +$C3 from the first item constant
-	ld [wd0b5], a
+	ld [wNameListIndex], a
 	ld a, TMHM_NAME
 	ld [wNameListType], a
 .notMachine
@@ -78,7 +78,7 @@ GetName::
 	ld h, a
 	ldh a, [hSwapTemp + 1]
 	ld l, a
-	ld a, [wd0b5]
+	ld a, [wNameListIndex]
 	ld b, a ; wanted entry
 	ld c, 0 ; entry counter
 .nextName
@@ -94,11 +94,11 @@ GetName::
 	jr nz, .nextName
 	ld h, d
 	ld l, e
-	ld de, wcd6d
+	ld de, wNameBuffer
 	ld bc, NAME_BUFFER_LENGTH
 	call CopyData
 .gotPtr
-	ld a, [wd11e]
+	ld a, [wNamedObjectIndex]
 	cp HM01
 	jr c, .notMachine2
 	ld a, ITEM_NAME	;this needs to be reset because machines can be in the same listings as items

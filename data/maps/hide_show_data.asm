@@ -1,284 +1,284 @@
 ; default hidden/shown objects for each map
 
-MapHSPointers:
+ToggleableObjectMapPointers:
 ; entries correspond to map ids
-	table_width 2, MapHSPointers
-	dw PalletTownHS
-	dw ViridianCityHS
-	dw PewterCityHS
-	dw CeruleanCityHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw SaffronCityHS
-	dw NoHS
+	table_width 2, ToggleableObjectMapPointers
+	dw ToggleData_PALLET_TOWN
+	dw ToggleData_VIRIDIAN_CITY
+	dw ToggleData_PEWTER_CITY
+	dw ToggleData_CERULEAN_CITY
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw ToggleData_SAFFRON_CITY
+	dw NoToggleData
 	dw Route1HS
-	dw Route2HS
-	dw NoHS
-	dw Route4HS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw Route9HS
-	dw NoHS
-	dw NoHS
-	dw Route12HS
-	dw NoHS
-	dw NoHS
-	dw Route15HS
-	dw Route16HS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw Route22HS
-	dw NoHS
-	dw Route24HS
-	dw Route25HS
+	dw ToggleData_ROUTE_2
+	dw NoToggleData
+	dw ToggleData_ROUTE_4
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw ToggleData_ROUTE_9
+	dw NoToggleData
+	dw NoToggleData
+	dw ToggleData_ROUTE_12
+	dw NoToggleData
+	dw NoToggleData
+	dw ToggleData_ROUTE_15
+	dw ToggleData_ROUTE_16
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw ToggleData_ROUTE_22
+	dw NoToggleData
+	dw ToggleData_ROUTE_24
+	dw ToggleData_ROUTE_25
 	dw RedsHouse1F
-	dw NoHS
-	dw BluesHouseHS
-	dw OaksLabHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw ViridianGymHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw ViridianForestHS
-	dw Museum1FHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw MtMoon1FHS
-	dw NoHS
-	dw MtMoonB2FHS
-	dw NoHS
-	dw CeruleanMelaniesHouseHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw PowerPlantHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw BillsHouseHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw SSAnne2FHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw SSAnne1FRoomsHS
-	dw SSAnne2FRoomsHS
-	dw SSAnneB1FRoomsHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw VictoryRoad1FHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
+	dw NoToggleData
+	dw ToggleData_BLUES_HOUSE
+	dw ToggleData_OAKS_LAB
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw ToggleData_VIRIDIAN_GYM
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw ToggleData_VIRIDIAN_FOREST
+	dw ToggleData_MUSEUM_1F
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw ToggleData_MT_MOON_1F
+	dw NoToggleData
+	dw ToggleData_MT_MOON_B2F
+	dw NoToggleData
+	dw ToggleData_CERULEAN_MELANIES_HOUSE
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw ToggleData_POWER_PLANT
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw ToggleData_BILLS_HOUSE
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw ToggleData_SS_ANNE_2F
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw ToggleData_SS_ANNE_1F_ROOMS
+	dw ToggleData_SS_ANNE_2F_ROOMS
+	dw ToggleData_SS_ANNE_B1F_ROOMS
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw ToggleData_VICTORY_ROAD_1F
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
 	dw LancesRoomHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw ChampionsRoomHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw CeladonMansionRoofHouseHS
-	dw NoHS
-	dw NoHS
-	dw GameCornerHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw PokemonTower2FHS
-	dw PokemonTower3FHS
-	dw PokemonTower4FHS
-	dw PokemonTower5FHS
-	dw PokemonTower6FHS
-	dw PokemonTower7FHS
-	dw MrFujisHouseHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw WardensHouseHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw SeafoamIslandsB1FHS
-	dw SeafoamIslandsB2FHS
-	dw SeafoamIslandsB3FHS
-	dw SeafoamIslandsB4FHS
-	dw NoHS
-	dw NoHS
-	dw PokemonMansion1FHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw ToggleData_CHAMPIONS_ROOM
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw ToggleData_CELADON_MANSION_ROOF_HOUSE
+	dw NoToggleData
+	dw NoToggleData
+	dw ToggleData_GAME_CORNER
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw ToggleData_POKEMON_TOWER_2F
+	dw ToggleData_POKEMON_TOWER_3F
+	dw ToggleData_POKEMON_TOWER_4F
+	dw ToggleData_POKEMON_TOWER_5F
+	dw ToggleData_POKEMON_TOWER_6F
+	dw ToggleData_POKEMON_TOWER_7F
+	dw ToggleData_MR_FUJIS_HOUSE
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw ToggleData_WARDENS_HOUSE
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw ToggleData_SEAFOAM_ISLANDS_B1F
+	dw ToggleData_SEAFOAM_ISLANDS_B2F
+	dw ToggleData_SEAFOAM_ISLANDS_B3F
+	dw ToggleData_SEAFOAM_ISLANDS_B4F
+	dw NoToggleData
+	dw NoToggleData
+	dw ToggleData_POKEMON_MANSION_1F
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
 	dw IndigoPlateauLobbyHS
-	dw NoHS
-	dw NoHS
-	dw FightingDojoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw SilphCo1FHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw SeafoamIslands1FHS
-	dw NoHS
-	dw VictoryRoad2FHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw VictoryRoad3FHS
-	dw RocketHideoutB1FHS
-	dw RocketHideoutB2FHS
-	dw RocketHideoutB3FHS
-	dw RocketHideoutB4FHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw SilphCo2FHS
-	dw SilphCo3FHS
-	dw SilphCo4FHS
-	dw SilphCo5FHS
-	dw SilphCo6FHS
-	dw SilphCo7FHS
-	dw SilphCo8FHS
-	dw PokemonMansion2FHS
-	dw PokemonMansion3FHS
-	dw PokemonMansionB1FHS
-	dw SafariZoneEastHS
-	dw SafariZoneNorthHS
-	dw SafariZoneWestHS
-	dw SafariZoneCenterHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw CeruleanCave2FHS
-	dw CeruleanCaveB1FHS
-	dw CeruleanCaveHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw SilphCo9FHS
-	dw SilphCo10FHS
-	dw SilphCo11FHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
-	dw UnusedMapF4HS
+	dw NoToggleData
+	dw NoToggleData
+	dw ToggleData_FIGHTING_DOJO
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw ToggleData_SILPH_CO_1F
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw ToggleData_SEAFOAM_ISLANDS_1F
+	dw NoToggleData
+	dw ToggleData_VICTORY_ROAD_2F
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw ToggleData_VICTORY_ROAD_3F
+	dw ToggleData_ROCKET_HIDEOUT_B1F
+	dw ToggleData_ROCKET_HIDEOUT_B2F
+	dw ToggleData_ROCKET_HIDEOUT_B3F
+	dw ToggleData_ROCKET_HIDEOUT_B4F
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw ToggleData_SILPH_CO_2F
+	dw ToggleData_SILPH_CO_3F
+	dw ToggleData_SILPH_CO_4F
+	dw ToggleData_SILPH_CO_5F
+	dw ToggleData_SILPH_CO_6F
+	dw ToggleData_SILPH_CO_7F
+	dw ToggleData_SILPH_CO_8F
+	dw ToggleData_POKEMON_MANSION_2F
+	dw ToggleData_POKEMON_MANSION_3F
+	dw ToggleData_POKEMON_MANSION_B1F
+	dw ToggleData_SAFARI_ZONE_EAST
+	dw ToggleData_SAFARI_ZONE_NORTH
+	dw ToggleData_SAFARI_ZONE_WEST
+	dw ToggleData_SAFARI_ZONE_CENTER
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw ToggleData_CERULEAN_CAVE_2F
+	dw ToggleData_CERULEAN_CAVE_B1F
+	dw ToggleData_CERULEAN_CAVE_1F
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw ToggleData_SILPH_CO_9F
+	dw ToggleData_SILPH_CO_10F
+	dw ToggleData_SILPH_CO_11F
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw NoToggleData
+	dw ToggleData_UNUSED_MAP_F4
 	dw LoreleisRoomHS
 	dw BrunosRoomHS
 	dw AgathasRoomHS
-	dw NoHS
+	dw NoToggleData
 	assert_table_length NUM_MAPS
 	dw -1 ; end
 
-NoHS:
+NoToggleData:
 	db $FF, $FF, $FF
 
-MissableObjects:
+ToggleableObjectStates:
 ; entries correspond to HS_* constants (see constants/hide_show_constants)
-	table_width 3, MissableObjects
+	table_width 3, ToggleableObjectStates
 ; format: map id, object id, HIDE/SHOW
 
-PalletTownHS:
+ToggleData_PALLET_TOWN:
 	db PALLET_TOWN, PALLETTOWN_OAK, HIDE
-ViridianCityHS:
+ToggleData_VIRIDIAN_CITY:
 	db VIRIDIAN_CITY, VIRIDIANCITY_OLD_MAN_SLEEPY, SHOW
 	db VIRIDIAN_CITY, VIRIDIANCITY_OLD_MAN,        HIDE
 	db VIRIDIAN_CITY, VIRIDIANCITY_OLD_MAN2,       HIDE
-PewterCityHS:
+ToggleData_PEWTER_CITY:
 	db PEWTER_CITY, PEWTERCITY_SUPER_NERD1, SHOW
 	db PEWTER_CITY, PEWTERCITY_YOUNGSTER,   SHOW
-CeruleanCityHS:
+ToggleData_CERULEAN_CITY:
 	db CERULEAN_CITY, CERULEANCITY_RIVAL,       HIDE
 	db CERULEAN_CITY, CERULEANCITY_ROCKET,      SHOW
 	db CERULEAN_CITY, CERULEANCITY_GUARD1,      HIDE
 	db CERULEAN_CITY, CERULEANCITY_SUPER_NERD3, SHOW
 	db CERULEAN_CITY, CERULEANCITY_GUARD2,      SHOW
-SaffronCityHS:
+ToggleData_SAFFRON_CITY:
 	db SAFFRON_CITY, SAFFRONCITY_ROCKET1,        SHOW
 	db SAFFRON_CITY, SAFFRONCITY_ROCKET2,        SHOW
 	db SAFFRON_CITY, SAFFRONCITY_ROCKET3,        SHOW
@@ -296,90 +296,90 @@ SaffronCityHS:
 	db SAFFRON_CITY, SAFFRONCITY_ROCKET9,        HIDE ; removed in yellow
 Route1HS:
 	db ROUTE_1, ROUTE1_OAK, HIDE ; PROF OAK fight. To test, change to SHOW. - PvK
-Route2HS:
+ToggleData_ROUTE_2:
 	db ROUTE_2, ROUTE2_MOON_STONE, SHOW
 	db ROUTE_2, ROUTE2_HP_UP,      SHOW
-Route4HS:
+ToggleData_ROUTE_4:
 	db ROUTE_4, ROUTE4_TM_RAZOR_WIND, SHOW
-Route9HS:
+ToggleData_ROUTE_9:
 	db ROUTE_9, ROUTE9_TM_TELEPORT, SHOW
-Route12HS:
+ToggleData_ROUTE_12:
 	db ROUTE_12, ROUTE12_SNORLAX,    SHOW
 	db ROUTE_12, ROUTE12_TM_PAY_DAY, SHOW
 	db ROUTE_12, ROUTE12_IRON,       SHOW
-Route15HS:
+ToggleData_ROUTE_15:
 	db ROUTE_15, ROUTE15_TM_RAGE, SHOW
-Route16HS:
+ToggleData_ROUTE_16:
 	db ROUTE_16, ROUTE16_SNORLAX, SHOW
-Route22HS:
+ToggleData_ROUTE_22:
 	db ROUTE_22, ROUTE22_RIVAL1, HIDE
 	db ROUTE_22, ROUTE22_RIVAL2, HIDE
-Route24HS:
+ToggleData_ROUTE_24:
 	db ROUTE_24, ROUTE24_COOLTRAINER_M1,  SHOW
 	db ROUTE_24, ROUTE24_TM_THUNDER_WAVE, SHOW
-Route25HS:
+ToggleData_ROUTE_25:
 	db ROUTE_25, ROUTE25_TM_SEISMIC_TOSS, SHOW
 RedsHouse1F:
 	db REDS_HOUSE_1F, REDSHOUSE1F_MR_MIME, HIDE
-BluesHouseHS:
+ToggleData_BLUES_HOUSE:
 	db BLUES_HOUSE, BLUESHOUSE_DAISY1,   SHOW
 	db BLUES_HOUSE, BLUESHOUSE_DAISY2,   HIDE
 	db BLUES_HOUSE, BLUESHOUSE_TOWN_MAP, SHOW
-OaksLabHS:
+ToggleData_OAKS_LAB:
 	db OAKS_LAB, OAKSLAB_RIVAL,                SHOW
 	db OAKS_LAB, OAKSLAB_EEVEE_POKE_BALL,      SHOW
 	db OAKS_LAB, OAKSLAB_OAK1,                 HIDE
 	db OAKS_LAB, OAKSLAB_POKEDEX1,             SHOW
 	db OAKS_LAB, OAKSLAB_POKEDEX2,             SHOW
 	db OAKS_LAB, OAKSLAB_OAK2,                 HIDE
-ViridianGymHS:
+ToggleData_VIRIDIAN_GYM:
 	db VIRIDIAN_GYM, VIRIDIANGYM_GIOVANNI, SHOW
 	db VIRIDIAN_GYM, VIRIDIANGYM_REVIVE,   SHOW
-Museum1FHS:
+ToggleData_MUSEUM_1F:
 	db MUSEUM_1F, MUSEUM1F_OLD_AMBER, SHOW
-CeruleanMelaniesHouseHS:
+ToggleData_CERULEAN_MELANIES_HOUSE:
 	db CERULEAN_MELANIES_HOUSE, CERULEANMELANIESHOUSE_BULBASAUR, SHOW
-CeruleanCaveHS:
+ToggleData_CERULEAN_CAVE_1F:
 	db CERULEAN_CAVE_1F, CERULEANCAVE1F_RARE_CANDY, SHOW
 	db CERULEAN_CAVE_1F, CERULEANCAVE1F_MAX_ELIXER, SHOW
 	db CERULEAN_CAVE_1F, CERULEANCAVE1F_MAX_REVIVE, SHOW
 	db CERULEAN_CAVE_1F, CERULEANCAVE1F_ULTRA_BALL, SHOW
-PokemonTower2FHS:
+ToggleData_POKEMON_TOWER_2F:
 	db POKEMON_TOWER_2F, POKEMONTOWER2F_RIVAL, SHOW
-PokemonTower3FHS:
+ToggleData_POKEMON_TOWER_3F:
 	db POKEMON_TOWER_3F, POKEMONTOWER3F_ESCAPE_ROPE, SHOW
-PokemonTower4FHS:
+ToggleData_POKEMON_TOWER_4F:
 	db POKEMON_TOWER_4F, POKEMONTOWER4F_ELIXER,    SHOW
 	db POKEMON_TOWER_4F, POKEMONTOWER4F_AWAKENING, SHOW
 	db POKEMON_TOWER_4F, POKEMONTOWER4F_HP_UP,     SHOW
-PokemonTower5FHS:
+ToggleData_POKEMON_TOWER_5F:
 	db POKEMON_TOWER_5F, POKEMONTOWER5F_NUGGET, SHOW
-PokemonTower6FHS:
+ToggleData_POKEMON_TOWER_6F:
 	db POKEMON_TOWER_6F, POKEMONTOWER6F_RARE_CANDY, SHOW
 	db POKEMON_TOWER_6F, POKEMONTOWER6F_X_ACCURACY, SHOW
-PokemonTower7FHS:
+ToggleData_POKEMON_TOWER_7F:
 	db POKEMON_TOWER_7F, POKEMONTOWER7F_JESSIE,  HIDE
 	db POKEMON_TOWER_7F, POKEMONTOWER7F_JAMES,   HIDE
 	db POKEMON_TOWER_7F, POKEMONTOWER7F_MR_FUJI, SHOW
-MrFujisHouseHS:
+ToggleData_MR_FUJIS_HOUSE:
 	db MR_FUJIS_HOUSE, MRFUJISHOUSE_MR_FUJI, HIDE
-CeladonMansionRoofHouseHS:
+ToggleData_CELADON_MANSION_ROOF_HOUSE:
 	db CELADON_MANSION_ROOF_HOUSE, CELADONMANSION_ROOF_HOUSE_EEVEE_POKEBALL, SHOW
-GameCornerHS:
+ToggleData_GAME_CORNER:
 	db GAME_CORNER, GAMECORNER_ROCKET, SHOW
-WardensHouseHS:
+ToggleData_WARDENS_HOUSE:
 	db WARDENS_HOUSE, WARDENSHOUSE_RARE_CANDY, SHOW
-PokemonMansion1FHS:
+ToggleData_POKEMON_MANSION_1F:
 	db POKEMON_MANSION_1F, POKEMONMANSION1F_ESCAPE_ROPE, SHOW
 	db POKEMON_MANSION_1F, POKEMONMANSION1F_CARBOS,      SHOW
 IndigoPlateauLobbyHS:
 	db INDIGO_PLATEAU_LOBBY, INDIGOPLATEAULOBBY_POST_GAME_CLERK,  HIDE
-FightingDojoHS:
+ToggleData_FIGHTING_DOJO:
 	db FIGHTING_DOJO, FIGHTINGDOJO_HITMONLEE_POKE_BALL,  SHOW
 	db FIGHTING_DOJO, FIGHTINGDOJO_HITMONCHAN_POKE_BALL, SHOW
-SilphCo1FHS:
+ToggleData_SILPH_CO_1F:
 	db SILPH_CO_1F, SILPHCO1F_LINK_RECEPTIONIST, HIDE
-PowerPlantHS:
+ToggleData_POWER_PLANT:
 	db POWER_PLANT, POWERPLANT_VOLTORB1,   SHOW
 	db POWER_PLANT, POWERPLANT_VOLTORB2,   SHOW
 	db POWER_PLANT, POWERPLANT_VOLTORB3,   SHOW
@@ -394,62 +394,62 @@ PowerPlantHS:
 	db POWER_PLANT, POWERPLANT_RARE_CANDY, SHOW
 	db POWER_PLANT, POWERPLANT_TM_THUNDER, SHOW
 	db POWER_PLANT, POWERPLANT_TM_REFLECT, SHOW
-VictoryRoad2FHS:
+ToggleData_VICTORY_ROAD_2F:
 	db VICTORY_ROAD_2F, VICTORYROAD2F_MOLTRES,       SHOW
 	db VICTORY_ROAD_2F, VICTORYROAD2F_TM_SUBMISSION, SHOW
 	db VICTORY_ROAD_2F, VICTORYROAD2F_FULL_HEAL,     SHOW
 	db VICTORY_ROAD_2F, VICTORYROAD2F_TM_MEGA_KICK,  SHOW
 	db VICTORY_ROAD_2F, VICTORYROAD2F_GUARD_SPEC,    SHOW
 	db VICTORY_ROAD_2F, VICTORYROAD2F_BOULDER3,      SHOW
-BillsHouseHS:
+ToggleData_BILLS_HOUSE:
 	db BILLS_HOUSE, BILLSHOUSE_BILL_POKEMON, SHOW
 	db BILLS_HOUSE, BILLSHOUSE_BILL1,        HIDE
 	db BILLS_HOUSE, BILLSHOUSE_BILL2,        HIDE
-ViridianForestHS:
+ToggleData_VIRIDIAN_FOREST:
 	db VIRIDIAN_FOREST, VIRIDIANFOREST_POTION1,   SHOW
 	db VIRIDIAN_FOREST, VIRIDIANFOREST_POTION2,   SHOW
 	db VIRIDIAN_FOREST, VIRIDIANFOREST_POKE_BALL, SHOW
-MtMoon1FHS:
+ToggleData_MT_MOON_1F:
 	db MT_MOON_1F, MTMOON1F_POTION1,      SHOW
 	db MT_MOON_1F, MTMOON1F_MOON_STONE,   SHOW
 	db MT_MOON_1F, MTMOON1F_RARE_CANDY,   SHOW
 	db MT_MOON_1F, MTMOON1F_ESCAPE_ROPE,  SHOW
 	db MT_MOON_1F, MTMOON1F_POTION2,      SHOW
 	db MT_MOON_1F, MTMOON1F_TM_WATER_GUN, SHOW
-MtMoonB2FHS:
+ToggleData_MT_MOON_B2F:
 	db MT_MOON_B2F, MTMOONB2F_JESSIE,        HIDE
 	db MT_MOON_B2F, MTMOONB2F_JAMES,         HIDE
 	db MT_MOON_B2F, MTMOONB2F_DOME_FOSSIL,   SHOW
 	db MT_MOON_B2F, MTMOONB2F_HELIX_FOSSIL,  SHOW
 	db MT_MOON_B2F, MTMOONB2F_HP_UP,         SHOW
 	db MT_MOON_B2F, MTMOONB2F_TM_MEGA_PUNCH, SHOW
-SSAnne2FHS:
+ToggleData_SS_ANNE_2F:
 	db SS_ANNE_2F, SSANNE2F_RIVAL, HIDE
-SSAnne1FRoomsHS:
+ToggleData_SS_ANNE_1F_ROOMS:
 	db SS_ANNE_1F_ROOMS, SSANNE1FROOMS_TM_BODY_SLAM, SHOW
-SSAnne2FRoomsHS:
+ToggleData_SS_ANNE_2F_ROOMS:
 	db SS_ANNE_2F_ROOMS, SSANNE2FROOMS_MAX_ETHER,  SHOW
 	db SS_ANNE_2F_ROOMS, SSANNE2FROOMS_RARE_CANDY, SHOW
-SSAnneB1FRoomsHS:
+ToggleData_SS_ANNE_B1F_ROOMS:
 	db SS_ANNE_B1F_ROOMS, SSANNEB1FROOMS_ETHER,      SHOW
 	db SS_ANNE_B1F_ROOMS, SSANNEB1FROOMS_TM_REST,    SHOW
 	db SS_ANNE_B1F_ROOMS, SSANNEB1FROOMS_MAX_POTION, SHOW
-VictoryRoad3FHS:
+ToggleData_VICTORY_ROAD_3F:
 	db VICTORY_ROAD_3F, VICTORYROAD3F_MAX_REVIVE,   SHOW
 	db VICTORY_ROAD_3F, VICTORYROAD3F_TM_EXPLOSION, SHOW
 	db VICTORY_ROAD_3F, VICTORYROAD3F_BOULDER4,     SHOW
-RocketHideoutB1FHS:
+ToggleData_ROCKET_HIDEOUT_B1F:
 	db ROCKET_HIDEOUT_B1F, ROCKETHIDEOUTB1F_ESCAPE_ROPE,  SHOW
 	db ROCKET_HIDEOUT_B1F, ROCKETHIDEOUTB1F_HYPER_POTION, SHOW
-RocketHideoutB2FHS:
+ToggleData_ROCKET_HIDEOUT_B2F:
 	db ROCKET_HIDEOUT_B2F, ROCKETHIDEOUTB2F_MOON_STONE,    SHOW
 	db ROCKET_HIDEOUT_B2F, ROCKETHIDEOUTB2F_NUGGET,        SHOW
 	db ROCKET_HIDEOUT_B2F, ROCKETHIDEOUTB2F_TM_HORN_DRILL, SHOW
 	db ROCKET_HIDEOUT_B2F, ROCKETHIDEOUTB2F_SUPER_POTION,  SHOW
-RocketHideoutB3FHS:
+ToggleData_ROCKET_HIDEOUT_B3F:
 	db ROCKET_HIDEOUT_B3F, ROCKETHIDEOUTB3F_TM_DOUBLE_EDGE, SHOW
 	db ROCKET_HIDEOUT_B3F, ROCKETHIDEOUTB3F_RARE_CANDY,     SHOW
-RocketHideoutB4FHS:
+ToggleData_ROCKET_HIDEOUT_B4F:
 	db ROCKET_HIDEOUT_B4F, ROCKETHIDEOUTB4F_GIOVANNI,      SHOW
 	db ROCKET_HIDEOUT_B4F, ROCKETHIDEOUTB4F_JAMES,         HIDE
 	db ROCKET_HIDEOUT_B4F, ROCKETHIDEOUTB4F_JESSIE,        HIDE
@@ -458,24 +458,24 @@ RocketHideoutB4FHS:
 	db ROCKET_HIDEOUT_B4F, ROCKETHIDEOUTB4F_IRON,          SHOW
 	db ROCKET_HIDEOUT_B4F, ROCKETHIDEOUTB4F_SILPH_SCOPE,   HIDE
 	db ROCKET_HIDEOUT_B4F, ROCKETHIDEOUTB4F_LIFT_KEY,      HIDE
-SilphCo2FHS:
+ToggleData_SILPH_CO_2F:
 	db SILPH_CO_2F, SILPHCO2F_SILPH_WORKER_F, SHOW
 	db SILPH_CO_2F, SILPHCO2F_SCIENTIST1,     SHOW
 	db SILPH_CO_2F, SILPHCO2F_SCIENTIST2,     SHOW
 	db SILPH_CO_2F, SILPHCO2F_ROCKET1,        SHOW
 	db SILPH_CO_2F, SILPHCO2F_ROCKET2,        SHOW
-SilphCo3FHS:
+ToggleData_SILPH_CO_3F:
 	db SILPH_CO_3F, SILPHCO3F_ROCKET,       SHOW
 	db SILPH_CO_3F, SILPHCO3F_SCIENTIST,    SHOW
 	db SILPH_CO_3F, SILPHCO3F_HYPER_POTION, SHOW
-SilphCo4FHS:
+ToggleData_SILPH_CO_4F:
 	db SILPH_CO_4F, SILPHCO4F_ROCKET1,     SHOW
 	db SILPH_CO_4F, SILPHCO4F_SCIENTIST,   SHOW
 	db SILPH_CO_4F, SILPHCO4F_ROCKET2,     SHOW
 	db SILPH_CO_4F, SILPHCO4F_FULL_HEAL,   SHOW
 	db SILPH_CO_4F, SILPHCO4F_MAX_REVIVE,  SHOW
 	db SILPH_CO_4F, SILPHCO4F_ESCAPE_ROPE, SHOW
-SilphCo5FHS:
+ToggleData_SILPH_CO_5F:
 	db SILPH_CO_5F, SILPHCO5F_ROCKET1,      SHOW
 	db SILPH_CO_5F, SILPHCO5F_SCIENTIST,    SHOW
 	db SILPH_CO_5F, SILPHCO5F_ROCKER,       SHOW
@@ -483,13 +483,13 @@ SilphCo5FHS:
 	db SILPH_CO_5F, SILPHCO5F_TM_TAKE_DOWN, SHOW
 	db SILPH_CO_5F, SILPHCO5F_PROTEIN,      SHOW
 	db SILPH_CO_5F, SILPHCO5F_CARD_KEY,     SHOW
-SilphCo6FHS:
+ToggleData_SILPH_CO_6F:
 	db SILPH_CO_6F, SILPHCO6F_ROCKET1,    SHOW
 	db SILPH_CO_6F, SILPHCO6F_SCIENTIST,  SHOW
 	db SILPH_CO_6F, SILPHCO6F_ROCKET2,    SHOW
 	db SILPH_CO_6F, SILPHCO6F_HP_UP,      SHOW
 	db SILPH_CO_6F, SILPHCO6F_X_ACCURACY, SHOW
-SilphCo7FHS:
+ToggleData_SILPH_CO_7F:
 	db SILPH_CO_7F, SILPHCO7F_ROCKET1,         SHOW
 	db SILPH_CO_7F, SILPHCO7F_SCIENTIST,       SHOW
 	db SILPH_CO_7F, SILPHCO7F_ROCKET2,         SHOW
@@ -498,93 +498,93 @@ SilphCo7FHS:
 	db SILPH_CO_7F, SILPHCO7F_CALCIUM,         SHOW
 	db SILPH_CO_7F, SILPHCO7F_TM_SWORDS_DANCE, SHOW
 	db SILPH_CO_7F, SILPHCO7F_UNUSED,          SHOW
-SilphCo8FHS:
+ToggleData_SILPH_CO_8F:
 	db SILPH_CO_8F, SILPHCO8F_ROCKET1,   SHOW
 	db SILPH_CO_8F, SILPHCO8F_SCIENTIST, SHOW
 	db SILPH_CO_8F, SILPHCO8F_ROCKET2,   SHOW
-SilphCo9FHS:
+ToggleData_SILPH_CO_9F:
 	db SILPH_CO_9F, SILPHCO9F_ROCKET1,   SHOW
 	db SILPH_CO_9F, SILPHCO9F_SCIENTIST, SHOW
 	db SILPH_CO_9F, SILPHCO9F_ROCKET2,   SHOW
-SilphCo10FHS:
+ToggleData_SILPH_CO_10F:
 	db SILPH_CO_10F, SILPHCO10F_ROCKET,         SHOW
 	db SILPH_CO_10F, SILPHCO10F_SCIENTIST,      SHOW
 	db SILPH_CO_10F, SILPHCO10F_SILPH_WORKER_F, SHOW
 	db SILPH_CO_10F, SILPHCO10F_TM_EARTHQUAKE,  SHOW
 	db SILPH_CO_10F, SILPHCO10F_RARE_CANDY,     SHOW
 	db SILPH_CO_10F, SILPHCO10F_CARBOS,         SHOW
-SilphCo11FHS:
+ToggleData_SILPH_CO_11F:
 	db SILPH_CO_11F, SILPHCO11F_GIOVANNI, SHOW
 	db SILPH_CO_11F, SILPHCO11F_JAMES,    SHOW
 	db SILPH_CO_11F, SILPHCO11F_ROCKET,   SHOW
 	db SILPH_CO_11F, SILPHCO11F_JESSIE,   SHOW
-UnusedMapF4HS:
+ToggleData_UNUSED_MAP_F4:
 	db UNUSED_MAP_F4, $02, SHOW ; unused
-PokemonMansion2FHS:
+ToggleData_POKEMON_MANSION_2F:
 	db POKEMON_MANSION_2F, POKEMONMANSION2F_CALCIUM, SHOW
 	db POKEMON_MANSION_2F, POKEMONMANSION2F_OAK, HIDE
-PokemonMansion3FHS:
+ToggleData_POKEMON_MANSION_3F:
 	db POKEMON_MANSION_3F, POKEMONMANSION3F_MAX_POTION, SHOW
 	db POKEMON_MANSION_3F, POKEMONMANSION3F_IRON,       SHOW
-PokemonMansionB1FHS:
+ToggleData_POKEMON_MANSION_B1F:
 	db POKEMON_MANSION_B1F, POKEMONMANSIONB1F_MEW,   		HIDE
 	db POKEMON_MANSION_B1F, POKEMONMANSIONB1F_RARE_CANDY,   SHOW
 	db POKEMON_MANSION_B1F, POKEMONMANSIONB1F_FULL_RESTORE, SHOW
 	db POKEMON_MANSION_B1F, POKEMONMANSIONB1F_TM_BLIZZARD,  SHOW
 	db POKEMON_MANSION_B1F, POKEMONMANSIONB1F_TM_SOLARBEAM, SHOW
 	db POKEMON_MANSION_B1F, POKEMONMANSIONB1F_SECRET_KEY,   SHOW
-SafariZoneEastHS:
+ToggleData_SAFARI_ZONE_EAST:
 	db SAFARI_ZONE_EAST, SAFARIZONEEAST_FULL_RESTORE, SHOW
 	db SAFARI_ZONE_EAST, SAFARIZONEEAST_MAX_RESTORE,  SHOW
 	db SAFARI_ZONE_EAST, SAFARIZONEEAST_CARBOS,       SHOW
 	db SAFARI_ZONE_EAST, SAFARIZONEEAST_TM_EGG_BOMB,  SHOW
-SafariZoneNorthHS:
+ToggleData_SAFARI_ZONE_NORTH:
 	db SAFARI_ZONE_NORTH, SAFARIZONENORTH_PROTEIN,       SHOW
 	db SAFARI_ZONE_NORTH, SAFARIZONENORTH_TM_SKULL_BASH, SHOW
-SafariZoneWestHS:
+ToggleData_SAFARI_ZONE_WEST:
 	db SAFARI_ZONE_WEST, SAFARIZONEWEST_MAX_POTION,     SHOW
 	db SAFARI_ZONE_WEST, SAFARIZONEWEST_TM_DOUBLE_TEAM, SHOW
 	db SAFARI_ZONE_WEST, SAFARIZONEWEST_MAX_REVIVE,     SHOW
 	db SAFARI_ZONE_WEST, SAFARIZONEWEST_GOLD_TEETH,     SHOW
-SafariZoneCenterHS:
+ToggleData_SAFARI_ZONE_CENTER:
 	db SAFARI_ZONE_CENTER, SAFARIZONECENTER_NUGGET, SHOW
-CeruleanCave2FHS:
+ToggleData_CERULEAN_CAVE_2F:
 	db CERULEAN_CAVE_2F, CERULEANCAVE2F_RARE_CANDY,   SHOW
 	db CERULEAN_CAVE_2F, CERULEANCAVE2F_ULTRA_BALL,   SHOW
 	db CERULEAN_CAVE_2F, CERULEANCAVE2F_MAX_REVIVE,   SHOW
 	db CERULEAN_CAVE_2F, CERULEANCAVE2F_FULL_RESTORE, SHOW
-CeruleanCaveB1FHS:
+ToggleData_CERULEAN_CAVE_B1F:
 	db CERULEAN_CAVE_B1F, CERULEANCAVEB1F_MEWTWO,      SHOW
 	db CERULEAN_CAVE_B1F, CERULEANCAVEB1F_ULTRA_BALL1, SHOW
 	db CERULEAN_CAVE_B1F, CERULEANCAVEB1F_ULTRA_BALL2, SHOW
 	db CERULEAN_CAVE_B1F, CERULEANCAVEB1F_MAX_REVIVE,  SHOW
 	db CERULEAN_CAVE_B1F, CERULEANCAVEB1F_MAX_ELIXER,  SHOW
-VictoryRoad1FHS:
+ToggleData_VICTORY_ROAD_1F:
 	db VICTORY_ROAD_1F, VICTORYROAD1F_TM_SKY_ATTACK, SHOW
 	db VICTORY_ROAD_1F, VICTORYROAD1F_RARE_CANDY,    SHOW
 LancesRoomHS:
 	db LANCES_ROOM, LANCESROOM_LANCE,   		SHOW
 	db LANCES_ROOM, LANCESROOM_LANCE_REMATCH,   HIDE
-ChampionsRoomHS:
+ToggleData_CHAMPIONS_ROOM:
 	db CHAMPIONS_ROOM, CHAMPIONSROOM_OAK, HIDE
 	db CHAMPIONS_ROOM, CHAMPIONSROOM_JOLTEON, HIDE
 	db CHAMPIONS_ROOM, CHAMPIONSROOM_FLAREON, HIDE
 	db CHAMPIONS_ROOM, CHAMPIONSROOM_VAPOREON, HIDE
-SeafoamIslands1FHS:
+ToggleData_SEAFOAM_ISLANDS_1F:
 	db SEAFOAM_ISLANDS_1F, SEAFOAMISLANDS1F_BOULDER1, SHOW
 	db SEAFOAM_ISLANDS_1F, SEAFOAMISLANDS1F_BOULDER2, SHOW
-SeafoamIslandsB1FHS:
+ToggleData_SEAFOAM_ISLANDS_B1F:
 	db SEAFOAM_ISLANDS_B1F, SEAFOAMISLANDSB1F_BOULDER1, HIDE
 	db SEAFOAM_ISLANDS_B1F, SEAFOAMISLANDSB1F_BOULDER2, HIDE
-SeafoamIslandsB2FHS:
+ToggleData_SEAFOAM_ISLANDS_B2F:
 	db SEAFOAM_ISLANDS_B2F, SEAFOAMISLANDSB2F_BOULDER1, HIDE
 	db SEAFOAM_ISLANDS_B2F, SEAFOAMISLANDSB2F_BOULDER2, HIDE
-SeafoamIslandsB3FHS:
+ToggleData_SEAFOAM_ISLANDS_B3F:
 	db SEAFOAM_ISLANDS_B3F, SEAFOAMISLANDSB3F_BOULDER2, SHOW
 	db SEAFOAM_ISLANDS_B3F, SEAFOAMISLANDSB3F_BOULDER3, SHOW
 	db SEAFOAM_ISLANDS_B3F, SEAFOAMISLANDSB3F_BOULDER5, HIDE
 	db SEAFOAM_ISLANDS_B3F, SEAFOAMISLANDSB3F_BOULDER6, HIDE
-SeafoamIslandsB4FHS:
+ToggleData_SEAFOAM_ISLANDS_B4F:
 	db SEAFOAM_ISLANDS_B4F, SEAFOAMISLANDSB4F_BOULDER1, HIDE
 	db SEAFOAM_ISLANDS_B4F, SEAFOAMISLANDSB4F_BOULDER2, HIDE
 	db SEAFOAM_ISLANDS_B4F, SEAFOAMISLANDSB4F_ARTICUNO, SHOW

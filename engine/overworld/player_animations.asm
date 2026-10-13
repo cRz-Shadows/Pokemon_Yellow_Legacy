@@ -5,13 +5,13 @@ EnterMapAnim::
 	call Delay3
 	push hl
 	call GBFadeInFromWhite
-	ld hl, wFlags_D733
+	ld hl, wStatusFlags7
 	bit 7, [hl] ; used fly out of battle?
 	res 7, [hl]
 	jr nz, .flyAnimation
 	ld a, SFX_TELEPORT_ENTER_1
 	call PlaySound
-	ld hl, wd732
+	ld hl, wStatusFlags6
 	bit 4, [hl] ; used dungeon warp?
 	pop hl
 	jr nz, .dungeonWarpAnimation
@@ -126,7 +126,7 @@ _LeaveMapAnim::
 .playerNotStandingOnWarpPadOrHole
 	ld a, $4
 	call StopMusic
-	ld a, [wd732]
+	ld a, [wStatusFlags6]
 	bit 6, a ; is the last used pokemon center the destination?
 	jr z, .flyAnimation
 ; if going to the last used pokemon center
@@ -384,7 +384,7 @@ INCLUDE "data/tilesets/warp_pad_hole_tile_ids.asm"
 FishingAnim:
 	ld c, 10
 	call DelayFrames
-	ld hl, wd736
+	ld hl, wMovementFlags
 	set 6, [hl] ; reserve the last 4 OAM entries
 	ld hl, vNPCSprites
 	ld a, [wPlayerGender] ; added gender check
@@ -469,7 +469,7 @@ FishingAnim:
 
 .done
 	call PrintText
-	ld hl, wd736
+	ld hl, wMovementFlags
 	res 6, [hl] ; unreserve the last 4 OAM entries
 	call LoadFontTilePatterns
 	ret
@@ -534,9 +534,9 @@ _HandleMidJump::
 .finishedJump
 	ld a, 3
 	ld [wNumberOfNoRandomBattleStepsLeft], a
-	ld a, [wd72c]
+	ld a, [wStatusFlags2]
 	set 0, a ; set bit for no encounters
-	ld [wd72c], a
+	ld [wStatusFlags2], a
 	ld a, 8
 	ld [wNoSprintSteps], a
 	ld a, [wWalkCounter]
@@ -549,9 +549,9 @@ _HandleMidJump::
 	ldh [hJoyPressed], a
 	ldh [hJoyReleased], a
 	ld [wPlayerJumpingYScreenCoordsIndex], a
-	ld hl, wd736
+	ld hl, wMovementFlags
 	res 6, [hl] ; not jumping down a ledge any more
-	ld hl, wd730
+	ld hl, wStatusFlags5
 	res 7, [hl] ; not simulating joypad states any more
 	xor a
 	ld [wJoyIgnore], a

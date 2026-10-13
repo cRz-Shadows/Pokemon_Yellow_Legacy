@@ -21,7 +21,7 @@ HallOfFamePC:
 	call FillFourRowsWithBlack
 	ld a, %11000000
 	ldh [rBGP], a
-	call UpdateGBCPal_BGP
+	call UpdateCGBPal_BGP
 	call EnableLCD
 	call StopAllMusic
 	ld hl, vBGMap1
@@ -38,7 +38,7 @@ HallOfFamePC:
 	ld [wNumCreditsMonsDisplayed], a
 	jp Credits
 
-FadeInCreditsText:
+FadeInCredits:
 	ld a, 1
 	ldh [hAutoBGTransferEnabled], a
 	ld hl, HoFGBPalettes
@@ -46,7 +46,7 @@ FadeInCreditsText:
 .loop
 	ld a, [hli]
 	ldh [rBGP], a
-	call UpdateGBCPal_BGP
+	call UpdateCGBPal_BGP
 	ld c, 5
 	call DelayFrames
 	dec b
@@ -78,7 +78,7 @@ DisplayCreditsMon:
 	call CreditsCopyTileMapToVRAM
 	ld a, %11111100 ; make the mon a black silhouette
 	ldh [rBGP], a
-	call UpdateGBCPal_BGP
+	call UpdateCGBPal_BGP
 	ld hl, rLCDC
 	res 3, [hl]
 	ld a, 1
@@ -94,7 +94,7 @@ DisplayCreditsMon:
 	call ScrollCreditsMonLeft
 	ld a, %11000000
 	ldh [rBGP], a
-	call UpdateGBCPal_BGP
+	call UpdateCGBPal_BGP
 	xor a
 	ldh [hSCX], a
 	ret
@@ -117,8 +117,8 @@ GetNextCreditsMon:
 	ld hl, CreditsMons
 	add hl, bc
 	ld a, [hl]
-	ld [wcf91], a
-	ld [wd0b5], a
+	ld [wCurPartySpecies], a
+	ld [wCurSpecies], a
 	hlcoord 8, 6
 	call GetMonHeader
 	call LoadFrontSpriteByMonIndex
@@ -139,12 +139,12 @@ CreditsLoadFont:
 	call LoadFontTilePatterns
 	ld hl, vChars1
 	ld bc,  ($80 tiles) / 2
-	call ZeroMemory
+	call ShiftFontColorIndex
 
 	call LoadTextBoxTilePatterns
 	ld hl, vChars2 tile $60
 	ld bc, ($20 tiles) / 2
-	call ZeroMemory
+	call ShiftFontColorIndex
 
 	ld hl, vChars2 tile $7e
 	ld bc, 1 tiles
@@ -152,7 +152,7 @@ CreditsLoadFont:
 	call FillMemory
 	ret
 
-ZeroMemory:
+ShiftFontColorIndex:
 ; zero bc bytes at hl
 	ld [hl], 0
 	inc hl
@@ -160,7 +160,7 @@ ZeroMemory:
 	dec bc
 	ld a, b
 	or c
-	jr nz, ZeroMemory
+	jr nz, ShiftFontColorIndex
 	ret
 
 FillFourRowsWithBlack:
@@ -243,7 +243,7 @@ Credits: ; Roll credits
 
 
 .fadeInTextAndShowMon
-	call FadeInCreditsText
+	call FadeInCredits
 	ld c, 102
 	jr .next1
 
@@ -255,7 +255,7 @@ Credits: ; Roll credits
 	jr .nextCreditsScreen
 
 .fadeInText
-	call FadeInCreditsText
+	call FadeInCredits
 	ld c, 132
 	jr .next2
 
@@ -283,7 +283,7 @@ ShowTheEndGFX:
 	hlcoord 4, 9
 	inc de
 	call PlaceString
-	jp FadeInCreditsText
+	jp FadeInCredits
 
 TheEndTextString:
 ; "T H E  E N D"

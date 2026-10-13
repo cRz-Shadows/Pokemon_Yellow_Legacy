@@ -10,7 +10,7 @@ InitPlayerData2:
 	ld [wPlayerID + 1], a
 
 	ld a, $ff
-	ld [wUnusedD71B], a
+	ld [wUnusedPlayerDataByte], a
 
 	ld a, 90 ; initialize happiness to 90
 	ld [wPikachuHappiness], a
@@ -50,7 +50,7 @@ DEF START_MONEY EQU $3000
 	ld bc, wGameProgressFlagsEnd - wGameProgressFlags
 	call FillMemory ; clear all game progress flags
 
-	jp InitializeMissableObjectsFlags
+	jp InitializeToggleableObjectsFlags
 
 InitializeEmptyList:
 	xor a ; count

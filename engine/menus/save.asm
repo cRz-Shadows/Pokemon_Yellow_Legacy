@@ -1,19 +1,19 @@
-LoadSAV:
+TryLoadSaveFile:
 ;(if carry -> write
 ;"the file data is destroyed")
 	call ClearScreen
 	call LoadFontTilePatterns
 	call LoadTextBoxTilePatterns
-	call LoadSAV0
+	call LoadMainData
 	jr c, .badsum
-	call LoadSAV1
+	call LoadCurrentBoxData
 	jr c, .badsum
-	call LoadSAV2
+	call LoadPartyAndDexData
 	jr c, .badsum
 	ld a, $2 ; good checksum
-	jr .goodsum
+	jr .done
 .badsum
-	ld hl, wd730
+	ld hl, wStatusFlags5
 	push hl
 	set 6, [hl]
 	ld hl, FileDataDestroyedText
@@ -23,7 +23,7 @@ LoadSAV:
 	pop hl
 	res 6, [hl]
 	ld a, $1 ; bad checksum
-.goodsum
+.done
 	ld [wSaveFileStatus], a
 	ret
 
@@ -31,8 +31,8 @@ FileDataDestroyedText:
 	text_far _FileDataDestroyedText
 	text_end
 
-LoadSAV0:
-	call EnableSRAMAndLatchClockData
+LoadMainData:
+	call EnableSRAM
 	ld a, $1
 	ld [MBC1SRamBank], a
 ; This vc_hook does not have to be in any particular location.
@@ -40,22 +40,22 @@ LoadSAV0:
 	vc_hook Unknown_save_limit
 	ld hl, sGameData
 	ld bc, sGameDataEnd - sGameData
-	call SAVCheckSum
+	call CalcCheckSum
 	ld c, a
 	ld a, [sMainDataCheckSum]
 	cp c
-	jp z, .checkSumsMatched
+	jp z, .checkSumMatched
 
 ; If the computed checksum didn't match the saved on, try again.
 	ld hl, sGameData
 	ld bc, sGameDataEnd - sGameData
-	call SAVCheckSum
+	call CalcCheckSum
 	ld c, a
 	ld a, [sMainDataCheckSum]
 	cp c
-	jp nz, SAVBadCheckSum
+	jp nz, CheckSumFailed
 
-.checkSumsMatched
+.checkSumMatched
 	ld hl, sPlayerName
 	ld de, wPlayerName
 	ld bc, NAME_LENGTH
@@ -77,37 +77,37 @@ LoadSAV0:
 	ld bc, wBoxDataEnd - wBoxDataStart
 	call CopyData
 	and a
-	jp SAVGoodChecksum
+	jp GoodCheckSum
 
-LoadSAV1:
-	call EnableSRAMAndLatchClockData
+LoadCurrentBoxData:
+	call EnableSRAM
 	ld a, $1
 	ld [MBC1SRamBank], a
 	ld hl, sGameData
 	ld bc, sGameDataEnd - sGameData
-	call SAVCheckSum
+	call CalcCheckSum
 	ld c, a
 	ld a, [sMainDataCheckSum]
 	cp c
-	jr nz, SAVBadCheckSum
+	jr nz, CheckSumFailed
 	ld hl, sCurBoxData
 	ld de, wBoxDataStart
 	ld bc, wBoxDataEnd - wBoxDataStart
 	call CopyData
 	and a
-	jp SAVGoodChecksum
+	jp GoodCheckSum
 
-LoadSAV2:
-	call EnableSRAMAndLatchClockData
+LoadPartyAndDexData:
+	call EnableSRAM
 	ld a, $1
 	ld [MBC1SRamBank], a
 	ld hl, sGameData
 	ld bc, sGameDataEnd - sGameData
-	call SAVCheckSum
+	call CalcCheckSum
 	ld c, a
 	ld a, [sMainDataCheckSum]
 	cp c
-	jp nz, SAVBadCheckSum
+	jp nz, CheckSumFailed
 	ld hl, sPartyData
 	ld de, wPartyDataStart
 	ld bc, wPartyDataEnd - wPartyDataStart
@@ -117,22 +117,22 @@ LoadSAV2:
 	ld bc, wPokedexSeenEnd - wPokedexOwned
 	call CopyData
 	and a
-	jp SAVGoodChecksum
+	jp GoodCheckSum
 
-SAVBadCheckSum:
+CheckSumFailed:
 	scf
 
-SAVGoodChecksum:
-	call DisableSRAMAndPrepareClockData
+GoodCheckSum:
+	call DisableSRAM
 	ret
 
-LoadSAVIgnoreBadCheckSum:
+TryLoadSaveFileIgnoreChecksum:
 ; unused function that loads save data and ignores bad checksums
-	call LoadSAV0
-	call LoadSAV1
-	jp LoadSAV2
+	call LoadMainData
+	call LoadCurrentBoxData
+	jp LoadPartyAndDexData
 
-SaveSAV:
+SaveMenu:
 	farcall PrintSaveScreenText
 	ld c, 10
 	call DelayFrames
@@ -141,14 +141,14 @@ SaveSAV:
 	ld a, [wSaveFileStatus]
 	cp $1
 	jr z, .save
-	call SAVCheckRandomID
+	call CheckPreviousSaveFile
 	jr z, .save
 	ld hl, OlderFileWillBeErasedText
-	call SaveSAVConfirm
+	call SaveTheGame_YesOrNo
 	and a
 	ret nz
 .save
-	call SaveSAVtoSRAM
+	call SaveGameData
 	ld hl, GameSavedText
 	call PrintText
 	ld c, 10
@@ -160,7 +160,7 @@ SaveSAV:
 	call DelayFrames
 	ret
 
-SaveSAVConfirm:
+SaveTheGame_YesOrNo:
 	call PrintText
 	hlcoord 0, 7
 	lb bc, 8, 1
@@ -186,8 +186,8 @@ OlderFileWillBeErasedText:
 	text_far _OlderFileWillBeErasedText
 	text_end
 
-SaveSAVtoSRAM0:
-	call EnableSRAMAndLatchClockData
+SaveMainData:
+	call EnableSRAM
 	ld a, $1
 	ld [MBC1SRamBank], a
 	ld hl, wPlayerName
@@ -210,14 +210,14 @@ SaveSAVtoSRAM0:
 	ld [sTileAnimations], a
 	ld hl, sGameData
 	ld bc, sGameDataEnd - sGameData
-	call SAVCheckSum
+	call CalcCheckSum
 	ld [sMainDataCheckSum], a
-	call DisableSRAMAndPrepareClockData
+	call DisableSRAM
 	ret
 
-SaveSAVtoSRAM1:
+SaveCurrentBoxData:
 ; stored pokémon
-	call EnableSRAMAndLatchClockData
+	call EnableSRAM
 	ld a, $1
 	ld [MBC1SRamBank], a
 	ld hl, wBoxDataStart
@@ -226,13 +226,13 @@ SaveSAVtoSRAM1:
 	call CopyData
 	ld hl, sGameData
 	ld bc, sGameDataEnd - sGameData
-	call SAVCheckSum
+	call CalcCheckSum
 	ld [sMainDataCheckSum], a
-	call DisableSRAMAndPrepareClockData
+	call DisableSRAM
 	ret
 
-SaveSAVtoSRAM2:
-	call EnableSRAMAndLatchClockData
+SavePartyAndDexData:
+	call EnableSRAM
 	ld a, $1
 	ld [MBC1SRamBank], a
 	ld hl, wPartyDataStart
@@ -252,19 +252,19 @@ SaveSAVtoSRAM2:
 	ld [de], a
 	ld hl, sGameData
 	ld bc, sGameDataEnd - sGameData
-	call SAVCheckSum
+	call CalcCheckSum
 	ld [sMainDataCheckSum], a
-	call DisableSRAMAndPrepareClockData
+	call DisableSRAM
 	ret
 
-SaveSAVtoSRAM::
+SaveGameData::
 	ld a, $2
 	ld [wSaveFileStatus], a
-	call SaveSAVtoSRAM0
-	call SaveSAVtoSRAM1
-	jp SaveSAVtoSRAM2
+	call SaveMainData
+	call SaveCurrentBoxData
+	jp SavePartyAndDexData
 
-SAVCheckSum:
+CalcCheckSum:
 ;Check Sum (result[1 byte] is complemented)
 	ld d, 0
 .loop
@@ -287,7 +287,7 @@ CalcIndividualBoxCheckSums:
 	push bc
 	push de
 	ld bc, wBoxDataEnd - wBoxDataStart
-	call SAVCheckSum
+	call CalcCheckSum
 	pop de
 	ld [de], a
 	inc de
@@ -366,7 +366,7 @@ ChangeBox::
 	ld a, [hl]
 	ld [de], a
 	call RestoreMapTextPointer
-	call SaveSAVtoSRAM
+	call SaveGameData
 	ld hl, wChangeBoxSavedMapTextPointer
 	call SetMapTextPointer
 	ret
@@ -378,7 +378,7 @@ WhenYouChangeBoxText:
 CopyBoxToOrFromSRAM:
 ; copy an entire box from hl to de with b as the SRAM bank
 	push hl
-	call EnableSRAMAndLatchClockData
+	call EnableSRAM
 	ld a, b
 	ld [MBC1SRamBank], a
 	ld bc, wBoxDataEnd - wBoxDataStart
@@ -393,10 +393,10 @@ CopyBoxToOrFromSRAM:
 
 	ld hl, sBox1 ; sBox7
 	ld bc, sBank2AllBoxesChecksum - sBox1
-	call SAVCheckSum
+	call CalcCheckSum
 	ld [sBank2AllBoxesChecksum], a ; sBank3AllBoxesChecksum
 	call CalcIndividualBoxCheckSums
-	call DisableSRAMAndPrepareClockData
+	call DisableSRAM
 	ret
 
 DisplayChangeBoxMenu:
@@ -492,14 +492,14 @@ BoxNoText:
 EmptyAllSRAMBoxes:
 ; marks all boxes in SRAM as empty (initialisation for the first time the
 ; player changes the box)
-	call EnableSRAMAndLatchClockData
+	call EnableSRAM
 	ld a, 2
 	ld [MBC1SRamBank], a
 	call EmptySRAMBoxesInBank
 	ld a, 3
 	ld [MBC1SRamBank], a
 	call EmptySRAMBoxesInBank
-	call DisableSRAMAndPrepareClockData
+	call DisableSRAM
 	ret
 
 EmptySRAMBoxesInBank:
@@ -518,7 +518,7 @@ EmptySRAMBoxesInBank:
 	call EmptySRAMBox
 	ld hl, sBox1 ; sBox7
 	ld bc, sBank2AllBoxesChecksum - sBox1
-	call SAVCheckSum
+	call CalcCheckSum
 	ld [sBank2AllBoxesChecksum], a ; sBank3AllBoxesChecksum
 	call CalcIndividualBoxCheckSums
 	ret
@@ -533,14 +533,14 @@ EmptySRAMBox:
 GetMonCountsForAllBoxes:
 	ld hl, wBoxMonCounts
 	push hl
-	call EnableSRAMAndLatchClockData
+	call EnableSRAM
 	ld a, $2
 	ld [MBC1SRamBank], a
 	call GetMonCountsForBoxesInBank
 	ld a, $3
 	ld [MBC1SRamBank], a
 	call GetMonCountsForBoxesInBank
-	call DisableSRAMAndPrepareClockData
+	call DisableSRAM
 	pop hl
 
 ; copy the count for the current box from WRAM
@@ -569,11 +569,11 @@ GetMonCountsForBoxesInBank:
 	ld [hli], a
 	ret
 
-SAVCheckRandomID:
+CheckPreviousSaveFile:
 ; checks if Sav file is the same by checking player's name 1st letter
 ; and the two random numbers generated at game beginning
 ; (which are stored at wPlayerID)s
-	call EnableSRAMAndLatchClockData
+	call EnableSRAM
 	ld a, $01
 	ld [MBC1SRamBank], a
 	ld a, [sPlayerName]
@@ -581,7 +581,7 @@ SAVCheckRandomID:
 	jr z, .next
 	ld hl, sGameData
 	ld bc, sGameDataEnd - sGameData
-	call SAVCheckSum
+	call CalcCheckSum
 	ld c, a
 	ld a, [sMainDataCheckSum]
 	cp c
@@ -637,15 +637,15 @@ LoadHallOfFameTeams:
 	; fallthrough
 
 HallOfFame_Copy:
-	call EnableSRAMAndLatchClockData
+	call EnableSRAM
 	xor a
 	ld [MBC1SRamBank], a
 	call CopyData
-	call DisableSRAMAndPrepareClockData
+	call DisableSRAM
 	ret
 
-ClearSAV:
-	call EnableSRAMAndLatchClockData
+ClearAllSRAMBanks:
+	call EnableSRAM
 	ld a, $4
 .loop
 	dec a
@@ -653,7 +653,7 @@ ClearSAV:
 	call PadSRAM_FF
 	pop af
 	jr nz, .loop
-	call DisableSRAMAndPrepareClockData
+	call DisableSRAM
 	ret
 
 PadSRAM_FF:
@@ -663,14 +663,14 @@ PadSRAM_FF:
 	ld a, $ff
 	jp FillMemory
 
-EnableSRAMAndLatchClockData:
+EnableSRAM:
 	ld a, $1
 	ld [MBC1SRamBankingMode], a
 	ld a, SRAM_ENABLE
 	ld [MBC1SRamEnable], a
 	ret
 
-DisableSRAMAndPrepareClockData:
+DisableSRAM:
 	ld a, SRAM_DISABLE
 	ld [MBC1SRamBankingMode], a
 	ld [MBC1SRamEnable], a

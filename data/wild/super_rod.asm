@@ -48,7 +48,7 @@ CheckMapForFishingMon:
 	ld a, $4 ; 4 pokemon per map
 	cp b
 	jr z, .loop
-	ld a, [wd11e] ; ID of the mon we're searching for
+	ld a, [wPokedexNum] ; ID of the mon we're searching for
 	; Do old rod and good rod mons manually because there's so little of them
 	cp POLIWAG
 	jr z, .found

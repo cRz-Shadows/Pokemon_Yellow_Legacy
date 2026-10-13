@@ -16,7 +16,7 @@ ExecuteCurMapScriptInTable::
 	pop hl
 	pop af
 	push hl
-	ld hl, wFlags_D733
+	ld hl, wStatusFlags7
 	bit 4, [hl]
 	res 4, [hl]
 	jr z, .useProvidedIndex   ; test if map script index was overridden manually
@@ -114,9 +114,9 @@ TalkToTrainer::
 	call ReadTrainerHeaderInfo     ; read end battle text
 	pop de
 	call SaveEndBattleTextPointers
-	ld hl, wFlags_D733
+	ld hl, wStatusFlags7
 	set 4, [hl]                    ; activate map script index override (index is set below)
-	ld hl, wFlags_0xcd60
+	ld hl, wMiscFlags
 	bit 0, [hl]                    ; test if player is already engaging the trainer (because the trainer saw the player)
 	ret nz
 ; if the player talked to the trainer of his own volition
@@ -144,7 +144,7 @@ ENDC
 	ld [wTrainerHeaderFlagBit], a
 	ret
 .trainerEngaging
-	ld hl, wFlags_D733
+	ld hl, wStatusFlags7
 	set 3, [hl]
 	ld [wEmotionBubbleSpriteIndex], a
 	xor a ; EXCLAMATION_BUBBLE
@@ -161,12 +161,12 @@ ENDC
 
 ; display the before battle text after the enemy trainer has walked up to the player's sprite
 DisplayEnemyTrainerTextAndStartBattle::
-	ld a, [wd730]
+	ld a, [wStatusFlags5]
 	and $1
 	ret nz ; return if the enemy trainer hasn't finished walking to the player's sprite
 	ld [wJoyIgnore], a
 	ld a, [wSpriteIndex]
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	; fall through
 
@@ -174,10 +174,10 @@ StartTrainerBattle::
 	xor a
 	ld [wJoyIgnore], a
 	call InitBattleEnemyParameters
-	ld hl, wd72d
+	ld hl, wStatusFlags3
 	set 6, [hl]
 	set 7, [hl]
-	ld hl, wd72e
+	ld hl, wStatusFlags4
 	set 1, [hl]
 	ld hl, wCurMapScript
 	inc [hl]        ; increment map script index (next script function is usually EndTrainerBattle)
@@ -187,9 +187,9 @@ EndTrainerBattle::
 	ld hl, wCurrentMapScriptFlags
 	set 5, [hl]
 	set 6, [hl]
-	ld hl, wd72d
+	ld hl, wStatusFlags3
 	res 7, [hl]
-	ld hl, wFlags_0xcd60
+	ld hl, wMiscFlags
 	res 0, [hl]                  ; player is no longer engaged by any trainer
 	ld a, [wIsInBattle]
 	cp $ff
@@ -203,16 +203,16 @@ EndTrainerBattle::
 	ld a, [wEnemyMonOrTrainerClass]
 	cp OPP_ID_OFFSET
 	jr nc, .skipRemoveSprite    ; test if trainer was fought (in that case skip removing the corresponding sprite)
-	ld hl, wMissableObjectList
+	ld hl, wToggleableObjectList
 	ld de, $2
 	ld a, [wSpriteIndex]
 	call IsInArray              ; search for sprite ID
 	inc hl
 	ld a, [hl]
-	ld [wMissableObjectIndex], a               ; load corresponding missable object index and remove it
+	ld [wToggleableObjectIndex], a               ; load corresponding missable object index and remove it
 	predef HideObject
 .skipRemoveSprite
-	ld hl, wd730
+	ld hl, wStatusFlags5
 	bit 4, [hl]
 	res 4, [hl]
 	ret nz
@@ -241,7 +241,7 @@ InitBattleEnemyParameters::
 	ld [wTrainerNo], a
 	ret
 .noTrainer
-	ld [wCurEnemyLVL], a
+	ld [wCurEnemyLevel], a
 	ret
 
 GetSpritePosition1::
@@ -341,7 +341,7 @@ EngageMapTrainer::
 
 PrintEndBattleText::
 	push hl
-	ld hl, wd72d
+	ld hl, wStatusFlags3
 	bit 7, [hl]
 	res 7, [hl]
 	pop hl
@@ -359,12 +359,12 @@ PrintEndBattleText::
 	pop af
 	ldh [hLoadedROMBank], a
 	ld [MBC1RomBank], a
-	farcall FreezeEnemyTrainerSprite
+	farcall SetEnemyTrainerToStayAndFaceAnyDirection
 	jp WaitForSoundToFinish
 
 SaveTrainerName::
 	ld hl, wTrainerName
-	ld de, wcd6d
+	ld de, wNameBuffer
 .CopyCharacter
 	ld a, [hli]
 	ld [de], a

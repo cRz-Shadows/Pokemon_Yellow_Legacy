@@ -2,9 +2,9 @@ _RemovePokemon::
 	ld hl, wPartyCount
 	ld a, [wRemoveMonFromBox]
 	and a
-	jr z, .usePartyCount
+	jr z, .gotCount
 	ld hl, wBoxCount
-.usePartyCount
+.gotCount
 	ld a, [hl]
 	dec a
 	ld [hli], a
@@ -25,10 +25,10 @@ _RemovePokemon::
 	ld d, PARTY_LENGTH - 1 ; max number of pokemon to shift
 	ld a, [wRemoveMonFromBox]
 	and a
-	jr z, .usePartyMonOTs
+	jr z, .gotOTsPointer
 	ld hl, wBoxMonOT
 	ld d, MONS_PER_BOX - 1
-.usePartyMonOTs
+.gotOTsPointer
 	ld a, [wWhichPokemon]
 	call SkipFixedLengthTextEntries
 	ld a, [wWhichPokemon]
@@ -44,41 +44,41 @@ _RemovePokemon::
 	ld bc, wPartyMonNicks
 	ld a, [wRemoveMonFromBox]
 	and a
-	jr z, .usePartyMonNicks
+	jr z, .gotNicksPointer
 	ld bc, wBoxMonNicks
-.usePartyMonNicks
+.gotNicksPointer
 	call CopyDataUntil
 	ld hl, wPartyMons
 	ld bc, wPartyMon2 - wPartyMon1
 	ld a, [wRemoveMonFromBox]
 	and a
-	jr z, .usePartyMonStructs
+	jr z, .gotMonStructs
 	ld hl, wBoxMons
 	ld bc, wBoxMon2 - wBoxMon1
-.usePartyMonStructs
+.gotMonStructs
 	ld a, [wWhichPokemon]
 	call AddNTimes ; get address of the pokemon removed
 	ld d, h ; store in de for CopyDataUntil
 	ld e, l
 	ld a, [wRemoveMonFromBox]
 	and a
-	jr z, .copyUntilPartyMonOTs
+	jr z, .copyUntilPartyMonOT
 	ld bc, wBoxMon2 - wBoxMon1
 	add hl, bc ; get address of pokemon after the pokemon removed
 	ld bc, wBoxMonOT ; address of when to stop copying
-	jr .continue
-.copyUntilPartyMonOTs
+	jr .shiftOTs
+.copyUntilPartyMonOT
 	ld bc, wPartyMon2 - wPartyMon1
 	add hl, bc ; get address of pokemon after the pokemon removed
 	ld bc, wPartyMonOT ; address of when to stop copying
-.continue
+.shiftOTs
 	call CopyDataUntil ; shift all pokemon data after the removed mon to the removed mon's location
 	ld hl, wPartyMonNicks
 	ld a, [wRemoveMonFromBox]
 	and a
-	jr z, .usePartyMonNicks2
+	jr z, .gotNicksPointer2
 	ld hl, wBoxMonNicks
-.usePartyMonNicks2
+.gotNicksPointer2
 	ld bc, NAME_LENGTH
 	ld a, [wWhichPokemon]
 	call AddNTimes
@@ -89,7 +89,7 @@ _RemovePokemon::
 	ld bc, wPartyMonNicksEnd
 	ld a, [wRemoveMonFromBox]
 	and a
-	jr z, .copyUntilPartyMonNicksEnd
+	jr z, .shiftMonNicks
 	ld bc, wBoxMonNicksEnd
-.copyUntilPartyMonNicksEnd
+.shiftMonNicks
 	jp CopyDataUntil

@@ -26,7 +26,7 @@ ENDC
 	call PrintText
 	jr .done
 .next
-	ld hl, wd492
+	ld hl, wPikachuMapScriptFlags
 	bit 0, [hl]
 	set 0, [hl]
 	jr nz, .next2
@@ -43,7 +43,7 @@ ENDC
 	ld a, 1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	farcall SurfingPikachuMinigame
-	ld hl, wd492
+	ld hl, wPikachuMapScriptFlags
 	set 1, [hl]
 	jr .done
 .asm_f226b
@@ -146,7 +146,7 @@ ENDC
 	vc_patch_end
 	jr z, .asm_f2369
 
-	ld hl, wd492
+	ld hl, wPikachuMapScriptFlags
 	bit 1, [hl]
 	jr z, .next2
 	ld a, 0
@@ -154,7 +154,7 @@ ENDC
 .next2
 	ld hl, .SummerBeachHousePrinterText2
 	call PrintText
-	ld a, [wd492]
+	ld a, [wPikachuMapScriptFlags]
 	bit 1, a
 	jr z, .asm_f236f
 
@@ -167,13 +167,13 @@ ENDC
 	and a
 	jp z, Func_f23d0
 	call SaveScreenTilesToBuffer2
-	ld hl, wd730
+	ld hl, wStatusFlags5
 	set 6, [hl]
 	xor a
 	ld [wUpdateSpritesEnabled], a
 	callfar Printer_PrepareSurfingMinigameHighScoreTileMap
 	call WaitForTextScrollButtonPress
-	ld hl, wd730
+	ld hl, wStatusFlags5
 	res 6, [hl]
 	call GBPalWhiteOutWithDelay3
 	call ReloadTilesetTilePatterns

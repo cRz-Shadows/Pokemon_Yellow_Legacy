@@ -11,7 +11,7 @@ BattleTransition:
 ; Determine which OAM block is being used by the enemy trainer sprite (if there
 ; is one).
 	ld hl, wSpritePlayerStateData1ImageIndex
-	ldh a, [hSpriteIndexOrTextID] ; enemy trainer sprite index (0 if wild battle)
+	ldh a, [hTextID] ; enemy trainer sprite index (0 if wild battle)
 	ld c, a
 	ld b, 0
 	ld de, $10
@@ -105,7 +105,7 @@ GetBattleTransitionID_CompareLevels:
 	ld a, [hl]
 	add $3
 	ld e, a
-	ld a, [wCurEnemyLVL]
+	ld a, [wCurEnemyLevel]
 	sub e
 	jr nc, .highLevelEnemy
 	res 1, c
@@ -163,9 +163,9 @@ BattleTransition_BlackScreen:
 	ldh [rBGP], a
 	ldh [rOBP0], a
 	ldh [rOBP1], a
-	call UpdateGBCPal_BGP
-	call UpdateGBCPal_OBP0
-	call UpdateGBCPal_OBP1
+	call UpdateCGBPal_BGP
+	call UpdateCGBPal_OBP0
+	call UpdateCGBPal_OBP1
 	ret
 
 ; for non-dungeon trainer battles
@@ -329,7 +329,7 @@ BattleTransition_FlashScreen_:
 	cp 1
 	jr z, .done
 	ldh [rBGP], a
-	call UpdateGBCPal_BGP
+	call UpdateCGBPal_BGP
 	ld c, 2
 	call DelayFrames
 	jr .loop

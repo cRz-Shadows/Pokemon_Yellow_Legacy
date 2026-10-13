@@ -103,7 +103,7 @@ Route22FirstRivalBattleScript:
 	ret
 
 Route22Rival1StartBattleScript:
-	ld a, [wd730]
+	ld a, [wStatusFlags5]
 	bit 0, a
 	ret nz
 	ld a, [wSavedCoordIndex]
@@ -123,9 +123,9 @@ Route22Rival1StartBattleScript:
 	xor a
 	ld [wJoyIgnore], a
 	ld a, TEXT_ROUTE22_RIVAL1
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
-	ld hl, wd72d
+	ld hl, wStatusFlags3
 	set 6, [hl]
 	set 7, [hl]
 	ld hl, Route22Rival1DefeatedText
@@ -170,7 +170,7 @@ Route22Rival1AfterBattleScript:
 	ld [wJoyIgnore], a
 	SetEvent EVENT_BEAT_ROUTE22_RIVAL_1ST_BATTLE
 	ld a, TEXT_ROUTE22_RIVAL1
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	call StopAllMusic
 	farcall Music_RivalAlternateStart
@@ -221,13 +221,13 @@ Route22Rival1ExitMovementData2:
 	db -1 ; end
 
 Route22Rival1ExitScript:
-	ld a, [wd730]
+	ld a, [wStatusFlags5]
 	bit 0, a
 	ret nz
 	xor a
 	ld [wJoyIgnore], a
 	ld a, HS_ROUTE_22_RIVAL_1
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	call PlayDefaultMusic
 	ResetEvents EVENT_1ST_ROUTE22_RIVAL_BATTLE, EVENT_ROUTE22_RIVAL_WANTS_BATTLE
@@ -256,7 +256,7 @@ Route22SecondRivalBattleScript:
 	ret
 
 Route22Rival2StartBattleScript:
-	ld a, [wd730]
+	ld a, [wStatusFlags5]
 	bit 0, a
 	ret nz
 	ld a, ROUTE22_RIVAL2
@@ -278,9 +278,9 @@ Route22Rival2StartBattleScript:
 	xor a
 	ld [wJoyIgnore], a
 	ld a, TEXT_ROUTE22_RIVAL2
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
-	ld hl, wd72d
+	ld hl, wStatusFlags3
 	set 6, [hl]
 	set 7, [hl]
 	ld hl, Route22Rival2DefeatedText
@@ -323,7 +323,7 @@ Route22Rival2AfterBattleScript:
 	ld [wJoyIgnore], a
 	SetEvent EVENT_BEAT_ROUTE22_RIVAL_2ND_BATTLE
 	ld a, TEXT_ROUTE22_RIVAL2
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	call StopAllMusic
 	farcall Music_RivalAlternateStartAndTempo
@@ -359,13 +359,13 @@ Route22Rival2ExitMovementData2:
 	db -1 ; end
 
 Route22Rival2ExitScript:
-	ld a, [wd730]
+	ld a, [wStatusFlags5]
 	bit 0, a
 	ret nz
 	xor a
 	ld [wJoyIgnore], a
 	ld a, HS_ROUTE_22_RIVAL_2
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	call PlayDefaultMusic
 	ResetEvents EVENT_2ND_ROUTE22_RIVAL_BATTLE, EVENT_ROUTE22_RIVAL_WANTS_BATTLE

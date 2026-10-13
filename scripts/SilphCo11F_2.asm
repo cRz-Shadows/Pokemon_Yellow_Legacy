@@ -1,27 +1,27 @@
 SilphCo11FTeamRocketLeavesScript::
-	ld hl, .HideMissableObjectIDs
+	ld hl, .HideToggleableObjectIDs
 .hide_loop
 	ld a, [hli]
 	cp $ff
 	jr z, .done_hiding
 	push hl
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	pop hl
 	jr .hide_loop
 .done_hiding
-	ld hl, .ShowMissableObjectIDs
+	ld hl, .ShowToggleableObjectIDs
 .show_loop
 	ld a, [hli]
 	cp -1
 	ret z
 	push hl
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef ShowObject
 	pop hl
 	jr .show_loop
 
-.ShowMissableObjectIDs:
+.ShowToggleableObjectIDs:
 	db HS_SAFFRON_CITY_8
 	db HS_SAFFRON_CITY_9
 	db HS_SAFFRON_CITY_A
@@ -30,7 +30,7 @@ SilphCo11FTeamRocketLeavesScript::
 	db HS_SAFFRON_CITY_D
 	db -1 ; end
 
-.HideMissableObjectIDs:
+.HideToggleableObjectIDs:
 	db HS_SAFFRON_CITY_1
 	db HS_SAFFRON_CITY_2
 	db HS_SAFFRON_CITY_3

@@ -40,8 +40,8 @@ BoulderText::
 	inc h
 .noCarry
 	ld a, [hl]
-	ld [wcf91], a
-	predef PrintStrengthTxt
+	ld [wCurPartySpecies], a
+	predef PrintStrengthText
 .done
 	jp TextScriptEnd
 

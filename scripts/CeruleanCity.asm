@@ -9,7 +9,7 @@ CeruleanCityClearScripts:
 	ld [wJoyIgnore], a
 	ld [wCeruleanCityCurScript], a
 	ld a, HS_CERULEAN_RIVAL
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef_jump HideObject
 
 CeruleanCity_ScriptPointers:
@@ -28,7 +28,7 @@ CeruleanCityRocketDefeatedScript:
 	ld [wJoyIgnore], a
 	SetEvent EVENT_BEAT_CERULEAN_ROCKET_THIEF
 	ld a, TEXT_CERULEANCITY_ROCKET
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	xor a ; SCRIPT_CERULEANCITY_DEFAULT
 	ld [wJoyIgnore], a
@@ -58,7 +58,7 @@ ENDC
 	ld [wSprite02StateData1FacingDirection], a
 	call Delay3
 	ld a, TEXT_CERULEANCITY_ROCKET
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	jp DisplayTextID
 .skipRocketThiefEncounter
 	CheckEvent EVENT_BEAT_CERULEAN_RIVAL
@@ -89,7 +89,7 @@ ENDC
 	ld [hl], 25
 .playerOnRightSideOfBridge
 	ld a, HS_CERULEAN_RIVAL
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef ShowObject
 	ld de, CeruleanCityMovement1
 	ld a, CERULEANCITY_RIVAL
@@ -123,15 +123,15 @@ CeruleanCityFaceRivalScript:
 	jp SetSpriteFacingDirectionAndDelay ; face object
 
 CeruleanCityRivalBattleScript:
-	ld a, [wd730]
+	ld a, [wStatusFlags5]
 	bit 0, a
 	ret nz
 	xor a
 	ld [wJoyIgnore], a
 	ld a, TEXT_CERULEANCITY_RIVAL
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
-	ld hl, wd72d
+	ld hl, wStatusFlags3
 	set 6, [hl]
 	set 7, [hl]
 	ld hl, CeruleanCityRivalDefeatedText
@@ -157,7 +157,7 @@ CeruleanCityRivalDefeatedScript:
 	ld [wJoyIgnore], a
 	SetEvent EVENT_BEAT_CERULEAN_RIVAL
 	ld a, TEXT_CERULEANCITY_RIVAL
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	call StopAllMusic
 	farcall Music_RivalAlternateStart
@@ -200,11 +200,11 @@ CeruleanCityMovement4:
 	db -1 ; end
 
 CeruleanCityRivalCleanupScript:
-	ld a, [wd730]
+	ld a, [wStatusFlags5]
 	bit 0, a
 	ret nz
 	ld a, HS_CERULEAN_RIVAL
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	xor a
 	ld [wJoyIgnore], a
@@ -270,13 +270,13 @@ CeruleanCityRocketText:
 	jr nz, .beatRocketThief
 	ld hl, .Text
 	call PrintText
-	ld hl, wd72d
+	ld hl, wStatusFlags3
 	set 6, [hl]
 	set 7, [hl]
 	ld hl, .IGiveUpText
 	ld de, .IGiveUpText
 	call SaveEndBattleTextPointers
-	ldh a, [hSpriteIndexOrTextID]
+	ldh a, [hTextID]
 	ld [wSpriteIndex], a
 	call EngageMapTrainer
 	call InitBattleEnemyParameters

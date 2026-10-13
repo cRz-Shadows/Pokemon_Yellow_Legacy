@@ -1,4 +1,4 @@
-MarkTownVisitedAndLoadMissableObjects::
+MarkTownVisitedAndLoadToggleableObjects::
 	ld a, [wCurMap]
 	cp FIRST_ROUTE_MAP
 	jr nc, .notInTown
@@ -7,7 +7,7 @@ MarkTownVisitedAndLoadMissableObjects::
 	ld hl, wTownVisitedFlag   ; mark town as visited (for flying)
 	predef FlagActionPredef
 .notInTown
-	ld hl, MapHSPointers
+	ld hl, ToggleableObjectMapPointers
 	ld a, [wCurMap]
 	ld b, $0
 	ld c, a
@@ -18,10 +18,10 @@ MarkTownVisitedAndLoadMissableObjects::
 	ld l, a
 	push hl
 	ld a, l
-	sub LOW(MissableObjects)   ; calculate difference between out pointer and the base pointer
+	sub LOW(ToggleableObjectStates)   ; calculate difference between out pointer and the base pointer
 	ld l, a
 	ld a, h
-	sbc HIGH(MissableObjects)
+	sbc HIGH(ToggleableObjectStates)
 	ld h, a
 	ld a, h
 	ldh [hDividend], a
@@ -38,9 +38,9 @@ MarkTownVisitedAndLoadMissableObjects::
 	ld b, a
 	ldh a, [hDividend+3]
 	ld c, a                    ; store global offset in c
-	ld de, wMissableObjectList
+	ld de, wToggleableObjectList
 	pop hl
-.writeMissableObjectsListLoop
+.writeToggleableObjectsListLoop
 	ld a, [hli]
 	cp -1
 	jr z, .done     ; end of list
@@ -54,21 +54,21 @@ MarkTownVisitedAndLoadMissableObjects::
 	inc c
 	ld [de], a                 ; write (global) missable object index
 	inc de
-	jr .writeMissableObjectsListLoop
+	jr .writeToggleableObjectsListLoop
 .done
 	ld a, -1
 	ld [de], a                 ; write sentinel
 	ret
 
-InitializeMissableObjectsFlags:
-	ld hl, wMissableObjectFlags
-	ld bc, wMissableObjectFlagsEnd - wMissableObjectFlags
+InitializeToggleableObjectsFlags:
+	ld hl, wToggleableObjectFlags
+	ld bc, wToggleableObjectFlagsEnd - wToggleableObjectFlags
 	xor a
 	call FillMemory ; clear missable objects flags
-	ld hl, MissableObjects
+	ld hl, ToggleableObjectStates
 	xor a
-	ld [wMissableObjectCounter], a
-.missableObjectsLoop
+	ld [wToggleableObjectCounter], a
+.toggleableObjectsLoop
 	ld a, [hli]
 	cp -1           ; end of list
 	ret z
@@ -77,25 +77,25 @@ InitializeMissableObjectsFlags:
 	ld a, [hl]
 	cp HIDE
 	jr nz, .skip
-	ld hl, wMissableObjectFlags
-	ld a, [wMissableObjectCounter]
+	ld hl, wToggleableObjectFlags
+	ld a, [wToggleableObjectCounter]
 	ld c, a
 	ld b, FLAG_SET
-	call MissableObjectFlagAction ; set flag if Item is hidden
+	call ToggleableObjectFlagAction ; set flag if Item is hidden
 .skip
-	ld hl, wMissableObjectCounter
+	ld hl, wToggleableObjectCounter
 	inc [hl]
 	pop hl
 	inc hl
 	inc hl
-	jr .missableObjectsLoop
+	jr .toggleableObjectsLoop
 
 ; tests if current sprite is a missable object that is hidden/has been removed
 IsObjectHidden:
 	ldh a, [hCurrentSpriteOffset]
 	swap a
 	ld b, a
-	ld hl, wMissableObjectList
+	ld hl, wToggleableObjectList
 .loop
 	ld a, [hli]
 	cp -1
@@ -105,39 +105,39 @@ IsObjectHidden:
 	jr nz, .loop
 	ld c, a
 	ld b, FLAG_TEST
-	ld hl, wMissableObjectFlags
-	call MissableObjectFlagAction
+	ld hl, wToggleableObjectFlags
+	call ToggleableObjectFlagAction
 	ld a, c
 	and a
 	jr nz, .hidden
 .notHidden
 	xor a
 .hidden
-	ldh [hIsHiddenMissableObject], a
+	ldh [hIsToggleableObjectOff], a
 	ret
 
 ; adds missable object (items, leg. pokemon, etc.) to the map
-; [wMissableObjectIndex]: index of the missable object to be added (global index)
+; [wToggleableObjectIndex]: index of the missable object to be added (global index)
 ShowObject:
 ShowObject2:
-	ld hl, wMissableObjectFlags
-	ld a, [wMissableObjectIndex]
+	ld hl, wToggleableObjectFlags
+	ld a, [wToggleableObjectIndex]
 	ld c, a
 	ld b, FLAG_RESET
-	call MissableObjectFlagAction   ; reset "removed" flag
+	call ToggleableObjectFlagAction   ; reset "removed" flag
 	jp UpdateSprites
 
 ; removes missable object (items, leg. pokemon, etc.) from the map
-; [wMissableObjectIndex]: index of the missable object to be removed (global index)
+; [wToggleableObjectIndex]: index of the missable object to be removed (global index)
 HideObject:
-	ld hl, wMissableObjectFlags
-	ld a, [wMissableObjectIndex]
+	ld hl, wToggleableObjectFlags
+	ld a, [wToggleableObjectIndex]
 	ld c, a
 	ld b, FLAG_SET
-	call MissableObjectFlagAction   ; set "removed" flag
+	call ToggleableObjectFlagAction   ; set "removed" flag
 	jp UpdateSprites
 
-MissableObjectFlagAction:
+ToggleableObjectFlagAction:
 ; identical to FlagAction
 
 	push hl

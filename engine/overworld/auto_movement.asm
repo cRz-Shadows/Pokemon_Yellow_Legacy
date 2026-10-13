@@ -1,11 +1,11 @@
 PlayerStepOutFromDoor::
-	ld hl, wd730
+	ld hl, wStatusFlags5
 	res 1, [hl]
 	call IsPlayerStandingOnDoorTile
 	jr nc, .notStandingOnDoor
 	ld a, SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
 	ld [wJoyIgnore], a
-	ld hl, wd736
+	ld hl, wMovementFlags
 	set 1, [hl]
 	ld a, $1
 	ld [wSimulatedJoypadStatesIndex], a
@@ -17,29 +17,29 @@ PlayerStepOutFromDoor::
 	ret
 .notStandingOnDoor
 	xor a
-	ld [wUnusedCD3A], a
+	ld [wUnusedOverrideSimulatedJoypadStatesIndex], a
 	ld [wSimulatedJoypadStatesIndex], a
 	ld [wSimulatedJoypadStatesEnd], a
-	ld hl, wd736
+	ld hl, wMovementFlags
 	res 0, [hl]
 	res 1, [hl]
-	ld hl, wd730
+	ld hl, wStatusFlags5
 	res 7, [hl]
 	ret
 
 _EndNPCMovementScript::
-	ld hl, wd730
+	ld hl, wStatusFlags5
 	res 7, [hl]
-	ld hl, wd72e
+	ld hl, wStatusFlags4
 	res 7, [hl]
-	ld hl, wd736
+	ld hl, wMovementFlags
 	res 0, [hl]
 	res 1, [hl]
 	xor a
 	ld [wNPCMovementScriptSpriteOffset], a
 	ld [wNPCMovementScriptFunctionNum], a
 	ld [wNPCMovementScriptPointerTableNum], a
-	ld [wUnusedCD3A], a
+	ld [wUnusedOverrideSimulatedJoypadStatesIndex], a
 	ld [wSimulatedJoypadStatesIndex], a
 	ld [wSimulatedJoypadStatesEnd], a
 	ret
@@ -83,14 +83,14 @@ PalletMovementScript_OakMoveLeft:
 	ld c, a
 	ld a, MUSIC_MUSEUM_GUY
 	call PlayMusic
-	ld hl, wFlags_D733
+	ld hl, wStatusFlags7
 	set 1, [hl]
 	ld a, SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
 	ld [wJoyIgnore], a
 	ret
 
 PalletMovementScript_PlayerMoveLeft:
-	ld a, [wd730]
+	ld a, [wStatusFlags5]
 	bit 0, a ; is an NPC being moved by a script?
 	ret nz ; return if Oak is still moving
 	ld a, [wNumStepsToTake]
@@ -123,9 +123,9 @@ PalletMovementScript_WalkToLab:
 	ld hl, wNPCMovementDirections2
 	ld de, RLEList_ProfOakWalkToLab
 	call DecodeRLEList
-	ld hl, wd72e
+	ld hl, wStatusFlags4
 	res 7, [hl]
-	ld hl, wd730
+	ld hl, wStatusFlags5
 	set 7, [hl]
 	ld a, $4
 	ld [wNPCMovementScriptFunctionNum], a
@@ -154,11 +154,11 @@ PalletMovementScript_Done:
 	and a
 	ret nz
 	ld a, HS_PALLET_TOWN_OAK
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef HideObject
-	ld hl, wd730
+	ld hl, wStatusFlags5
 	res 7, [hl]
-	ld hl, wd72e
+	ld hl, wStatusFlags4
 	res 7, [hl]
 	jp EndNPCMovementScript
 
@@ -186,7 +186,7 @@ PewterMovementScript_WalkToMuseum:
 	ld hl, wNPCMovementDirections2
 	ld de, RLEList_PewterMuseumGuy
 	call DecodeRLEList
-	ld hl, wd72e
+	ld hl, wStatusFlags4
 	res 7, [hl]
 	ld a, $1
 	ld [wNPCMovementScriptFunctionNum], a
@@ -210,9 +210,9 @@ PewterMovementScript_Done:
 	ld a, [wSimulatedJoypadStatesIndex]
 	and a
 	ret nz
-	ld hl, wd730
+	ld hl, wStatusFlags5
 	res 7, [hl]
-	ld hl, wd72e
+	ld hl, wStatusFlags4
 	res 7, [hl]
 	jp EndNPCMovementScript
 
@@ -241,9 +241,9 @@ PewterMovementScript_WalkToGym:
 	ld hl, wNPCMovementDirections2
 	ld de, RLEList_PewterGymGuy
 	call DecodeRLEList
-	ld hl, wd72e
+	ld hl, wStatusFlags4
 	res 7, [hl]
-	ld hl, wd730
+	ld hl, wStatusFlags5
 	set 7, [hl]
 	ld a, $1
 	ld [wNPCMovementScriptFunctionNum], a

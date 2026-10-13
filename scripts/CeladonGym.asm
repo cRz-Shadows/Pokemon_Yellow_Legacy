@@ -48,23 +48,23 @@ CeladonGymErikaPostBattleScript:
 ; fallthrough
 CeladonGymReceiveTM21:
 	ld a, TEXT_CELADONGYM_RAINBOWBADGE_INFO
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	SetEvent EVENT_BEAT_ERIKA
 	ld a, HS_REDS_HOUSE_2F_MR_MIME
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef ShowObject
 	lb bc, TM_MEGA_DRAIN, 1
 	call GiveItem
 	jr nc, .BagFull
 	ld a, TEXT_CELADONGYM_RECEIVED_TM21
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	SetEvent EVENT_GOT_TM21
 	jr .gymVictory
 .BagFull
 	ld a, TEXT_CELADONGYM_TM21_NO_ROOM
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 .gymVictory
 	ld hl, wObtainedBadges
@@ -79,7 +79,7 @@ CeladonGymReceiveTM21:
 
 ErikaRematchPostBattle:
 	ld a, TEXT_CELADONGYM_REMATCH_POST_BATTLE
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	jp CeladonGymResetScripts
 
@@ -135,7 +135,7 @@ CeladonGymErikaText:
 .beforeBeat
 	ld hl, .PreBattleText
 	call PrintText
-	ld hl, wd72d
+	ld hl, wStatusFlags3
 	set 6, [hl]
 	set 7, [hl]
 	ld hl, .ReceivedRainbowBadgeText

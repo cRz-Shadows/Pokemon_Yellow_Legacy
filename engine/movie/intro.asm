@@ -85,7 +85,7 @@ PlayShootingStar:
 	farcall LoadCopyrightAndTextBoxTiles
 	ldpal a, SHADE_BLACK, SHADE_DARK, SHADE_LIGHT, SHADE_WHITE
 	ldh [rBGP], a
-	call UpdateGBCPal_BGP
+	call UpdateCGBPal_BGP
 	ld c, 180
 	call DelayFrames
 	call ClearScreen
@@ -147,7 +147,7 @@ IntroDrawBlackBars:
 	ld c,  BG_MAP_WIDTH * 4
 	jp IntroPlaceBlackTiles
 
-EmptyFunc2:
+LoadPresentsGraphic:
 	ret
 
 GameFreakIntro:

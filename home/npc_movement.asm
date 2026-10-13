@@ -4,15 +4,15 @@ IsPlayerCharacterBeingControlledByGame::
 	ld a, [wNPCMovementScriptPointerTableNum]
 	and a
 	ret nz
-	ld a, [wd736]
+	ld a, [wMovementFlags]
 	bit 1, a ; currently stepping down from door bit
 	ret nz
-	ld a, [wd730]
+	ld a, [wStatusFlags5]
 	and $80
 	ret
 
 RunNPCMovementScript::
-	ld hl, wd736
+	ld hl, wMovementFlags
 	bit 0, [hl]
 	res 0, [hl]
 	jr nz, .playerStepOutFromDoor

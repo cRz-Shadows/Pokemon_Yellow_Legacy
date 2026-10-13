@@ -21,7 +21,7 @@ DrawStartMenu::
 	ld [wLastMenuItem], a
 	xor a
 	ld [wMenuWatchMovingOutOfBounds], a
-	ld hl, wd730
+	ld hl, wStatusFlags5
 	set 6, [hl] ; no pauses between printing each letter
 	hlcoord 12, 2
 	CheckEvent EVENT_GOT_POKEDEX
@@ -40,7 +40,7 @@ DrawStartMenu::
 	call PrintStartMenuItem
 	ld de, wPlayerName ; player's name
 	call PrintStartMenuItem
-	ld a, [wd72e]
+	ld a, [wStatusFlags4]
 	bit 6, a ; is the player using the link feature?
 ; case for not using link feature
 	ld de, StartMenuSaveText
@@ -53,7 +53,7 @@ DrawStartMenu::
 	call PrintStartMenuItem
 	ld de, StartMenuExitText
 	call PlaceString
-	ld hl, wd730
+	ld hl, wStatusFlags5
 	res 6, [hl] ; turn pauses between printing letters back on
 	ret
 

@@ -14,7 +14,7 @@ DisplayTownMap:
 	ld b, $0
 	call DrawPlayerOrBirdSprite ; player sprite
 	hlcoord 1, 0
-	ld de, wcd6d
+	ld de, wNameBuffer
 	call PlaceString
 	ld hl, wShadowOAM
 	ld de, wTileMapBackup
@@ -50,7 +50,7 @@ DisplayTownMap:
 	ld hl, wShadowOAMSprite04
 	call WriteTownMapSpriteOAM ; town map cursor sprite
 	pop hl
-	ld de, wcd6d
+	ld de, wNameBuffer
 .copyMapName
 	ld a, [hli]
 	ld [de], a
@@ -58,7 +58,7 @@ DisplayTownMap:
 	cp $50
 	jr nz, .copyMapName
 	hlcoord 1, 0
-	ld de, wcd6d
+	ld de, wNameBuffer
 	call PlaceString
 	ld hl, wShadowOAMSprite04
 	ld de, wTileMapBackup + 16
@@ -186,7 +186,7 @@ LoadTownMap_Fly::
 	ld b, $4
 	call DrawPlayerOrBirdSprite ; draw bird sprite
 	hlcoord 3, 0
-	ld de, wcd6d
+	ld de, wNameBuffer
 	call PlaceString
 	ld c, 15
 	call DelayFrames
@@ -218,7 +218,7 @@ LoadTownMap_Fly::
 	call PlaySound
 	ld a, [hl]
 	ld [wDestinationMap], a
-	ld hl, wd732
+	ld hl, wStatusFlags6
 	set 3, [hl]
 	inc hl
 	set 7, [hl]
@@ -365,7 +365,7 @@ DrawPlayerOrBirdSprite:
 	call TownMapCoordsToOAMCoords
 	call WritePlayerOrBirdSpriteOAM
 	pop hl
-	ld de, wcd6d
+	ld de, wNameBuffer
 .loop
 	ld a, [hli]
 	ld [de], a

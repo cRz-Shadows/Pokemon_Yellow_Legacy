@@ -1,4 +1,4 @@
-FreezeEnemyTrainerSprite::
+SetEnemyTrainerToStayAndFaceAnyDirection::
 	ld a, [wCurMap]
 	cp POKEMON_TOWER_7F
 	ret z ; the Rockets on Pokemon Tower 7F leave after battling, so don't freeze them

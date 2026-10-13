@@ -57,10 +57,10 @@ CeladonMansion3FGraphicArtistText:
 	call SaveScreenTilesToBuffer2
 	xor a
 	ld [wUpdateSpritesEnabled], a
-	ld hl, wd730
+	ld hl, wStatusFlags5
 	set 6, [hl]
 	callfar PrintDiploma
-	ld hl, wd730
+	ld hl, wStatusFlags5
 	res 6, [hl]
 	call GBPalWhiteOutWithDelay3
 	call ReloadTilesetTilePatterns

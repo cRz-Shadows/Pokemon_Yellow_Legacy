@@ -1,5 +1,5 @@
 PewterPokecenter_Script:
-	ld hl, wd492
+	ld hl, wPikachuMapScriptFlags
 	set 7, [hl]
 	call Serial_TryEstablishingExternallyClockedConnection
 	call EnableAutoTextBoxDrawing

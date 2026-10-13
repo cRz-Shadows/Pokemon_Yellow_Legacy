@@ -231,7 +231,7 @@ DEF BATTLE_SFX_START EQUS "SFX_PECK"
 	music_const SFX_BATTLE_34,          SFX_Battle_34
 	music_const SFX_BATTLE_35,          SFX_Battle_35
 	music_const SFX_BATTLE_36,          SFX_Battle_36
-	music_const SFX_SILPH_SCOPE,        SFX_Silph_Scope
+	music_const SFX_SILPH_SCOPE,        SFX_Trainer_Appeared
 DEF BATTLE_SFX_END   EQUS "SFX_SILPH_SCOPE + 1"
 DEF MAX_SFX_ID_2 EQUS "SFX_SILPH_SCOPE"
 

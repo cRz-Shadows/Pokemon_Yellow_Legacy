@@ -11,7 +11,7 @@ Route6Gate_ScriptPointers:
 	dw_const Route6GatePlayerMovingScript, SCRIPT_ROUTE6GATE_PLAYER_MOVING
 
 Route6GateDefaultScript:
-	ld a, [wd728]
+	ld a, [wStatusFlags1]
 	bit 6, a
 	ret nz
 	ld hl, .PlayerInCoordsArray
@@ -26,17 +26,17 @@ Route6GateDefaultScript:
 	and a
 	jr nz, .have_drink
 	ld a, TEXT_ROUTE6GATE_GUARD_GEE_IM_THIRSTY
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	call Route6GateMovePlayerDownScript
 	ld a, SCRIPT_ROUTE6GATE_PLAYER_MOVING
 	ld [wRoute6GateCurScript], a
 	ret
 .have_drink
-	ld hl, wd728
+	ld hl, wStatusFlags1
 	set 6, [hl]
 	ld a, TEXT_ROUTE6GATE_GUARD_GIVE_DRINK
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	jp DisplayTextID
 
 .PlayerInCoordsArray:
@@ -55,7 +55,7 @@ Route6GatePlayerMovingScript:
 	ret
 
 Route6GateMovePlayerDownScript:
-	ld hl, wd730
+	ld hl, wStatusFlags5
 	set 7, [hl]
 	ld a, D_DOWN | B_BUTTON
 	ld [wSimulatedJoypadStatesEnd], a

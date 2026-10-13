@@ -11,7 +11,7 @@ VermilionDock_Script:
 	jp z, VermilionDockSSAnneLeavesScript
 	SetEventReuseHL EVENT_STARTED_WALKING_OUT_OF_DOCK
 	call Delay3
-	ld hl, wd730
+	ld hl, wStatusFlags5
 	set 7, [hl]
 	ld hl, wSimulatedJoypadStatesEnd
 	ld a, D_UP
@@ -62,7 +62,7 @@ VermilionDockSSAnneLeavesScript:
 	ldh [hAutoBGTransferEnabled], a
 	ld [wSSAnneSmokeDriftAmount], a
 	ldh [rOBP1], a
-	call UpdateGBCPal_OBP1
+	call UpdateCGBPal_OBP1
 	ld a, 88
 	ld [wSSAnneSmokeX], a
 	ld hl, wMapViewVRAMPointer

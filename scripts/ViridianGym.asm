@@ -41,7 +41,7 @@ ViridianGymDefaultScript:
 	cp $ff
 	jp z, CheckFightingMapTrainers
 	call StartSimulatingJoypadStates
-	ld hl, wd736
+	ld hl, wMovementFlags
 	set 7, [hl]
 	ld a, SFX_ARROW_TILES
 	call PlaySound
@@ -120,7 +120,7 @@ ViridianGymPlayerSpinningScript:
 	jr nz, .ViridianGymLoadSpinnerArrow
 	xor a
 	ld [wJoyIgnore], a
-	ld hl, wd736
+	ld hl, wMovementFlags
 	res 7, [hl]
 	ld a, SCRIPT_VIRIDIANGYM_DEFAULT
 	ld [wCurMapScript], a
@@ -137,20 +137,20 @@ ViridianGymGiovanniPostBattle:
 ; fallthrough
 ViridianGymReceiveTM27:
 	ld a, TEXT_VIRIDIANGYM_GIOVANNI_EARTH_BADGE_INFO
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	SetEvent EVENT_BEAT_VIRIDIAN_GYM_GIOVANNI
 	lb bc, TM_FISSURE, 1
 	call GiveItem
 	jr nc, .bag_full
 	ld a, TEXT_VIRIDIANGYM_GIOVANNI_RECEIVED_TM27
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	SetEvent EVENT_GOT_TM27
 	jr .gym_victory
 .bag_full
 	ld a, TEXT_VIRIDIANGYM_GIOVANNI_TM27_NO_ROOM
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 .gym_victory
 	ld hl, wObtainedBadges
@@ -162,7 +162,7 @@ ViridianGymReceiveTM27:
 	SetEventRange EVENT_BEAT_VIRIDIAN_GYM_TRAINER_0, EVENT_BEAT_VIRIDIAN_GYM_TRAINER_7
 
 	ld a, HS_ROUTE_22_RIVAL_2
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef ShowObject
 	SetEvents EVENT_2ND_ROUTE22_RIVAL_BATTLE, EVENT_ROUTE22_RIVAL_WANTS_BATTLE
 	jp ViridianGymResetScripts
@@ -220,7 +220,7 @@ ViridianGymGiovanniText:
 	call PrintText
 	call GBFadeOutToBlack
 	ld a, HS_VIRIDIAN_GYM_GIOVANNI
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	call UpdateSprites
 	call Delay3
@@ -232,7 +232,7 @@ ViridianGymGiovanniText:
 	call PlayMusic
 	ld hl, .PreBattleText
 	call PrintText
-	ld hl, wd72d
+	ld hl, wStatusFlags3
 	set 6, [hl]
 	set 7, [hl]
 	ld hl, .ReceivedEarthBadgeText

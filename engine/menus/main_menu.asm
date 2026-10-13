@@ -8,7 +8,7 @@ MainMenu:
 	call CheckForPlayerNameInSRAM
 	jr nc, .mainMenuLoop
 
-	predef LoadSAV
+	predef TryLoadSaveFile
 
 .mainMenuLoop
 	ld c, 20
@@ -21,13 +21,13 @@ MainMenu:
 	ld [hli], a
 	ld [hl], a
 	ld [wDefaultMap], a
-	ld hl, wd72e
+	ld hl, wStatusFlags4
 	res 6, [hl]
 	call ClearScreen
 	call RunDefaultPaletteCommand
 	call LoadTextBoxTilePatterns
 	call LoadFontTilePatterns
-	ld hl, wd730
+	ld hl, wStatusFlags5
 	set 6, [hl]
 	ld a, [wSaveFileStatus]
 	cp 1
@@ -48,7 +48,7 @@ MainMenu:
 	ld de, NewGameText
 	call PlaceString
 .next2
-	ld hl, wd730
+	ld hl, wStatusFlags5
 	res 6, [hl]
 	call UpdateSprites
 	xor a
@@ -117,7 +117,7 @@ MainMenu:
 	jp nz, SpecialEnterMap
 	xor a
 	ld [wDestinationMap], a
-	ld hl, wd732
+	ld hl, wStatusFlags6
 	set 2, [hl] ; fly warp or dungeon warp
 	call PrepareForSpecialWarp
 	jp SpecialEnterMap
@@ -145,7 +145,7 @@ NotEnoughMemoryText:
 	text_end
 
 StartNewGame:
-	ld hl, wd732
+	ld hl, wStatusFlags6
 	; Ensure debug mode is not used when
 	; starting a regular new game.
 	; Debug mode persists in saved games for
@@ -166,8 +166,8 @@ SpecialEnterMap::
 	ldh [hJoyPressed], a
 	ldh [hJoyHeld], a
 	ldh [hJoy5], a
-	ld [wd72d], a
-	ld hl, wd732
+	ld [wCableClubDestinationMap], a
+	ld hl, wStatusFlags6
 	set 0, [hl] ; count play time
 	call ResetPlayerSpriteData
 	ld c, 20

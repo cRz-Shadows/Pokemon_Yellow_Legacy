@@ -2,18 +2,18 @@ IsPlayerTalkingToPikachu::
 	ld a, [wd436]
 	and a
 	ret z
-	ldh a, [hSpriteIndexOrTextID]
+	ldh a, [hTextID]
 	cp $f
 	ret nz
 	call InitializePikachuTextID
 	xor a
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	ld [wd436], a
 	ret
 
 InitializePikachuTextID::
 	ld a, TEXT_PIKACHU_ANIM ; display
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	xor a
 	ld [wPlayerMovingDirection], a
 	ld a, $1
@@ -166,7 +166,7 @@ StarterPikachuEmotionCommand_subcmd:
 StarterPikachuEmotionCommand_nop2:
 IF DEF(_DEBUG)
 	push hl
-	ld hl, wd732
+	ld hl, wStatusFlags6
 	bit 1, [hl]
 	pop hl
 	ret z
@@ -213,7 +213,7 @@ REPT 5
 ENDR
 IF DEF(_DEBUG)
 	push hl
-	ld hl, wd732
+	ld hl, wStatusFlags6
 	bit 1, [hl]
 	pop hl
 	ret z
@@ -304,7 +304,7 @@ MapSpecificPikachuExpression:
 	ld a, [wCurMap]
 	cp POKEMON_FAN_CLUB
 	jr nz, .notFanClub
-	ld hl, wd492
+	ld hl, wPikachuMapScriptFlags
 	bit 7, [hl]
 	ldpikaemotion a, PikachuEmotion29
 	jr z, .play_emotion
@@ -323,7 +323,7 @@ MapSpecificPikachuExpression:
 	jr .check_pikachu_status
 
 .notPewterPokecenter
-	callfar Func_f24ae
+	callfar BillsHouse_CheckPikachuEmotion
 	ld a, e
 	cp $ff
 	jr nz, .play_emotion
@@ -333,7 +333,7 @@ MapSpecificPikachuExpression:
 	call IsPlayerPikachuAsleepInParty
 	ldpikaemotion a, PikachuEmotion11
 	jr c, .play_emotion
-	callfar CheckPikachuFaintedOrStatused ; same bank
+	callfar CheckPikachuStatusCondition ; same bank
 	ldpikaemotion a, PikachuEmotion28
 	jr c, .play_emotion
 	ld a, [wCurMap]
@@ -343,7 +343,7 @@ MapSpecificPikachuExpression:
 	ldpikaemotion a, PikachuEmotion22
 	jr c, .play_emotion
 .notInLavenderTower
-	ld a, [wd49c]
+	ld a, [wPikachuEmotionModifier]
 	and a
 	jr z, .mood_based_emotion
 	dec a
@@ -383,7 +383,7 @@ IsPlayerPikachuAsleepInParty:
 	jr z, .done
 	cp STARTER_PIKACHU
 	jr nz, .curMonNotStarterPikachu
-	callfar IsThisPartymonStarterPikachu
+	callfar IsThisPartyMonStarterPikachu
 	jr nc, .curMonNotStarterPikachu
 	ld a, [wWhichPokemon]
 	ld hl, wPartyMon1Status

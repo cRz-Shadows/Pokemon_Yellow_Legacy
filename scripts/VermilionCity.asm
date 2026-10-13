@@ -6,7 +6,7 @@ VermilionCity_Script:
 	ld [wFirstLockTrashCanIndex], a
 
 	call EnableAutoTextBoxDrawing
-	ld hl, wd492
+	ld hl, wPikachuMapScriptFlags
 	res 7, [hl]
 	ld hl, wCurrentMapScriptFlags
 	bit 6, [hl]
@@ -71,7 +71,7 @@ VermilionCityDefaultScript:
 	ldh [hJoyHeld], a
 	ld [wSavedCoordIndex], a ; unnecessary
 	ld a, TEXT_VERMILIONCITY_SAILOR1
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	CheckEvent EVENT_SS_ANNE_LEFT
 	jr nz, .ship_departed
@@ -300,7 +300,7 @@ VermilionCityJennyPostBattleScript:
 	inc a
 	jr z, .skip	; Kick out if the player lost.
 	ld a, TEXT_VERMILION_CITY_JENNY_POST_BATTLE
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	SetEvent EVENT_BEAT_JENNY
 .skip

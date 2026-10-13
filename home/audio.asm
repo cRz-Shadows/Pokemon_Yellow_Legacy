@@ -10,7 +10,7 @@ PlayDefaultMusicFadeOutCurrent::
 ; Fade out the current music and then play the default music.
 	ld c, 10
 	ld d, 0
-	ld a, [wd72e]
+	ld a, [wStatusFlags4]
 	bit 5, a ; has a battle just ended?
 	jr z, PlayDefaultMusicCommon
 	xor a

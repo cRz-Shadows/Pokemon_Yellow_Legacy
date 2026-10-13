@@ -60,10 +60,10 @@ ChampionsRoomRivalReadyToBattleScript:
 	and a
 	jr nz, .ChampionRematchBattle
 	ld a, TEXT_CHAMPIONSROOM_RIVAL
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	call Delay3
-	ld hl, wd72d
+	ld hl, wStatusFlags3
 	set 6, [hl]
 	set 7, [hl]
 	ld hl, RivalDefeatedText
@@ -84,10 +84,10 @@ ChampionsRoomRivalReadyToBattleScript:
 	ret
 .ChampionRematchBattle
 	ld a, TEXT_CHAMPIONSROOM_RIVAL_REMATCH_INTRO
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	call Delay3
-	ld hl, wd72d
+	ld hl, wStatusFlags3
 	set 6, [hl]
 	set 7, [hl]
 	ld hl, RivalRematchDefeatedText
@@ -114,7 +114,7 @@ ChampionsRoomRivalDefeatedScript:
 	ld [wJoyIgnore], a
 	ld a, TEXT_CHAMPIONSROOM_RIVAL
 .continue
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call ChampionsRoom_DisplayTextID_AllowABSelectStart
 	ld a, CHAMPIONSROOM_RIVAL
 	ldh [hSpriteIndex], a
@@ -131,7 +131,7 @@ ChampionsRoomRivalDefeatedScript:
 ChampionsRoomOakArrivesScript:
 	farcall Music_Cities1AlternateTempo
 	ld a, TEXT_CHAMPIONSROOM_OAK
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call ChampionsRoom_DisplayTextID_AllowABSelectStart
 	ld a, CHAMPIONSROOM_OAK
 	ldh [hSpriteIndex], a
@@ -141,7 +141,7 @@ ChampionsRoomOakArrivesScript:
 	ldh [hSpriteIndex], a
 	call MoveSprite
 	ld a, HS_CHAMPIONS_ROOM_OAK
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef ShowObject
 	ld a, SCRIPT_CHAMPIONSROOM_OAK_CONGRATULATES_PLAYER
 	ld [wChampionsRoomCurScript], a
@@ -156,7 +156,7 @@ OakEntranceAfterVictoryMovement:
 	db -1 ; end
 
 ChampionsRoomOakCongratulatesPlayerScript:
-	ld a, [wd730]
+	ld a, [wStatusFlags5]
 	bit 0, a
 	ret nz
 	ld a, PLAYER_DIR_LEFT
@@ -176,7 +176,7 @@ ChampionsRoomOakCongratulatesPlayerScript:
 	jr nz, .ChampionRematchDefeated
 	ld a, TEXT_CHAMPIONSROOM_OAK_CONGRATULATES_PLAYER
 .continue
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call ChampionsRoom_DisplayTextID_AllowABSelectStart
 	ld a, SCRIPT_CHAMPIONSROOM_OAK_DISAPPOINTED_WITH_RIVAL
 	ld [wChampionsRoomCurScript], a
@@ -196,7 +196,7 @@ ChampionsRoomOakDisappointedWithRivalScript:
 	jr nz, .ChampionRematchDefeated
 	ld a, TEXT_CHAMPIONSROOM_OAK_DISAPPOINTED_WITH_RIVAL
 .continue
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call ChampionsRoom_DisplayTextID_AllowABSelectStart
 	ld a, SCRIPT_CHAMPIONSROOM_OAK_COME_WITH_ME
 	ld [wChampionsRoomCurScript], a
@@ -216,7 +216,7 @@ ChampionsRoomOakComeWithMeScript:
 	jr nz, .ChampionRematchDefeated
 	ld a, TEXT_CHAMPIONSROOM_OAK_COME_WITH_ME
 .continue
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call ChampionsRoom_DisplayTextID_AllowABSelectStart
 	ld de, OakExitChampionsRoomMovement
 	ld a, CHAMPIONSROOM_OAK
@@ -235,11 +235,11 @@ OakExitChampionsRoomMovement:
 	db -1 ; end
 
 ChampionsRoomOakExitsScript:
-	ld a, [wd730]
+	ld a, [wStatusFlags5]
 	bit 0, a
 	ret nz
 	ld a, HS_CHAMPIONS_ROOM_OAK
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	ld a, SCRIPT_CHAMPIONSROOM_PLAYER_FOLLOWS_OAK
 	ld [wChampionsRoomCurScript], a
@@ -346,7 +346,7 @@ ChampionsRoomOakText:
 ChampionsRoomOakCongratulatesPlayerText:
 	text_asm
 	ld a, [wPlayerStarter]
-	ld [wd11e], a
+	ld [wNamedObjectIndex], a
 	call GetMonName
 	ld hl, .Text
 	call PrintText

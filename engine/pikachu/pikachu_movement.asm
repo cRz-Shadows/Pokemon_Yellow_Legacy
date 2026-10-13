@@ -154,7 +154,7 @@ AnimatePikachuShadow:
 	ld hl, wPikachuMovementFlags
 	bit 6, [hl]
 	res 6, [hl]
-	ld hl, wd736
+	ld hl, wMovementFlags
 	res 6, [hl]
 	ret z
 	set 6, [hl]

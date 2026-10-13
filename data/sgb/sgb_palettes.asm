@@ -43,9 +43,9 @@ SuperPalettes:
 	RGB 31,31,30, 16,16,16, 31,25,09, 06,06,06 ; PAL_PIKACHUS_BEACH_TITLE
 	assert_table_length NUM_SGB_PALS
 
-GBCBasePalettes:
+CGBBasePalettes:
 ; entries correspond to PAL_* constants
-	table_width 2 * 4, GBCBasePalettes
+	table_width 2 * 4, CGBBasePalettes
 	RGB 31,31,31, 16,31,04, 11,23,31, 03,03,03 ; PAL_ROUTE
 	RGB 31,31,31, 23,17,31, 11,23,31, 03,03,03 ; PAL_PALLET
 	RGB 31,31,31, 19,31,00, 11,23,31, 03,03,03 ; PAL_VIRIDIAN

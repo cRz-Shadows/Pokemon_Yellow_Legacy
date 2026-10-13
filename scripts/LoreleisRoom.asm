@@ -14,7 +14,7 @@ LoreleiShowOrHideExitBlock:
 	bit 5, [hl]
 	res 5, [hl]
 	ret z
-	ld hl, wBeatLorelei
+	ld hl, wElite4Flags
 	set 1, [hl]
 	ld a, [wGameStage] ; Check if player has beat the game
 	and a
@@ -85,7 +85,7 @@ LoreleisRoomDefaultScript:
 	jr z, LoreleiScriptWalkIntoRoom
 .stopPlayerFromLeaving
 	ld a, TEXT_LORELEISROOM_DONT_RUN_AWAY
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID  ; "Don't run away!"
 	ld a, D_UP | B_BUTTON
 	ld [wSimulatedJoypadStatesEnd], a
@@ -125,7 +125,7 @@ LoreleisRoomLoreleiEndBattleScript:
 	jr nz, .Rematch
 	ld a, TEXT_LORELEISROOM_LORELEI
 .continue
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	jp DisplayTextID
 .Rematch
 	ld a, TEXT_LORELEISROOM_LORELEI_REMATCH

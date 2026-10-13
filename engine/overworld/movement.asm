@@ -67,7 +67,7 @@ UpdatePlayerSprite:
 	call Func_4e32
 	jr .skipSpriteAnim
 .moving
-	ld a, [wd736]
+	ld a, [wMovementFlags]
 	bit 7, a ; is the player sprite spinning due to a spin tile?
 	jr nz, .skipSpriteAnim
 	ld a, [hCurrentSpriteOffset]
@@ -163,7 +163,7 @@ UpdateNPCSprite:
 	ld b, a
 	ld a, [wFontLoaded]
 	bit 0, a
-	jp nz, notYetMoving
+	jp nz, NotYetMoving
 	ld a, b
 	cp $2
 	jp z, UpdateSpriteMovementDelay  ; [x#SPRITESTATEDATA1_MOVEMENTSTATUS] == 2
@@ -200,11 +200,11 @@ UpdateNPCSprite:
 	jr nz, .next
 ; reached end of wNPCMovementDirections list
 	ld [hl], a ; store $ff in movement byte 1, disabling scripted movement
-	ld hl, wd730
+	ld hl, wStatusFlags5
 	res 0, [hl]
 	xor a
 	ld [wSimulatedJoypadStatesIndex], a
-	ld [wUnusedCD3A], a
+	ld [wUnusedOverrideSimulatedJoypadStatesIndex], a
 	ret
 .next
 	cp WALK
@@ -385,14 +385,14 @@ UpdateSpriteMovementDelay:
 	jr .moving
 .tickMoveCounter
 	dec [hl]                ; x#SPRITESTATEDATA2_MOVEMENTDELAY
-	jr nz, notYetMoving
+	jr nz, NotYetMoving
 .moving
 	dec h
 	ldh a, [hCurrentSpriteOffset]
 	inc a
 	ld l, a
 	ld [hl], $1             ; [x#SPRITESTATEDATA1_MOVEMENTSTATUS] = 1 (mark as ready to move)
-notYetMoving:
+NotYetMoving:
 	ld h, HIGH(wSpriteStateData1)
 	ldh a, [hCurrentSpriteOffset]
 	add SPRITESTATEDATA1_ANIMFRAMECOUNTER
@@ -405,9 +405,9 @@ MakeNPCFacePlayer:
 
 ; Check if the behaviour of the NPC facing the player when spoken to is
 ; disabled. This is only done when rubbing the S.S. Anne captain's back.
-	ld a, [wd72d]
+	ld a, [wStatusFlags3]
 	bit 5, a
-	jr nz, notYetMoving
+	jr nz, NotYetMoving
 	res 7, [hl]
 	ld a, [wPlayerDirection]
 	bit PLAYER_DIR_BIT_UP, a
@@ -431,7 +431,7 @@ MakeNPCFacePlayer:
 	add $9
 	ld l, a
 	ld [hl], c              ; [x#SPRITESTATEDATA1_FACINGDIRECTION]: set facing direction
-	jr notYetMoving
+	jr NotYetMoving
 
 InitializeSpriteStatus:
 	ld [hl], $1   ; [x#SPRITESTATEDATA1_MOVEMENTSTATUS] = ready
@@ -486,7 +486,7 @@ Func_5033:
 ; tests if sprite is off screen or otherwise unable to do anything
 CheckSpriteAvailability:
 	predef IsObjectHidden
-	ldh a, [hIsHiddenMissableObject]
+	ldh a, [hIsToggleableObjectOff]
 	and a
 	jp nz, .spriteInvisible
 	ld h, HIGH(wSpriteStateData2)
@@ -748,10 +748,10 @@ DoScriptedNPCMovement:
 ; a few times in the game. It is used when the NPC and player must walk together
 ; in sync, such as when the player is following the NPC somewhere. An NPC can't
 ; be moved in sync with the player using the other method.
-	ld a, [wd730]
+	ld a, [wStatusFlags5]
 	bit 7, a
 	ret z
-	ld hl, wd72e
+	ld hl, wStatusFlags4
 	bit 7, [hl]
 	set 7, [hl]
 	jp z, InitScriptedNPCMovement

@@ -2,10 +2,10 @@ Func_f23d0:
 	call SaveScreenTilesToBuffer2
 	xor a
 	ld [wUpdateSpritesEnabled], a
-	ld hl, wd730
+	ld hl, wStatusFlags5
 	set 6, [hl]
 	callfar PrintSurfingMinigameHighScore
-	ld hl, wd730
+	ld hl, wStatusFlags5
 	res 6, [hl]
 	call GBPalWhiteOutWithDelay3
 	call ReloadTilesetTilePatterns

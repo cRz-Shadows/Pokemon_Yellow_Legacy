@@ -2,7 +2,7 @@ FadeOutAudio::
 	ld a, [wAudioFadeOutControl]
 	and a ; currently fading out audio?
 	jr nz, .fadingOut
-	ld a, [wd72c]
+	ld a, [wStatusFlags2]
 	bit 1, a
 	ret nz
 	ld a, $77

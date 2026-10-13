@@ -16,7 +16,7 @@ hPreviousTileset::
 hRLEByteValue::
 	db
 
-hSpriteIndexOrTextID:: ; DisplayTextID's argument
+hTextID:: ; DisplayTextID's argument
 hPartyMonIndex::
 	db
 
@@ -325,7 +325,7 @@ hItemToRemoveIndex:: db
 NEXTU
 hItemCounter::
 hSavedCoordIndex::
-hMissableObjectIndex::
+hToggleableObjectIndex::
 hGymTrashCanRandNumMask::
 hInteractedWithBookshelf::
 	db
@@ -353,7 +353,7 @@ hDivisor2::  db
 hQuotient2:: db
 
 NEXTU
-hIsHiddenMissableObject:: db
+hIsToggleableObjectOff:: db
 ENDU
 
 hMapROMBank:: db
@@ -373,7 +373,7 @@ hSpriteMapXCoord::    db
 NEXTU
 hItemAlreadyFound:: db
 	ds 2
-hDidntFindAnyHiddenObject:: db
+hDidntFindAnyHiddenEvent:: db
 
 NEXTU
 	ds 1
@@ -406,4 +406,4 @@ hPikachuSpriteVRAMOffset:: db
 	ds 1
 
 ; 0 if DMG, != 0 if GBC
-hGBC:: db
+hOnCGB:: db

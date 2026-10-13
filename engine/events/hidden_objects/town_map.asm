@@ -4,7 +4,7 @@ TownMapText::
 	text_asm
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
-	ld hl, wd730
+	ld hl, wStatusFlags5
 	set 6, [hl]
 	call GBPalWhiteOutWithDelay3
 	xor a
@@ -13,7 +13,7 @@ TownMapText::
 	ldh [hAutoBGTransferEnabled], a
 	call LoadFontTilePatterns
 	farcall DisplayTownMap
-	ld hl, wd730
+	ld hl, wStatusFlags5
 	res 6, [hl]
 	ld de, TextScriptEnd
 	push de

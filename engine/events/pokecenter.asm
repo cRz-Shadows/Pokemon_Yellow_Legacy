@@ -16,7 +16,7 @@ DisplayPokemonCenterDialogue_::
 	ld a, [wPartyCount]
 	and a
 	jp z, .naotenho
-	ld hl, wd72e
+	ld hl, wStatusFlags4
 	bit 2, [hl]
 	set 1, [hl]
 	set 2, [hl]
@@ -35,7 +35,7 @@ DisplayPokemonCenterDialogue_::
 	call PrintText
 .skipHealingText
 	call SetLastBlackoutMap
-	callfar IsStarterPikachuInOurParty
+	callfar IsStarterPikachuAliveInOurParty
 	jr nc, .notHealingPlayerPikachu
 	call CheckPikachuFollowingPlayer
 	jr nz, .notHealingPlayerPikachu
@@ -57,7 +57,7 @@ DisplayPokemonCenterDialogue_::
 	call CheckPikachuFollowingPlayer
 	jr nz, .playerPikachuNotOnScreen
 	call DisablePikachuOverworldSpriteDrawing
-	callfar IsStarterPikachuInOurParty
+	callfar IsStarterPikachuAliveInOurParty
 	call c, Func_6eaa
 .playerPikachuNotOnScreen
 	lb bc, 1, 8
@@ -76,7 +76,7 @@ DisplayPokemonCenterDialogue_::
 	call PlaySound
 	call CheckPikachuFollowingPlayer
 	jr nz, .doNotReturnPikachu
-	callfar IsStarterPikachuInOurParty
+	callfar IsStarterPikachuAliveInOurParty
 	call c, Func_6eaa
 	ld a, $5
 	ld [wPikachuSpawnState], a
@@ -90,7 +90,7 @@ DisplayPokemonCenterDialogue_::
 	call PrintText
 .FightingFitShort
 	call UpdateSprites
-	callfar IsStarterPikachuInOurParty
+	callfar IsStarterPikachuAliveInOurParty
 	jr nc, .notInParty
 	lb bc, 15, 0
 	call Func_6ebb

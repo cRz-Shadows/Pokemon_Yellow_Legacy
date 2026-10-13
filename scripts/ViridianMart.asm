@@ -29,7 +29,7 @@ ViridianMart_ScriptPointers:
 ViridianMartDefaultScript:
 	call UpdateSprites
 	ld a, TEXT_VIRIDIANMART_CLERK_YOU_CAME_FROM_PALLET_TOWN
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	ld hl, wSimulatedJoypadStatesEnd
 	ld de, .PlayerMovement
@@ -52,7 +52,7 @@ ViridianMartOaksParcelScript:
 	ret nz
 	call Delay3
 	ld a, TEXT_VIRIDIANMART_CLERK_PARCEL_QUEST
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	lb bc, OAKS_PARCEL, 1
 	call GiveItem
@@ -67,10 +67,10 @@ ViridianMartScript2:
 	CheckAndSetEventReuseHL EVENT_SPAWNED_OLD_MAN_1
 	ret nz
 	ld a, HS_OLD_MAN_2
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	ld a, HS_OLD_MAN_1
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef ShowObject
 	ret
 
@@ -117,7 +117,7 @@ ViridianMartClerkText::
 
 ViridianCityFishingGuruText:
 	text_asm
-	ld a, [wd728]
+	ld a, [wStatusFlags1]
 	bit 3, a ; got old rod?
 	jr nz, .got_old_rod
 	ld hl, .DoYouLikeToFishText
@@ -129,7 +129,7 @@ ViridianCityFishingGuruText:
 	lb bc, OLD_ROD, 1
 	call GiveItem
 	jr nc, .bag_full
-	ld hl, wd728
+	ld hl, wStatusFlags1
 	set 3, [hl] ; got old rod
 	ld hl, .TakeThisText
 	jr .print_text

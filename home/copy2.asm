@@ -174,18 +174,18 @@ ClearScreenArea::
 ; Clear tilemap area cxb at hl.
 	ld a, ' ' ; blank tile
 	ld de, 20 ; screen width
-.y
+.loopRows
 	push hl
 	push bc
-.x
+.loopTiles
 	ld [hli], a
 	dec c
-	jr nz, .x
+	jr nz, .loopTiles
 	pop bc
 	pop hl
 	add hl, de
 	dec b
-	jr nz, .y
+	jr nz, .loopRows
 	ret
 
 CopyScreenTileBufferToVRAM::

@@ -7,8 +7,8 @@ AskName:
 	hlcoord 0, 0
 	lb bc, 4, 11
 	call z, ClearScreenArea ; only if in wild battle
-	ld a, [wcf91]
-	ld [wd11e], a
+	ld a, [wCurPartySpecies]
+	ld [wNamedObjectIndex], a
 	call GetMonName
 	ld hl, DoYouWantToNicknameText
 	call PrintText
@@ -44,7 +44,7 @@ AskName:
 .declinedNickname
 	ld d, h
 	ld e, l
-	ld hl, wcd6d
+	ld hl, wNameBuffer
 	ld bc, NAME_LENGTH
 	jp CopyData
 
@@ -82,7 +82,7 @@ DisplayNameRaterScreen::
 
 DisplayNamingScreen:
 	push hl
-	ld hl, wd730
+	ld hl, wStatusFlags5
 	set 6, [hl]
 	call GBPalWhiteOutWithDelay3
 	call ClearScreen
@@ -165,7 +165,7 @@ DisplayNamingScreen:
 	call GBPalNormal
 	xor a
 	ld [wAnimCounter], a
-	ld hl, wd730
+	ld hl, wStatusFlags5
 	res 6, [hl]
 	ld a, [wIsInBattle]
 	and a
@@ -215,11 +215,11 @@ DisplayNamingScreen:
 .didNotPressED
 	ld a, [wCurrentMenuItem]
 	cp $6 ; case switch row
-	jr nz, .didNotPressCaseSwtich
+	jr nz, .didNotPressCaseSwitch
 	ld a, [wTopMenuItemX]
 	cp $1 ; case switch column
 	jr z, .pressedA_changedCase
-.didNotPressCaseSwtich
+.didNotPressCaseSwitch
 	ld hl, wMenuCursorLocation
 	ld a, [hli]
 	ld h, [hl]
@@ -381,12 +381,12 @@ PrintNicknameAndUnderscores:
 	hlcoord 10, 3
 	ld a, [wNamingScreenType]
 	cp NAME_MON_SCREEN
-	jr nc, .pokemon1
+	jr nc, .pokemon
 	ld b, 7 ; player or rival max name length
-	jr .playerOrRival1
-.pokemon1
+	jr .gotUnderscoreCount
+.pokemon
 	ld b, 10 ; pokemon max name length
-.playerOrRival1
+.gotUnderscoreCount
 	ld a, $76 ; underscore tile id
 .placeUnderscoreLoop
 	ld [hli], a
@@ -397,10 +397,10 @@ PrintNicknameAndUnderscores:
 	ld a, [wNamingScreenNameLength]
 	jr nc, .pokemon2
 	cp 7 ; player or rival max name length
-	jr .playerOrRival2
+	jr .checkEmptySpaces
 .pokemon2
 	cp 10 ; pokemon max name length
-.playerOrRival2
+.checkEmptySpaces
 	jr nz, .emptySpacesRemaining
 	; when all spaces are filled, force the cursor onto the ED tile
 	call EraseMenuCursor
@@ -443,12 +443,12 @@ PrintNamingText:
 	ld de, RivalsTextString
 	dec a
 	jr z, .notNickname
-	ld a, [wcf91]
+	ld a, [wCurPartySpecies]
 	ld [wMonPartySpriteSpecies], a
 	push af
 	farcall WriteMonPartySpriteOAMBySpecies
 	pop af
-	ld [wd11e], a
+	ld [wNamedObjectIndex], a
 	call GetMonName
 	hlcoord 4, 1
 	call PlaceString

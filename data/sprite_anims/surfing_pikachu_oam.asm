@@ -1,5 +1,5 @@
 SurfingPikachuOAMData:
-	dbw $00, .Frame0
+	dbw $00, .SingleTile
 	dbw $00, .Frame1
 	dbw $36, .Frame2
 	dbw $03, .Frame3
@@ -18,25 +18,25 @@ SurfingPikachuOAMData:
 	dbw $9c, .Frame16
 	dbw $a0, .Frame17
 	dbw $a3, .Frame18
-	dbw $a7, .Frame19
-	dbw $a8, .Frame20
-	dbw $98, .Frame21
+	dbw $a7, .SmallSplash
+	dbw $a8, .LargeSplash
+	dbw $98, .EmptySurfboard
 	dbw $e0, .Frame22
 	dbw $e6, .Frame23
 	dbw $ca, .Frame24
-	dbw $a7, .Frame25
-	dbw $00, .Frame26
-	dbw $00, .Frame27
-	dbw $00, .Frame28
-	dbw $00, .Frame29
-	dbw $00, .Frame30
-	dbw $00, .Frame31
+	dbw $a7, .WaterSpray
+	dbw $00, .Plus50Pts
+	dbw $00, .Plus150Pts
+	dbw $00, .Plus350Pts
+	dbw $00, .Plus750Pts
+	dbw $00, .Plus180Pts
+	dbw $00, .Plus500Pts
 	dbw $80, .Frame32
 	dbw $84, .Frame33
 	dbw $88, .Frame34
 	dbw $8c, .Frame35
 
-.Frame0:
+.SingleTile:
 	db 1
 	db $fc, $fc, $00, $00
 
@@ -86,13 +86,13 @@ SurfingPikachuOAMData:
 	db $00, $08, $14, $00
 	db $00, $10, $15, $00
 
-.Frame25:
+.WaterSpray:
 	db 3
 	db $fc, $0b, $00, $10
 	db $04, $03, $0f, $10
 	db $04, $0b, $10, $10
 
-.Frame19:
+.SmallSplash:
 	db 6
 	db $fc, $f0, $00, $30
 	db $fc, $08, $00, $10
@@ -101,7 +101,7 @@ SurfingPikachuOAMData:
 	db $04, $00, $0f, $10
 	db $04, $08, $10, $10
 
-.Frame20:
+.LargeSplash:
 	db 12
 	db $f4, $f0, $00, $10
 	db $f4, $f8, $01, $10
@@ -116,47 +116,47 @@ SurfingPikachuOAMData:
 	db $04, $00, $21, $30
 	db $04, $08, $20, $30
 
-.Frame21:
+.EmptySurfboard:
 	db 3
 	db $04, $f4, $00, $00
 	db $04, $fc, $01, $00
 	db $04, $04, $02, $00
 
-.Frame26:
+.Plus50Pts:
 	db 3
 	db $fc, $f4, $bf, $00
 	db $fc, $fc, $d5, $00
 	db $fc, $04, $d0, $00
 
-.Frame27:
+.Plus150Pts:
 	db 4
 	db $fc, $f0, $bf, $00
 	db $fc, $f8, $d1, $00
 	db $fc, $00, $d5, $00
 	db $fc, $08, $d0, $00
 
-.Frame28:
+.Plus350Pts:
 	db 4
 	db $fc, $f0, $bf, $00
 	db $fc, $f8, $d3, $00
 	db $fc, $00, $d5, $00
 	db $fc, $08, $d0, $00
 
-.Frame29:
+.Plus750Pts:
 	db 4
 	db $fc, $f0, $bf, $00
 	db $fc, $f8, $d7, $00
 	db $fc, $00, $d5, $00
 	db $fc, $08, $d0, $00
 
-.Frame30:
+.Plus180Pts:
 	db 4
 	db $fc, $f0, $bf, $00
 	db $fc, $f8, $d1, $00
 	db $fc, $00, $d8, $00
 	db $fc, $08, $d0, $00
 
-.Frame31:
+.Plus500Pts:
 	db 4
 	db $fc, $f0, $bf, $00
 	db $fc, $f8, $d5, $00

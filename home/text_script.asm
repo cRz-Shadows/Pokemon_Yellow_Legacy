@@ -3,7 +3,7 @@ UnknownText_2812:: ; unreferenced
 	text_end
 
 ; this function is used to display sign messages, sprite dialog, etc.
-; INPUT: [hSpriteIndexOrTextID] = sprite ID or text ID
+; INPUT: [hTextID] = sprite ID or text ID
 DisplayTextID::
 	ldh a, [hLoadedROMBank]
 	push af
@@ -22,7 +22,7 @@ DisplayTextID::
 	ld h, [hl]
 	ld l, a ; hl = map text pointer
 	ld d, $00
-	ldh a, [hSpriteIndexOrTextID] ; text ID
+	ldh a, [hTextID] ; text ID
 	ld [wSpriteIndex], a
 
 	dict TEXT_START_MENU,       DisplayStartMenu
@@ -34,7 +34,7 @@ DisplayTextID::
 
 	ld a, [wNumSprites]
 	ld e, a
-	ldh a, [hSpriteIndexOrTextID] ; sprite ID
+	ldh a, [hTextID] ; sprite ID
 	cp e
 	jr z, .spriteHandling
 	jr nc, .skipSpriteHandling
@@ -42,7 +42,7 @@ DisplayTextID::
 ; get the text ID of the sprite
 	push hl
 	ld hl, wMapSpriteData ; NPC text entries
-	ldh a, [hSpriteIndexOrTextID]
+	ldh a, [hTextID]
 	dec a
 	add a
 	ld e, a
@@ -124,7 +124,7 @@ CloseTextDisplay::
 	call InitMapSprites ; reload sprite tile pattern data (since it was partially overwritten by text tile patterns)
 	ld hl, wFontLoaded
 	res 0, [hl]
-	ld a, [wd732]
+	ld a, [wStatusFlags6]
 	bit 3, a ; used fly warp
 	call z, LoadPlayerSpriteGraphics
 	call LoadCurrentMapView
@@ -191,9 +191,9 @@ PokemonFaintedText::
 DisplayPlayerBlackedOutText::
 	ld hl, PlayerBlackedOutText
 	call PrintText
-	ld a, [wd732]
+	ld a, [wStatusFlags6]
 	res 5, a ; reset forced to use bike bit
-	ld [wd732], a
+	ld [wStatusFlags6], a
 	CheckEvent EVENT_IN_SAFARI_ZONE
 	jr z, .didnotblackoutinsafari
 	xor a
@@ -213,7 +213,7 @@ PlayerBlackedOutText::
 DisplayRepelWoreOffText::
 	; is there another repel we can use?
 	ld a, [wRepelType]
-	ld [wd11e], a
+	ld [wNamedObjectIndex], a
 	ld b, a
 	call IsItemInBag
 	jr z, .NoRepelsInBag ; skip reuse if no repels in bag

@@ -7,7 +7,7 @@ VermilionOldRodHouse_TextPointers:
 
 VermilionOldRodHouseFishingGuruText:
 	text_asm
-	ld a, [wd728]
+	ld a, [wStatusFlags1]
 	bit 4, a ; got good rod?
 	jr nz, .got_item
 	ld hl, .Text
@@ -19,7 +19,7 @@ VermilionOldRodHouseFishingGuruText:
 	lb bc, GOOD_ROD, 1
 	call GiveItem
 	jr nc, .bag_full
-	ld hl, wd728
+	ld hl, wStatusFlags1
 	set 4, [hl] ; got good rod
 	ld hl, .ReceivedGoodRodText
 	jr .done
