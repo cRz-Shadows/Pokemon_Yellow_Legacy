@@ -167,6 +167,8 @@ HoFDisplayAndRecordMonInfo:
 .asm_7033c
 	jp HoFRecordMonInfo
 
+; SUGGESTED NAME: HoFDisplayMonInfoAndPlayCry
+; Draws a HoF mon's level/type box and plays its cry; used by the League PC viewer (confidence: high)
 Func_7033f:
 	call HoFDisplayMonInfo
 	ld a, [wHoFMonSpecies]

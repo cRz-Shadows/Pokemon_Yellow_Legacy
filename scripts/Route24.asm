@@ -321,19 +321,27 @@ Route24CooltrainerM4Text:
 	call PrintText
 	jp TextScriptEnd
 
+; SUGGESTED NAME: Route24CooltrainerM4OfferCharmanderText
+; Damian offers his "weak" Charmander (confidence: high)
 Route24Text_515de:
 	text_far _Route24DamianText1
 	text_end
 
+; SUGGESTED NAME: Route24CooltrainerM4GoodLuckText
+; Damian after giving Charmander: "Good luck with that." (confidence: high)
 Route24Text_515e3:
 	text_far _Route24DamianText2
 	text_waitbutton
 	text_end
 
+; SUGGESTED NAME: Route24CooltrainerM4DeclinedText
+; Damian when you decline: "I'd better release it then." (confidence: high)
 Route24Text_515e9:
 	text_far _Route24DamianText3
 	text_end
 
+; SUGGESTED NAME: Route24CooltrainerM4HowsCharmanderText
+; Damian later: "How's that weak old CHARMANDER doing?" (confidence: high)
 Route24Text_515ee:
 	text_far _Route24DamianText4
 	text_end

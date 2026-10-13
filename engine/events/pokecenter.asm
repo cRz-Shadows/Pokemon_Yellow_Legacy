@@ -130,6 +130,8 @@ TemPokemonOuNao:
 	text_far _TemPokemonOuNao
 	text_end
 
+; SUGGESTED NAME: PokeCenterNurseFacePikachu
+; Sets the nurse (sprite 1) to frame 4 and waits 64 frames during Pikachu healing (confidence: low)
 Func_6eaa:
 	ld a, $1
 	ldh [hSpriteIndex], a
@@ -140,6 +142,8 @@ Func_6eaa:
 	call DelayFrames
 	ret
 
+; SUGGESTED NAME: SetSpriteFacingAndImageIndex
+; Sets sprite b's facing direction to c (with delay), then its image index to c (confidence: high)
 Func_6ebb:
 	ld a, b
 	ldh [hSpriteIndex], a

@@ -1,5 +1,7 @@
 ; This list is used by a unreferenced function.
 
+; SUGGESTED NAME: SkipBaseMovesSpeciesList
+; Species for which CanSpeciesLearnMoveAtLevel skips the base-moves check (confidence: low)
 Pointer_3b0ee:
 	db NIDOKING
 	db IVYSAUR

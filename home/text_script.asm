@@ -1,3 +1,5 @@
+; SUGGESTED NAME: UnusedPokemonExclamationText
+; Unreferenced text_far to "#MON!" (confidence: medium)
 UnknownText_2812:: ; unreferenced
 	text_far _PokemonText
 	text_end

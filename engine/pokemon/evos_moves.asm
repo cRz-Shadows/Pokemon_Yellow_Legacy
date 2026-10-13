@@ -387,6 +387,8 @@ LearnMoveFromLevelUp:
 	ld [wPokedexNum], a
 	ret
 
+; SUGGESTED NAME: CanMonOrPreEvosLearnMove
+; Carry if wCurPartySpecies or up to 2 pre-evolutions can learn move wTempTMHM (confidence: high)
 Func_3b079:
 	ld a, [wCurPartySpecies]
 	push af
@@ -415,6 +417,8 @@ Func_3b079:
 	scf
 	ret
 
+; SUGGESTED NAME: CanSpeciesLearnMoveAtLevel
+; Carry if the species learns wTempTMHM by TM/HM, base moves, or level-up by wCurEnemyLevel (confidence: high)
 Func_3b0a2:
 ; XXX what is wCurPartySpecies entering this function?
 	ld a, [wTempTMHM]
@@ -460,6 +464,8 @@ Func_3b0a2:
 
 INCLUDE "data/pokemon/unknown_list.asm"
 
+; SUGGESTED NAME: GetPreEvolution
+; Carry and wCurPartySpecies = pre-evolution if any mon evolves into wCurPartySpecies (confidence: high)
 Func_3b10f:
 	ld c, $0
 .asm_3b111

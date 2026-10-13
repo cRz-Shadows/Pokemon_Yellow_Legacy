@@ -1,3 +1,5 @@
+; SUGGESTED NAME: ColosseumCupMenu
+; Colosseum cup menu (Poke/Pika/Petit Cup/Cancel) synced over link; checks rules (confidence: high)
 Func_f531b::
 	ld c, $14
 	call DelayFrames
@@ -176,12 +178,18 @@ Func_f531b::
 	and a
 	ret
 
+; SUGGESTED NAME: ColosseumCupMenuIneligible
+; Prints the ineligible-party text and restarts the cup menu (confidence: high)
 Func_f5476::
 	ld hl, ColosseumIneligibleText
 	call PrintText
+; SUGGESTED NAME: ColosseumCupMenuRestart
+; Restarts the colosseum cup menu (confidence: high)
 asm_f547c::
 	jp Func_f531b
 
+; SUGGESTED NAME: ColosseumCupMenuCancel
+; Cancels the colosseum cup menu (returns carry) (confidence: high)
 asm_f547f::
 	xor a
 	ld [wUnknownSerialCounter], a
@@ -189,6 +197,8 @@ asm_f547f::
 	scf
 	ret
 
+; SUGGESTED NAME: ColosseumCupEligibilityChecks
+; Party-eligibility check routines for Poke Cup, Pika Cup and Petit Cup (confidence: high)
 PointerTable_f5488::
 	dw PokeCup
 	dw PikaCup
@@ -479,6 +489,8 @@ CombinedLevelsAbove50::
 	ld a, $c
 	ret
 
+; SUGGESTED NAME: PetitCupMonTooTall
+; Petit Cup: prints that a party mon is over 6'8" and returns error $d (confidence: high)
 asm_f5689::
 	pop af
 	pop bc
@@ -490,6 +502,8 @@ asm_f5689::
 	ld a, $d
 	ret
 
+; SUGGESTED NAME: PetitCupMonTooHeavy
+; Petit Cup: prints that a party mon is over 44 lb and returns error $e (confidence: high)
 asm_f569b::
 	pop af
 	pop bc
@@ -501,6 +515,8 @@ asm_f569b::
 	ld a, $e
 	ret
 
+; SUGGESTED NAME: PetitCupMonNotBasic
+; Petit Cup: prints that a party mon is evolved and returns error $f (confidence: high)
 asm_f56ad::
 	ld a, [hl]
 	ld [wNamedObjectIndex], a
@@ -510,6 +526,8 @@ asm_f56ad::
 	ld a, $f
 	ret
 
+; SUGGESTED NAME: PrintColosseumCupRules
+; Prints the highlighted cup's rules in the bottom text box of the cup menu (confidence: high)
 Func_f56bd::
 	xor a
 	ldh [hAutoBGTransferEnabled], a
@@ -538,30 +556,42 @@ Func_f56bd::
 	ldh [hAutoBGTransferEnabled], a
 	ret
 
+; SUGGESTED NAME: ColosseumCupRulesTexts
+; Pointers to the rules strings for Poke Cup, Pika Cup and Petit Cup (confidence: high)
 PointerTable_f56ee::
 	dw Text_f56f4
 	dw Text_f5728
 	dw Text_f575b
 
+; SUGGESTED NAME: PokeCupRulesText
+; Poke Cup rules string (3 mons LV50-55, sum 155, no Mew) (confidence: high)
 Text_f56f4::
 	db "LVs of 3<PKMN>:50-55"
 	next "Sum of LVs:155 MAX"
 	next "MEW can't attend.@"
 
+; SUGGESTED NAME: PikaCupRulesText
+; Pika Cup rules string (3 mons LV15-20, sum 50, no Mew) (confidence: high)
 Text_f5728::
 	db "LVs of 3<PKMN>:15-20"
 	next "Sum of LVs:50 MAX"
 	next "MEW can't attend.@"
 
+; SUGGESTED NAME: PetitCupRulesText
+; Petit Cup rules string (3 basic mons LV25-30, sum 80, 6'8"/44lb max) (confidence: high)
 Text_f575b::
 	db "3 Basic <PKMN>.LV25-30"
 	next "Sum of LVs:80 MAX"
 	next "6’8” and 44lb MAX@"
 
+; SUGGESTED NAME: ColosseumViewRulesText
+; "View Rules" label in the colosseum cup menu (confidence: high)
 Text_f5791::
 	db "View"
 	next "Rules@"
 
+; SUGGESTED NAME: ColosseumCupNamesText
+; Cup menu options: Poke Cup, Pika Cup, Petit Cup, CANCEL (confidence: high)
 Text_f579c::
 	db "# Cup"
 	next "Pika Cup"
@@ -873,6 +903,8 @@ LinkMenu:
 	ld a, $f0
 	jp .next
 
+; SUGGESTED NAME: LinkMenuPlaceSelectionArrows
+; Places chars b/c/d/e at the 4 link menu rows (shows chosen item), waits 40 frames (confidence: high)
 Func_f59ec::
 	ld a, b
 	ldcoord_a 6, 5
@@ -902,6 +934,8 @@ ColosseumVersionText:
 	text_far _ColosseumVersionText
 	text_end
 
+; SUGGESTED NAME: LinkMenuBlankText
+; Empty text (text_end) printed when opening the link menu (confidence: high)
 TextTerminator_f5a16:
 	text_end
 

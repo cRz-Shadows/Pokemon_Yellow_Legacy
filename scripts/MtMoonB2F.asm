@@ -84,6 +84,8 @@ ENDC
 	call z, MtMoonB2FScript_49e15
 	ret
 
+; SUGGESTED NAME: MtMoonB2FScript_CheckSuperNerdEncounter
+; Before fossils: Super Nerd challenges the player at (13,8), else check trainers (confidence: high)
 MtMoonB2FScript_49d28:
 	CheckEvent EVENT_BEAT_MT_MOON_EXIT_SUPER_NERD
 	jp nz, .asm_49d4b
@@ -158,40 +160,56 @@ MtMoonB2FMoveSuperNerdScript:
 	call MtMoonB2FSetScript
 	ret
 
+; SUGGESTED NAME: MtMoonB2FDomeFossilAreaCoords
+; Tiles around the Dome Fossil; Super Nerd then walks to the Helix Fossil (confidence: high)
 CoordsData_49dc0:
 	dbmapcoord 12,  7
 	dbmapcoord 11,  6
 	dbmapcoord 12,  5
 	db -1 ; end
 
+; SUGGESTED NAME: MtMoonB2FBelowDomeFossilCoords
+; Tile below the Dome Fossil, where Pikachu must also move out of the way (confidence: high)
 CoordsData_49dc7:
 	dbmapcoord 12,  7
 	db -1 ; end
 
+; SUGGESTED NAME: MtMoonB2FPikachuMovement_DomeSide
+; Pikachu sidestep when the Super Nerd walks to the Helix Fossil (confidence: medium)
 PikachuMovementData_49dca:
 	db $00
 	db $35
 	db $33
 	db $3f
 
+; SUGGESTED NAME: MtMoonB2FHelixFossilAreaCoords
+; Tiles around the Helix Fossil; Super Nerd then walks to the Dome Fossil (confidence: high)
 CoordsData_49dce:
 	dbmapcoord 13,  7
 	dbmapcoord 14,  6
 	dbmapcoord 14,  5
 	db -1 ; end
 
+; SUGGESTED NAME: MtMoonB2FBelowHelixFossilCoords
+; Tile below the Helix Fossil, where Pikachu must also move out of the way (confidence: high)
 CoordsData_49dd5:
 	dbmapcoord 13,  7
 	db -1 ; end
 
+; SUGGESTED NAME: MtMoonB2FPikachuMovement_HelixSide
+; Pikachu sidestep when the Super Nerd walks to the Dome Fossil (confidence: medium)
 PikachuMovementData_49dd8:
 	db $00
 	db $35
 	db $34
 	db $3f
 
+; SUGGESTED NAME: MtMoonB2FSuperNerdMovement_ToHelixFossil
+; Super Nerd walks right then up to take the other (Helix) fossil (confidence: high)
 MovementData_49ddc:
 	db NPC_MOVEMENT_RIGHT
+; SUGGESTED NAME: MtMoonB2FSuperNerdMovement_ToDomeFossil
+; Super Nerd walks up to take the other (Dome) fossil (confidence: high)
 MovementData_49ddd:
 	db NPC_MOVEMENT_UP
 	db -1 ; end
@@ -222,6 +240,8 @@ MtMoonB2FSuperNerdTakesOtherFossilScript:
 	call MtMoonB2FSetScript
 	ret
 
+; SUGGESTED NAME: MtMoonB2FScript_StartJessieJamesEncounter
+; At (3,5): plays Jessie & James music, shows them and starts their intro (confidence: high)
 MtMoonB2FScript_49e15:
 	ld a, [wXCoord]
 	cp $3
@@ -259,8 +279,12 @@ MtMoonB2FScript_49e15:
 	call MtMoonB2FSetScript
 	ret
 
+; SUGGESTED NAME: MtMoonB2FJessieRunLeftMovement
+; Jessie runs left 6 tiles (code $06 = fast step left) (confidence: medium)
 MovementData_f9e65:
 	db $06
+; SUGGESTED NAME: MtMoonB2FJamesRunLeftMovement
+; James runs left 5 tiles (code $06 = fast step left) (confidence: medium)
 MovementData_f9e66:
 	db $06
 	db $06

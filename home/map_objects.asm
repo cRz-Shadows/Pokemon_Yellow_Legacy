@@ -112,6 +112,8 @@ IsSurfingPikachuInParty::
 	call Func_3467
 	ret
 
+; SUGGESTED NAME: SetStarterPikachuInPartyFlag
+; Sets wd472 bit 7 if starter Pikachu is alive in the party (pret: local .checkForStarter) (confidence: high)
 Func_3467::
 	push hl
 	push bc
@@ -147,6 +149,8 @@ SetSpriteImageIndexAfterSettingFacingDirection::
 	ld [hl], a
 	ret
 
+; SUGGESTED NAME: SetSpriteImageIndexFromPicID
+; Sets sprite hSpriteIndex's image index to (picture ID-1)*16 + hSpriteImageIndex (confidence: medium)
 SpriteFunc_34a1::
 	ldh a, [hSpriteIndex]
 	swap a

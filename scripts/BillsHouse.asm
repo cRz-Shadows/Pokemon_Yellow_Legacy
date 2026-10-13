@@ -185,6 +185,8 @@ BillsHouseScript5:
 	ld [wBillsHouseCurScript], a
 	ret
 
+; SUGGESTED NAME: BillMovement_ExitCellSeparator
+; Bill walks out of the cell separator (pret: local .BillExitMachineMovement) (confidence: high)
 MovementData_1e807:
 	db NPC_MOVEMENT_DOWN
 	db NPC_MOVEMENT_RIGHT
@@ -225,6 +227,8 @@ BillsHouseScript7:
 	ld [wBillsHouseCurScript], a
 	ret
 
+; SUGGESTED NAME: BillsHouseRLE_PlayerWalksToBill
+; Simulated joypad RLE list: player walks right 3 steps to stand in front of Bill (confidence: medium)
 RLE_1e219:
 	db D_RIGHT, $3
 	db $FF

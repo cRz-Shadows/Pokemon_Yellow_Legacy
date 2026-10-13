@@ -31,10 +31,14 @@ CeladonMansion3FProgrammerText:
 	call PrintText
 	jp TextScriptEnd
 
+; SUGGESTED NAME: CeladonMansion3FProgrammerDefaultText
+; Programmer's text before the #DEX is complete (confidence: high)
 CeladonMansion3Text_486f0:
 	text_far _CeladonMansion3FProgrammerText
 	text_end
 
+; SUGGESTED NAME: CeladonMansion3FProgrammerDexCompleteText
+; Programmer's text once the #DEX is complete (Mew not needed) (confidence: high)
 CeladonMansion3Text_486f5:
 	text_far _CeladonMansion3FProgrammerText2
 	text_end

@@ -126,6 +126,8 @@ UpdatePlayerSprite:
 	ld [wSpritePlayerStateData2GrassPriority], a
 	ret
 
+; SUGGESTED NAME: UpdatePlayerSpriteImageIndex
+; Sets the player's image index to facing direction + anim frame counter (confidence: high)
 Func_4e32:
 	ld a, [wSpritePlayerStateData1AnimFrameCounter]
 	ld b, a
@@ -471,6 +473,8 @@ InitializeSpriteScreenPosition:
 	ld [hl], a      ; [x#SPRITESTATEDATA1_XPIXELS]
 	ret
 
+; SUGGESTED NAME: SignedTileDeltaToPixels
+; Multiplies a signed tile delta by 16 (sign taken from carry) for screen positions (confidence: high)
 Func_5033:
 	jr nc, .asm_503c
 	cpl
@@ -888,6 +892,8 @@ AdvanceScriptedNPCAnimFrameCounter:
 	ldh [hSpriteAnimFrameCounter], a
 	ret
 
+; SUGGESTED NAME: IncrementSpriteAnimCounters
+; Advances the current sprite's intra-anim counter, and its anim frame every 4 ticks (confidence: high)
 Func_5274:
 	ldh a, [hCurrentSpriteOffset]
 	add $7
@@ -905,6 +911,8 @@ Func_5274:
 	ld [hl], a                       ; advance to next animation frame every 4 ticks (16 ticks total for one step)
 	ret
 
+; SUGGESTED NAME: TryDoSpecialNPCMovement
+; Handles movement codes $4-$7 (fast step) and $11-$14 (step in place); carry if handled (confidence: medium)
 Func_5288:
 ; nice lookup table
 ; a is supposedly [wNPCMovementDirections + $fe]
@@ -1004,26 +1012,36 @@ Func_5288:
 	scf
 	ret
 
+; SUGGESTED NAME: GetDownMovementDeltas
+; Loads d/e and c for one step down (de = 1, 0; c = SPRITE_FACING_DOWN) (confidence: high)
 Func_531f:
 	lb de, 1, 0
 	ld c, SPRITE_FACING_DOWN
 	ret
 
+; SUGGESTED NAME: GetUpMovementDeltas
+; Loads d/e and c for one step up (de = -1, 0; c = SPRITE_FACING_UP) (confidence: high)
 Func_5325:
 	lb de, -1, 0
 	ld c, SPRITE_FACING_UP
 	ret
 
+; SUGGESTED NAME: GetRightMovementDeltas
+; Loads d/e and c for one step right (de = 0, 1; c = SPRITE_FACING_RIGHT) (confidence: high)
 Func_532b:
 	lb de, 0, 1
 	ld c, SPRITE_FACING_RIGHT
 	ret
 
+; SUGGESTED NAME: GetLeftMovementDeltas
+; Loads d/e and c for one step left (de = 0, -1; c = SPRITE_FACING_LEFT) (confidence: high)
 Func_5331:
 	lb de, 0, -1
 	ld c, SPRITE_FACING_LEFT
 	ret
 
+; SUGGESTED NAME: SetSpriteFacingAndStepVectors
+; Writes facing direction c and Y/X step vectors d/e for the current sprite (confidence: high)
 Func_5337:
 	ldh a, [hCurrentSpriteOffset]
 	add $9
@@ -1039,6 +1057,8 @@ Func_5337:
 	ld [hl], e          ; x#SPRITESTATEDATA1_XSTEPVECTOR
 	ret
 
+; SUGGESTED NAME: UpdateSpriteMapPosition
+; Adds d/e to the current sprite's map Y/X coordinates (confidence: high)
 Func_5349:
 	ld h, HIGH(wSpriteStateData2)
 	ldh a, [hCurrentSpriteOffset]
@@ -1052,6 +1072,8 @@ Func_5349:
 	ld [hl], a          ; update X position
 	ret
 
+; SUGGESTED NAME: UpdateSpriteInFastWalkingAnimation
+; Movement status 4: moves the sprite 2px per frame, then resets its movement status (confidence: medium)
 Func_5357:
 	call Func_5274
 	ldh a, [hCurrentSpriteOffset]

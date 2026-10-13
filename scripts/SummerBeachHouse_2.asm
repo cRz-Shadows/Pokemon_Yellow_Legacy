@@ -1,3 +1,5 @@
+; SUGGESTED NAME: SummerBeachHousePrintHighScoreScript
+; Prints the surfing minigame high score, then says done or error (confidence: high)
 Func_f23d0:
 	call SaveScreenTilesToBuffer2
 	xor a
@@ -22,11 +24,15 @@ Func_f23d0:
 	call PrintText
 	jp TextScriptEnd
 
+; SUGGESTED NAME: SummerBeachHousePrintCompletedText
+; "PRINT completed." (confidence: high)
 Text_f240c:
 	text_far _SummerBeachHousePrinterText5
 	text_waitbutton
 	text_end
 
+; SUGGESTED NAME: SummerBeachHousePrintErrorText
+; "PRINT error!" (confidence: high)
 Text_f2412:
 	text_far _SummerBeachHousePrinterText6
 	text_waitbutton

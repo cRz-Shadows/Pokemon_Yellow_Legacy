@@ -1,3 +1,5 @@
+; SUGGESTED NAME: UnusedEmptyFunction
+; Unreferenced function that only returns (confidence: medium)
 Func_f0a54: ; unreferenced
 	ret
 

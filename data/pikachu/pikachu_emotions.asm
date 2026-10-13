@@ -221,34 +221,46 @@ PikachuEmotion32:
 	pikaemotion_pikapic PikaPicAnimScript23
 	db $ff
 
+; SUGGESTED NAME: PikachuMovementData_TurnAround
+; Pikachu turns 180 degrees (two clockwise turns), then holds still ~31 frames (confidence: medium)
 PikachuMovementData_fd218:
 	db $00
 	db $39,  2 - 1
 	db $3e, 31 - 1
 	db $3f
 
+; SUGGESTED NAME: PikachuMovementData_LookAway
+; Pikachu makes one clockwise quarter turn, then holds still ~31 frames (confidence: medium)
 PikachuMovementData_fd21e:
 	db $00
 	db $39,  1 - 1
 	db $3e, 31 - 1
 	db $3f
 
+; SUGGESTED NAME: PikachuMovementData_TwoQuickHops
+; Pikachu hops in place twice, quickly (8 frames per hop) (confidence: medium)
 PikachuMovementData_fd224:
 	db $00
 	db $3c, 8 - 1, (2 << 4) | (16 - 1)
 	db $3c, 8 - 1, (2 << 4) | (16 - 1)
 	db $3f
 
+; SUGGESTED NAME: PikachuMovementData_Spin
+; Unused: Pikachu spins counterclockwise every 4 frames for 32 frames (no $00 start) (confidence: medium)
 PikachuMovementData_fd22c:
 	db $3b, 32 - 1, 4 - 1
 	db $3f
 
+; SUGGESTED NAME: PikachuMovementData_TwoSlowHops
+; Pikachu hops in place twice, slowly (16 frames per hop) (confidence: medium)
 PikachuMovementData_fd230:
 	db $00
 	db $3c, 16 - 1, (1 << 4) | (16 - 1)
 	db $3c, 16 - 1, (1 << 4) | (16 - 1)
 	db $3f
 
+; SUGGESTED NAME: PikachuMovementData_StepDance
+; Unused: Pikachu does turning steps with pauses, like a little dance (confidence: low)
 PikachuMovementData_fd238:
 	db $00
 	db $05, 8 - 1

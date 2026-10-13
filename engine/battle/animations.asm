@@ -596,6 +596,8 @@ SetAnimationPalette:
 	call UpdateCGBPal_OBP1
 	ret
 
+; SUGGESTED NAME: RefreshBGMapsAfterAnimation
+; After a move animation: blanks BG map 0, then copies the tilemap to BG map 1 (confidence: medium)
 Func_78e98:
 	call SaveScreenTilesToBuffer2
 	xor a
@@ -2208,6 +2210,8 @@ AnimationHideEnemyMonPic:
 	ldh [hAutoBGTransferEnabled], a
 	jp Delay3
 
+; SUGGESTED NAME: AnimationShowMonAfterSubstitute
+; When a substitute breaks, redraws the mon (minimized sprite, or flash + show pic) (confidence: high)
 Func_79929:
 	ld hl, wPlayerMonMinimized
 	ldh a, [hWhoseTurn]

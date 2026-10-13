@@ -70,6 +70,8 @@ UpdateCGBPal_OBP1::
 	pop af
 	ret
 
+; SUGGESTED NAME: UpdateMusicManually
+; Runs the low-health alarm and music update by hand during long BG map work (confidence: high)
 Func_3082::
 	ldh a, [hLoadedROMBank]
 	push af

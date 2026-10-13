@@ -51,14 +51,20 @@ Museum2FHikerText:
 .asm_5c20b
 	jp TextScriptEnd
 
+; SUGGESTED NAME: Museum2FHikerDefaultText
+; Hiker's normal text when starter Pikachu isn't in the party (confidence: high)
 Museum2FText_5c20e:
 	text_far _Museum2FHikerText
 	text_end
 
+; SUGGESTED NAME: Museum2FHikerWantsPikachuText
+; Hiker asks for Pikachu (Pikachu happiness < 101) (confidence: high)
 Museum2FText_5c213:
 	text_far _Museum2FPikachuText1
 	text_end
 
+; SUGGESTED NAME: Museum2FHikerPikachuAttachedText
+; Hiker sees Pikachu is too attached to you (happiness >= 101) (confidence: high)
 Museum2FText_5c218:
 	text_far _Museum2FPikachuText2
 	text_end

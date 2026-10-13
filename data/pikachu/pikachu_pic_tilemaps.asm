@@ -97,12 +97,16 @@ PikaAnimTilemap_8:
 	db $00, $01
 	db $02, $03
 
+; SUGGESTED NAME: PikaAnimTilemap_3x2
+; Unused 3-row by 2-column tilemap (tiles $00-$05) (confidence: high)
 PikaAnimTilemap_fde71: ; unused
 	db 3, 2
 	db $00, $01
 	db $02, $03
 	db $04, $05
 
+; SUGGESTED NAME: PikaAnimTilemap_2x3
+; Unused 2-row by 3-column tilemap (tiles $00-$05) (confidence: high)
 PikaAnimTilemap_fde79: ; unused
 	db 2, 3
 	db $00, $01, $02

@@ -131,6 +131,8 @@ InitOptions:
 	ld [wPrinterSettings], a
 	ret
 
+; SUGGESTED NAME: CheckEnoughMemoryStub
+; Leftover "not enough memory" check; the compare always returns early (confidence: medium)
 Func_5cc1:
 ; unused?
 	ld a, $6d

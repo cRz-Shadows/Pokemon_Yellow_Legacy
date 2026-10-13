@@ -2894,6 +2894,8 @@ SelectMenuItem_CursorDown:
 	ld [wCurrentMenuItem], a
 	jp SelectMenuItem
 
+; SUGGESTED NAME: TestBattlePlayMoveAnimation
+; Debug test battle (START/SELECT): plays wTestBattlePlayerSelectedMove's animation (confidence: high)
 Func_3d4f5:
 	bit 3, a
 	ld a, $0
@@ -2913,18 +2915,26 @@ Func_3d4f5:
 	callfar Func_78e98
 	jp MoveSelectionMenu
 
+; SUGGESTED NAME: TestBattleDecrementMoveID
+; Debug test battle (D-Left): decrements the selected test move ID (confidence: high)
 Func_3d523:
 	ld a, [wTestBattlePlayerSelectedMove]
 	dec a
 	jr asm_3d52d
+; SUGGESTED NAME: TestBattleIncrementMoveID
+; Debug test battle (D-Right): increments the selected test move ID (confidence: high)
 Func_3d529:
 	ld a, [wTestBattlePlayerSelectedMove]
 	inc a
+; SUGGESTED NAME: TestBattleSetMoveID
+; Stores the new test move ID, reprints it and returns to the move menu (confidence: high)
 asm_3d52d:
 	ld [wTestBattlePlayerSelectedMove], a
 	call Func_3d536
 	jp MoveSelectionMenu
 
+; SUGGESTED NAME: TestBattlePrintMoveID
+; Prints the test move's number and name at the bottom of the move menu (confidence: high)
 Func_3d536:
 	hlcoord 10, 16
 	lb bc, 2, 10

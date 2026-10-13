@@ -702,12 +702,16 @@ PikaMovementFunc2_TurnCounterClockwise:
 	ld [wCurPikaMovementSpriteImageIdx], a
 	ret
 
+; SUGGESTED NAME: PikaMovementFacingCycle
+; Facing directions in clockwise order, used by the movement-script turn functions (confidence: high)
 Data_fd731:
 	db SPRITE_FACING_DOWN
 	db SPRITE_FACING_LEFT
 	db SPRITE_FACING_UP
 	db SPRITE_FACING_RIGHT
 	db SPRITE_FACING_DOWN
+; SUGGESTED NAME: PikaMovementFacingCycleEnd
+; End of PikaMovementFacingCycle (counterclockwise turns scan backwards from here) (confidence: high)
 Data_fd731End:
 
 PikaMovementFunc2_Timer:
@@ -930,6 +934,8 @@ LoadPikachuBallIconIntoVRAM:
 	lb bc, BANK(OverworldPikachuBallGFX), 1
 	jp CopyVideoDataDoubleAlternate
 
+; SUGGESTED NAME: LoadPikachuBallSpriteTilesIntoVRAM
+; Unused: copies the Poke Ball gfx over Pikachu's 3 overworld sprite frames in VRAM (confidence: medium)
 Func_fd851:
 	ld hl, vNPCSprites + $c * $10
 	ld a, 3
@@ -1006,6 +1012,8 @@ Cosine_e: ; cosine?
 
 Sine_e: ; sine?
 	ld a, e
+; SUGGESTED NAME: Sine_a
+; Shared body of Sine_e/Cosine_e: signed sine of angle a (0-63) times amplitude d (confidence: high)
 asm_fd908:
 	and $3f
 	cp $20

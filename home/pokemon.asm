@@ -304,6 +304,8 @@ HandlePartyMenuInput::
 	farcall SwitchPartyMon
 	jp HandlePartyMenuInput
 
+; SUGGESTED NAME: PartyMenuPikachuNoResponseText
+; "There isn't any response..." when picking starter Pikachu while it isn't following (confidence: high)
 PartyMenuText_12cc::
 	text_far _SleepingPikachuText1
 	text_end
