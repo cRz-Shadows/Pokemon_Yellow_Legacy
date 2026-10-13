@@ -1689,7 +1689,7 @@ _AnimationSquishMonPic:
 	call AnimCopyRowRight
 	inc hl
 .next
-	ld [hl], " "
+	ld [hl], ' '
 	pop hl
 	ld de, SCREEN_WIDTH
 	add hl, de
@@ -1923,7 +1923,7 @@ _AnimationSlideMonOff:
 ; bugfix: compares against the max tile + 1 as opposed to the max tile
 	cp $62
 	ret c
-	ld a, " "
+	ld a, ' '
 	ret
 
 .EnemyNextTile
@@ -1931,7 +1931,7 @@ _AnimationSlideMonOff:
 	sub 7
 	cp $31
 	ret c
-	ld a, " "
+	ld a, ' '
 	ret
 
 AnimationSlideMonHalfOff:

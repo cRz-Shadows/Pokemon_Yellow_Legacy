@@ -20,7 +20,7 @@ PrintBCDNumber::
 	jr z, .loop
 	bit 7, b
 	jr nz, .loop
-	ld [hl], "¥"
+	ld [hl], '¥'
 	inc hl
 .loop
 	ld a, [de]
@@ -40,10 +40,10 @@ PrintBCDNumber::
 .skipRightAlignmentAdjustment
 	bit 5, b
 	jr z, .skipCurrencySymbol
-	ld [hl], "¥"
+	ld [hl], '¥'
 	inc hl
 .skipCurrencySymbol
-	ld [hl], "0"
+	ld [hl], '0'
 	call PrintLetterDelay
 	inc hl
 .done
@@ -59,13 +59,13 @@ PrintBCDDigit::
 ; if bit 7 is set, then no numbers have been printed yet
 	bit 5, b ; print the currency symbol?
 	jr z, .skipCurrencySymbol
-	ld [hl], "¥"
+	ld [hl], '¥'
 	inc hl
 	res 5, b
 .skipCurrencySymbol
 	res 7, b ; unset 7 to indicate that a nonzero digit has been reached
 .outputDigit
-	add "0"
+	add '0'
 	ld [hli], a
 	jp PrintLetterDelay
 .zeroDigit
