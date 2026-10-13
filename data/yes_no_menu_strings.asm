@@ -15,7 +15,6 @@ TwoOptionMenuStrings:
 	two_option_menu 7, 3, FALSE, .TradeCancelMenu
 	two_option_menu 7, 4, TRUE,  .HealCancelMenu
 	two_option_menu 4, 3, FALSE, .NoYesMenu
-	two_option_menu 7, 3, FALSE, .DifficultyMenu
 	assert_table_length NUM_TWO_OPTION_MENUS
 
 .NoYesMenu:
@@ -45,7 +44,3 @@ TwoOptionMenuStrings:
 .HealCancelMenu:
 	db   "HEAL"
 	next "CANCEL@"
-
-.DifficultyMenu:
-	db   "NORMAL"
-	next "HARD@"

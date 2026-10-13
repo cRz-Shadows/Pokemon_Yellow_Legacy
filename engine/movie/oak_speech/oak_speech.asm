@@ -78,17 +78,20 @@ OakSpeech:
 	call DifficultyChoice
 	ld a, [wCurrentMenuItem]
 	ld [wDifficulty], a
-	cp 0 ; normal
-	jr z, .SelectedNormalMode
-	cp 1 ; hard
+	cp DIFFICULTY_HARD
 	jr z, .SelectedHardMode
-	; space for more game modes down the line
-.SelectedNormalMode
+	cp DIFFICULTY_PICK_STARTER
+	jr z, .SelectedPickStarterMode
+; DIFFICULTY_NORMAL
 	ld hl, NormalModeText
 	call PrintText
 	jp .YesNoNormalHard
 .SelectedHardMode
 	ld hl, HardModeText
+	call PrintText
+	jp .YesNoNormalHard
+.SelectedPickStarterMode
+	ld hl, PickStarterModeText
 	call PrintText
 .YesNoNormalHard ; Give the player a brief description of each game mode and make sure that's what they want
 	call YesNoNormalHardChoice
@@ -243,6 +246,9 @@ NormalModeText:
 HardModeText:
 	text_far _HardModeText
 	text_end
+PickStarterModeText:
+	text_far _PickStarterModeText
+	text_end
 DifficultyText:
 	text_far _DifficultyText
 	text_end
@@ -320,24 +326,39 @@ IntroDisplayPicCenteredOrUpperRight:
 	ldh [hStartTileID], a
 	predef_jump CopyUncompressedPicToTilemap
 
-; displays difficulty choice
+; displays the NORMAL / HARD / PICK STARTER menu
+; output: [wCurrentMenuItem] = chosen DIFFICULTY_* value
 DifficultyChoice::
 	call SaveScreenTilesToBuffer1
-	call InitDifficultyTextBoxParameters
-	jr DisplayDifficultyChoice
-
-InitDifficultyTextBoxParameters::
-	ld a, $8 ; loads the value for the difficulty menu
-	ld [wTwoOptionMenuID], a
-	coord hl, 5, 5
-	ld bc, $606 ; Cursor Pos
-	ret
-
-DisplayDifficultyChoice::
-	ld a, $14
-	ld [wTextBoxID], a
-	call DisplayTextBoxID
+	ld hl, wStatusFlags5
+	set 6, [hl] ; no printing delay
+	hlcoord 2, 5
+	lb bc, 2 * NUM_DIFFICULTIES - 1, 14 ; one item every other row
+	call TextBoxBorder
+	hlcoord 4, 6
+	ld de, DifficultyMenuText
+	call PlaceString
+	ld hl, wStatusFlags5
+	res 6, [hl] ; turn on the printing delay
+	xor a
+	ld [wCurrentMenuItem], a
+	ld [wLastMenuItem], a
+	ld [wMenuWatchMovingOutOfBounds], a
+	ld a, NUM_DIFFICULTIES - 1
+	ld [wMaxMenuItem], a
+	ld a, 6
+	ld [wTopMenuItemY], a
+	ld a, 3
+	ld [wTopMenuItemX], a
+	ld a, A_BUTTON
+	ld [wMenuWatchedKeys], a
+	call HandleMenuInput
 	jp LoadScreenTilesFromBuffer1
+
+DifficultyMenuText:
+	db   "NORMAL"
+	next "HARD"
+	next "PICK STARTER@"
 
 ; display yes/no choice
 YesNoNormalHardChoice::
