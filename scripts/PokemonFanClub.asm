@@ -26,6 +26,8 @@ PokemonFanClubScript1:
 	set 7, [hl]
 	ret
 
+; SUGGESTED NAME: PokemonFanClubScript_MaybePikachuReactsToSeel
+; 25/256 chance on entry to run PokemonFanClubScript_PikachuReactsToSeel (confidence: high)
 PokemonFanClubScript_59a39:
 	call Random
 	ldh a, [hRandomAdd]
@@ -33,6 +35,8 @@ PokemonFanClubScript_59a39:
 	call c, PokemonFanClubScript_59a44
 	ret
 
+; SUGGESTED NAME: PokemonFanClubScript_PikachuReactsToSeel
+; If Pikachu is out and healthy: exclamation, Pikachu walks over and Seel faces it (confidence: medium)
 PokemonFanClubScript_59a44:
 	ld a, [wd472]
 	bit 7, a
@@ -282,18 +286,26 @@ PokemonFanClubChairmanText:
 	text_far _PokemonFanClubBagFullText
 	text_end
 
+; SUGGESTED NAME: PokemonFanClubChairmanOfferPrintText
+; Chairman offers to PRINT one of your #MON (confidence: high)
 Text_59c1f:
 	text_far FanClubChairPrintText1
 	text_end
 
+; SUGGESTED NAME: PokemonFanClubChairmanPrintDeclinedText
+; Chairman: "No? That's really disappointing." (confidence: high)
 Text_59c24:
 	text_far FanClubChairPrintText2
 	text_end
 
+; SUGGESTED NAME: PokemonFanClubChairmanPrintDoneText
+; Chairman after printing: "OK, I'm done." (confidence: high)
 Text_59c29:
 	text_far FanClubChairPrintText3
 	text_end
 
+; SUGGESTED NAME: PokemonFanClubChairmanPrintCanceledText
+; Chairman on print error/cancel: "Maybe we won't PRINT this now." (confidence: high)
 Text_59c2e:
 	text_far FanClubChairPrintText4
 	text_end

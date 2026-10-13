@@ -70,6 +70,8 @@ SetPokedexOwnedFlag:
 	ld hl, GotMonText
 	jp PrintText
 
+; SUGGESTED NAME: GivePokemonEmptyText
+; Empty text (text_end) printed before AddPartyMon when giving a mon (confidence: high)
 UnknownTerminator_f6794:
 	text_end
 

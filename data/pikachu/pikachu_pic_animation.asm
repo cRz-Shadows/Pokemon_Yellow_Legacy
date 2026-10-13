@@ -21,6 +21,8 @@ PikaPicAnimThunderboltPals:
 	db 4, %11100100
 	db -1 ; end
 
+; SUGGESTED NAME: PikaPicAnimScriptUnused
+; Unreferenced pika pic animation script (Pic_e4000 + PikachuSprite gfx, BGFrames_1/2/3) (confidence: medium)
 Data_fe26b:
 	pikapic_loadgfx Pic_e4000
 	pikapic_loadgfx Pic_e49d1
@@ -292,6 +294,8 @@ PikaPicAnimScript25:
 	pikapic_thunderbolt
 	pikapic_ret
 
+; SUGGESTED NAME: PikaPicAnimScript26_WaitBGMap
+; Unreferenced alt entry: waits for BG map, then falls through into PikaPicAnimScript26 (confidence: high)
 Data_fe51f:
 	pikapic_waitbgmap
 PikaPicAnimScript26:

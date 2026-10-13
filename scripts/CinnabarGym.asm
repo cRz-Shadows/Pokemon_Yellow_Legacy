@@ -99,6 +99,8 @@ MovementNpcToLeftAndUp:
 	db NPC_MOVEMENT_UP
 	db -1 ; end
 
+; SUGGESTED NAME: CinnabarGymPikachuMovement_SuperNerd3
+; Pikachu sidestep when Super Nerd 3 walks up to battle after a wrong answer (confidence: medium)
 PikachuMovementData_74f97:
 	db $00
 	db $20
@@ -110,6 +112,8 @@ MovementNpcToLeft:
 	db NPC_MOVEMENT_LEFT
 	db -1 ; end
 
+; SUGGESTED NAME: CinnabarGymPikachuMovement_SuperNerd
+; Pikachu sidestep when another Super Nerd walks over to battle after a wrong answer (confidence: medium)
 PikachuMovementData_74f9e:
 	db $00
 	db $1d
@@ -117,6 +121,8 @@ PikachuMovementData_74f9e:
 	db $38
 	db $3f
 
+; SUGGESTED NAME: CinnabarGymMovePikachuOutOfWay
+; If Pikachu is out and faces direction b, applies Pikachu movement data hl (confidence: medium)
 CinnabarGymScript_74fa3:
 	ld a, [wd472]
 	bit 7, a
@@ -181,6 +187,8 @@ CinnabarGymOpenGateScript:
 	ld [wCurMapScript], a
 	ret
 
+; SUGGESTED NAME: CinnabarGymSetTrainerBeaten
+; Sets EVENT_BEAT_CINNABAR_GYM_TRAINER_n for wTrainerHeaderFlagBit (confidence: high)
 CinnabarGymScript_75023:
 	ld a, [wTrainerHeaderFlagBit]
 	ldh [hGymGateIndex], a
@@ -190,6 +198,8 @@ CinnabarGymScript_75023:
 	call CinnabarGymFlagAction
 	ret
 
+; SUGGESTED NAME: CinnabarGymCheckTrainerBeaten
+; Unreferenced: tests EVENT_BEAT_CINNABAR_GYM_TRAINER_n for wTrainerHeaderFlagBit (confidence: high)
 CinnabarGymScript_75032:
 	ld a, [wTrainerHeaderFlagBit]
 	ldh [hGymGateIndex], a
@@ -199,6 +209,8 @@ CinnabarGymScript_75032:
 	call CinnabarGymFlagAction
 	ret
 
+; SUGGESTED NAME: CinnabarGymUnlockGate
+; Sets the gate-unlocked event for this trainer and redraws the gate blocks (confidence: high)
 CinnabarGymScript_75041:
 	ld a, [wTrainerHeaderFlagBit]
 	sub 2

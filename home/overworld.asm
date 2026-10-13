@@ -1844,8 +1844,12 @@ LoadMapHeader::
 	farcall MarkTownVisitedAndLoadToggleableObjects
 	jr asm_0dbd
 
+; SUGGESTED NAME: LoadMapHeaderAndUnusedToggleables
+; Unreferenced: loads unused toggleable object data, then the map header (confidence: medium)
 Func_0db5:: ; XXX
 	farcall LoadToggleableObjectData
+; SUGGESTED NAME: LoadMapHeaderCommon
+; Shared body of LoadMapHeader: switches bank and copies the current map header (confidence: high)
 asm_0dbd:
 	ld a, [wCurMapTileset]
 	ld [wUnusedCurMapTilesetCopy], a
@@ -2178,6 +2182,8 @@ IsSpinning::
 	ret z ; no spinning
 	farjp LoadSpinnerArrowTiles ; spin while moving
 
+; SUGGESTED NAME: CheckTalkingToPikachu
+; Home-bank jump to IsPlayerTalkingToPikachu from the overworld loop (confidence: high)
 Func_0ffe::
 	jpfar IsPlayerTalkingToPikachu
 

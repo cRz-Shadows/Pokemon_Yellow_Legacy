@@ -186,6 +186,8 @@ GetSpriteScreenXY:
 	ld [de], a  ; [x#SPRITESTATEDATA1_XADJUSTED]
 	ret
 
+; SUGGESTED NAME: GetSpriteVRAMTileOffset
+; Returns the VRAM tile offset (slot*12, special case for 4-tile slot $b) of a sprite (confidence: high)
 Func_4a7b:
 	push bc
 	ld a, [wSavedSpriteImageIndex]

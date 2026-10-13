@@ -206,6 +206,8 @@ StarterPikachuEmotionCommand_turnawayfromplayer:
 	ld [wSpritePikachuStateData1FacingDirection], a
 	ret
 
+; SUGGESTED NAME: DebugCyclePikachuEmotion
+; Debug only: in Red's room with debug flag set, steps wExpressionNumber through emotions (confidence: high)
 DeletedFunction_fcffb:
 ; Inexplicably empty.
 REPT 5

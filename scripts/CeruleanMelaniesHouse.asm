@@ -61,25 +61,35 @@ CeruleanMelanieHouseMelanieText:
 	call PrintText
 	jp TextScriptEnd
 
+; SUGGESTED NAME: CeruleanMelanieHouseMelanieIntroText
+; Melanie: she nursed Bulbasaur and it needs a good trainer (confidence: high)
 CeruleanHouse1Text_1cfc8:
 	text_far MelanieText1
 	text_waitbutton
 	text_end
 
+; SUGGESTED NAME: CeruleanMelanieHouseOfferBulbasaurText
+; Melanie asks if you'll take Bulbasaur (only if Pikachu happiness >= 147) (confidence: high)
 CeruleanHouse1Text_1cfce:
 	text_far MelanieText2
 	text_end
 
+; SUGGESTED NAME: CeruleanMelanieHouseTakeCareText
+; Melanie: "Please take care of BULBASAUR!" after giving it (confidence: high)
 CeruleanHouse1Text_1cfd3:
 	text_far MelanieText3
 	text_waitbutton
 	text_end
 
+; SUGGESTED NAME: CeruleanMelanieHouseBulbasaurWellText
+; Melanie after giving Bulbasaur: "Is BULBASAUR doing well?" (confidence: high)
 CeruleanHouse1Text_1cfd9:
 	text_far MelanieText4
 	text_waitbutton
 	text_end
 
+; SUGGESTED NAME: CeruleanMelanieHouseTooBadText
+; Melanie when you decline Bulbasaur: "Oh... That's too bad..." (confidence: high)
 CeruleanHouse1Text_1cfdf:
 	text_far MelanieText5
 	text_waitbutton

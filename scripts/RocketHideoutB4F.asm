@@ -80,6 +80,8 @@ ENDC
 	call z, CheckFightingMapTrainers
 	ret
 
+; SUGGESTED NAME: RocketHideoutB4FScript_StartJessieJamesEncounter
+; At row 14 (X 24/25): plays Jessie & James music, intro text, shows them (confidence: high)
 RocketHideoutB4FScript_455a5:
 	ld a, [wYCoord]
 	cp $e
@@ -122,8 +124,12 @@ RocketHideoutB4FScript_455a5:
 	call RocketHideoutB4FSetScript
 	ret
 
+; SUGGESTED NAME: RocketHideoutB4FJessieJamesRunDown4Movement
+; Jessie/James run down 4 tiles (code $4 = fast step down) (confidence: medium)
 RocketHideoutB4FJessieJamesMovementData_45605:
 	db $4
+; SUGGESTED NAME: RocketHideoutB4FJessieJamesRunDown3Movement
+; Jessie/James run down 3 tiles (code $4 = fast step down) (confidence: medium)
 RocketHideoutB4FJessieJamesMovementData_45606:
 	db $4
 	db $4

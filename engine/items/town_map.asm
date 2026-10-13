@@ -105,6 +105,8 @@ DisplayTownMap:
 	ld [wWhichTownMapLocation], a
 	jp .townMapLoop
 
+; SUGGESTED NAME: TownMapPlayPikachuSoundOnScroll
+; Unreferenced: plays a Pikachu sound clip when Up/Down is pressed on the town map (confidence: medium)
 Func_70f87: ; unreferenced
 	ldh a, [hJoy5]
 	and D_DOWN | D_UP

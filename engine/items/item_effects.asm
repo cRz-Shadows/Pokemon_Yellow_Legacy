@@ -859,6 +859,8 @@ ItemUseEvoStone:
 	pop af
 	ret
 
+; SUGGESTED NAME: CanMonEvolveWithUsedStone
+; Sets carry if wLoadedMon has an EVOLVE_ITEM entry matching wCurItem (confidence: high)
 Func_d85d:
 	ld hl, EvosMovesPointerTable
 	ld a, [wLoadedMon]
@@ -2574,6 +2576,8 @@ ItemUseNotYoursToUse:
 	ld hl, ItemUseNotYoursToUseText
 	jr ItemUseFailed
 
+; SUGGESTED NAME: ItemUseNoPartyMon
+; Prints "You don't have a #MON!" and sets wActionResultOrTookBattleTurn to 2 (confidence: high)
 Func_e4bf:
 	ld a, $2
 	ld [wActionResultOrTookBattleTurn], a

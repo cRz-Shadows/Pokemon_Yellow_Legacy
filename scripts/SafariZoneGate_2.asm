@@ -171,10 +171,14 @@ SafariZoneEntranceCalculateLowCostAdmission:
 	and a
 	ret
 
+; SUGGESTED NAME: SafariZoneEntrancePayWhatYouHaveText
+; "Oh, all right, pay me what you have." (low-cost admission) (confidence: high)
 SafariZoneEntranceText_f20c4:
 	text_far _SafariZoneLowCostText1
 	text_end
 
+; SUGGESTED NAME: SafariZoneEntranceCantGiveAllBallsText
+; "But, I can't give you all 30 BALLs." (low-cost admission) (confidence: high)
 SafariZoneEntranceText_f20c9:
 	text_far _SafariZoneLowCostText2
 	text_end
@@ -207,12 +211,16 @@ SafariZoneEntranceGetLowCostAdmissionText:
 	and a
 	ret
 
+; SUGGESTED NAME: SafariZoneEntranceFreeEntryText
+; "You're persistent... you can go in for free, just this once!" (confidence: high)
 SafariZoneEntranceText_f20f6:
 	text_far _SafariZoneLowCostText3
 	sound_get_item_1
 	text_far _SafariZoneLowCostText4
 	text_end
 
+; SUGGESTED NAME: SafariZoneEntranceNoMoneyTexts
+; Refusal texts for a broke player, indexed by the refusal counter (wSafariSteps) (confidence: high)
 Pointers_f2100:
 	dw SafariZoneEntranceText_f210a
 	dw SafariZoneEntranceText_f210f
@@ -220,18 +228,26 @@ Pointers_f2100:
 	dw SafariZoneEntranceText_f2119
 	dw SafariZoneEntranceText_f2119
 
+; SUGGESTED NAME: SafariZoneEntranceMustPayText
+; 1st refusal: "I'm sorry, but you have to pay to enter." (confidence: high)
 SafariZoneEntranceText_f210a:
 	text_far _SafariZoneLowCostText5
 	text_end
 
+; SUGGESTED NAME: SafariZoneEntranceCantEnterWithoutPayingText
+; 2nd refusal: "You can't enter without paying!" (confidence: high)
 SafariZoneEntranceText_f210f:
 	text_far _SafariZoneLowCostText6
 	text_end
 
+; SUGGESTED NAME: SafariZoneEntranceNoMoneyNoEntryText
+; 3rd refusal: "I said, no money, no entry!" (confidence: high)
 SafariZoneEntranceText_f2114:
 	text_far _SafariZoneLowCostText7
 	text_end
 
+; SUGGESTED NAME: SafariZoneEntranceReadMyLipsText
+; 4th+ refusal: "Read my lips, NO! Get it?" (confidence: high)
 SafariZoneEntranceText_f2119:
 	text_far _SafariZoneLowCostText8
 	text_end

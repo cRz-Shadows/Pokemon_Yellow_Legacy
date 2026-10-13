@@ -242,6 +242,8 @@ CheckPikaPicAnimTimer:
 	ld a, $1
 	ret
 
+; SUGGESTED NAME: PikaPicAnimDummyHook
+; Empty routine called around each pika pic animation frame update (confidence: high)
 DummyFunction_fdad5:
 	ret
 

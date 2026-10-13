@@ -36,6 +36,8 @@ ENDC
 	call z, PokemonTower7FScript_60d2a
 	ret
 
+; SUGGESTED NAME: PokemonTower7FScript_StartJessieJamesEncounter
+; At row 12 (X 10/11): plays Jessie & James music, shows them and starts intro (confidence: high)
 PokemonTower7FScript_60d2a:
 	ld a, [wYCoord]
 	cp $c
@@ -72,8 +74,12 @@ PokemonTower7FScript_60d2a:
 	call PokemonTower7FSetScript
 	ret
 
+; SUGGESTED NAME: PokemonTower7FJessieJamesRunDown4Movement
+; Jessie/James run down 4 tiles (code $4 = fast step down) (confidence: medium)
 PokemonTower7FMovementData_60d7a:
 	db $4
+; SUGGESTED NAME: PokemonTower7FJessieJamesRunDown3Movement
+; Jessie/James run down 3 tiles (code $4 = fast step down) (confidence: medium)
 PokemonTower7FMovementData_60d7b:
 	db $4
 	db $4

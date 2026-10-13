@@ -176,10 +176,14 @@ Printer_GetMonStats:
 .Blank:
 	db "--------------@"
 
+; SUGGESTED NAME: PrinterHPLabelGFX
+; 1bpp "HP" label tiles used on the printed Pokémon stats page (confidence: high)
 GFX_ea563:
 INCBIN "gfx/printer/hp.1bpp"
 GFX_ea563End:
 
+; SUGGESTED NAME: PrinterLevelLabelGFX
+; 1bpp "Lv" label tiles used on the printed Pokémon stats page (confidence: high)
 GFX_ea56b:
 INCBIN "gfx/printer/lv.1bpp"
 GFX_ea56bEnd:
@@ -207,6 +211,8 @@ PrinterDebug_LoadGFX:
 	jr nz, .loop
 	ret
 
+; SUGGESTED NAME: PrinterDebugBitDigitsGFX
+; "0"/"1" tiles used to show printer status flag bits as sprites in printer debug (confidence: high)
 GFX_ea597:
 INCBIN "gfx/printer/01.2bpp"
 GFX_ea597End:
@@ -263,16 +269,22 @@ PrinterDebug_DoFunction:
 	dw Func_ea72f
 	dw Func_ea732
 
+; SUGGESTED NAME: PrinterDebug_Next
+; Debug copy of Printer_Next: advances wPrinterSendState (confidence: high)
 Func_ea606:
 	ld hl, wPrinterSendState
 	inc [hl]
 	ret
 
+; SUGGESTED NAME: PrinterDebug_Back
+; Debug copy of Printer_Back: steps wPrinterSendState back one (confidence: high)
 Func_ea60b:
 	ld hl, wPrinterSendState
 	dec [hl]
 	ret
 
+; SUGGESTED NAME: PrinterDebug_Quit
+; Debug copy of Printer_Quit: clears status flags and sets send-state done bit 7 (confidence: high)
 Func_ea610:
 	xor a
 	ld [wPrinterStatusFlags], a
@@ -280,15 +292,21 @@ Func_ea610:
 	set 7, [hl]
 	ret
 
+; SUGGESTED NAME: PrinterDebug_Next_
+; Debug copy of Printer_Next_: wrapper that advances the send state (confidence: high)
 Func_ea61a:
 	call Func_ea606
 	ret
 
+; SUGGESTED NAME: PrinterDebug_Restart
+; Resets wPrinterSendState to 0 to retry from init (cf. Printer_LoopBack, which uses 1) (confidence: high)
 Func_ea61e:
 	xor a
 	ld [wPrinterSendState], a
 	ret
 
+; SUGGESTED NAME: PrinterDebug_InitSerial
+; Debug copy of Printer_InitSerial: sends the init ($01) packet (confidence: high)
 Func_ea623:
 	call Func_ea784
 	ld hl, Data_ea9de
@@ -304,6 +322,8 @@ Func_ea623:
 	ld [wPrinterStatusIndicator], a
 	ret
 
+; SUGGESTED NAME: PrinterDebug_StartTransmittingTilemap
+; Sends 2 tile rows (with sprites composited) as a data ($04) packet; ends when none left (confidence: high)
 Func_ea645:
 	call Func_ea784
 	ld hl, wPrinterRowIndex
@@ -324,6 +344,8 @@ Func_ea645:
 	ld [wPrinterStatusIndicator], a
 	ret
 
+; SUGGESTED NAME: PrinterDebug_EndTilemapTransmission
+; Debug copy: sends the empty data ($04) packet that ends image transfer (confidence: high)
 Func_ea671:
 	ld a, $6
 	ld [wPrinterSendState], a
@@ -336,6 +358,8 @@ Func_ea671:
 	call Func_ea74c
 	ret
 
+; SUGGESTED NAME: PrinterDebug_SignalSendHeader
+; Debug copy: sends the print ($02) packet with its 4-byte parameters (confidence: high)
 Func_ea68a:
 	call Func_ea784
 	ld hl, Data_ea9e4
@@ -352,6 +376,8 @@ Func_ea68a:
 	ld [wPrinterStatusIndicator], a
 	ret
 
+; SUGGESTED NAME: PrinterDebug_WaitSerial
+; Debug copy of Printer_WaitSerial: waits 6 frames then advances the send state (confidence: high)
 Func_ea6af:
 	ld hl, wPrinterSerialFrameDelay
 	inc [hl]
@@ -363,6 +389,8 @@ Func_ea6af:
 	call Func_ea606
 	ret
 
+; SUGGESTED NAME: PrinterDebug_WaitSerialAndLoopBack2
+; Waits 6 frames, decrements rows left, and goes back two states to send next rows (confidence: high)
 Func_ea6bd:
 	ld hl, wPrinterSerialFrameDelay
 	inc [hl]
@@ -377,6 +405,8 @@ Func_ea6bd:
 	call Func_ea60b
 	ret
 
+; SUGGESTED NAME: PrinterDebug_CheckConnectionStatus
+; Checks printer reply ($81 + no errors) after init; else jumps to the retry states (confidence: high)
 Func_ea6d2:
 	call Func_ea742
 	ret c
@@ -403,6 +433,8 @@ Func_ea6d2:
 	ld [wPrinterSendState], a
 	ret
 
+; SUGGESTED NAME: PrinterDebug_TransmissionLoop
+; Waits for packet reply; advances, re-sends if busy, or goes to error wait on error (confidence: high)
 Func_ea701:
 	call Func_ea742
 	ret c
@@ -424,6 +456,8 @@ Func_ea701:
 	ld [wPrinterSendState], a
 	ret
 
+; SUGGESTED NAME: PrinterDebug_WaitUntilFinished
+; Waits until the printer reports no errors and not printing, then advances (confidence: high)
 Func_ea721:
 	call Func_ea742
 	ret c
@@ -433,8 +467,12 @@ Func_ea721:
 	call Func_ea606
 	ret
 
+; SUGGESTED NAME: PrinterDebug_WaitLoopBack
+; Advances state, then falls into PrinterDebug_WaitLoopBack_ (confidence: high)
 Func_ea72f:
 	call Func_ea606
+; SUGGESTED NAME: PrinterDebug_WaitLoopBack_
+; Waits until idle with no error bits, then resets send state to 0 to retry (confidence: high)
 Func_ea732:
 	ld a, [wPrinterOpcode]
 	and a
@@ -446,6 +484,8 @@ Func_ea732:
 	ld [wPrinterSendState], a
 	ret
 
+; SUGGESTED NAME: PrinterDebug_CheckSerialBusy
+; Returns carry if a serial packet is still being sent (wPrinterOpcode nonzero) (confidence: high)
 Func_ea742:
 	ld a, [wPrinterOpcode]
 	and a
@@ -457,6 +497,8 @@ Func_ea742:
 	scf
 	ret
 
+; SUGGESTED NAME: PrinterDebug_PrepareToSend
+; Debug copy of Printer_PrepareToSend: starts a packet by sending magic byte $88 (confidence: high)
 Func_ea74c:
 .asm_ea74c
 	ld a, [wPrinterOpcode]
@@ -475,6 +517,8 @@ Func_ea74c:
 	ldh [rSC], a
 	ret
 
+; SUGGESTED NAME: PrinterDebug_CopyDataHeader
+; Debug copy of CopyPrinterDataHeader: copies a 6-byte packet header/checksum (confidence: high)
 Func_ea76b:
 	ld a, [hli]
 	ld [wPrinterDataHeader], a
@@ -490,6 +534,8 @@ Func_ea76b:
 	ld [wPrinterDataHeader + 5], a
 	ret
 
+; SUGGESTED NAME: PrinterDebug_ResetData
+; Debug copy of ResetPrinterData: clears header, checksum, size, and send buffer (confidence: high)
 Func_ea784:
 	xor a
 	ld hl, wPrinterDataHeader
@@ -508,6 +554,8 @@ Func_ea784:
 	call FillMemory
 	ret
 
+; SUGGESTED NAME: PrinterDebug_ComputeChecksum
+; Debug copy of ComputePrinterChecksum: sums header and data into the checksum (confidence: high)
 Func_ea7a2:
 	ld hl, $0
 	ld bc, $4
@@ -525,6 +573,8 @@ Func_ea7a2:
 	ld [wPrinterDataHeader + 5], a
 	ret
 
+; SUGGESTED NAME: PrinterDebug_AddToChecksum
+; Adds bc bytes at de into the 16-bit sum in hl (confidence: high)
 Func_ea7c5:
 .asm_ea7c5
 	ld a, [de]
@@ -540,6 +590,8 @@ Func_ea7c5:
 	jr nz, .asm_ea7c5
 	ret
 
+; SUGGESTED NAME: PrinterDebug_StageHeaderForSend
+; Fills print packet params: 1 sheet, margins (wcae2), palette $e4, exposure setting (confidence: high)
 Func_ea7d2:
 	ld a, $1
 	ld [wPrinterSendDataSource1], a
@@ -953,21 +1005,33 @@ PrinterDebug_PrepOAMForPrinting:
 	pop hl
 	ret
 
+; SUGGESTED NAME: PrinterDebugInitPacket
+; Debug copy of PrinterDataPacket1: init ($01) packet header and checksum (confidence: high)
 Data_ea9de:
 	db  1, 0, $00, 0
 	dw 1
+; SUGGESTED NAME: PrinterDebugPrintPacket
+; Debug copy of PrinterDataPacket2: print ($02) packet header, 4 data bytes (confidence: high)
 Data_ea9e4:
 	db  2, 0, $04, 0
 	dw 0
+; SUGGESTED NAME: PrinterDebugDataPacket
+; Debug copy of PrinterDataPacket3: data ($04) packet header, $280 data bytes (confidence: high)
 Data_ea9ea:
 	db  4, 0, $80, 2
 	dw 0
+; SUGGESTED NAME: PrinterDebugEndDataPacket
+; Debug copy of PrinterDataPacket4: empty data ($04) packet that ends the image (confidence: high)
 Data_ea9f0:
 	db  4, 0, $00, 0
 	dw 4
+; SUGGESTED NAME: PrinterDebugBreakPacket
+; Unused break ($08) packet header and checksum (confidence: high)
 Data_ea9f6:
 	db  8, 0, $00, 0
 	dw 8
+; SUGGESTED NAME: PrinterDebugStatusPacket
+; Unused status ($0F) packet header and checksum (confidence: high)
 Data_ea9fc:
 	db 15, 0, $00, 0
 	dw 15

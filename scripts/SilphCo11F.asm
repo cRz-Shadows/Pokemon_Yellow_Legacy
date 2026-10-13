@@ -111,6 +111,8 @@ ENDC
 	call z, SilphCo11FScript_621c5
 	ret
 
+; SUGGESTED NAME: SilphCo11FScript_CheckGiovanniEncounter
+; At Giovanni's trigger tiles: shows his text, walks him down and starts the battle script (confidence: high)
 SilphCo11FScript_621c5:
 	ld hl, .PlayerCoordsArray
 	call ArePlayerCoordsInArray
@@ -144,6 +146,8 @@ SilphCo11FScript_621c5:
 	db NPC_MOVEMENT_DOWN
 	db -1 ; end
 
+; SUGGESTED NAME: SilphCo11FSetPlayerAndGiovanniFacing
+; Sets the player's direction from a and Giovanni's facing from b (confidence: high)
 SilphCo11FScript_621ff:
 	ld [wPlayerMovingDirection], a
 	ld a, b
@@ -216,6 +220,8 @@ SilphCo11FGiovanniStartBattleScript:
 	ld a, SCRIPT_SILPHCO11F_GIOVANNI_AFTER_BATTLE
 	jp SilphCo11FSetCurScript
 
+; SUGGESTED NAME: SilphCo11FScript_StartJessieJamesEncounter
+; At row 3 (X 0-3): plays Jessie & James music, intro text, picks approach path (confidence: high)
 SilphCo11FScript_6229c:
 	ld a, [wYCoord]
 	cp $3
@@ -256,6 +262,8 @@ SilphCo11FScript_6229c:
 	call SilphCo11FSetCurScript
 	ret
 
+; SUGGESTED NAME: SilphCo11FJamesMovement_PlayerX3
+; James runs up 5 (player at X 3) (confidence: medium)
 SilphCo11FMovementData_622f5:
 	db $5
 	db $5
@@ -264,6 +272,8 @@ SilphCo11FMovementData_622f5:
 	db $5
 	db $ff
 
+; SUGGESTED NAME: SilphCo11FJessieMovement_PlayerX3
+; Jessie runs up 4 (player at X 3) (confidence: medium)
 SilphCo11FMovementData_622fb:
 	db $5
 	db $5
@@ -271,6 +281,8 @@ SilphCo11FMovementData_622fb:
 	db $5
 	db $ff
 
+; SUGGESTED NAME: SilphCo11FJamesMovement_PlayerX2
+; James runs up 4 (player at X 2, EVENT_780) (confidence: medium)
 SilphCo11FMovementData_62300:
 	db $5
 	db $5
@@ -278,6 +290,8 @@ SilphCo11FMovementData_62300:
 	db $5
 	db $ff
 
+; SUGGESTED NAME: SilphCo11FJessieMovement_PlayerX2
+; Jessie runs up 5 (player at X 2, EVENT_780) (confidence: medium)
 SilphCo11FMovementData_62305:
 	db $5
 	db $5
@@ -286,6 +300,8 @@ SilphCo11FMovementData_62305:
 	db $5
 	db $ff
 
+; SUGGESTED NAME: SilphCo11FJamesMovement_PlayerX0To1
+; James runs up 2, left 1, up 2 (player at X 0-1, EVENT_781) (confidence: medium)
 SilphCo11FMovementData_6230b:
 	db $5
 	db $5
@@ -294,6 +310,8 @@ SilphCo11FMovementData_6230b:
 	db $5
 	db $ff
 
+; SUGGESTED NAME: SilphCo11FJessieMovement_PlayerX0To1
+; Jessie runs up 3, left 1, up 2 (player at X 0-1, EVENT_781) (confidence: medium)
 SilphCo11FMovementData_62311:
 	db $5
 	db $5
@@ -508,6 +526,8 @@ SilphCo11FText9:
 	text_far _SilphCoJessieJamesText2
 	text_end
 
+; SUGGESTED NAME: SilphCo11FJessieJamesEndBattleText
+; Jessie & James end-of-battle text (saved as both win/loss text) (confidence: high)
 SilphCo11FText_624c2:
 	text_far _SilphCoJessieJamesText3
 	text_end

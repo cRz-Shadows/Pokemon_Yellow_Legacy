@@ -349,6 +349,8 @@ SFX_Surfing_Crash::
 	channel_count 1
 	channel 8, SFX_Surfing_Crash_Ch8
 
+; SUGGESTED NAME: SFX_Surfing_Unused_Blip
+; Unused 2-note square blip in the surfing minigame audio bank (AUDIO_4) (confidence: low)
 SFX_Unknown_802cc::
 	channel_count 1
 	channel 5, SFX_Unknown_802cc_Ch5

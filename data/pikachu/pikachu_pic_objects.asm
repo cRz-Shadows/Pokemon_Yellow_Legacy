@@ -59,6 +59,8 @@ PikaPicAnimBGFrames_1:
 	pikaframe PikaAnimTilemap_7,    8
 	pikaframeend
 
+; SUGGESTED NAME: PikaPicAnimBGFrames_Unused
+; Unreferenced BG frame list flickering PikaAnimTilemap_2 / PikaAnimTilemap_1 (confidence: medium)
 PikaPicAnimBGFrames_fdc1e: ; unreferenced
 	pikaframe PikaAnimTilemap_2,    2
 	pikaframe PikaAnimTilemap_1,    1

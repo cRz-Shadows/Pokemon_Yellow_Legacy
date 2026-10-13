@@ -310,6 +310,8 @@ PrintPCBox::
 	ld [wUpdateSpritesEnabled], a
 	ret
 
+; SUGGESTED NAME: PrintPCBox_NoPokemon
+; Prints "no Pokémon" text instead of printing when the current PC box is empty (confidence: high)
 Func_e8df4:
 	ld hl, NoPokemonText
 	call PrintText
