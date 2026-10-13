@@ -175,22 +175,6 @@ ENDC
 	call ShowPokedexDataInternal
 	ld b, 0
 	jr .exitSideMenu
-	; call Pokedex_PrintMovesText
-	; ret
-	; ldh a, [hTileAnimations]
-	; push af
-	; xor a
-	; ldh [hTileAnimations], a
-	; ld a, [wd11e]
-	; ld [wcf91], a
-	; callfar PrintPokedexEntry
-	; xor a
-	; ldh [hAutoBGTransferEnabled], a
-	; call ClearScreen
-	; pop af
-	; ldh [hTileAnimations], a
-	; ld b, $3
-	; jr .exitSideMenu
 
 ; handles the list of pokemon on the left of the pokedex screen
 ; sets carry flag if player presses A, unsets carry flag if player presses B

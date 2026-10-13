@@ -154,7 +154,7 @@ InitializeFieldMoveTextBox:
 	ret
 
 CloseFieldMoveTextBox:
-	ld a,[hLoadedROMBank]
+	ld a, [hLoadedROMBank]
 	push af
 	jp CloseTextDisplay
 

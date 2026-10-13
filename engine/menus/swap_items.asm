@@ -218,20 +218,20 @@ SortItems::
 	ld a, 1
 	ld [hSwapTemp], a
 	ld a, [hl]
-	ld [hSwapItemID],a ; [hSwapItemID] = second item ID
+	ld [hSwapItemID], a ; [hSwapItemID] = second item ID
 	inc hl
-	ld a,[hld]
-	ld [hSwapItemQuantity],a ; [hSwapItemQuantity] = second item quantity
-	ld a,[de]
-	ld [hli],a ; put first item ID in second item slot
+	ld a, [hld]
+	ld [hSwapItemQuantity], a ; [hSwapItemQuantity] = second item quantity
+	ld a, [de]
+	ld [hli], a ; put first item ID in second item slot
 	inc de
-	ld a,[de]
-	ld [hl],a ; put first item quantity in second item slot
-	ld a,[hSwapItemQuantity]
-	ld [de],a ; put second item quantity in first item slot
+	ld a, [de]
+	ld [hl], a ; put first item quantity in second item slot
+	ld a, [hSwapItemQuantity]
+	ld [de], a ; put second item quantity in first item slot
 	dec de
-	ld a,[hSwapItemID]
-	ld [de],a ; put second item ID in first item slot
+	ld a, [hSwapItemID]
+	ld [de], a ; put second item ID in first item slot
 .cont
 	inc c
 	inc c

@@ -179,14 +179,10 @@ OakSpeech:
 	ld de, RedSprite
 	ld b, BANK(RedSprite)
 	ld c, $0C
-	; call CopyVideoData
-	; ld de, ShrinkPic1
-	; lb bc, BANK(ShrinkPic1), $00
-	; call IntroDisplayPicCenteredOrUpperRight
 	ld a, [wPlayerGender] ; check gender
 	and a      ; check gender
 	jr z, .NotGreen3
-	ld de,GreenSprite
+	ld de, GreenSprite
 	lb bc, BANK(GreenSprite), $0C
 .NotGreen3:
 	ld hl, vSprites

@@ -241,19 +241,14 @@ OverworldLoopLessDelay::
 	call UpdateSprites
 
 .moveAhead2
-	;ld hl, wFlags_0xcd60
-	;res 2, [hl]
-	;xor a
-	;ld [wd435], a
-	;call DoBikeSpeedup
-	ld hl,wFlags_0xcd60
-	res 2,[hl]
-	ld a,[wWalkBikeSurfState]
+	ld hl, wFlags_0xcd60
+	res 2, [hl]
+	ld a, [wWalkBikeSurfState]
 	dec a ; riding a bike?
-	jr nz,.normalPlayerSpriteAdvancement
-	ld a,[wd736]
-	bit 6,a ; jumping a ledge?
-	jr nz,.normalPlayerSpriteAdvancement
+	jr nz, .normalPlayerSpriteAdvancement
+	ld a, [wd736]
+	bit 6, a ; jumping a ledge?
+	jr nz, .normalPlayerSpriteAdvancement
 	call DoBikeSpeedup ; if riding a bike and not jumping a ledge
 	call DoBikeSpeedup ; added
 	call DoBikeSpeedup ; added
@@ -263,7 +258,7 @@ OverworldLoopLessDelay::
 	cp 0
 	jr nz, .notRunning ; Don't sprite right after jumping a ledge
 	; Make you surf at bike speed
-	ld a,[wWalkBikeSurfState]
+	ld a, [wWalkBikeSurfState]
 	cp a, $02
 	jr z, .surfFaster
 	; Add running shoes
@@ -373,19 +368,8 @@ NewBattle::
 	and a
 	ret
 
-; function to make bikes twice as fast as walking
+; advance the player sprite an extra step (used to speed up biking, surfing and running)
 DoBikeSpeedup::
-  ;ld a, [hJoyHeld] ; Check what buttons are being pressed for Shoes
-	;and B_BUTTON ; Are you holding B?
-	;jr z, .notRunning ; If you aren't holding B, skip ahead to step normally.
-	;jp .goFaster ; Make you go faster if you were holding B
-;.notRunning
-	;ld a, [wWalkBikeSurfState]
-	;dec a ; riding a bike?
-	;ret nz
-	;ld a, [wd736]
-	;bit 6, a
-	;ret nz
 	ld a, [wNPCMovementScriptPointerTableNum]
 	and a
 	ret nz
@@ -397,7 +381,6 @@ DoBikeSpeedup::
 	ret nz
 .goFaster
 	jp AdvancePlayerSprite
-;ret
 
 ; check if the player has stepped onto a warp after having not collided
 CheckWarpsNoCollision::

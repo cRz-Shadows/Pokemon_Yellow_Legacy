@@ -514,7 +514,7 @@ Func_fc7aa:
 	ld [hl], a
 	cp $4
 	jp z, Func_fca0a
-	ld a,[hJoyHeld]
+	ld a, [hJoyHeld]
 	and B_BUTTON
 	jp nz, FastPikachuFollow
 	call AreThereAtLeastTwoStepsInPikachuFollowCommandBuffer

@@ -59,7 +59,7 @@ MoveDeleterText1:
 	push de
 	push bc
 	ld [wMoveNum], a
-	ld [wd11e],a
+	ld [wd11e], a
 	call GetMoveName
 	call CopyToStringBuffer ; copy name to wcf4b
 	ld hl, MoveDeleterConfirmText
