@@ -74,8 +74,8 @@ OakSpeech:
 	jp nz, .skipSpeech
 .MenuCursorLoop ; difficulty menu
 	ld hl, DifficultyText
-  	call PrintText
-  	call DifficultyChoice
+	call PrintText
+	call DifficultyChoice
 	ld a, [wCurrentMenuItem]
 	ld [wDifficulty], a
 	cp 0 ; normal
@@ -91,13 +91,13 @@ OakSpeech:
 	ld hl, HardModeText
 	call PrintText
 .YesNoNormalHard ; Give the player a brief description of each game mode and make sure that's what they want
-  	call YesNoNormalHardChoice
+	call YesNoNormalHardChoice
 	ld a, [wCurrentMenuItem]
 	cp 0
 	jr z, .doneLoop
 	jp .MenuCursorLoop ; If player says no, back to difficulty selection
 .doneLoop
-   	call ClearScreen ; clear the screen before resuming normal intro
+	call ClearScreen ; clear the screen before resuming normal intro
 
 	; Gender Menu
 	ld hl, BoyGirlText  ; added to the same file as the other oak text
@@ -179,14 +179,10 @@ OakSpeech:
 	ld de, RedSprite
 	ld b, BANK(RedSprite)
 	ld c, $0C
-	; call CopyVideoData
-	; ld de, ShrinkPic1
-	; lb bc, BANK(ShrinkPic1), $00
-	; call IntroDisplayPicCenteredOrUpperRight
 	ld a, [wPlayerGender] ; check gender
 	and a      ; check gender
 	jr z, .NotGreen3
-	ld de,GreenSprite
+	ld de, GreenSprite
 	lb bc, BANK(GreenSprite), $0C
 .NotGreen3:
 	ld hl, vSprites
@@ -254,8 +250,8 @@ YesNoNormalHardText:
 	text_far _AreYouSureText
 	text_end
 BoyGirlText:
-    text_far _BoyGirlText
-    text_end
+	text_far _BoyGirlText
+	text_end
 
 FadeInIntroPic:
 	ld hl, IntroFadePalettes
@@ -331,12 +327,12 @@ DifficultyChoice::
 	jr DisplayDifficultyChoice
 
 InitDifficultyTextBoxParameters::
-  	ld a, $8 ; loads the value for the difficulty menu
+	ld a, $8 ; loads the value for the difficulty menu
 	ld [wTwoOptionMenuID], a
 	coord hl, 5, 5
 	ld bc, $606 ; Cursor Pos
 	ret
-	
+
 DisplayDifficultyChoice::
 	ld a, $14
 	ld [wTextBoxID], a
@@ -350,12 +346,12 @@ YesNoNormalHardChoice::
 	jr DisplayYesNoNormalHardChoice
 
 InitYesNoNormalHardTextBoxParameters::
-  	ld a, $0 ; loads the value for the difficulty menu
+	ld a, $0 ; loads the value for the difficulty menu
 	ld [wTwoOptionMenuID], a
 	coord hl, 7, 5
 	ld bc, $608 ; Cursor Pos
 	ret
-	
+
 DisplayYesNoNormalHardChoice::
 	ld a, $14
 	ld [wTextBoxID], a
@@ -369,14 +365,14 @@ BoyGirlChoice::
 	jr DisplayBoyGirlChoice
 
 InitBoyGirlTextBoxParameters::
-   ld a, $1 ; loads the value for the unused North/West choice, that was changed to say Boy/Girl
+	ld a, $1 ; loads the value for the unused North/West choice, that was changed to say Boy/Girl
 	ld [wTwoOptionMenuID], a
-	coord hl, 6, 5 
+	coord hl, 6, 5
 	ld bc, $607
 	ret
-	
+
 DisplayBoyGirlChoice::
-	  ld a, $14
-	  ld [wTextBoxID], a
-	  call DisplayTextBoxID
-	  jp LoadScreenTilesFromBuffer1
+	ld a, $14
+	ld [wTextBoxID], a
+	call DisplayTextBoxID
+	jp LoadScreenTilesFromBuffer1

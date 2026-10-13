@@ -216,7 +216,7 @@ VermilionDock_TextPointers:
 VermilionDockUnusedText:
 	text_far _VermilionDockUnusedText
 	text_end
-	
+
 VermilionDockTruckText:
 	text_far _VermilionDockTruckText
 	text_end

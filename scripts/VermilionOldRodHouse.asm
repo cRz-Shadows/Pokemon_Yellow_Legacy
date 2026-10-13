@@ -65,4 +65,3 @@ VermilionOldRodHouseFishingGuruText:
 .NoRoomText:
 	text_far _VermilionGoodRodHouseFishingGuruNoRoomText
 	text_end
-

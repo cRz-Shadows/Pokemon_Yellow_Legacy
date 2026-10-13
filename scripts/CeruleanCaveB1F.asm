@@ -35,15 +35,15 @@ CeruleanCaveSmithText1:
 	ld hl, SmithTrainerHeader
 	call TalkToTrainer
 	jp TextScriptEnd
-	
+
 CeruleanCaveSmithBattleText1:
 	text_far _CeruleanCaveSmithBattleText1
 	text_end
-	
+
 CeruleanCaveSmithEndBattleText1:
 	text_far _CeruleanCaveSmithEndBattleText1
 	text_end
-	
+
 CeruleanCaveSmithAfterBattleText1:
 	text_far _CeruleanCaveSmithAfterBattleText1
 	text_end

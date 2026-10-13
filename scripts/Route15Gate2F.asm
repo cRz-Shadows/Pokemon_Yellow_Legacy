@@ -26,7 +26,7 @@ Route15Gate2FOaksAideText:
 	ld hl, .ExpAllText
 	call PrintText
 	jp TextScriptEnd
-	
+
 .Route15Gate2FOaksAideHiText:
 	text_far _Route15Gate2FOaksAideHiText
 	text_end

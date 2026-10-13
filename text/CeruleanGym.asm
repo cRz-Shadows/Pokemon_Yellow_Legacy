@@ -21,35 +21,35 @@ _CeruleanGymMistyPreBattleText::
 
 _CeruleanGymRematchPreBattle1Text::
 	text "You've grown so"
-    line "much since our"
-    cont "last battle."
+	line "much since our"
+	cont "last battle."
 
-    para "Ready for a"
-    line "rematch at my"
-    cont "full strength?"
+	para "Ready for a"
+	line "rematch at my"
+	cont "full strength?"
 
-    para "I won't hold"
-    line "back this time!"
+	para "I won't hold"
+	line "back this time!"
 
-    para "Ready to dive"
-    line "in, CHAMPION?"
+	para "Ready to dive"
+	line "in, CHAMPION?"
 	done
 
 _CeruleanGymPreRematchBattle2Text::
 	text "Let's make a"
-    line "splash!"
+	line "splash!"
 	done
 
 _CeruleanGymRematchPostBattleText::
 	text "You've bested"
-    line "me again!"
+	line "me again!"
 
-    para "Your strength"
-    line "is inspiring!"
+	para "Your strength"
+	line "is inspiring!"
 
-    para "I'll train harder"
-    line "for our next"
-    cont "battle!"
+	para "I'll train harder"
+	line "for our next"
+	cont "battle!"
 	done
 
 _CeruleanGymMistyTM11ExplanationText::

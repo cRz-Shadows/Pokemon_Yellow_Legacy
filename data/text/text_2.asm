@@ -733,7 +733,7 @@ _ViridianBlackboardPrlzText::
 _ViridianBlackboardBurnText::
 	text "A burn reduces"
 	line "power."
-	
+
 	para "It also causes"
 	line "ongoing damage."
 
@@ -1300,14 +1300,14 @@ _HookedMonAttackedText::
 	prompt
 
 _DifficultyText::
-    text "Select Difficulty"
-    done
+	text "Select Difficulty"
+	done
 
 _AreYouSureText::
 	text "Are you sure?"
 	done
 
 _BoyGirlText::
-    text "Play as a boy, or"
-    line "as a girl?"
-    done
+	text "Play as a boy, or"
+	line "as a girl?"
+	done

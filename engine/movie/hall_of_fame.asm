@@ -8,7 +8,7 @@ AnimateHallOfFame:
 	call DisableLCD
 	ld hl, vBGMap0
 	ld bc, $800
-	ld a, " "
+	ld a, ' '
 	call FillMemory
 	call EnableLCD
 	ld hl, rLCDC

@@ -268,7 +268,7 @@ ItemUseBall:
 	ld a, 12
 	cp ULTRA_BALL
 	ld a, 4
-	cp SAFARI_BALL 
+	cp SAFARI_BALL
 	ld a, 4
 	jr nz, .skip1
 	ld a, 8
@@ -1498,14 +1498,14 @@ ItemUseMedicine:
 	cp 5
 	ld b, 50 ; Alakazam's level
 	jr nc, .next1
-    cp 4
+	cp 4
 	ld b, 43 ; Venomoth's level
 	jr nc, .next1
 	cp 3
 	ld b, 35 ; Vileplume's level
 	jr nc, .next1
 	cp 2
-    ld b, 24 ; Bit below Raichu's level
+	ld b, 24 ; Bit below Raichu's level
 	jr nc, .next1
 	cp 1
 	ld b, 21 ; Starmie's level
@@ -3263,7 +3263,7 @@ AddStaticEncounters: ; manually add gift mons, static encounters and fossil loca
 	jr z, .addCinnabarIsland
 	cp JYNX
 	jr z, .addSaffron
-	; game corner mons 
+	; game corner mons
 	cp ABRA
 	jr z, .addCeladon
 	cp SEEL

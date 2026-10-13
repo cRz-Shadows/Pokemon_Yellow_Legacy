@@ -136,10 +136,6 @@ SaveSAV:
 	farcall PrintSaveScreenText
 	ld c, 10
 	call DelayFrames
-	; ld hl, WouldYouLikeToSaveText
-	; call SaveSAVConfirm
-	; and a   ;|0 = Yes|1 = No|
-	; ret nz
 	ld c, 10
 	call DelayFrames
 	ld a, [wSaveFileStatus]
@@ -153,10 +149,6 @@ SaveSAV:
 	ret nz
 .save
 	call SaveSAVtoSRAM
-	; ld hl, SavingText
-	; call PrintText
-	; ld c, 128
-	; call DelayFrames
 	ld hl, GameSavedText
 	call PrintText
 	ld c, 10
@@ -445,11 +437,11 @@ DisplayChangeBoxMenu:
 	jr c, .singleDigitBoxNum
 	sub 9
 	hlcoord 8, 2
-	ld [hl], "1"
-	add "0"
+	ld [hl], '1'
+	add '0'
 	jr .next
 .singleDigitBoxNum
-	add "1"
+	add '1'
 .next
 	ldcoord_a 9, 2
 	hlcoord 1, 2

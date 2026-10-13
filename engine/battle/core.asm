@@ -20,7 +20,7 @@ SlidePlayerAndEnemySilhouettesOnScreen:
 	ld hl, vBGMap0
 	ld bc, BG_MAP_WIDTH * BG_MAP_HEIGHT
 .clearBackgroundLoop
-	ld a, " "
+	ld a, ' '
 	ld [hli], a
 	dec bc
 	ld a, b
@@ -469,45 +469,45 @@ MainInBattleLoop:
 
 HandleMovePriority:
 ; This subroutine modifies registers a, hl, bc, and de
-; The player's priority value will be stored in register c and 
+; The player's priority value will be stored in register c and
 ; the enemy's priority value will be stored in register e.
 ; These values will be compared after the 'ret' instruction is called
 
-        ld a, [wPlayerSelectedMove]
-        ld b, a
-        ld hl, PriorityMovesList
-        ld c, 7           ; no priority is 7
+	ld a, [wPlayerSelectedMove]
+	ld b, a
+	ld hl, PriorityMovesList
+	ld c, 7           ; no priority is 7
 .playerPriorityMoveLoop
-        ld a, [hli]       ; load the move ID from priority list and 
+	ld a, [hli]       ; load the move ID from priority list and
                           ; increment address to the priority value address
-        cp b              ; compare with move being used
-        jr z, .playerUsingPriorityMove
-        inc a             ; if at end of list: -1 + 1 = 0xFF + 0x01 = 0
-        jr z, .noPlayerPriorityMove
-        inc hl            ; increment address to the next move
-        jr .playerPriorityMoveLoop
+	cp b              ; compare with move being used
+	jr z, .playerUsingPriorityMove
+	inc a             ; if at end of list: -1 + 1 = 0xFF + 0x01 = 0
+	jr z, .noPlayerPriorityMove
+	inc hl            ; increment address to the next move
+	jr .playerPriorityMoveLoop
 .playerUsingPriorityMove
-        ld c, [hl]        ; get new priority value 
+	ld c, [hl]        ; get new priority value
 .noPlayerPriorityMove
 
-; Now check enemy priority 
-        ld a, [wEnemySelectedMove]
-        ld d, a
-        ld hl, PriorityMovesList
-        ld e, 7           ; no priority is 7
+; Now check enemy priority
+	ld a, [wEnemySelectedMove]
+	ld d, a
+	ld hl, PriorityMovesList
+	ld e, 7           ; no priority is 7
 .enemyPriorityMoveLoop
-        ld a, [hli]       ; load the move ID from priority list and 
+	ld a, [hli]       ; load the move ID from priority list and
                           ; increment address to the priority value address
-        cp d              ; compare with move being used
-        jr z, .enemyUsingPriorityMove
-        inc a             ; if at end of list: -1 + 1 = 0xFF + 0x01 = 0
-        jr z, .noEnemyPriorityMove
-        inc hl            ; increment address to the next move
-        jr .enemyPriorityMoveLoop
+	cp d              ; compare with move being used
+	jr z, .enemyUsingPriorityMove
+	inc a             ; if at end of list: -1 + 1 = 0xFF + 0x01 = 0
+	jr z, .noEnemyPriorityMove
+	inc hl            ; increment address to the next move
+	jr .enemyPriorityMoveLoop
 .enemyUsingPriorityMove
-        ld e, [hl]        ; get new priority value 
+	ld e, [hl]        ; get new priority value
 .noEnemyPriorityMove
-        ret
+	ret
 
 INCLUDE "data/battle/priority_moves.asm"
 
@@ -2120,11 +2120,11 @@ CenterMonName:
 .loop
 	inc de
 	ld a, [de]
-	cp "@"
+	cp '@'
 	jr z, .done
 	inc de
 	ld a, [de]
-	cp "@"
+	cp '@'
 	jr z, .done
 	dec hl
 	dec b
@@ -2181,15 +2181,15 @@ DisplayBattleMenu::
 	call CopyData
 ; the following simulates the keystrokes by drawing menus on screen
 	hlcoord 9, 14
-	ld [hl], "▶"
+	ld [hl], '▶'
 	ld c, 20
 	call DelayFrames
-	ld [hl], " "
+	ld [hl], ' '
 	hlcoord 9, 16
-	ld [hl], "▶"
+	ld [hl], '▶'
 	ld c, 20
 	call DelayFrames
-	ld [hl], "▷"
+	ld [hl], '▷'
 	ld a, $2 ; select the "ITEM" menu
 	jp .upperLeftMenuItemWasNotSelected
 .oldManName
@@ -2209,7 +2209,7 @@ DisplayBattleMenu::
 .leftColumn ; put cursor in left column of menu
 	ld a, [wBattleType]
 	cp BATTLE_TYPE_SAFARI
-	ld a, " "
+	ld a, ' '
 	jr z, .safariLeftColumn
 ; put cursor in left column for normal battle menu (i.e. when it's not a Safari battle)
 	ldcoord_a 15, 14 ; clear upper cursor position in right column
@@ -2242,7 +2242,7 @@ DisplayBattleMenu::
 .rightColumn ; put cursor in right column of menu
 	ld a, [wBattleType]
 	cp BATTLE_TYPE_SAFARI
-	ld a, " "
+	ld a, ' '
 	jr z, .safariRightColumn
 ; put cursor in right column for normal battle menu (i.e. when it's not a Safari battle)
 	ldcoord_a 9, 14 ; clear upper cursor position in left column
@@ -2506,7 +2506,7 @@ PartyMenuOrRockOrRun:
 .partyMonDeselected
 	hlcoord 11, 11
 	ld bc, 6 * SCREEN_WIDTH + 9
-	ld a, " "
+	ld a, ' '
 	call FillMemory
 	xor a ; NORMAL_PARTY_MENU
 	ld [wPartyMenuTypeOrMessageID], a
@@ -2674,9 +2674,9 @@ MoveSelectionMenu:
 	   ; so it is necessary to put the di ei block to not cause tearing
 	call TextBoxBorder
 	hlcoord 4, 12
-	ld [hl], "─"
+	ld [hl], '─'
 	hlcoord 10, 12
-	ld [hl], "┘"
+	ld [hl], '┘'
 	ei
 	hlcoord 6, 13
 	call .writemoves
@@ -2778,7 +2778,7 @@ SelectMenuItem:
 	dec a
 	ld bc, SCREEN_WIDTH
 	call AddNTimes
-	ld [hl], "▷"
+	ld [hl], '▷'
 .select
 	ld hl, hUILayoutFlags
 	set 1, [hl]
@@ -3128,13 +3128,13 @@ PrintMenuItem:
 	ld de, TypeText
 	call PlaceString
 	hlcoord 1, 11
-	ld a, "<BOLD_P>"
+	ld a, '<BOLD_P>'
 	ld [hli], a
-	ld [hl], "<BOLD_P>"
+	ld [hl], '<BOLD_P>'
 	hlcoord 7, 11
-	ld [hl], "/"
+	ld [hl], '/'
 	hlcoord 5, 9
-	ld [hl], "/"
+	ld [hl], '/'
 	hlcoord 5, 11
 	ld de, wcd6d
 	lb bc, 1, 2
@@ -4156,14 +4156,14 @@ CheckForDisobedience:
 	cp 5
 	ld a, 50 ; Alakazam's level
 	jr nc, .next
-    cp 4
+	cp 4
 	ld a, 43 ; Venomoth's level
 	jr nc, .next
 	cp 3
 	ld a, 35 ; Vileplume's level
 	jr nc, .next
 	cp 2
-    ld a, 24 ; Bit below Raichu's level
+	ld a, 24 ; Bit below Raichu's level
 	jr nc, .next
 	cp 1
 	ld a, 21 ; Starmie's level
@@ -6491,13 +6491,13 @@ LoadEnemyMonData:
 	ld a, [hl]     ; base exp
 	ld [de], a
 	; Nickname code
-    ld a, [wCurOpponent]
-    cp OPP_CRAIG
-    jr nz, .loadSpeciesName
-    ld hl, .CraigMonsNicks
-    ld a, [wWhichPokemon]
-    call SkipFixedLengthTextEntries
-    jr .copyNick
+	ld a, [wCurOpponent]
+	cp OPP_CRAIG
+	jr nz, .loadSpeciesName
+	ld hl, .CraigMonsNicks
+	ld a, [wWhichPokemon]
+	call SkipFixedLengthTextEntries
+	jr .copyNick
 .loadSpeciesName
 	ld a, [wEnemyMonSpecies2]
 	ld [wd11e], a
@@ -6881,9 +6881,9 @@ ApplyBadgeStatBoosts:
 	rr e
 	srl d
 	rr e
-    ld a, [wBattleMonSpecies] ; Check if the species is Pikachu
-    cp PIKACHU
-    jr nz, .continue ; times by 1.25 if its Pikachu
+	ld a, [wBattleMonSpecies] ; Check if the species is Pikachu
+	cp PIKACHU
+	jr nz, .continue ; times by 1.25 if its Pikachu
 	srl d
 	rr e
 .continue

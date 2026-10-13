@@ -175,4 +175,3 @@ HallOfFameOakText:
 HallOfFameRematchOakText:
 	text_far _HallOfFameRematchOakText
 	text_end
-

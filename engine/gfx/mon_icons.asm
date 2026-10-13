@@ -129,27 +129,27 @@ LoadMonPartySpriteGfx: ; nickname screen, etc
 	ld a, [hl] ; read the icon id
 	ld [wd11e], a
 	cp $80                      ; Compare the icon ID with $80
-    jr c, .useMonIcons1          ; If the icon ID is < $80, use MonIcons
+	jr c, .useMonIcons1          ; If the icon ID is < $80, use MonIcons
 	; Handling icon IDs >= $80
-    sub $80                     ; Subtract $80 from the icon ID
-    ld hl, MonIcons2            ; Use MonIcons2
-    jr .loadIcon1                ; Jump to the icon loading part
+	sub $80                     ; Subtract $80 from the icon ID
+	ld hl, MonIcons2            ; Use MonIcons2
+	jr .loadIcon1                ; Jump to the icon loading part
 .useMonIcons1:
-    ld hl, MonIcons             ; Use MonIcons
+	ld hl, MonIcons             ; Use MonIcons
 .loadIcon1:
 
 	ld bc, $80
 	call AddNTimes ; hl now contains pointer to mon icon
-	
+
 	ld a, [wd11e]
 	cp $80                      ; Compare the icon ID with $80
-    jr c, .useMonIcons2          ; If the icon ID is < $80, use MonIcons
+	jr c, .useMonIcons2          ; If the icon ID is < $80, use MonIcons
 	; Handling icon IDs >= $80
-    sub $80                     ; Subtract $80 from the icon ID
-    ld a, BANK(MonIcons2)
-    jr .loadIcon2                ; Jump to the icon loading part
+	sub $80                     ; Subtract $80 from the icon ID
+	ld a, BANK(MonIcons2)
+	jr .loadIcon2                ; Jump to the icon loading part
 .useMonIcons2:
-    ld a, BANK(MonIcons)
+	ld a, BANK(MonIcons)
 .loadIcon2:
 
 	ld de, vSprites
@@ -185,20 +185,20 @@ LoadMonPartySpriteGfxWithLCDDisabled: ; party menu
 	ld e, a
 	ld d, 0
 	add hl, de
-	
+
 	ld a, [hl] ; read the icon id
 	ld [wd11e], a
 
 	cp $80                      ; Compare the icon ID with $80
-    jr c, .useMonIcons1          ; If the icon ID is < $80, use MonIcons
+	jr c, .useMonIcons1          ; If the icon ID is < $80, use MonIcons
 
 	; Handling icon IDs >= $80
-    sub $80                     ; Subtract $80 from the icon ID
-    ld hl, MonIcons2            ; Use MonIcons2
-    jr .loadIcon1                ; Jump to the icon loading part
+	sub $80                     ; Subtract $80 from the icon ID
+	ld hl, MonIcons2            ; Use MonIcons2
+	jr .loadIcon1                ; Jump to the icon loading part
 
 .useMonIcons1:
-    ld hl, MonIcons             ; Use MonIcons
+	ld hl, MonIcons             ; Use MonIcons
 .loadIcon1:
 
 	ld bc, $80
@@ -221,15 +221,15 @@ LoadMonPartySpriteGfxWithLCDDisabled: ; party menu
 	ld a, [wd11e]
 
 	cp $80                      ; Compare the icon ID with $80
-    jr c, .useMonIcons2          ; If the icon ID is < $80, use MonIcons
+	jr c, .useMonIcons2          ; If the icon ID is < $80, use MonIcons
 
 	; Handling icon IDs >= $80
-    sub $80                     ; Subtract $80 from the icon ID
-    ld a, BANK(MonIcons2)
-    jr .loadIcon2                ; Jump to the icon loading part
+	sub $80                     ; Subtract $80 from the icon ID
+	ld a, BANK(MonIcons2)
+	jr .loadIcon2                ; Jump to the icon loading part
 
 .useMonIcons2:
-    ld a, BANK(MonIcons)
+	ld a, BANK(MonIcons)
 .loadIcon2:
 
 	ld bc, $80

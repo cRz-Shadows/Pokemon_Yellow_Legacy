@@ -41,7 +41,7 @@ _PalletTownGirlText::
 	cont "in record time!"
 
 	para "I can't run to"
-	line "CINNABAR ISLAND," 
+	line "CINNABAR ISLAND,"
 	cont "but I can see"
 	cont "it from here!"
 

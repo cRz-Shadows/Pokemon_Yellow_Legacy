@@ -47,7 +47,7 @@ _RedsHouse1FMomChampionText::
 	line "celebrate with"
 	cont "your #MON and"
 	cont "friends."
-	
+
 	para "You've earned it!"
 
 	para "I know you'll"

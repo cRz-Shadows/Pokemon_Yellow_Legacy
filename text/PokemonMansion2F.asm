@@ -50,7 +50,7 @@ _PokemonMansion2F_OakBeforeBattleText1::
 	text "You've caught me"
 	line "in a moment of"
 	cont "deep research."
-	
+
 	para "This mansion"
 	line "holds secrets of"
 	cont "a #MON barely"
@@ -59,10 +59,10 @@ _PokemonMansion2F_OakBeforeBattleText1::
 	cont "ancient texts."
 	prompt
 
-_PokemonMansion2F_OakBeforeBattleText2::	
+_PokemonMansion2F_OakBeforeBattleText2::
 	text "Looking at the"
 	line "story of MEWTWO,"
-	
+
 	para "one ponders its"
 	line "origins..."
 	prompt
@@ -107,7 +107,7 @@ _PokemonMansion2F_OakBeforeBattleText6::
 	line "on the present."
 
 	para "<PLAYER>!"
-	
+
 	para "You have become"
 	line "a #MON master"
 	cont "above all others."
@@ -116,7 +116,7 @@ _PokemonMansion2F_OakBeforeBattleText6::
 	line "showed me back"
 	cont "to the path of"
 	cont "strength."
-	
+
 	para "Now, I challenge"
 	line "you with my full,"
 
@@ -124,7 +124,7 @@ _PokemonMansion2F_OakBeforeBattleText6::
 	line "power."
 
 	para "Might I test"
-	line "your might" 
+	line "your might"
 	cont "once more?"
 	done
 
@@ -132,7 +132,7 @@ _PokemonMansion2F_OakRealChallengeBattleText::
 	text "May our battle"
 	line "echo through"
 	cont "these halls."
-	
+
 	para "Prepare yourself!"
 	done
 
@@ -168,7 +168,7 @@ _PokemonMansion2F_OakPostBattleText::
 	para "Keep your senses"
 	line "sharp. The world"
 	cont "is full of wonders"
-	
+
 	para "waiting to reveal"
 	line "themselves to the"
 	cont "worthy."

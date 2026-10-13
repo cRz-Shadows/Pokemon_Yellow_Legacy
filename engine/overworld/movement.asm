@@ -70,8 +70,6 @@ UpdatePlayerSprite:
 	ld a, [wd736]
 	bit 7, a ; is the player sprite spinning due to a spin tile?
 	jr nz, .skipSpriteAnim
-	; call Func_5274
-	; call Func_4e32
 	ld a, [hCurrentSpriteOffset]
 	add $7
 	ld l, a

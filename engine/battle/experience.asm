@@ -146,14 +146,14 @@ GainExperience:
 	cp 5
 	ld d, 50 ; Alakazam's level
 	jr nc, .next1
-    cp 4
+	cp 4
 	ld d, 43 ; Venomoth's level
 	jr nc, .next1
 	cp 3
 	ld d, 35 ; Vileplume's level
 	jr nc, .next1
 	cp 2
-    ld d, 24 ; Bit below Raichu's level
+	ld d, 24 ; Bit below Raichu's level
 	jr nc, .next1
 	cp 1
 	ld d, 21 ; Starmie's level
@@ -316,7 +316,7 @@ GainExperience:
 	ld c, a	; load the final level to grow to over to c
 	ld a, [wTempLevelStore]	; load the current level into a
 	ld b, a	; load the current level over to b
-.inc_level	; marker for looping back 
+.inc_level	; marker for looping back
 	inc b	;increment 	the current level
 	ld a, b	;put the current level in a
 	ld [wCurEnemyLVL], a	;and reset the level to advance to as merely 1 higher

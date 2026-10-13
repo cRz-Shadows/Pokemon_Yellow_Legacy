@@ -282,5 +282,5 @@ BillsHouseBillCheckOutMyRarePokemonText:
 	jp TextScriptEnd
 
 BillsHouseMachineText:
-  text_far _BillsHouseMachineText
-  text_end
+	text_far _BillsHouseMachineText
+	text_end

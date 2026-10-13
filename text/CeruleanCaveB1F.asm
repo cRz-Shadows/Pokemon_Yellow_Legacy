@@ -8,19 +8,19 @@ _CeruleanCaveSmithBattleText1::
 	para "Show me how much"
 	line "zest you've got!"
 	done
-	
+
 _CeruleanCaveSmithEndBattleText1::
 	text "Wow!"
-	
+
 	para "You've got zest!"
 
 	para "I love to see"
 	line "that."
 	prompt
-	
+
 _CeruleanCaveSmithAfterBattleText1::
 	text "What zest!"
-	
+
 	para "You should be"
 	line "able to handle"
 	cont "yourself in this"

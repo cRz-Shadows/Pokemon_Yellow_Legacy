@@ -145,7 +145,7 @@ CreditsTextPointers:
 	dw CreditsText_TomWang
 	assert_table_length NUM_CRED_STRINGS
 
-; 
+;
 ; 5  / 4  = -1
 ; 7  / 6  = -2
 ; 9  / 8  = -3

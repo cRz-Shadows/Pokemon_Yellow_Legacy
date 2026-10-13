@@ -318,7 +318,7 @@ CinnabarGymStartRematchScript:
 	ld hl, .PreBattleRematchRefusedText
 	call PrintText
 	jp TextScriptEnd
-	
+
 .PreBattleRematch1Text
 	text_far _CinnabarGymRematchPreBattle1Text
 	text_end

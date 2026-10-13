@@ -60,15 +60,15 @@ PowerPlantCraigText:
 	ld hl, CraigTrainerHeader
 	call TalkToTrainer
 	jp TextScriptEnd
-	
+
 PowerPlantCraigBattleText1:
 	text_far _PowerPlantCraigBattleText1
 	text_end
-	
+
 PowerPlantCraigEndBattleText1:
 	text_far _PowerPlantCraigEndBattleText1
 	text_end
-	
+
 PowerPlantCraigAfterBattleText1:
 	text_far _PowerPlantCraigAfterBattleText1
 	text_end

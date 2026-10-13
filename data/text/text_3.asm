@@ -451,7 +451,7 @@ _NormalModeText::
 
 _HardModeText::
 	text "Are you sure?"
-	
+
 	para "Set mode, no"
 	line "items in battle,"
 	cont "gym level caps."

@@ -31,7 +31,7 @@ _ViridianCityOldManLosingMyTouchText::
 	para "Maybe that was"
 	line "just a strong"
 	cont "#MON."
-	
+
 	para "Apparently, if"
 	line "you hold START"
 	cont "while pressing A"
@@ -100,7 +100,7 @@ ViridianCityYoungster2CaterpieAndWeedleDescriptionText::
 	para "The DV value"
 	line "determines stat"
 	cont "variation."
-	
+
 	para "At lvl 100,"
 	line "the difference"
 	cont "between a 0 and"
@@ -210,7 +210,7 @@ _ViridianCityTrainerTips1Text::
 	para "Many #MON"
 	line "have recently"
 	cont "moved habitats."
-	
+
 	para "Keep an eye out"
 	line "on new routes"
 	cont "for unexpected"

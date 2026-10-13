@@ -39,16 +39,16 @@ _FuchsiaGymKogaPostBattleAdviceText::
 _FuchsiaGymRematchPreBattle1Text::
 	text "Fwahahaha!"
 
-    para "CHAMPION, huh?"
-	
-    para "I commend your"
-    line "strength."
+	para "CHAMPION, huh?"
 
-    para "But as a ninja"
-    line "master, I've"
-    cont "grown stronger."
+	para "I commend your"
+	line "strength."
 
-    para "Dare face me"
+	para "But as a ninja"
+	line "master, I've"
+	cont "grown stronger."
+
+	para "Dare face me"
 	line "again, with all"
 	cont "my power?"
 	done
@@ -56,11 +56,11 @@ _FuchsiaGymRematchPreBattle1Text::
 _FuchsiaGymPreRematchBattle2Text::
 	text "Let us see if"
 	line "the CHAMPION"
-	
+
 	para "can survive the"
 	line "ultimate poison"
 	cont "technique!"
-    done
+	done
 
 _FuchsiaGymRematchPostBattleText::
 	text "You've withstood"
@@ -158,7 +158,7 @@ _FuchsiaGymRocker2AfterBattleText::
 
 _FuchsiaGymJanineBattleText::
 	text "Fufufu..."
-	
+
 	para "Caught off guard?"
 
 	para "I'm JANINE, a"

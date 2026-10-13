@@ -11,7 +11,7 @@ While Yellow Legacy is not designed as a “Kaizo” project, Pokémon trainer f
 
 ## Download and Play
 
-* ### **You should use RGBDS version 0.6.1.**
+* ### **You should use RGBDS version 1.0.4.** The build requires 1.0.0 or newer.
 * To set up the repository, see [**INSTALL.md**](INSTALL.md).
 
 
@@ -41,7 +41,6 @@ These videos also provide an overview of the hack and the ideology behind it:
 
 ## Pret Stuff
 - **All Pret Projects:** [pret.github.io](https://pret.github.io/).
-- [**FAQ**](FAQ.md)
 - [**Wiki**][wiki] (includes [tutorials][tutorials])
 - **Discord:** [pret][discord]
 - **IRC:** [libera#pret][irc]
@@ -51,7 +50,7 @@ These videos also provide an overview of the hack and the ideology behind it:
 
 ### Creators:
 - TheSmithPlays - Developer
-- cRz Shadows - Devoloper
+- cRz Shadows - Developer
 - Weebra - Video Editor
 
 
@@ -179,5 +178,3 @@ These videos also provide an overview of the hack and the ideology behind it:
 [tutorials]: https://github.com/pret/pokeyellow/wiki/Tutorials
 [discord]: https://discord.gg/d5dubZ3
 [irc]: https://web.libera.chat/?#pret
-[ci]: https://github.com/pret/pokeyellow/actions
-[ci-badge]: https://github.com/pret/pokecrystal/actions/workflows/main.yml/badge.svg

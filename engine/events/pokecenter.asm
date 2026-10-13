@@ -88,12 +88,8 @@ DisplayPokemonCenterDialogue_::
 	jr nz, .FightingFitShort
 	ld hl, PokemonFightingFitText
 	call PrintText
-	; jp .skiptext3
 .FightingFitShort
 	call UpdateSprites
-	; ld hl, PokemonFightingFitShortText
-	; call PrintText
-; .skiptext3
 	callfar IsStarterPikachuInOurParty
 	jr nc, .notInParty
 	lb bc, 15, 0
@@ -129,7 +125,7 @@ DisplayPokemonCenterDialogue_::
 .naotenho
 	ld hl, TemPokemonOuNao
 	jp PrintText
-	
+
 TemPokemonOuNao:
 	text_far _TemPokemonOuNao
 	text_end

@@ -14,7 +14,7 @@
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
-	tmhm CUT      
+	tmhm CUT
 	; end
 
 	db 0 ; padding

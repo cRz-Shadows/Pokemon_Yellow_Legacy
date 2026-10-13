@@ -189,7 +189,7 @@ PokemonMansion2FOakText:
 	ld a, [wCurrentMenuItem]
 	and a
 	jr nz, .refused
-	
+
 	ld c, BANK(Music_MeetMaleTrainer)
 	ld a, MUSIC_MEET_MALE_TRAINER
 	call PlayMusic
@@ -197,7 +197,7 @@ PokemonMansion2FOakText:
 	ld hl, wd72d
 	set 6, [hl]
 	set 7, [hl]
-	
+
 	call Delay3
 	ld a, OPP_PROF_OAK
 	ld [wCurOpponent], a
@@ -208,7 +208,7 @@ PokemonMansion2FOakText:
 	ld a, $3
 	ld [wPokemonMansion2FCurScript], a
 	ld [wCurMapScript], a	;joenote - also set the value for current map script or you will have a bad time
-	
+
 	ld hl, PokemonMansion2F_OakDefeatedText
 	ld de, PokemonMansion2F_OakWonText
 	call SaveEndBattleTextPointers

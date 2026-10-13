@@ -93,6 +93,6 @@ _BillsHouseBillCheckOutMyRarePokemonText::
 	done
 
 _BillsHouseMachineText::
-  text "Its some kind of"
-  line "machine."
-  done
+	text "Its some kind of"
+	line "machine."
+	done

@@ -242,7 +242,7 @@ PrintSafariZoneSteps::
 	cp 10
 	jr nc, .tenOrMore
 	hlcoord 5, 3
-	ld a, " "
+	ld a, ' '
 	ld [hl], a
 .tenOrMore
 	hlcoord 6, 3
@@ -342,7 +342,7 @@ ReadTileFromVram:
 	;move to proper y coordinate
 	push de
 	ld de, $0020
-.loop	
+.loop
 	sub 1
 	jr c, .endloop
 	add hl, de

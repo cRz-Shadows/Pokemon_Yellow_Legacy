@@ -288,7 +288,7 @@ CheckForPlayerNameInSRAM:
 	ld hl, sPlayerName
 .loop
 	ld a, [hli]
-	cp "@"
+	cp '@'
 	jr z, .found
 	dec b
 	jr nz, .loop

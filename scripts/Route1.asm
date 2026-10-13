@@ -73,7 +73,7 @@ Route1OakText:
 	ld a, [wCurrentMenuItem]
 	and a
 	jr nz, .refused
-	
+
 	ld c, BANK(Music_MeetMaleTrainer)
 	ld a, MUSIC_MEET_MALE_TRAINER
 	call PlayMusic
@@ -81,7 +81,7 @@ Route1OakText:
 	ld hl, wd72d
 	set 6, [hl]
 	set 7, [hl]
-	
+
 	call Delay3
 	ld a, OPP_PROF_OAK
 	ld [wCurOpponent], a
@@ -92,7 +92,7 @@ Route1OakText:
 	ld a, $1
 	ld [wRoute1CurScript], a
 	ld [wCurMapScript], a	;joenote - also set the value for current map script or you will have a bad time
-	
+
 	ld hl, OakDefeatedText
 	ld de, OakWonText
 	call SaveEndBattleTextPointers

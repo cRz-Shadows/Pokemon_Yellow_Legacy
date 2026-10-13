@@ -71,7 +71,7 @@ TryPushingBoulder::
 	ret
 
 BoulderSwitchSoundCheck::
-	
+
 	ret
 
 PushBoulderUpMovementData:

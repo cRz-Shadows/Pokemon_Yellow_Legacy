@@ -82,8 +82,8 @@ BillsHousePrintBillCheckOutMyRarePokemonText::
 	text_end
 
 .BillsHouseMachineText:
-  text_far _BillsHouseMachineText
-  text_end
+	text_far _BillsHouseMachineText
+	text_end
 
 Func_f24ae::
 	ld a, [wCurMap]

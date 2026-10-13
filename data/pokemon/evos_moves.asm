@@ -266,14 +266,14 @@ NidokingEvosMoves:
 	db 40, EARTHQUAKE
 	db 46, HORN_DRILL
 	db 0
-	
+
 SlowbroEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
 	db 5, GROWL
 	db 5, WATER_GUN
-	db 10, CONFUSION 
+	db 10, CONFUSION
 	db 18, DISABLE
 	db 22, HEADBUTT
 	db 25, PSYBEAM
@@ -377,7 +377,7 @@ NidoranFEvosMoves:
 	db EVOLVE_LEVEL, 16, NIDORINA
 	db 0
 ; Learnset
- 	db 6, POISON_STING
+	db 6, POISON_STING
 	db 8, BITE
 	db 12, DOUBLE_KICK
 	db 23, TAIL_WHIP
@@ -669,7 +669,7 @@ SlowpokeEvosMoves:
 ; Learnset
 	db 5, GROWL
 	db 5, WATER_GUN
-	db 10, CONFUSION 
+	db 10, CONFUSION
 	db 18, DISABLE
 	db 22, HEADBUTT
 	db 25, PSYBEAM
@@ -1206,7 +1206,7 @@ KabutoEvosMoves:
 	db EVOLVE_LEVEL, 40, KABUTOPS
 	db 0
 ; Learnset
-	db 11, LEER	
+	db 11, LEER
 	db 15, WATER_GUN
 	db 19, ABSORB
 	db 25, ROCK_THROW
@@ -1221,7 +1221,7 @@ KabutopsEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 11, LEER	
+	db 11, LEER
 	db 15, WATER_GUN
 	db 19, ABSORB
 	db 25, ROCK_THROW
@@ -2109,7 +2109,7 @@ AerodactylEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 15, BITE	
+	db 15, BITE
 	db 22, SUPERSONIC
 	db 27, ROCK_THROW
 	db 32, WING_ATTACK

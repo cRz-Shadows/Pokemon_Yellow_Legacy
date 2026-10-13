@@ -160,7 +160,7 @@ _OaksLabGirlText::
 	para "Poison is"
 	line "strong against"
 	cont "bug-types."
-	
+
 	para "It seems that"
 	line "bug is no longer"
 	cont "strong against"

@@ -75,7 +75,7 @@ DisplayListMenuIDLoop::
 	and a ; is it the Old Man battle?
 	jr z, .notOldManBattle
 .oldManBattle
-	ld a, "▶"
+	ld a, '▶'
 	ldcoord_a 5, 4 ; place menu cursor in front of first menu entry
 	ld c, 20
 	call DelayFrames
@@ -196,8 +196,8 @@ DisplayListMenuIDLoop::
 	jp nz, ExitListMenu ; if so, exit the menu
 	bit BIT_SELECT, a
 	jp nz, HandleItemListSwapping ; if so, allow the player to swap menu entries
-	bit 3,a ; was the start button pressed?
-	jp nz,.sortItems ; if so, allow the player to swap menu entries
+	bit 3, a ; was the start button pressed?
+	jp nz, .sortItems ; if so, allow the player to swap menu entries
 	ld b, a
 	bit BIT_D_DOWN, b
 	ld hl, wListScrollOffset
@@ -265,14 +265,14 @@ DisplayChooseQuantityMenu::
 	ld a, [wMaxItemQuantity]
 	ld b, a
 	ld a, [wItemQuantity]
-    add a, 10
-    cp b
-    jr nc, .maxQuantity ; if number goes grater than max, set it to max
-    ld [wItemQuantity], a 
-    jr .handleNewQuantity
+	add a, 10
+	cp b
+	jr nc, .maxQuantity ; if number goes grater than max, set it to max
+	ld [wItemQuantity], a
+	jr .handleNewQuantity
 .maxQuantity
-    ld a, b
-    ld [wItemQuantity], a
+	ld a, b
+	ld [wItemQuantity], a
 	jr .handleNewQuantity
 .incrementQuantity
 	ld a, [wMaxItemQuantity]
@@ -530,7 +530,7 @@ PrintListMenuEntries::
 	push hl
 	ld bc, SCREEN_WIDTH + 8 ; 1 row down and 8 columns right
 	add hl, bc
-	ld a, "×"
+	ld a, '×'
 	ld [hli], a
 	ld a, [wd11e]
 	push af
@@ -558,7 +558,7 @@ PrintListMenuEntries::
 	cp c ; is it this item?
 	jr nz, .nextListEntry
 	dec hl
-	ld a, "▷"
+	ld a, '▷'
 	ld [hli], a
 .nextListEntry
 	ld bc, 2 * SCREEN_WIDTH ; 2 rows
@@ -569,7 +569,7 @@ PrintListMenuEntries::
 	jp nz, .loop
 	ld bc, -8
 	add hl, bc
-	ld a, "▼"
+	ld a, '▼'
 	ld [hl], a
 	ret
 .printCancelMenuItem
