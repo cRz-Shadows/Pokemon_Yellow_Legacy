@@ -40,10 +40,10 @@ BillsHousePrintBillSSTicketText::
 	call PrintText
 	SetEvent EVENT_GOT_SS_TICKET
 	ld a, HS_CERULEAN_GUARD_1
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef ShowObject
 	ld a, HS_CERULEAN_GUARD_2
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 .got_ss_ticket
 	ld hl, .WhyDontYouGoInsteadOfMeText
@@ -85,12 +85,12 @@ BillsHousePrintBillCheckOutMyRarePokemonText::
 	text_far _BillsHouseMachineText
 	text_end
 
-Func_f24ae::
+BillsHouse_CheckPikachuEmotion::
 	ld a, [wCurMap]
 	cp BILLS_HOUSE
-	jr nz, .asm_f24d2
+	jr nz, .noEmotion
 	call CheckPikachuFollowingPlayer
-	jr z, .asm_f24d2
+	jr z, .noEmotion
 	ld a, [wBillsHouseCurScript]
 	cp SCRIPT_BILLSHOUSE_SCRIPT5
 	ldpikaemotion e, PikachuEmotion27
@@ -104,18 +104,18 @@ Func_f24ae::
 	ldpikaemotion e, PikachuEmotion31
 	ret
 
-.asm_f24d2
+.noEmotion
 	ld e, $ff
 	ret
 
-Func_f24d5::
+BillsHousePikachuConfused::
 	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
 	ld [wJoyIgnore], a
 	xor a
 	ld [wPlayerMovingDirection], a
 	call UpdateSprites
 	call UpdateSprites
-	ld hl, Data_f2505
+	ld hl, PikachuMovement_Confused
 	call ApplyPikachuMovementData
 	ld a, $f ; pikachu
 	ld [wEmotionBubbleSpriteIndex], a
@@ -126,7 +126,7 @@ Func_f24d5::
 	callfar InitializePikachuTextID
 	ret
 
-Data_f2505:
+PikachuMovement_Confused:
 	db $00
 	db $20
 	db $20
@@ -134,23 +134,23 @@ Data_f2505:
 	db $1e
 	db $3f
 
-Func_f250b::
-	ld hl, Data_f251c
+BillsHousePikachuWatchPlayer::
+	ld hl, PikachuMovement_WatchPlayer1
 	ld b, SPRITE_FACING_UP
 	call TryApplyPikachuMovementData
-	ld hl, Data_f2521
+	ld hl, PikachuMovement_WatchPlayer2
 	ld b, SPRITE_FACING_RIGHT
 	call TryApplyPikachuMovementData
 	ret
 
-Data_f251c:
+PikachuMovement_WatchPlayer1:
 	db $00
 	db $1f
 	db $1d
 	db $38
 	db $3f
 
-Data_f2521:
+PikachuMovement_WatchPlayer2:
 	db $00
 	db $1e
 	db $1f

@@ -1,4 +1,4 @@
-ExclamationPointMoveSets:
+MoveGrammar:
 ; set 0
 	db SWORDS_DANCE
 	db GROWTH

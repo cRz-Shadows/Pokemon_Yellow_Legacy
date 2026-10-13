@@ -139,7 +139,7 @@ PrepareOAMData::
 
 	; Clear unused OAM.
 .asm_4a41
-	ld a, [wd736]
+	ld a, [wMovementFlags]
 	bit 6, a ; jumping down ledge or fishing animation?
 	ld c, $a0
 	jr z, .clear

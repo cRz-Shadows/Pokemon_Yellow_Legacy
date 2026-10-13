@@ -49,20 +49,20 @@ PewterGymBrockPostBattle:
 ; fallthrough
 PewterGymScriptReceiveTM34:
 	ld a, TEXT_PEWTERGYM_BROCK_WAIT_TAKE_THIS
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	SetEvent EVENT_BEAT_BROCK
 	lb bc, TM_BIDE, 1
 	call GiveItem
 	jr nc, .BagFull
 	ld a, TEXT_PEWTERGYM_RECEIVED_TM34
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	SetEvent EVENT_GOT_TM34
 	jr .gymVictory
 .BagFull
 	ld a, TEXT_PEWTERGYM_TM34_NO_ROOM
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 .gymVictory
 	ld hl, wObtainedBadges
@@ -71,10 +71,10 @@ PewterGymScriptReceiveTM34:
 	set BIT_BOULDERBADGE, [hl]
 
 	ld a, HS_GYM_GUY
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	ld a, HS_ROUTE_22_RIVAL_1
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 
 	ResetEvents EVENT_1ST_ROUTE22_RIVAL_BATTLE, EVENT_ROUTE22_RIVAL_WANTS_BATTLE
@@ -86,7 +86,7 @@ PewterGymScriptReceiveTM34:
 
 BrockRematchPostBattle:
 	ld a, TEXT_PEWTERGYM_REMATCH_POST_BATTLE
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	jp PewterGymResetScripts
 
@@ -125,7 +125,7 @@ PewterGymBrockText:
 .beforeBeat
 	ld hl, .PreBattleText
 	call PrintText
-	ld hl, wd72d
+	ld hl, wStatusFlags3
 	set 6, [hl]
 	set 7, [hl]
 	ld hl, PewterGymBrockReceivedBoulderBadgeText

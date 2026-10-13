@@ -46,7 +46,7 @@ VictoryRoad2FDefaultScript:
 	ld hl, .SwitchCoords
 	call CheckBoulderCoords
 	jp nc, CheckFightingMapTrainers
-	ldh a, [hSpriteIndexOrTextID]
+	ldh a, [hTextID]
 	cp $f
 	jp z, CheckFightingMapTrainers
 	EventFlagAddress hl, EVENT_VICTORY_ROAD_2_BOULDER_ON_SWITCH1

@@ -23,7 +23,7 @@ RocketHideoutB2FDefaultScript:
 	call DecodeArrowMovementRLE
 	cp $ff
 	jp z, CheckFightingMapTrainers
-	ld hl, wd736
+	ld hl, wMovementFlags
 	set 7, [hl]
 	call StartSimulatingJoypadStates
 	ld a, SFX_ARROW_TILES
@@ -262,7 +262,7 @@ RocketHideoutB2FPlayerSpinningScript:
 	jr nz, LoadSpinnerArrowTiles
 	xor a
 	ld [wJoyIgnore], a
-	ld hl, wd736
+	ld hl, wMovementFlags
 	res 7, [hl]
 	ld a, SCRIPT_ROCKETHIDEOUTB2F_DEFAULT
 	ld [wCurMapScript], a
@@ -281,7 +281,7 @@ RocketHideoutB2F_TextPointers:
 RocketHideout2TrainerHeaders:
 	def_trainers
 RocketHideout2TrainerHeader0:
-	trainer EVENT_BEAT_ROCKET_HIDEOUT_2_TRAINER_0, 4, RocketHideoutB1FRocketBattleText, RocketHideoutB1FRocketEndBattleText, RocketHideoutB1FRocketAfterBattleText
+	trainer EVENT_BEAT_ROCKET_HIDEOUT_2_TRAINER_0, 4, RocketHideoutB2FRocketBattleText, RocketHideoutB2FRocketEndBattleText, RocketHideoutB2FRocketAfterBattleText
 	db -1 ; end
 
 RocketHideoutB2FRocketText:
@@ -290,14 +290,14 @@ RocketHideoutB2FRocketText:
 	call TalkToTrainer
 	jp TextScriptEnd
 
-RocketHideoutB1FRocketBattleText:
-	text_far _RocketHideoutB1FRocketBattleText
+RocketHideoutB2FRocketBattleText:
+	text_far _RocketHideoutB2FRocketBattleText
 	text_end
 
-RocketHideoutB1FRocketEndBattleText:
-	text_far _RocketHideoutB1FRocketEndBattleText
+RocketHideoutB2FRocketEndBattleText:
+	text_far _RocketHideoutB2FRocketEndBattleText
 	text_end
 
-RocketHideoutB1FRocketAfterBattleText:
-	text_far _RocketHideoutB1FRocketAfterBattleText
+RocketHideoutB2FRocketAfterBattleText:
+	text_far _RocketHideoutB2FRocketAfterBattleText
 	text_end

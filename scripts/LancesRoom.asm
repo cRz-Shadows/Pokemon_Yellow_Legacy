@@ -67,7 +67,7 @@ LancesRoomDefaultScript:
 	jr nz, .Rematch
 	ld a, TEXT_LANCESROOM_LANCE
 .continue
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	jp DisplayTextID
 .notStandingNextToLance
 	cp $5  ; Is player standing on the entrance staircase?
@@ -101,7 +101,7 @@ LancesRoomLanceEndBattleScript:
 	jr nz, .Rematch
 	ld a, TEXT_LANCESROOM_LANCE
 .continue
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	jp DisplayTextID
 .Rematch
 	ld a, TEXT_LANCESROOM_LANCE_REMATCH

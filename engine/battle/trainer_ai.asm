@@ -1093,10 +1093,10 @@ AIUseDireHit: ; unused
 	ld a, DIRE_HIT
 	jp AIPrintItemUse
 
-; PureRGBnote: ADDED: if enemy HP is below a 1/[wUnusedC000], store 1 in wUnusedC000.
+; PureRGBnote: ADDED: if enemy HP is below a 1/[wUnusedMusicByte], store 1 in wUnusedMusicByte.
 ; used for checking whether the hyper ball item should guarantee success on use
 AICheckIfHPBelowFractionStore::
-	ld a, [wUnusedC000]
+	ld a, [wUnusedMusicByte]
 	call AICheckIfHPBelowFraction
 	jr c, .below
 	xor a
@@ -1104,7 +1104,7 @@ AICheckIfHPBelowFractionStore::
 .below
 	ld a, 1
 .done
-	ld [wUnusedC000], a
+	ld [wUnusedMusicByte], a
 	ret
 
 AICheckIfHPBelowFractionWrapped:
@@ -1193,7 +1193,7 @@ AIPrintItemUse:
 AIPrintItemUse_:
 ; print "x used [wAIItem] on z!"
 	ld a, [wAIItem]
-	ld [wd11e], a
+	ld [wNamedObjectIndex], a
 	call GetItemName
 	ld hl, AIBattleUseItemText
 	jp PrintText

@@ -1,6 +1,6 @@
 DisplayMonFrontSpriteInBox:
 ; Displays a pokemon's front sprite in a pop-up window.
-; [wcf91] = pokemon internal id number
+; [wCurPartySpecies] = pokemon internal id number
 	ld a, 1
 	ldh [hAutoBGTransferEnabled], a
 	call Delay3
@@ -11,8 +11,8 @@ DisplayMonFrontSpriteInBox:
 	ld [wTextBoxID], a
 	call DisplayTextBoxID
 	call UpdateSprites
-	ld a, [wcf91]
-	ld [wd0b5], a
+	ld a, [wCurPartySpecies]
+	ld [wCurSpecies], a
 	call GetMonHeader
 	ld de, vChars1 tile $31
 	call LoadMonFrontSprite
@@ -20,7 +20,7 @@ DisplayMonFrontSpriteInBox:
 	ldh [hStartTileID], a
 	hlcoord 10, 11
 	predef AnimateSendingOutMon
-	ld a, [wcf91]
+	ld a, [wCurPartySpecies]
 	cp FOSSIL_KABUTOPS
 	jr z, .skipCry
 	cp FOSSIL_AERODACTYL

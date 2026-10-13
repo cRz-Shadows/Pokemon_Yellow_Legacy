@@ -50,20 +50,20 @@ FuchsiaGymKogaPostBattleScript:
 ; fallthrough
 FuchsiaGymReceiveTM06:
 	ld a, TEXT_FUCHSIAGYM_KOGA_SOUL_BADGE_INFO
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	SetEvent EVENT_BEAT_KOGA
 	lb bc, TM_TOXIC, 1
 	call GiveItem
 	jr nc, .BagFull
 	ld a, TEXT_FUCHSIAGYM_KOGA_RECEIVED_TM06
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	SetEvent EVENT_GOT_TM06
 	jr .gymVictory
 .BagFull
 	ld a, TEXT_FUCHSIAGYM_KOGA_TM06_NO_ROOM
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 .gymVictory
 	ld hl, wObtainedBadges
@@ -78,7 +78,7 @@ FuchsiaGymReceiveTM06:
 
 KogaRematchPostBattle:
 	ld a, TEXT_FUCHSIAGYM_REMATCH_POST_BATTLE
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	jp FuchsiaGymResetScripts
 
@@ -132,7 +132,7 @@ FuchsiaGymKogaText:
 .beforeBeat
 	ld hl, .BeforeBattleText
 	call PrintText
-	ld hl, wd72d
+	ld hl, wStatusFlags3
 	set 6, [hl]
 	set 7, [hl]
 	ld hl, .ReceivedSoulBadgeText

@@ -21,7 +21,7 @@ TrySurf:
 	bit 4, a ; SOUL BADGE
 	jr z, .no
 	farcall IsSurfingAllowed
-	ld hl, wd728
+	ld hl, wStatusFlags1
 	bit 1, [hl]
 	res 1, [hl]
 	jr z, .no2
@@ -34,7 +34,7 @@ TrySurf:
 	jr nz, .no2
 	call GetPartyMonName2
 	ld a, SURFBOARD
-	ld [wcf91], a
+	ld [wCurItem], a
 	ld [wPseudoItemID], a
 	call UseItem
 .yes2
@@ -149,7 +149,7 @@ HasPartyMove::
 InitializeFieldMoveTextBox:
 	call EnableAutoTextBoxDrawing
 	ld a, 1 ; not 0
-	ld [hSpriteIndexOrTextID], a
+	ld [hTextID], a
 	farcall DisplayTextIDInit
 	ret
 

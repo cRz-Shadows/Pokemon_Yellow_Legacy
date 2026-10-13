@@ -57,7 +57,7 @@ PalletTownOakHeyWaitScript:
 	xor a
 	ld [wOakWalkedToPlayer], a
 	ld a, TEXT_PALLETTOWN_OAK
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
 	ld [wJoyIgnore], a
@@ -67,7 +67,7 @@ PalletTownOakHeyWaitScript:
 	ld a, 14
 	ld [hl], a ; SPRITESTATEDATA2_MAPX
 	ld a, HS_PALLET_TOWN_OAK
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef ShowObject
 	ld a, $2
 	ld [wSprite01StateData1MovementStatus], a
@@ -103,7 +103,7 @@ PalletTownOakWalksToPlayerScript:
 	ret
 
 PalletTownOakGreetsPlayerScript:
-	ld a, [wd730]
+	ld a, [wStatusFlags5]
 	bit 0, a
 	ret nz
 	ld a, ~(A_BUTTON | B_BUTTON)
@@ -115,7 +115,7 @@ PalletTownOakGreetsPlayerScript:
 	ld a, SPRITE_FACING_UP
 	ld [wSprite01StateData1FacingDirection], a
 	ld a, TEXT_PALLETTOWN_OAK
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	; oak faces the horizontally adjacent patch of grass to face pikachu
 	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
@@ -145,7 +145,7 @@ PalletTownPikachuBattleScript:
 	ld a, STARTER_PIKACHU
 	ld [wCurOpponent], a
 	ld a, 5
-	ld [wCurEnemyLVL], a
+	ld [wCurEnemyLevel], a
 
 	; trigger the next script
 	ld a, SCRIPT_PALLETTOWN_AFTER_PIKACHU_BATTLE
@@ -156,14 +156,14 @@ PalletTownAfterPikachuBattleScript:
 	ld a, 2
 	ld [wOakWalkedToPlayer], a
 	ld a, TEXT_PALLETTOWN_OAK
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	ld a, $2
 	ld [wSprite01StateData1MovementStatus], a
 	ld a, SPRITE_FACING_UP
 	ld [wSprite01StateData1FacingDirection], a
 	ld a, TEXT_PALLETTOWN_OAK_COME_WITH_ME
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
 	ld [wJoyIgnore], a
@@ -199,7 +199,7 @@ PalletTownPlayerFollowsOakScript:
 	CheckEvent EVENT_FOLLOWED_OAK_INTO_LAB
 	jr nz, .followed_oak
 	; move player one tile left
-	ld hl, wd736
+	ld hl, wMovementFlags
 	set 1, [hl]
 	ld a, $1
 	ld [wSimulatedJoypadStatesIndex], a
@@ -222,10 +222,10 @@ PalletTownDaisyScript:
 	jr nz, .next
 	SetEvent EVENT_DAISY_WALKING
 	ld a, HS_DAISY_SITTING
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	ld a, HS_DAISY_WALKING
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef_jump ShowObject
 .next
 	CheckEvent EVENT_GOT_POKEBALLS_FROM_OAK

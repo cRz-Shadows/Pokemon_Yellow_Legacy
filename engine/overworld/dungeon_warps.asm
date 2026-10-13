@@ -1,15 +1,15 @@
 IsPlayerOnDungeonWarp::
 	xor a
 	ld [wWhichDungeonWarp], a
-	ld a, [wd72d]
+	ld a, [wStatusFlags3]
 	bit 4, a
 	ret nz
 	call ArePlayerCoordsInArray
 	ret nc
 	ld a, [wCoordIndex]
 	ld [wWhichDungeonWarp], a
-	ld hl, wd72d
+	ld hl, wStatusFlags3
 	set 4, [hl]
-	ld hl, wd732
+	ld hl, wStatusFlags6
 	set 4, [hl]
 	ret

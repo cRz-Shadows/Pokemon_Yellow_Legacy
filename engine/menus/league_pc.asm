@@ -1,7 +1,7 @@
 PKMNLeaguePC:
 	ld hl, AccessedHoFPCText
 	call PrintText
-	ld hl, wd730
+	ld hl, wStatusFlags5
 	set 6, [hl]
 	push hl
 	ld a, [wUpdateSpritesEnabled]
@@ -83,13 +83,13 @@ LeaguePCShowMon:
 	ld hl, wHallOfFame
 	ld a, [hli]
 	ld [wHoFMonSpecies], a
-	ld [wcf91], a
-	ld [wd0b5], a
+	ld [wCurPartySpecies], a
+	ld [wCurSpecies], a
 	ld [wBattleMonSpecies2], a
 	ld [wWholeScreenPaletteMonSpecies], a
 	ld a, [hli]
 	ld [wHoFMonLevel], a
-	ld de, wcd6d
+	ld de, wNameBuffer
 	ld bc, NAME_LENGTH
 	call CopyData
 	ld b, SET_PAL_POKEMON_WHOLE_SCREEN

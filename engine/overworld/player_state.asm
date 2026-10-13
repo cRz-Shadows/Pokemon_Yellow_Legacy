@@ -1,4 +1,4 @@
-; only used for setting bit 2 of wd736 upon entering a new map
+; only used for setting bit 2 of wMovementFlags upon entering a new map
 IsPlayerStandingOnWarp::
 	ld a, [wNumberOfWarps]
 	and a
@@ -18,7 +18,7 @@ IsPlayerStandingOnWarp::
 	ld [wDestinationWarpID], a
 	ld a, [hl] ; target map
 	ldh [hWarpDestinationMap], a
-	ld hl, wd736
+	ld hl, wMovementFlags
 	set 2, [hl] ; standing on warp flag
 	ret
 .nextWarp1
@@ -32,7 +32,7 @@ IsPlayerStandingOnWarp::
 	ret
 
 CheckForceBikeOrSurf::
-	ld hl, wd732
+	ld hl, wStatusFlags6
 	bit 5, [hl]
 	ret nz
 	ld hl, ForcedBikeOrSurfMaps
@@ -65,7 +65,7 @@ CheckForceBikeOrSurf::
 	ld [wSeafoamIslandsB4FCurScript], a
 	jr z, .forceSurfing
 	;force bike riding
-	ld hl, wd732
+	ld hl, wStatusFlags6
 	set 5, [hl]
 	ld a, $1
 	ld [wWalkBikeSurfState], a
@@ -209,7 +209,7 @@ IsPlayerStandingOnDoorTileOrWarpTile::
 	lda_coord 8, 9
 	call IsInArray
 	jr nc, .done
-	ld hl, wd736
+	ld hl, wMovementFlags
 	res 2, [hl]
 .done
 	pop bc

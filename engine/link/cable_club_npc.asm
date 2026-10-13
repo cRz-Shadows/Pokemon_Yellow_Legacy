@@ -67,7 +67,7 @@ CableClubNPC::
 	and a
 	jr nz, .choseNo
 	vc_hook Wireless_TryQuickSave_block_input
-	callfar SaveSAVtoSRAM
+	callfar SaveGameData
 	call WaitForSoundToFinish
 	ld a, SFX_SAVE
 	call PlaySoundWaitForCurrent
@@ -113,7 +113,7 @@ CableClubNPC::
 	ld hl, wUnknownSerialCounter
 	ld [hli], a
 	ld [hl], a
-	ld hl, wd72e
+	ld hl, wStatusFlags4
 	res 6, [hl]
 	xor a
 	ld [wMenuJoypadPollCount], a

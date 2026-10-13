@@ -6,7 +6,7 @@ ShouldPikachuSpawn::
 	ld a, [wPikachuOverworldStateFlags]
 	bit 7, a
 	jr nz, .hide
-	call IsStarterPikachuInOurParty
+	call IsStarterPikachuAliveInOurParty
 	jr nc, .hide
 	ld a, [wWalkBikeSurfState]
 	and a
@@ -918,7 +918,7 @@ TryDoubleAddPikachuStepVectorToScreenPixelCoords:
 	ld a, [wWalkBikeSurfState]
 	cp $1 ; biking
 	jr nz, AddPikachuStepVectorToScreenPixelCoords
-	ld a, [wd736]
+	ld a, [wMovementFlags]
 	bit 6, a
 	jr nz, AddPikachuStepVectorToScreenPixelCoords
 DoubleAddPikachuStepVectorToScreenPixelCoords:
@@ -990,7 +990,7 @@ UpdatePikachuWalkingSprite:
 	dec a
 	swap a
 	ld d, a
-	ld a, [wd736]
+	ld a, [wMovementFlags]
 	bit 7, a
 	jr nz, .copy_player
 	ld hl, wSpritePikachuStateData1FacingDirection - wSpritePikachuStateData1
@@ -1260,7 +1260,7 @@ CheckAbsoluteValueLessThan2:
 Func_fcc08::
 	call Func_fcc23
 	ret nc
-	ld a, [wd736]
+	ld a, [wMovementFlags]
 	bit 6, a
 	jr nz, .asm_fcc1b
 	call Func_fcc42

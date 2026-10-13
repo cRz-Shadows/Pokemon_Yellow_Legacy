@@ -11,18 +11,18 @@ PokemonFanClub_ScriptPointers:
 	dw_const PokemonFanClubScript1, SCRIPT_POKEMONFANCLUB_SCRIPT1
 
 PokemonFanClubScript0:
-	ld hl, wd492
+	ld hl, wPikachuMapScriptFlags
 	bit 7, [hl]
 	call z, PokemonFanClubScript_59a44
-	ld hl, wd492
+	ld hl, wPikachuMapScriptFlags
 	set 7, [hl]
 	ret
 
 PokemonFanClubScript1:
-	ld hl, wd492
+	ld hl, wPikachuMapScriptFlags
 	bit 7, [hl]
 	call z, PokemonFanClubScript_59a39
-	ld hl, wd492
+	ld hl, wPikachuMapScriptFlags
 	set 7, [hl]
 	ret
 
@@ -37,7 +37,7 @@ PokemonFanClubScript_59a44:
 	ld a, [wd472]
 	bit 7, a
 	ret z
-	callfar CheckPikachuFaintedOrStatused
+	callfar CheckPikachuStatusCondition
 	ret c
 	ld a, SCRIPT_POKEMONFANCLUB_SCRIPT1
 	ld [wPokemonFanClubCurScript], a
@@ -238,10 +238,10 @@ PokemonFanClubChairmanText:
 .print
 	xor a
 	ld [wUpdateSpritesEnabled], a
-	ld hl, wd730
+	ld hl, wStatusFlags5
 	set 6, [hl]
 	callfar PrintFanClubPortrait
-	ld hl, wd730
+	ld hl, wStatusFlags5
 	res 6, [hl]
 	call GBPalWhiteOutWithDelay3
 	call ReloadTilesetTilePatterns

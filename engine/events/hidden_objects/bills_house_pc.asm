@@ -80,7 +80,7 @@ BillsHousePokemonList::
 	ld a, 1
 	ld [wTopMenuItemX], a
 .billsPokemonLoop
-	ld hl, wd730
+	ld hl, wStatusFlags5
 	set 6, [hl]
 	hlcoord 0, 0
 	lb bc, 10, 9
@@ -110,7 +110,7 @@ BillsHousePokemonList::
 	call LoadScreenTilesFromBuffer2
 	jr .billsPokemonLoop
 .cancel
-	ld hl, wd730
+	ld hl, wStatusFlags5
 	res 6, [hl]
 	call LoadScreenTilesFromBuffer2
 	jp TextScriptEnd

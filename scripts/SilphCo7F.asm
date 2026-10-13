@@ -136,7 +136,7 @@ SilphCo7FDefaultScript:
 	ld a, MUSIC_MEET_RIVAL
 	call PlayMusic
 	ld a, TEXT_SILPHCO7F_RIVAL
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	ld a, SILPHCO7F_RIVAL
 	ldh [hSpriteIndex], a
@@ -167,16 +167,16 @@ SilphCo7FDefaultScript:
 	db -1 ; end
 
 SilphCo7FRivalStartBattleScript:
-	ld a, [wd730]
+	ld a, [wStatusFlags5]
 	bit 0, a
 	ret nz
 	xor a
 	ld [wJoyIgnore], a
 	ld a, TEXT_SILPHCO7F_RIVAL_WAITED_HERE
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	call Delay3
-	ld hl, wd72d
+	ld hl, wStatusFlags3
 	set 6, [hl]
 	set 7, [hl]
 	ld hl, SilphCo7FRivalDefeatedText
@@ -206,7 +206,7 @@ SilphCo7FRivalAfterBattleScript:
 	ldh [hSpriteFacingDirection], a
 	call SetSpriteFacingDirectionAndDelay
 	ld a, TEXT_SILPHCO7F_RIVAL_GOOD_LUCK_TO_YOU
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	call StopAllMusic
 	farcall Music_RivalAlternateStart
@@ -238,11 +238,11 @@ SilphCo7FRivalAfterBattleScript:
 	db -1 ; end
 
 SilphCo7FRivalExitScript:
-	ld a, [wd730]
+	ld a, [wStatusFlags5]
 	bit 0, a
 	ret nz
 	ld a, HS_SILPH_CO_7F_RIVAL
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	call PlayDefaultMusic
 	xor a
@@ -282,7 +282,7 @@ SilphCo7TrainerHeader3:
 SilphCo7FSilphWorkerM1Text:
 ; lapras guy
 	text_asm
-	ld a, [wd72e]
+	ld a, [wStatusFlags4]
 	bit 0, a ; got lapras?
 	jr z, .give_lapras
 	CheckEvent EVENT_BEAT_SILPH_CO_GIOVANNI
@@ -302,7 +302,7 @@ SilphCo7FSilphWorkerM1Text:
 	call EnableAutoTextBoxDrawing
 	ld hl, .LaprasDescriptionText
 	call PrintText
-	ld hl, wd72e
+	ld hl, wStatusFlags4
 	set 0, [hl]
 	jr .done
 .saved_silph

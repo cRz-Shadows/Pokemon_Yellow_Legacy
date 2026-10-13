@@ -34,7 +34,7 @@ RedrawPartyMenu_::
 	call PlaceString ; print the pokemon's name
 	ldh a, [hPartyMonIndex]
 	ld [wWhichPokemon], a
-	callfar IsThisPartymonStarterPikachu_Party
+	callfar IsThisPartyMonStarterPikachu
 	jr nc, .regularMon
 	call CheckPikachuFollowingPlayer
 	jr z, .regularMon
@@ -131,19 +131,19 @@ RedrawPartyMenu_::
 	rl b
 	ld c, a
 	add hl, bc
-	ld de, wcd6d
+	ld de, wEvoDataBuffer
 	ld a, BANK(EvosMovesPointerTable)
 	ld bc, 2
 	call FarCopyData
-	ld hl, wcd6d
+	ld hl, wEvoDataBuffer
 	ld a, [hli]
 	ld h, [hl]
 	ld l, a
-	ld de, wcd6d
+	ld de, wEvoDataBuffer
 	ld a, BANK(EvosMovesPointerTable)
 	ld bc, 4 * 3 + 1 ; enough for Eevee's three 4-byte evolutions and 0 terminator
 	call FarCopyData
-	ld hl, wcd6d
+	ld hl, wEvoDataBuffer
 	ld de, .notAbleToEvolveText
 ; loop through the pokemon's evolution entries
 .checkEvolutionsLoop
@@ -182,7 +182,7 @@ RedrawPartyMenu_::
 	ld b, SET_PAL_PARTY_MENU
 	call RunPaletteCommand
 .printMessage
-	ld hl, wd730
+	ld hl, wStatusFlags5
 	ld a, [hl]
 	push af
 	push hl

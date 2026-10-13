@@ -53,7 +53,7 @@ _Joypad::
 	ld a, b
 	ldh [hJoyLast], a
 
-	ld a, [wd730]
+	ld a, [wStatusFlags5]
 	bit 5, a
 	jr nz, DiscardButtonPresses
 

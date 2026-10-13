@@ -51,7 +51,7 @@ SeafoamIslandsB4FDefaultScript:
 	ld a, D_UP | B_BUTTON
 	ld [wSimulatedJoypadStatesEnd], a
 	call StartSimulatingJoypadStates
-	ld hl, wFlags_D733
+	ld hl, wStatusFlags7
 	res 2, [hl]
 	ld a, SCRIPT_SEAFOAMISLANDSB4F_OBJECT_MOVING1
 	ld [wSeafoamIslandsB4FCurScript], a
@@ -189,7 +189,7 @@ WeebraPostBattleScript:
 	CheckEvent EVENT_BEAT_WEEBRA
 	jr nz, .dontDoText
 	ld a, TEXT_SEAFOAM_ISLANDS_WEEBRA_END_BATTLE
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	SetEvent EVENT_BEAT_WEEBRA
 .dontDoText

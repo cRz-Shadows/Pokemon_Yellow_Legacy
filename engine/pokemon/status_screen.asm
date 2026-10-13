@@ -76,13 +76,13 @@ StatusScreen:
 ; mon is in a box or daycare
 	ld a, [wLoadedMonBoxLevel]
 	ld [wLoadedMonLevel], a
-	ld [wCurEnemyLVL], a
+	ld [wCurEnemyLevel], a
 	ld hl, wLoadedMonHPExp - 1
 	ld de, wLoadedMonStats
 	ld b, $1
 	call CalcStats ; Recalculate stats
 .DontRecalculate
-	ld hl, wd72c
+	ld hl, wStatusFlags2
 	set 1, [hl]
 	ld a, $33
 	ld [rNR50], a ; Reduce the volume
@@ -118,7 +118,7 @@ StatusScreen:
 	lb bc, 8, 6
 	call DrawLineBox ; Draws the box around types, ID No. and OT
 	coord hl, 10, 9
-	ld de, Type1Text
+	ld de, TypesIDNoOTText
 	call PlaceString ; "TYPE1/"
 	coord hl, 11, 3
 	predef DrawHP
@@ -179,11 +179,11 @@ StatusScreen:
 	coord hl, 14, 2
 	call PrintLevel ; Pokémon level
 	ld a, [wMonHIndex]
-	ld [wd11e], a
-	ld [wd0b5], a
+	ld [wPokedexNum], a
+	ld [wCurSpecies], a
 	predef IndexToPokedex
 	coord hl, 3, 7
-	ld de, wd11e
+	ld de, wPokedexNum
 	lb bc, LEADING_ZEROES | 1, 3
 	call PrintNumber ; Pokémon no.
 	coord hl, 11, 10
@@ -215,18 +215,18 @@ StatusScreen:
 	jr z, .playRegularCry
 	cp BOX_DATA
 	jr z, .checkBoxData
-	callfar IsThisPartymonStarterPikachu_Party
+	callfar IsThisPartyMonStarterPikachu
 	jr nc, .playRegularCry
 	jr .playPikachuSoundClip
 .checkBoxData
-	callfar IsThisPartymonStarterPikachu_Box
+	callfar IsThisBoxMonStarterPikachu
 	jr nc, .playRegularCry
 .playPikachuSoundClip
 	ld e, 16
 	callfar PlayPikachuSoundClip
 	jr .continue
 .playRegularCry
-	ld a, [wcf91]
+	ld a, [wCurPartySpecies]
 	call PlayCry ; play Pokémon cry
 .continue
 	call WaitForTextScrollButtonPress ; wait for button
@@ -261,7 +261,7 @@ NamePointers2:
 	dw wBoxMonNicks
 	dw wDayCareMonName
 
-Type1Text:
+TypesIDNoOTText:
 	db   "TYPE1/"
 	next ""
 	; fallthrough
@@ -304,14 +304,14 @@ DrawLineBox:
 PrintStatsBox:
 	ld a, d
 	and a ; a is 0 from the status screen
-	jr nz, .DifferentBox
+	jr nz, .LevelUpStatsBox
 	hlcoord 0, 8
 	lb bc, 8, 8
 	call TextBoxBorder ; Draws the box
 	hlcoord 1, 9 ; Start printing stats from here
 	ld bc, $19 ; Number offset
 	jr .PrintStats
-.DifferentBox
+.LevelUpStatsBox
 	hlcoord 9, 2
 	lb bc, 8, 9
 	call TextBoxBorder
@@ -502,7 +502,7 @@ StatusScreen2:
 	hlcoord 9, 1
 	call StatusScreen_ClearName
 	ld a, [wMonHIndex]
-	ld [wd11e], a
+	ld [wNamedObjectIndex], a
 	call GetMonName
 	hlcoord 9, 1
 	call PlaceString
@@ -512,7 +512,7 @@ StatusScreen2:
 	call WaitForTextScrollButtonPress ; wait for button
 	pop af
 	ldh [hTileAnimations], a
-	ld hl, wd72c
+	ld hl, wStatusFlags2
 	res 1, [hl]
 	ld a, $77
 	ldh [rNR50], a

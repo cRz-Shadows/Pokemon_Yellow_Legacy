@@ -27,7 +27,7 @@ VictoryRoad3F_ScriptPointers:
 	dw_const EndTrainerBattle,                      SCRIPT_VICTORYROAD3F_END_BATTLE
 
 VictoryRoad3FDefaultScript:
-	ld hl, wFlags_0xcd60
+	ld hl, wMiscFlags
 	bit 7, [hl]
 	res 7, [hl]
 	jp z, .check_switch_hole
@@ -37,7 +37,7 @@ VictoryRoad3FDefaultScript:
 	ld a, [wCoordIndex]
 	cp $1
 	jr nz, .handle_hole
-	ldh a, [hSpriteIndexOrTextID]
+	ldh a, [hTextID]
 	cp $f ; Pikachu
 	jp z, .check_switch_hole
 	ld hl, wCurrentMapScriptFlags
@@ -50,10 +50,10 @@ VictoryRoad3FDefaultScript:
 	CheckAndSetEvent EVENT_VICTORY_ROAD_3_BOULDER_ON_SWITCH2
 	jr nz, .check_switch_hole
 	ld a, HS_VICTORY_ROAD_3F_BOULDER
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	ld a, HS_VICTORY_ROAD_2F_BOULDER
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef_jump ShowObject
 
 .SwitchOrHoleCoords:
@@ -69,13 +69,13 @@ VictoryRoad3FDefaultScript:
 	ld a, [wCoordIndex]
 	cp $1
 	jr nz, .hole
-	ld hl, wd72d
+	ld hl, wStatusFlags3
 	res 4, [hl]
-	ld hl, wd732
+	ld hl, wStatusFlags6
 	res 4, [hl]
 	ret
 .hole
-	ld a, [wd72d]
+	ld a, [wStatusFlags3]
 	bit 4, a
 	jp z, CheckFightingMapTrainers
 	ret

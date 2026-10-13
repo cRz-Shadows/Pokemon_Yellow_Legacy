@@ -32,7 +32,7 @@ UsedCut:
 	ld a, [wWhichPokemon]
 	ld hl, wPartyMonNicks
 	call GetPartyMonName
-	ld hl, wd730
+	ld hl, wStatusFlags5
 	set 6, [hl]
 	call GBPalWhiteOutWithDelay3
 	call ClearSprites
@@ -52,7 +52,7 @@ Cut2::
 	ld hl, UsedCutText
 	call PrintText
 	call LoadScreenTilesFromBuffer2
-	ld hl, wd730
+	ld hl, wStatusFlags5
 	res 6, [hl]
 	ld a, $ff
 	ld [wUpdateSpritesEnabled], a
@@ -79,7 +79,7 @@ InitCutAnimOAM:
 	ld [wWhichAnimationOffsets], a
 	ld a, %11100100
 	ldh [rOBP1], a
-	call UpdateGBCPal_OBP1
+	call UpdateCGBPal_OBP1
 	ld a, [wCutTile]
 	cp $52
 	jr z, .grass

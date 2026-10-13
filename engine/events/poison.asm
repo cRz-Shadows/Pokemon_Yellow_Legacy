@@ -1,18 +1,18 @@
 ApplyOutOfBattlePoisonDamage:
-	ld a, [wd730]
+	ld a, [wStatusFlags5]
 	add a
 	jp c, .noBlackOut ; no black out if joypad states are being simulated
-	ld a, [wd492]
+	ld a, [wPikachuMapScriptFlags]
 	bit 7, a
 	jp nz, .noBlackOut
-	ld a, [wd72e]
+	ld a, [wStatusFlags4]
 	bit 6, a
 	jp nz, .noBlackOut
 	ld a, [wPartyCount]
 	and a
 	jp z, .noBlackOut
 	call IncrementDayCareMonExp
-	call Func_c4c7
+	call UpdatePikachuHappinessAndMood
 	ld a, [wStepCounter]
 	and $3 ; is the counter a multiple of 4?
 	jp nz, .skipPoisonEffectAndSound ; only apply poison damage every fourth step
@@ -50,7 +50,7 @@ ApplyOutOfBattlePoisonDamage:
 	inc hl
 	ld [hl], a
 	ld a, [de]
-	ld [wd11e], a
+	ld [wPokedexNum], a
 	push de
 	ld a, [wWhichPokemon]
 	ld hl, wPartyMonNicks
@@ -59,9 +59,9 @@ ApplyOutOfBattlePoisonDamage:
 	ld [wJoyIgnore], a
 	call EnableAutoTextBoxDrawing
 	ld a, TEXT_MON_FAINTED
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
-	callfar IsThisPartymonStarterPikachu_Party
+	callfar IsThisPartyMonStarterPikachu
 	jr nc, .curMonNotPlayerPikachu
 	ld e, $3
 	callfar PlayPikachuSoundClip
@@ -112,9 +112,9 @@ ApplyOutOfBattlePoisonDamage:
 	jr nz, .noBlackOut
 	call EnableAutoTextBoxDrawing
 	ld a, TEXT_BLACKED_OUT
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
-	ld hl, wd72e
+	ld hl, wStatusFlags4
 	set 5, [hl]
 	ld a, $ff
 	jr .done
@@ -124,28 +124,28 @@ ApplyOutOfBattlePoisonDamage:
 	ld [wOutOfBattleBlackout], a
 	ret
 
-Func_c4c7:
+UpdatePikachuHappinessAndMood:
 	ld a, [wStepCounter]
 	and a
-	jr nz, .asm_c4de
+	jr nz, .noWalkingHappinessIncrease
 	call Random
 	and $1
-	jr z, .asm_c4de
+	jr z, .noWalkingHappinessIncrease
 	calladb_ModifyPikachuHappiness $6
-.asm_c4de
+.noWalkingHappinessIncrease
 	ld hl, wPikachuMood
 	ld a, [hl]
 	cp $80
-	jr z, .asm_c4ef
-	jr c, .asm_c4ea
+	jr z, .clearEmotionModifier
+	jr c, .increaseMood
 	dec a
 	dec a
-.asm_c4ea
+.increaseMood
 	inc a
 	ld [hl], a
 	cp $80
 	ret nz
-.asm_c4ef
+.clearEmotionModifier
 	xor a
-	ld [wd49c], a
+	ld [wPikachuEmotionModifier], a
 	ret

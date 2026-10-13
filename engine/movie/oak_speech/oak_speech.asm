@@ -8,7 +8,7 @@ PrepareOakSpeech:
 	; which causes CheckForceBikeOrSurf to not return.
 	; To fix this in debug builds, reset bit 5 here or in StartNewGame.
 	; In non-debug builds, the instructions can be removed.
-	ld a, [wd732]
+	ld a, [wStatusFlags6]
 	push af
 	ld a, [wPrinterSettings]
 	push af
@@ -27,7 +27,7 @@ PrepareOakSpeech:
 	pop af
 	ld [wPrinterSettings], a
 	pop af
-	ld [wd732], a
+	ld [wStatusFlags6], a
 	pop af
 	ld [wOptions], a
 	pop af
@@ -60,7 +60,7 @@ OakSpeech:
 	predef InitPlayerData2
 	ld hl, wNumBoxItems
 	ld a, POTION
-	ld [wcf91], a
+	ld [wCurItem], a
 	ld a, 1
 	ld [wItemQuantity], a
 	call AddItemToInventory
@@ -69,7 +69,7 @@ OakSpeech:
 	call PrepareForSpecialWarp
 	xor a
 	ldh [hTileAnimations], a
-	ld a, [wd732]
+	ld a, [wStatusFlags6]
 	bit BIT_DEBUG_MODE, a
 	jp nz, .skipSpeech
 .MenuCursorLoop ; difficulty menu
@@ -116,8 +116,8 @@ OakSpeech:
 	call GBFadeOutToWhite
 	call ClearScreen
 	ld a, STARTER_PIKACHU
-	ld [wd0b5], a
-	ld [wcf91], a
+	ld [wCurSpecies], a
+	ld [wCurPartySpecies], a
 	call GetMonHeader
 	hlcoord 6, 4
 	call LoadFlippedFrontSpriteByMonIndex
@@ -161,7 +161,7 @@ OakSpeech:
 .NotGreen2:
 	call IntroDisplayPicCenteredOrUpperRight
 	call GBFadeInFromWhite
-	ld a, [wd72d]
+	ld a, [wStatusFlags3]
 	and a
 	jr nz, .next
 	ld hl, OakSpeechText3
@@ -259,7 +259,7 @@ FadeInIntroPic:
 .next
 	ld a, [hli]
 	ldh [rBGP], a
-	call UpdateGBCPal_BGP
+	call UpdateCGBPal_BGP
 	ld c, 10
 	call DelayFrames
 	dec b
@@ -281,7 +281,7 @@ MovePicLeft:
 
 	ld a, %11100100
 	ldh [rBGP], a
-	call UpdateGBCPal_BGP
+	call UpdateCGBPal_BGP
 .next
 	call DelayFrame
 	ldh a, [rWX]
@@ -301,12 +301,12 @@ IntroDisplayPicCenteredOrUpperRight:
 	ld a, b
 	call UncompressSpriteFromDE
 	ld a, $0
-	call SwitchSRAMBankAndLatchClockData
+	call OpenSRAM
 	ld hl, sSpriteBuffer1
 	ld de, sSpriteBuffer0
 	ld bc, $310
 	call CopyData
-	call PrepareRTCDataAndDisableSRAM
+	call CloseSRAM
 	ld de, vFrontPic
 	call InterlaceMergeSpriteBuffers
 	pop bc

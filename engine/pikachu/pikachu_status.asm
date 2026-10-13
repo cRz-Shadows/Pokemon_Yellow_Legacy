@@ -1,4 +1,4 @@
-IsStarterPikachuInOurParty::
+IsStarterPikachuAliveInOurParty::
 	ld hl, wPartySpecies
 	ld de, wPartyMon1OTID
 	ld bc, wPartyMonOT
@@ -64,18 +64,17 @@ IsStarterPikachuInOurParty::
 	and a
 	ret
 
-IsThisPartymonStarterPikachu_Box::
+IsThisBoxMonStarterPikachu::
 	ld hl, wBoxMon1
 	ld bc, wBoxMon2 - wBoxMon1
 	ld de, wBoxMonOT
-	jr asm_fce21
+	jr IsThisMonStarterPikachu
 
-IsThisPartymonStarterPikachu_Party::
-IsThisPartymonStarterPikachu::
+IsThisPartyMonStarterPikachu::
 	ld hl, wPartyMon1
 	ld bc, wPartyMon2 - wPartyMon1
 	ld de, wPartyMonOT
-asm_fce21:
+IsThisMonStarterPikachu:
 	ld a, [wWhichPokemon]
 	call AddNTimes
 	ld a, [hl]
@@ -117,7 +116,7 @@ UpdatePikachuMoodAfterBattle::
 ; because d is always $82 at this function, it serves to
 ; ensure Pikachu's mood is at least 130 after battle
 	push de
-	call IsStarterPikachuInOurParty
+	call IsStarterPikachuAliveInOurParty
 	pop de
 	ret nc
 	ld a, d
@@ -136,7 +135,7 @@ UpdatePikachuMoodAfterBattle::
 	ld [wPikachuMood], a
 	ret
 
-CheckPikachuFaintedOrStatused::
+CheckPikachuStatusCondition::
 ; function to test if Pikachu is alive?
 	xor a
 	ld [wWhichPokemon], a
@@ -145,9 +144,9 @@ CheckPikachuFaintedOrStatused::
 	inc hl
 	ld a, [hl]
 	cp $ff
-	jr z, .dead_or_not_in_party
+	jr z, .noAilment
 	push hl
-	call IsThisPartymonStarterPikachu_Party
+	call IsThisPartyMonStarterPikachu
 	pop hl
 	jr nc, .next
 	ld a, [wWhichPokemon]
@@ -161,8 +160,8 @@ CheckPikachuFaintedOrStatused::
 	inc hl
 	ld a, [hl] ; status
 	and a
-	jr nz, .alive
-	jr .dead_or_not_in_party
+	jr nz, .hasAilment
+	jr .noAilment
 
 .next
 	ld a, [wWhichPokemon]
@@ -170,15 +169,15 @@ CheckPikachuFaintedOrStatused::
 	ld [wWhichPokemon], a
 	jr .loop
 
-.alive
+.hasAilment
 	scf
 	ret
 
-.dead_or_not_in_party
+.noAilment
 	and a
 	ret
 
-IsSurfingPikachuInThePlayersParty::
+IsSurfingStarterPikachuInParty::
 	ld hl, wPartySpecies
 	ld de, wPartyMon1Moves
 	ld bc, wPartyMonOT

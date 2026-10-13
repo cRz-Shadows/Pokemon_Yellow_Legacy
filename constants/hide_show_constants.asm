@@ -1,7 +1,7 @@
 DEF HIDE EQU $11
 DEF SHOW EQU $15
 
-; MissableObjects indexes (see data/maps/hide_show_data.asm)
+; ToggleableObjectStates indexes (see data/maps/hide_show_data.asm)
 ; this is a list of the sprites that can be enabled/disabled during the game
 ; TODO: mark sprite constants with an X that are never used
 

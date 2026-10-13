@@ -90,7 +90,7 @@ PKMNLeaguePCText: db "<PKMN>LEAGUE@"
 LogOffPCText:     db "LOG OFF@"
 
 BillsPC_::
-	ld hl, wd730
+	ld hl, wStatusFlags5
 	set 6, [hl]
 	xor a
 	ld [wParentMenuItem], a
@@ -99,7 +99,7 @@ BillsPC_::
 	call LoadHpBarAndStatusTilePatterns
 	ld a, [wListScrollOffset]
 	push af
-	ld a, [wFlags_0xcd60]
+	ld a, [wMiscFlags]
 	bit 3, a ; accessing Bill's PC through another PC?
 	jr nz, BillsPCMenu
 ; accessing it directly
@@ -185,7 +185,7 @@ BillsPCMenu:
 	jp z, BillsPCPrintBox
 
 ExitBillsPC:
-	ld a, [wFlags_0xcd60]
+	ld a, [wMiscFlags]
 	bit 3, a ; accessing Bill's PC through another PC?
 	jr nz, .next
 ; accessing it directly
@@ -194,12 +194,12 @@ ExitBillsPC:
 	call PlaySound
 	call WaitForSoundToFinish
 .next
-	ld hl, wFlags_0xcd60
+	ld hl, wMiscFlags
 	res 5, [hl]
 	call LoadScreenTilesFromBuffer2
 	pop af
 	ld [wListScrollOffset], a
-	ld hl, wd730
+	ld hl, wStatusFlags5
 	res 6, [hl]
 	ret
 
@@ -225,7 +225,7 @@ BillsPCDeposit:
 	ld hl, wPartyCount
 	call DisplayMonListMenu
 	jp c, BillsPCMenu
-	callfar IsThisPartymonStarterPikachu_Party
+	callfar IsThisPartyMonStarterPikachu
 	jr nc, .asm_215ad
 	call CheckPikachuFollowingPlayer
 	jr z, .asm_215ad
@@ -235,13 +235,13 @@ BillsPCDeposit:
 .asm_215ad
 	call DisplayDepositWithdrawMenu
 	jp nc, BillsPCMenu
-	callfar IsThisPartymonStarterPikachu_Party
+	callfar IsThisPartyMonStarterPikachu
 	jr nc, .asm_215c9
 	ld e, $1b
 	callfar PlayPikachuSoundClip
 	jr .asm_215cf
 .asm_215c9
-	ld a, [wcf91]
+	ld a, [wCurPartySpecies]
 	call PlayCry
 .asm_215cf
 	callabd_ModifyPikachuHappiness PIKAHAPPY_DEPOSITED
@@ -298,13 +298,13 @@ BillsPCWithdraw:
 	ld a, [wWhichPokemon]
 	ld hl, wBoxMonNicks
 	call GetPartyMonName
-	callfar IsThisPartymonStarterPikachu_Box
+	callfar IsThisBoxMonStarterPikachu
 	jr nc, .asm_21660
 	ld e, $22
 	callfar PlayPikachuSoundClip
 	jr .asm_21666
 .asm_21660
-	ld a, [wcf91]
+	ld a, [wCurPartySpecies]
 	call PlayCry
 .asm_21666
 	xor a ; BOX_TO_PARTY
@@ -329,7 +329,7 @@ BillsPCRelease:
 	ld hl, wBoxCount
 	call DisplayMonListMenu
 	jp c, BillsPCMenu
-	callfar IsThisPartymonStarterPikachu_Box
+	callfar IsThisBoxMonStarterPikachu
 	jr c, .asm_216cb
 	ld hl, OnceReleasedText
 	call PrintText
@@ -341,7 +341,7 @@ BillsPCRelease:
 	ld [wRemoveMonFromBox], a
 	call RemovePokemon
 	call WaitForSoundToFinish
-	ld a, [wcf91]
+	ld a, [wCurPartySpecies]
 	call PlayCry
 	ld hl, MonWasReleasedText
 	call PrintText

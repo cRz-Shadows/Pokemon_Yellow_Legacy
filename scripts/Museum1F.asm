@@ -27,7 +27,7 @@ Museum1FDefaultScript:
 	xor a
 	ldh [hJoyHeld], a
 	ld a, TEXT_MUSEUM1F_SCIENTIST1
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	jp DisplayTextID
 
 Museum1FNoopScript:

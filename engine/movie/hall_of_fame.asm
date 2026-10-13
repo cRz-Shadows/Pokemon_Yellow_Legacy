@@ -100,8 +100,8 @@ HoFShowMonOrPlayer:
 	ld a, $c0
 	ldh [hSCX], a
 	ld a, [wHoFMonSpecies]
-	ld [wcf91], a
-	ld [wd0b5], a
+	ld [wCurPartySpecies], a
+	ld [wCurSpecies], a
 	ld [wBattleMonSpecies2], a
 	ld [wWholeScreenPaletteMonSpecies], a
 	ld a, [wHoFMonOrPlayer]
@@ -121,7 +121,7 @@ HoFShowMonOrPlayer:
 	call RunPaletteCommand
 	ld a, %11100100
 	ldh [rBGP], a
-	call UpdateGBCPal_BGP
+	call UpdateCGBPal_BGP
 	ld c, $31 ; back pic
 	call HoFLoadMonPlayerPicTileIDs
 	ld d, $a0
@@ -156,7 +156,7 @@ HoFDisplayAndRecordMonInfo:
 	call HoFDisplayMonInfo
 	ld a, [wHoFPartyMonIndex]
 	ld [wWhichPokemon], a
-	callfar IsThisPartymonStarterPikachu_Party
+	callfar IsThisPartyMonStarterPikachu
 	jr nc, .asm_70336
 	ld e, $22
 	callfar PlayPikachuSoundClip
@@ -180,13 +180,13 @@ HoFDisplayMonInfo:
 	ld de, HoFMonInfoText
 	call PlaceString
 	hlcoord 1, 4
-	ld de, wcd6d
+	ld de, wNameBuffer
 	call PlaceString
 	ld a, [wHoFMonLevel]
 	hlcoord 8, 7
 	call PrintLevelCommon
 	ld a, [wHoFMonSpecies]
-	ld [wd0b5], a
+	ld [wCurSpecies], a
 	hlcoord 3, 9
 	predef PrintMonType
 	ret
@@ -209,12 +209,12 @@ HoFLoadPlayerPics:
 .Routine ; resume original routine
 	call UncompressSpriteFromDE
 	ld a, $0
-	call SwitchSRAMBankAndLatchClockData
+	call OpenSRAM
 	ld hl, sSpriteBuffer1
 	ld de, sSpriteBuffer0
 	ld bc, $310
 	call CopyData
-	call PrepareRTCDataAndDisableSRAM
+	call CloseSRAM
 	ld de, vFrontPic
 	call InterlaceMergeSpriteBuffers
 	ld a, [wPlayerGender] ; new gender check
@@ -341,7 +341,7 @@ HoFRecordMonInfo:
 	ld [hli], a
 	ld e, l
 	ld d, h
-	ld hl, wcd6d
+	ld hl, wNameBuffer
 	ld bc, NAME_LENGTH
 	jp CopyData
 

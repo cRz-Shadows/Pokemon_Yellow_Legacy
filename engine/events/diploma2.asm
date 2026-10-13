@@ -1,21 +1,21 @@
 DEF CIRCLE_TILE_ID EQU $10
 
-_DisplayDiploma:
+DisplayDiplomaTop:
 	call GBPalWhiteOutWithDelay3
 	call ClearScreen
-	ld de, SurfingPikachu3Graphics
+	ld de, DiplomaGraphics
 	ld hl, vChars2
-	lb bc, BANK(SurfingPikachu3Graphics), (SurfingPikachu3GraphicsEnd - SurfingPikachu3Graphics) / $10
+	lb bc, BANK(DiplomaGraphics), (DiplomaGraphicsEnd - DiplomaGraphics) / $10
 	call CopyVideoData
 
 	hlcoord 0, 0
-	call Func_e9bdf
+	call DiplomaDrawHorizontalBorder
 
 	hlcoord 0, 0
-	call Func_e9beb
+	call DiplomaDrawVerticalBorder
 
 	hlcoord 19, 0
-	call Func_e9beb
+	call DiplomaDrawVerticalBorder
 
 	ld a, $00
 	hlcoord 0, 0
@@ -67,28 +67,28 @@ DiplomaCongrats:
 DiplomaGameFreak:
 	db "GAME FREAK@"
 
-Func_e9ad3:
+DisplayDiplomaBottom:
 	call ClearScreen
 	hlcoord 0, 17
-	call Func_e9bdf
+	call DiplomaDrawHorizontalBorder
 	hlcoord 0, 0
-	call Func_e9beb
+	call DiplomaDrawVerticalBorder
 	hlcoord 19, 0
-	call Func_e9beb
+	call DiplomaDrawVerticalBorder
 	ld a, $00
 	hlcoord 0, 17
 	ld [hl], a
 	hlcoord 19, 17
 	ld [hl], a
-	ld de, Tilemap_e9b3e
+	ld de, DiplomaPikachuTiles
 	hlcoord 6, 2
 	lb bc, 10, 12
 	call Diploma_Surfing_CopyBox
-	ld de, Tilemap_e9bb6
+	ld de, CongratulationsTiles
 	hlcoord 5, 13
 	lb bc, 1, 11
 	call Diploma_Surfing_CopyBox
-	ld de, String_e9bd5
+	ld de, DiplomaPlayTime
 	hlcoord 2, 15
 	call PlaceString
 	hlcoord 12, 15
@@ -103,13 +103,13 @@ Func_e9ad3:
 	ld a, [wNumSetBits]
 	cp 151
 	ret nz
-	ld de, TileMap_e9bc1
+	ld de, DiplomaMewTiles
 	hlcoord 2, 0
 	lb bc, 4, 5
 	call Diploma_Surfing_CopyBox
 	ret
 
-Tilemap_e9b3e:
+DiplomaPikachuTiles:
 	db $7f, $7f, $7f, $1a, $1b, $7f, $7f, $7f, $7f, $7f
 	db $7f, $7f, $7f, $7f, $7f, $1c, $1d, $1e, $1f, $20
 	db $7f, $21, $22, $23, $7f, $24, $25, $26, $27, $28
@@ -123,7 +123,7 @@ Tilemap_e9b3e:
 	db $64, $65, $66, $67, $68, $7f, $7f, $7f, $7f, $7f
 	db $7f, $69, $6a, $6b, $6c, $6d, $6e, $7f, $7f, $7f
 
-Tilemap_e9bb6:
+CongratulationsTiles:
 	db $05
 	db $06
 	db $07
@@ -136,36 +136,36 @@ Tilemap_e9bb6:
 	db $0e
 	db $0f
 
-TileMap_e9bc1:
+DiplomaMewTiles:
 	db $70, $71, $7f, $72, $7f
 	db $73, $74, $75, $76, $77
 	db $7f, $78, $11, $12, $13
 	db $7f, $7f, $14, $15, $7f
 
-String_e9bd5:  db "PLAY TIME@"
+DiplomaPlayTime:  db "PLAY TIME@"
 
-Func_e9bdf:
+DiplomaDrawHorizontalBorder:
 	ld c, 10
-.asm_e9be1
+.loop
 	ld [hl], $02
 	inc hl
 	ld [hl], $01
 	inc hl
 	dec c
-	jr nz, .asm_e9be1
+	jr nz, .loop
 	ret
 
-Func_e9beb:
+DiplomaDrawVerticalBorder:
 	ld c, 9
 	ld de, SCREEN_WIDTH
-.asm_e9bed
+.loop
 	ld [hl], $04
 	add hl, de
 	ld [hl], $03
 	add hl, de
 	dec c
-	jr nz, .asm_e9bed
+	jr nz, .loop
 	ret
 
-SurfingPikachu3Graphics: INCBIN "gfx/surfing_pikachu/surfing_pikachu_3.2bpp"
-SurfingPikachu3GraphicsEnd:
+DiplomaGraphics: INCBIN "gfx/surfing_pikachu/surfing_pikachu_3.2bpp"
+DiplomaGraphicsEnd:

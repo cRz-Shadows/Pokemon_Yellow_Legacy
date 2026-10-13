@@ -70,7 +70,7 @@ EndOfBattle:
 	ld [hli], a
 	dec b
 	jr nz, .loop
-	ld hl, wd72c
+	ld hl, wStatusFlags2
 	set 0, [hl]
 	call WaitForSoundToFinish
 	call GBPalWhiteOut

@@ -5,7 +5,7 @@ PlayerPC::
 	xor a
 	ld [wBagSavedMenuItem], a
 	ld [wParentMenuItem], a
-	ld a, [wFlags_0xcd60]
+	ld a, [wMiscFlags]
 	bit 3, a ; accessing player's PC through another PC?
 	jr nz, PlayerPCMenu
 ; accessing it directly
@@ -15,11 +15,11 @@ PlayerPC::
 	call PrintText
 
 PlayerPCMenu:
-	ld hl, wd730
+	ld hl, wStatusFlags5
 	set 6, [hl]
 	ld a, [wParentMenuItem]
 	ld [wCurrentMenuItem], a
-	ld hl, wFlags_0xcd60
+	ld hl, wMiscFlags
 	set 5, [hl]
 	call LoadScreenTilesFromBuffer2
 	hlcoord 0, 0
@@ -62,7 +62,7 @@ PlayerPCMenu:
 	jp z, PlayerPCToss
 
 ExitPlayerPC:
-	ld a, [wFlags_0xcd60]
+	ld a, [wMiscFlags]
 	bit 3, a ; accessing player's PC through another PC?
 	jr nz, .next
 ; accessing it directly
@@ -70,13 +70,13 @@ ExitPlayerPC:
 	call PlaySound
 	call WaitForSoundToFinish
 .next
-	ld hl, wFlags_0xcd60
+	ld hl, wMiscFlags
 	res 5, [hl]
 	call LoadScreenTilesFromBuffer2
 	xor a
 	ld [wListScrollOffset], a
 	ld [wBagSavedMenuItem], a
-	ld hl, wd730
+	ld hl, wStatusFlags5
 	res 6, [hl]
 	xor a
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
@@ -106,7 +106,7 @@ PlayerPCDeposit:
 	ld [wListMenuID], a
 	call DisplayListMenuID
 	jp c, PlayerPCMenu
-	ld a, [wcf91]
+	ld a, [wCurItem]
 	call IsItemHM
 	jr c, .CantDeposit
 	call IsKeyItem
@@ -231,7 +231,7 @@ PlayerPCToss:
 	ld a, [wIsKeyItem]
 	and a
 	jr nz, .next
-	ld a, [wcf91]
+	ld a, [wCurItem]
 	call IsItemHM
 	jr c, .next
 ; if it's not a key item, there can be more than one of the item

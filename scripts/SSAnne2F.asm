@@ -32,7 +32,7 @@ SSAnne2FDefaultScript:
 	ld a, [wCoordIndex]
 	ldh [hSavedCoordIndex], a
 	ld a, HS_SS_ANNE_2F_RIVAL
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef ShowObject
 	call Delay3
 	ld a, SSANNE2F_RIVAL
@@ -85,14 +85,14 @@ SSAnne2FSetFacingDirectionScript:
 	jp SetSpriteFacingDirectionAndDelay
 
 SSAnne2FRivalStartBattleScript:
-	ld a, [wd730]
+	ld a, [wStatusFlags5]
 	bit 0, a
 	ret nz
 	call SSAnne2FSetFacingDirectionScript
 	xor a
 	ld [wJoyIgnore], a
 	ld a, TEXT_SSANNE2F_RIVAL
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	call Delay3
 	ld a, OPP_RIVAL2
@@ -112,7 +112,7 @@ SSAnne2FRivalAfterBattleScript:
 	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
 	ld [wJoyIgnore], a
 	ld a, TEXT_SSANNE2F_RIVAL_CUT_MASTER
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	ld a, SSANNE2F_RIVAL
 	ldh [hSpriteIndex], a
@@ -145,13 +145,13 @@ SSAnne2FRivalAfterBattleScript:
 	db -1 ; end
 
 SSAnne2FRivalExitScript:
-	ld a, [wd730]
+	ld a, [wStatusFlags5]
 	bit 0, a
 	ret nz
 	xor a
 	ld [wJoyIgnore], a
 	ld a, HS_SS_ANNE_2F_RIVAL
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	call PlayDefaultMusic
 	ld a, SCRIPT_SSANNE2F_NOOP
@@ -172,7 +172,7 @@ SSAnne2FRivalText:
 	text_asm
 	ld hl, .Text
 	call PrintText
-	ld hl, wd72d
+	ld hl, wStatusFlags3
 	set 6, [hl]
 	set 7, [hl]
 	ld hl, SSAnne2FRivalDefeatedText

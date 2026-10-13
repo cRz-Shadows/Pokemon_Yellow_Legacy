@@ -17,7 +17,7 @@ CeladonMansionRoofHouseEeveePokeballText:
 	call GivePokemon
 	jr nc, .party_full
 	ld a, HS_CELADON_MANSION_EEVEE_GIFT
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 .party_full
 	jp TextScriptEnd

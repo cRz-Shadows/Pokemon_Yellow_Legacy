@@ -1,5 +1,5 @@
 Route16Gate1F_Script:
-	ld hl, wd732
+	ld hl, wStatusFlags6
 	res 5, [hl]
 	call EnableAutoTextBoxDrawing
 	ld a, [wRoute16Gate1FCurScript]
@@ -20,7 +20,7 @@ Route16Gate1FDefaultScript:
 	call ArePlayerCoordsInArray
 	ret nc
 	ld a, TEXT_ROUTE16GATE1F_GUARD_WAIT_UP
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	xor a
 	ldh [hJoyHeld], a
@@ -60,7 +60,7 @@ Route16Gate1FPlayerMovingUpScript:
 
 Route16Gate1FGuardScript:
 	ld a, TEXT_ROUTE16GATE1F_GUARD
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	ld a, $1
 	ld [wSimulatedJoypadStatesIndex], a
@@ -77,7 +77,7 @@ Route16Gate1FPlayerMovingRightScript:
 	ret nz
 	xor a
 	ld [wJoyIgnore], a
-	ld hl, wd730
+	ld hl, wStatusFlags5
 	res 7, [hl]
 	ld a, SCRIPT_ROUTE16GATE1F_DEFAULT
 	ld [wRoute16Gate1FCurScript], a

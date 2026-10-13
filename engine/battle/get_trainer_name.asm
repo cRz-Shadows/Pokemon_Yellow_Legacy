@@ -11,13 +11,13 @@ GetTrainerName_::
 	jr z, .foundName
 	cp RIVAL3
 	jr z, .foundName
-	ld [wd0b5], a
+	ld [wNameListIndex], a
 	ld a, TRAINER_NAME
 	ld [wNameListType], a
 	ld a, BANK(TrainerNames)
 	ld [wPredefBank], a
 	call GetName
-	ld hl, wcd6d
+	ld hl, wNameBuffer
 .foundName
 	ld de, wTrainerName
 	ld bc, $d

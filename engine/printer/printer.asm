@@ -72,7 +72,7 @@ PrintPokedexEntry:
 	call Printer_ResetJoypadHRAM
 .print_loop
 	call JoypadLowSensitivity
-	call Printer_CheckPressingB
+	call Printer_StopIfPressB
 	jr c, .pressed_b
 	ld a, [wPrinterSendState]
 	bit 7, a
@@ -133,7 +133,7 @@ PrintSurfingMinigameHighScore::
 	call Printer_ResetJoypadHRAM
 .loop
 	call JoypadLowSensitivity
-	call Printer_CheckPressingB
+	call Printer_StopIfPressB
 	jr c, .quit
 	ld a, [wPrinterSendState]
 	bit 7, a
@@ -161,7 +161,7 @@ PrintDiploma::
 	xor a
 	ldh [hCanceledPrinting], a
 	call Printer_PlayPrinterMusic
-	call _DisplayDiploma
+	call DisplayDiplomaTop
 	ldh a, [rIE]
 	push af
 	xor a
@@ -172,8 +172,8 @@ PrintDiploma::
 	ld a, $10
 	ld [wcae2], a
 	call Printer_CopyTileMapToPrinterTileBuffer
-	call Func_e8d11
-	jr c, .asm_e8cfa
+	call PrintDiplomaPage
+	jr c, .quit
 	xor a
 	ld [wPrinterConnectionOpen], a
 	ld [wPrinterOpcode], a
@@ -182,14 +182,14 @@ PrintDiploma::
 	call SaveScreenTilesToBuffer1
 	xor a
 	ldh [hAutoBGTransferEnabled], a
-	call Func_e9ad3
+	call DisplayDiplomaBottom
 	call StartTransmission_Send9Rows
 	ld a, $3
 	ld [wcae2], a
 	call Printer_CopyTileMapToPrinterTileBuffer
 	call LoadScreenTilesFromBuffer1
-	call Func_e8d11
-.asm_e8cfa
+	call PrintDiplomaPage
+.quit
 	xor a
 	ld [wPrinterConnectionOpen], a
 	ld [wPrinterOpcode], a
@@ -202,26 +202,26 @@ PrintDiploma::
 	call Printer_PlayMapMusic
 	ret
 
-Func_e8d11:
+PrintDiplomaPage:
 	call Printer_ResetJoypadHRAM
-.asm_e8d14
+.print_loop
 	call JoypadLowSensitivity
-	call Printer_CheckPressingB
-	jr c, .asm_e8d33
+	call Printer_StopIfPressB
+	jr c, .pressed_b
 	ld a, [wPrinterSendState]
 	bit 7, a
-	jr nz, .asm_e8d31
+	jr nz, .completed
 	call PrinterTransmissionJumptable
 	call GBPrinter_CheckForErrors
 	call GBPrinter_UpdateStatusMessage
 	call DelayFrame
-	jr .asm_e8d14
+	jr .print_loop
 
-.asm_e8d31
+.completed
 	and a
 	ret
 
-.asm_e8d33
+.pressed_b
 	scf
 	ret
 
@@ -250,8 +250,8 @@ PrintPCBox::
 	ld [wcae2], a
 	call Printer_CopyTileMapToPrinterTileBuffer
 	call LoadScreenTilesFromBuffer1
-	call Func_e8dfb
-	jr c, .asm_e8ddc
+	call PrintPCBoxPage
+	jr c, .quit
 	xor a
 	ld [wPrinterConnectionOpen], a
 	ld [wPrinterOpcode], a
@@ -265,8 +265,8 @@ PrintPCBox::
 	ld [wcae2], a
 	call Printer_CopyTileMapToPrinterTileBuffer
 	call LoadScreenTilesFromBuffer1
-	call Func_e8dfb
-	jr c, .asm_e8ddc
+	call PrintPCBoxPage
+	jr c, .quit
 	xor a
 	ld [wPrinterConnectionOpen], a
 	ld [wPrinterOpcode], a
@@ -280,8 +280,8 @@ PrintPCBox::
 	ld [wcae2], a
 	call Printer_CopyTileMapToPrinterTileBuffer
 	call LoadScreenTilesFromBuffer1
-	call Func_e8dfb
-	jr c, .asm_e8ddc
+	call PrintPCBoxPage
+	jr c, .quit
 	xor a
 	ld [wPrinterConnectionOpen], a
 	ld [wPrinterOpcode], a
@@ -295,8 +295,8 @@ PrintPCBox::
 	ld [wcae2], a
 	call Printer_CopyTileMapToPrinterTileBuffer
 	call LoadScreenTilesFromBuffer1
-	call Func_e8dfb
-.asm_e8ddc
+	call PrintPCBoxPage
+.quit
 	xor a
 	ld [wPrinterConnectionOpen], a
 	ld [wPrinterOpcode], a
@@ -311,34 +311,34 @@ PrintPCBox::
 	ret
 
 Func_e8df4:
-	ld hl, String_e8e1f
+	ld hl, NoPokemonText
 	call PrintText
 	ret
 
-Func_e8dfb:
+PrintPCBoxPage:
 	call Printer_ResetJoypadHRAM
-.asm_e8dfe
+.print_loop
 	call JoypadLowSensitivity
-	call Printer_CheckPressingB
-	jr c, .asm_e8e1d
+	call Printer_StopIfPressB
+	jr c, .pressed_b
 	ld a, [wPrinterSendState]
 	bit 7, a
-	jr nz, .asm_e8e1b
+	jr nz, .completed
 	call PrinterTransmissionJumptable
 	call GBPrinter_CheckForErrors
 	call GBPrinter_UpdateStatusMessage
 	call DelayFrame
-	jr .asm_e8dfe
+	jr .print_loop
 
-.asm_e8e1b
+.completed
 	and a
 	ret
 
-.asm_e8e1d
+.pressed_b
 	scf
 	ret
 
-String_e8e1f:
+NoPokemonText:
 	text_far _NoPokemonText
 	text_end
 
@@ -358,20 +358,20 @@ PrintFanClubPortrait::
 	ld [wcae2], a
 	call Printer_CopyTileMapToPrinterTileBuffer
 	call Printer_ResetJoypadHRAM
-.asm_e8e45
+.print_loop
 	call JoypadLowSensitivity
-	call Printer_CheckPressingB
-	jr c, .asm_e8e62
+	call Printer_StopIfPressB
+	jr c, .quit
 	ld a, [wPrinterSendState]
 	bit 7, a
-	jr nz, .asm_e8e62
+	jr nz, .quit
 	call PrinterTransmissionJumptable
 	call GBPrinter_CheckForErrors
 	call GBPrinter_UpdateStatusMessage
 	call DelayFrame
-	jr .asm_e8e45
+	jr .print_loop
 
-.asm_e8e62
+.quit
 	xor a
 	ld [wPrinterConnectionOpen], a
 	ld [wPrinterOpcode], a
@@ -430,7 +430,7 @@ PrinterDebug:
 	pop af
 	ret
 
-Printer_CheckPressingB:
+Printer_StopIfPressB:
 	ldh a, [hJoyHeld]
 	and B_BUTTON
 	jr nz, .quit
@@ -873,7 +873,7 @@ PrintPCBox_PlaceBoxMonInfo:
 	ld a, [de]
 	cp $ff
 	jr z, .done
-	ld [wd11e], a
+	ld [wPokedexNum], a
 	push bc
 	push hl
 	push de

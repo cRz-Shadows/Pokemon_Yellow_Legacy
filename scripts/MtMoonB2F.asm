@@ -10,11 +10,11 @@ MtMoonB2F_Script:
 	ld hl, MtMoonB2FFossilAreaCoords
 	call ArePlayerCoordsInArray
 	jr nc, .enable_battles
-	ld hl, wd72e
+	ld hl, wStatusFlags4
 	set 4, [hl]
 	ret
 .enable_battles
-	ld hl, wd72e
+	ld hl, wStatusFlags4
 	res 4, [hl]
 	ret
 
@@ -96,7 +96,7 @@ MtMoonB2FScript_49d28:
 	xor a
 	ldh [hJoyHeld], a
 	ld a, TEXT_MTMOONB2F_SUPER_NERD
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	ret
 
@@ -197,7 +197,7 @@ MovementData_49ddd:
 	db -1 ; end
 
 MtMoonB2FSuperNerdTakesOtherFossilScript:
-	ld a, [wd730]
+	ld a, [wStatusFlags5]
 	bit 0, a
 	ret nz
 	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
@@ -205,16 +205,16 @@ MtMoonB2FSuperNerdTakesOtherFossilScript:
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	ld a, TEXT_MTMOONB2F_SUPER_NERD_THEN_THIS_IS_MINE
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	CheckEvent EVENT_GOT_HELIX_FOSSIL
-	jr z, .asm_49e1d
+	jr z, .got_helix_fossil
 	ld a, HS_MT_MOON_B2F_FOSSIL_1
-	jr .asm_49e1f
-.asm_49e1d
+	jr .continue
+.got_helix_fossil
 	ld a, HS_MT_MOON_B2F_FOSSIL_2
-.asm_49e1f
-	ld [wMissableObjectIndex], a
+.continue
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	xor a
 	ld [wJoyIgnore], a
@@ -244,7 +244,7 @@ MtMoonB2FScript_49e15:
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	ld a, TEXT_MTMOONB2F_TEXT12
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	xor a
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
@@ -289,7 +289,7 @@ MtMoonB2FScript6:
 MtMoonB2FScript7:
 	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
 	ld [wJoyIgnore], a
-	ld a, [wd730]
+	ld a, [wStatusFlags5]
 	bit 0, a
 	ret nz
 MtMoonB2FScript8:
@@ -311,7 +311,7 @@ MtMoonB2FScript9:
 MtMoonB2FScript10:
 	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
 	ld [wJoyIgnore], a
-	ld a, [wd730]
+	ld a, [wStatusFlags5]
 	bit 0, a
 	ret nz
 MtMoonB2FScript11:
@@ -323,10 +323,10 @@ MtMoonB2FScript11:
 	ld a, ~(A_BUTTON | B_BUTTON)
 	ld [wJoyIgnore], a
 	ld a, TEXT_MTMOONB2F_TEXT13
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 MtMoonB2FScript12:
-	ld hl, wd72d
+	ld hl, wStatusFlags3
 	set 6, [hl]
 	set 7, [hl]
 	ld hl, MtMoonB2FJessieJamesEndBattleText
@@ -361,7 +361,7 @@ MtMoonB2FScript13:
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	ld a, TEXT_MTMOONB2F_TEXT14
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	xor a
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
@@ -402,14 +402,14 @@ MtMoonB2FScript15:
 	ret
 
 MtMoonB2FScript_ShowObject:
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef ShowObject
 	call UpdateSprites
 	call Delay3
 	ret
 
 MtMoonB2FScript_HideObject:
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	ret
 
@@ -487,7 +487,7 @@ MtMoonB2FSuperNerdText:
 .beat_super_nerd
 	ld hl, MtMoonB2FSuperNerdTheyreBothMineText
 	call PrintText
-	ld hl, wd72d
+	ld hl, wStatusFlags3
 	set 6, [hl]
 	set 7, [hl]
 	ld hl, MtMoonB2FSuperNerdOkIllShareText
@@ -538,7 +538,7 @@ MtMoonB2FDomeFossilText:
 	jp nc, MtMoonB2FYouHaveNoRoomText
 	call MtMoonB2FReceivedFossilText
 	ld a, HS_MT_MOON_B2F_FOSSIL_1
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	SetEvent EVENT_GOT_DOME_FOSSIL
 	ld a, SCRIPT_MTMOONB2F_MOVE_SUPER_NERD
@@ -565,7 +565,7 @@ MtMoonB2FHelixFossilText:
 	jp nc, MtMoonB2FYouHaveNoRoomText
 	call MtMoonB2FReceivedFossilText
 	ld a, HS_MT_MOON_B2F_FOSSIL_2
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	SetEvent EVENT_GOT_HELIX_FOSSIL
 	ld a, SCRIPT_MTMOONB2F_MOVE_SUPER_NERD

@@ -64,7 +64,7 @@ PokemonTower7FScript_60d2a:
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	ld a, TEXT_POKEMONTOWER7F_TEXT4
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
 	ld [wJoyIgnore], a
@@ -87,7 +87,7 @@ PokemonTower7FScript1:
 	ld de, PokemonTower7FMovementData_60d7a
 .asm_60d8c
 	ld a, POKEMONTOWER7F_JESSIE
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call MoveSprite
 	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
 	ld [wJoyIgnore], a
@@ -98,7 +98,7 @@ PokemonTower7FScript1:
 PokemonTower7FScript2:
 	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
 	ld [wJoyIgnore], a
-	ld a, [wd730]
+	ld a, [wStatusFlags5]
 	bit 0, a
 	ret nz
 PokemonTower7FScript3:
@@ -118,7 +118,7 @@ PokemonTower7FScript4:
 	ld de, PokemonTower7FMovementData_60d7b
 .asm_60dcc
 	ld a, POKEMONTOWER7F_JAMES
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call MoveSprite
 	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
 	ld [wJoyIgnore], a
@@ -129,7 +129,7 @@ PokemonTower7FScript4:
 PokemonTower7FScript5:
 	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
 	ld [wJoyIgnore], a
-	ld a, [wd730]
+	ld a, [wStatusFlags5]
 	bit 0, a
 	ret nz
 PokemonTower7FScript6:
@@ -146,10 +146,10 @@ PokemonTower7FScript6:
 	ld a, ~(A_BUTTON | B_BUTTON)
 	ld [wJoyIgnore], a
 	ld a, TEXT_POKEMONTOWER7F_TEXT5
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 PokemonTower7FScript7:
-	ld hl, wd72d
+	ld hl, wStatusFlags3
 	set 6, [hl]
 	set 7, [hl]
 	ld hl, PokemonTower7FJessieJamesEndBattleText
@@ -183,7 +183,7 @@ PokemonTower7FScript8:
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	ld a, TEXT_POKEMONTOWER7F_TEXT6
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	xor a
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
@@ -223,14 +223,14 @@ PokemonTower7FScript10:
 	ret
 
 PokemonTower7FScript_ShowObject:
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef ShowObject
 	call UpdateSprites
 	call Delay3
 	ret
 
 PokemonTower7FScript_HideObject:
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	ret
 
@@ -238,7 +238,7 @@ PokemonTower7FWarpToMrFujiHouseScript:
 	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
 	ld [wJoyIgnore], a
 	ld a, HS_POKEMON_TOWER_7F_MR_FUJI
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	ld a, SPRITE_FACING_UP
 	ld [wSpritePlayerStateData1FacingDirection], a
@@ -248,7 +248,7 @@ PokemonTower7FWarpToMrFujiHouseScript:
 	ld [wDestinationWarpID], a
 	ld a, LAVENDER_TOWN
 	ld [wLastMap], a
-	ld hl, wd72d
+	ld hl, wStatusFlags3
 	set 3, [hl]
 	ld a, SCRIPT_POKEMONTOWER7F_SCRIPT0
 	ld [wPokemonTower7FCurScript], a
@@ -304,13 +304,13 @@ PokemonTower7FMrFujiText:
 	SetEvent EVENT_RESCUED_MR_FUJI
 	SetEvent EVENT_RESCUED_MR_FUJI_2
 	ld a, HS_MR_FUJIS_HOUSE_MR_FUJI
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef ShowObject
 	ld a, HS_SAFFRON_CITY_E
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	ld a, HS_SAFFRON_CITY_F
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef ShowObject
 	ld a, SCRIPT_POKEMONTOWER7F_WARP_TO_MR_FUJI_HOUSE
 	ld [wPokemonTower7FCurScript], a

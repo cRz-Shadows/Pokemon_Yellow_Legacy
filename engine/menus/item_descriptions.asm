@@ -1,5 +1,5 @@
 DisplayItemDescription::
-	ld a, [wcf91]
+	ld a, [wCurItem]
 	dec a
 	cp a, HM01 - 1
 	jr c, .ok

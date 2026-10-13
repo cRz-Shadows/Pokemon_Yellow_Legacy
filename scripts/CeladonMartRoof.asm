@@ -14,7 +14,7 @@ CeladonMartRoofScript_GetDrinksInBag:
 	jr z, .done
 	push hl
 	push de
-	ld [wd11e], a
+	ld [wTempByteValue], a
 	ld b, a
 	predef GetQuantityOfItemInBag
 	pop de
@@ -22,7 +22,7 @@ CeladonMartRoofScript_GetDrinksInBag:
 	ld a, b
 	and a
 	jr z, .loop ; if the item isn't in the bag
-	ld a, [wd11e]
+	ld a, [wTempByteValue]
 	ld [de], a
 	inc de
 	push hl
@@ -42,7 +42,7 @@ CeladonMartRoofDrinkList:
 	db 0 ; end
 
 CeladonMartRoofScript_GiveDrinkToGirl:
-	ld hl, wd730
+	ld hl, wStatusFlags5
 	set 6, [hl]
 	ld hl, CeladonMartRoofLittleGirlGiveHerWhichDrinkText
 	call PrintText
@@ -69,7 +69,7 @@ CeladonMartRoofScript_GiveDrinkToGirl:
 	call TextBoxBorder
 	call UpdateSprites
 	call CeladonMartRoofScript_PrintDrinksInBag
-	ld hl, wd730
+	ld hl, wStatusFlags5
 	res 6, [hl]
 	call HandleMenuInput
 	bit BIT_B_BUTTON, a
@@ -196,13 +196,13 @@ CeladonMartRoofScript_PrintDrinksInBag:
 	cp $ff
 	ret z
 	push hl
-	ld [wd11e], a
+	ld [wNamedObjectIndex], a
 	call GetItemName
 	hlcoord 2, 2
 	ldh a, [hItemCounter]
 	ld bc, SCREEN_WIDTH * 2
 	call AddNTimes
-	ld de, wcd6d
+	ld de, wNameBuffer
 	call PlaceString
 	ld hl, hItemCounter
 	inc [hl]

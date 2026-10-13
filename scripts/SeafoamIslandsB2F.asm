@@ -1,6 +1,6 @@
 SeafoamIslandsB2F_Script:
 	call EnableAutoTextBoxDrawing
-	ld hl, wFlags_0xcd60
+	ld hl, wMiscFlags
 	bit 7, [hl]
 	res 7, [hl]
 	jr z, .noBoulderWasPushed
@@ -25,10 +25,10 @@ SeafoamIslandsB2F_Script:
 	ld [wObjectToShow], a
 .hideAndShowBoulderObjects
 	ld a, [wObjectToHide]
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	ld a, [wObjectToShow]
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef_jump ShowObject
 .noBoulderWasPushed
 	ld a, SEAFOAM_ISLANDS_B3F

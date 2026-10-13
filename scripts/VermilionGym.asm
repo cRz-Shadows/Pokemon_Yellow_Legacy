@@ -67,20 +67,20 @@ VermilionGymLTSurgeAfterBattleScript:
 ; fallthrough
 VermilionGymLTSurgeReceiveTM24Script:
 	ld a, TEXT_VERMILIONGYM_LT_SURGE_THUNDER_BADGE_INFO
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	SetEvent EVENT_BEAT_LT_SURGE
 	lb bc, TM_THUNDERBOLT, 1
 	call GiveItem
 	jr nc, .bag_full
 	ld a, TEXT_VERMILIONGYM_LT_SURGE_RECEIVED_TM24
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	SetEvent EVENT_GOT_TM24
 	jr .gym_victory
 .bag_full
 	ld a, TEXT_VERMILIONGYM_LT_SURGE_TM24_NO_ROOM
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 .gym_victory
 	ld hl, wObtainedBadges
@@ -95,7 +95,7 @@ VermilionGymLTSurgeReceiveTM24Script:
 
 SurgeRematchPostBattle:
 	ld a, TEXT_VERMILIONGYM_REMATCH_POST_BATTLE
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	jp VermilionGymResetScripts
 
@@ -140,7 +140,7 @@ VermilionGymLTSurgeText:
 .before_beat
 	ld hl, .PreBattleText
 	call PrintText
-	ld hl, wd72d
+	ld hl, wStatusFlags3
 	set 6, [hl]
 	set 7, [hl]
 	ld hl, VermilionGymLTSurgeReceivedThunderBadgeText

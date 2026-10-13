@@ -29,7 +29,7 @@ HallOfFameResetEventsAndSaveScript:
 	predef HallOfFamePC
 	pop af
 	ld [wLetterPrintingDelayFlags], a
-	ld hl, wFlags_D733
+	ld hl, wStatusFlags7
 	res 1, [hl]
 	inc hl
 	set BIT_TEST_BATTLE, [hl] ; debug, unused?
@@ -48,7 +48,7 @@ HallOfFameResetEventsAndSaveScript:
 	ld [wHallOfFameCurScript], a
 	ld a, PALLET_TOWN
 	ld [wLastBlackoutMap], a
-	farcall SaveSAVtoSRAM
+	farcall SaveGameData
 	ld b, 5
 .delayLoop
 	ld c, 600 / 5
@@ -101,48 +101,48 @@ HallOfFameOakCongratulationsScript:
 .RematchText
 	ld a, TEXT_HALLOFFAME_REMATCH_OAK
 .continue
-	ldh [hSpriteIndexOrTextID], a
+	ldh [hTextID], a
 	call DisplayTextID
 	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
 	ld [wJoyIgnore], a
 	ld a, HS_CERULEAN_CAVE_GUY
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	ld a, HS_OAKS_LAB_OAK_1
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	ld a, HS_ROUTE_1_OAK
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef ShowObject
 	ld a, HS_CHAMPIONS_ROOM_OAK
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	ld a, HS_INDIGO_PLATEU_LOBBY_CLERK_HS
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef ShowObject
 	ld a, HS_LORELEISROOM_LORELEI
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	ld a, HS_LORELEISROOM_LORELEI_REMATCH
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef ShowObject
 	ld a, HS_BRUNOSROOM_BRUNO
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	ld a, HS_BRUNOSROOM_BRUNO_REMATCH
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef ShowObject
 	ld a, HS_AGATHASROOM_AGATHA
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	ld a, HS_AGATHASROOM_AGATHA_REMATCH
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef ShowObject
 	ld a, HS_LANCESROOM_LANCE
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	ld a, HS_LANCESROOM_LANCE_REMATCH
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef ShowObject
 	ld a, [wRivalStarter]
 	cp RIVAL_STARTER_FLAREON
@@ -157,7 +157,7 @@ HallOfFameOakCongratulationsScript:
 .UnhideVaporeon
 	ld a, HS_CHAMPIONS_ROOM_VAPOREON
 .done
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef ShowObject
 	ld a, SCRIPT_HALLOFFAME_RESET_EVENTS_AND_SAVE
 	ld [wHallOfFameCurScript], a

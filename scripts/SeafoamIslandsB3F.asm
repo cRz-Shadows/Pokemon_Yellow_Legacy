@@ -1,6 +1,6 @@
 SeafoamIslandsB3F_Script:
 	call EnableAutoTextBoxDrawing
-	ld hl, wFlags_0xcd60
+	ld hl, wMiscFlags
 	bit 7, [hl]
 	res 7, [hl]
 	jr z, .noBoulderWasPushed
@@ -25,10 +25,10 @@ SeafoamIslandsB3F_Script:
 	ld [wObjectToShow], a
 .hideAndShowBoulderObjects
 	ld a, [wObjectToHide]
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	ld a, [wObjectToShow]
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef ShowObject
 	jr .runCurrentMapScript
 .noBoulderWasPushed
@@ -36,7 +36,7 @@ SeafoamIslandsB3F_Script:
 	ld [wDungeonWarpDestinationMap], a
 	ld hl, Seafoam4HolesCoords
 	call IsPlayerOnDungeonWarp
-	ld a, [wd732]
+	ld a, [wStatusFlags6]
 	bit 4, a
 	ret nz
 .runCurrentMapScript
@@ -72,7 +72,7 @@ SeafoamIslandsB3FDefaultScript:
 	dec a
 	ld [wSimulatedJoypadStatesIndex], a
 	call StartSimulatingJoypadStates
-	ld hl, wFlags_D733
+	ld hl, wStatusFlags7
 	set 2, [hl]
 	ld a, SCRIPT_SEAFOAMISLANDSB3F_OBJECT_MOVING1
 	ld [wSeafoamIslandsB3FCurScript], a
@@ -112,9 +112,9 @@ SeafoamIslandsB3FMoveObjectScript:
 	ld [wSimulatedJoypadStatesIndex], a
 	xor a
 	ld [wSpritePlayerStateData2MovementByte1], a
-	ld hl, wd730
+	ld hl, wStatusFlags5
 	set 7, [hl]
-	ld hl, wFlags_D733
+	ld hl, wStatusFlags7
 	set 2, [hl]
 	ld a, SCRIPT_SEAFOAMISLANDSB3F_OBJECT_MOVING2
 .playerNotInStrongCurrent
