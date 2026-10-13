@@ -446,7 +446,17 @@ OaksLabPlayerWatchRivalExitScript:
 	ld [wToggleableObjectIndex], a
 	predef HideObject
 	call PlayDefaultMusic
+	ld a, [wPlayerStarter]
+	cp STARTER_PIKACHU
+	jr nz, .noStarterPikachu
 	ld a, SCRIPT_OAKSLAB_PIKACHU_ESCAPES_POKEBALL
+	ld [wOaksLabCurScript], a
+	ret
+.noStarterPikachu
+; Pick Starter mode: there's no Pikachu to escape its POKé BALL
+	xor a
+	ld [wJoyIgnore], a
+	ld a, SCRIPT_OAKSLAB_NOOP
 	ld [wOaksLabCurScript], a
 	ret
 ; make the player keep facing the rival as he walks away
@@ -844,7 +854,7 @@ OaksLabOak1Text:
 .check_for_poke_balls
 	ld b, POKE_BALL
 	call IsItemInBag
-	jr nz, .come_see_me_sometimes
+	jp nz, .come_see_me_sometimes
 	ld hl, wPokedexOwned
 	ld b, wPokedexOwnedEnd - wPokedexOwned
 	call CountSetBits
@@ -872,6 +882,11 @@ OaksLabOak1Text:
 	call IsItemInBag
 	jr nz, .got_parcel
 	ld hl, .YouShouldTalkToIt
+	ld a, [wPlayerStarter]
+	cp STARTER_PIKACHU
+	jr z, .printStarterAdvice
+	ld hl, .YourPokemonCanFightText ; Pick Starter mode: no Pikachu following to talk to
+.printStarterAdvice
 	call PrintText
 	jr .done
 .got_parcel

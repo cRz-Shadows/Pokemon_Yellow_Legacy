@@ -17,9 +17,15 @@ CeruleanMelanieHouseMelanieText:
 	jr nz, .asm_1cfbf
 	ld hl, CeruleanHouse1Text_1cfc8
 	call PrintText
+	; Pick Starter mode without a starter Pikachu: there's no Pikachu
+	; happiness to earn (it never changes), so Melanie trusts the player
+	ld a, [wPlayerStarter]
+	cp STARTER_PIKACHU
+	jr nz, .trustsPlayer
 	ld a, [wPikachuHappiness]
 	cp 147
 	jr c, .asm_1cfb3
+.trustsPlayer
 	ld hl, CeruleanHouse1Text_1cfce
 	call PrintText
 	call YesNoChoice
