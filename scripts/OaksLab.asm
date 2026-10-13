@@ -1043,6 +1043,19 @@ OaksLabRivalTakesText5:
 
 OaksLabPlayerReceivedMonText:
 	text_asm
+	ld a, [wDifficulty]
+	cp DIFFICULTY_PICK_STARTER
+	jr nz, .giveStarterPikachu
+	ld hl, OaksLabOakPickStarterText
+	call PrintText
+	callfar PickStarterMenu ; sets [wPlayerStarter]
+	ld a, [wPlayerStarter]
+	ld [wNamedObjectIndex], a
+	call GetMonName
+	ld a, $1
+	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
+	jr .receivedStarter
+.giveStarterPikachu
 	ld a, STARTER_PIKACHU
 	ld [wPlayerStarter], a
 	ld [wNamedObjectIndex], a
@@ -1051,18 +1064,23 @@ OaksLabPlayerReceivedMonText:
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	ld hl, OaksLabOakGivesText
 	call PrintText
+.receivedStarter
 	ld hl, OaksLabReceivedText
 	call PrintText
 	xor a
 	ld [wMonDataLocation], a
 	ld a, 5
 	ld [wCurEnemyLevel], a
-	ld a, STARTER_PIKACHU
+	ld a, [wPlayerStarter]
 	ld [wPokedexNum], a
 	ld [wCurPartySpecies], a
 	call AddPartyMon
+	ld a, [wPlayerStarter]
+	cp STARTER_PIKACHU
+	jr nz, .notPikachu
 	ld a, LIGHT_BALL_GSC
 	ld [wPartyMon1CatchRate], a
+.notPikachu
 	call DisablePikachuOverworldSpriteDrawing
 	SetEvent EVENT_GOT_STARTER
 	ld hl, wStatusFlags4
@@ -1071,6 +1089,10 @@ OaksLabPlayerReceivedMonText:
 
 OaksLabOakGivesText:
 	text_far _OaksLabOakGivesText
+	text_end
+
+OaksLabOakPickStarterText:
+	text_far _OaksLabOakPickStarterText
 	text_end
 
 OaksLabReceivedText:

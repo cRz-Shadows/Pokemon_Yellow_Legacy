@@ -254,6 +254,22 @@ _OaksLabOakGivesText::
 	cont "not tame yet."
 	prompt
 
+_OaksLabOakPickStarterText::
+	text "OAK: <PLAYER>, I"
+	line "keep every kind"
+	cont "of #MON here!"
+
+	para "Go on, pick any"
+	line "one you like!"
+	prompt
+
+_PickStarterConfirmText::
+	text "So, you want"
+	line "@"
+	text_ram wNameBuffer
+	text "?"
+	done
+
 _OaksLabReceivedText::
 	text "<PLAYER> received"
 	line "a @"

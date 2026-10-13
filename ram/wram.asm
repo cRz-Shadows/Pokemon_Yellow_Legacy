@@ -1296,7 +1296,10 @@ wItemList:: ds 16
 wListPointer:: dw
 
 ; used to store pointers, but never read
-wUnusedNamePointer:: dw
+wUnusedNamePointer::
+; Pick Starter menu: frames left before the highlighted mon's picture loads
+wPickStarterPicDelay::
+	dw
 
 wItemPrices:: dw
 
