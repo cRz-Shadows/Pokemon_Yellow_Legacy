@@ -15,6 +15,9 @@
 *.wav binary
 *.blk binary
 *.pic binary
+*.map binary
+*.bin binary
+*.pcm binary
 
 # Declare files that will always have CRLF line endings on checkout.
 *.patch.template text eol=crlf linguist-language=INI

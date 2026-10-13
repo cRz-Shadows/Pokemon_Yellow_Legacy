@@ -42,7 +42,7 @@ RGBLINK ?= $(RGBDS)rgblink
 .SECONDEXPANSION:
 .PRECIOUS:
 .SECONDARY:
-.PHONY: all yellow yellow_debug clean tidy compare tools
+.PHONY: all yellow yellow_debug yellow_vc clean tidy compare tools
 
 all: $(roms)
 yellow:       pokemon_yellow_legacy.gbc
@@ -130,7 +130,7 @@ pokemon_yellow_legacy_pad       = 0x00
 pokemon_yellow_legacy_debug_pad = 0xff
 pokemon_yellow_legacy_vc_pad    = 0x00
 
-opts = -cjsv -k 01 -l 0x33 -m 0x1b -p 0 -r 03 -t "POKEMON YELLOW LEGACY"
+opts = -cjsv -k 01 -l 0x33 -m 0x1b -r 03 -t "POKEMON YELLOW LEGACY"
 
 %.gbc: $$(%_obj) layout.link
 	$(RGBLINK) -p $($*_pad) -w -m $*.map -n $*.sym -l layout.link -o $@ $(filter %.o,$^)
