@@ -19,3 +19,10 @@ DEF TEXT_DELAY_SLOW   EQU %101 ; 5
 
 ; wStatusFlags6 flags
 DEF BIT_DEBUG_MODE EQU 1
+
+; wDifficulty values
+	const_def
+	const DIFFICULTY_NORMAL ; 0
+	const DIFFICULTY_HARD   ; 1
+	const DIFFICULTY_PICK_STARTER ; 2: Normal rules, but the player picks any starter
+DEF NUM_DIFFICULTIES EQU const_value

@@ -248,8 +248,8 @@ HoFDisplayPlayerStats:
 	call TextBoxBorder
 
 	ld a, [wDifficulty] ; Check if player is on hard mode
-	and a
-	jr z, .NormalModeText
+	cp DIFFICULTY_HARD
+	jr nz, .NormalModeText
 
 	hlcoord 12, 1
 	ld de, LegacyText

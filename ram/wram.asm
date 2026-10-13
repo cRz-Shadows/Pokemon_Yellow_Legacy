@@ -2345,8 +2345,10 @@ wRoute18Gate1FCurScript:: db
 wGameProgressFlagsEnd::
 
 wDifficulty::
+	; a DIFFICULTY_* constant:
 	; $00 = normal
 	; $01 = hard
+	; $02 = pick starter (normal rules, any starter)
 		ds 1
 
 wPlayerGender::

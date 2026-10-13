@@ -1445,8 +1445,8 @@ EnemySendOutFirstMon:
 	cp LINK_STATE_BATTLING
 	jr z, .next4
 	ld a, [wDifficulty] ; Check if player is on hard mode
-	and a
-	jr z, .DontForceSetMode
+	cp DIFFICULTY_HARD
+	jr nz, .DontForceSetMode
 	jr .next4 ; skip switch request on hard mode
 .DontForceSetMode
 	ld a, [wOptions]
@@ -2366,8 +2366,8 @@ BagWasSelected:
 	jr z, .simulatedInputBattle
 
 	ld a, [wDifficulty] ; Check if player is on hard mode
-	and a
-	jr z, .NormalMode
+	cp DIFFICULTY_HARD
+	jr nz, .NormalMode
 
 	ld a, [wIsInBattle] ; Check if this is a wild battle or trainer battle
 	dec a
@@ -4135,8 +4135,8 @@ CheckForDisobedience:
 	jr nz, .monIsTraded
 
 	ld a, [wDifficulty] ; Check if player is on hard mode
-	and a
-	jr z, .NormalMode2
+	cp DIFFICULTY_HARD
+	jr nz, .NormalMode2
 ; what level might disobey?
 	ld a, [wGameStage] ; Check if player has beat the game
 	and a
@@ -4857,8 +4857,8 @@ CriticalHitTest:
 	ld b, $ff                    ; cap at 255/256
 .noFocusEnergyUsed
 	ld a, [wDifficulty] ; Check if player is on hard mode
-	and a
-	jr nz, .NotGuarenteedCrit ; keep 1/256 chance to not crit if on hard mode
+	cp DIFFICULTY_HARD
+	jr z, .NotGuarenteedCrit ; keep 1/256 chance to not crit if on hard mode
 	ld a, b
 	inc a ; optimization of "cp $ff"
 	jr z, .guaranteedCriticalHit
@@ -5687,8 +5687,8 @@ MoveHitTest:
 	ld b, a
 .doAccuracyCheck
 	ld a, [wDifficulty] ; Check if player is on hard mode
-	and a
-	jr nz, .DontRemoveMiss ; Keep 1/256 chance to miss on hard mode
+	cp DIFFICULTY_HARD
+	jr z, .DontRemoveMiss ; Keep 1/256 chance to miss on hard mode
 	; The following snippet fixes 1/256 chance to miss on 100% accurate moves bug on normal mode
 	ld a, b
 	cp $FF ; Is the value $FF?

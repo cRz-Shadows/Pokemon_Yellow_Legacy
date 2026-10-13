@@ -457,6 +457,14 @@ _HardModeText::
 	cont "gym level caps."
 	done
 
+_PickStarterModeText::
+	text "Are you sure?"
+
+	para "Classic rules,"
+	line "but pick any"
+	cont "#MON to start!"
+	done
+
 _OakSpeechText2A::
 	text "This world is"
 	line "inhabited by"

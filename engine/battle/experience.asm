@@ -125,8 +125,8 @@ GainExperience:
 	ld d, MAX_LEVEL
 
 	ld a, [wDifficulty] ; Check if player is on hard mode
-	and a
-	jr z, .next1 ; no level caps if not on hard mode
+	cp DIFFICULTY_HARD
+	jr nz, .next1 ; no level caps if not on hard mode
 
 	ld a, [wGameStage] ; Check if player has beat the game
 	and a
