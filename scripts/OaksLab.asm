@@ -1081,6 +1081,20 @@ OaksLabPlayerReceivedMonText:
 	call PrintText
 .receivedStarter
 	ld hl, OaksLabReceivedText
+	ld a, [wNameBuffer]
+	cp 'A'
+	jr z, .an
+	cp 'E'
+	jr z, .an
+	cp 'I'
+	jr z, .an
+	cp 'O'
+	jr z, .an
+	cp 'U'
+	jr nz, .printReceived
+.an
+	ld hl, OaksLabReceivedAnText
+.printReceived
 	call PrintText
 	xor a
 	ld [wMonDataLocation], a
@@ -1112,6 +1126,11 @@ OaksLabOakPickStarterText:
 
 OaksLabReceivedText:
 	text_far _OaksLabReceivedText
+	sound_get_key_item
+	text_end
+
+OaksLabReceivedAnText:
+	text_far _OaksLabReceivedAnText
 	sound_get_key_item
 	text_end
 

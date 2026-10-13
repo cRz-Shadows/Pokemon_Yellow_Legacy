@@ -277,6 +277,13 @@ _OaksLabReceivedText::
 	text "!@"
 	text_end
 
+_OaksLabReceivedAnText::
+	text "<PLAYER> received"
+	line "an @"
+	text_ram wNameBuffer
+	text "!@"
+	text_end
+
 _OaksLabOakDontGoAwayYetText::
 	text "OAK: Hey! Don't go"
 	line "away yet!"

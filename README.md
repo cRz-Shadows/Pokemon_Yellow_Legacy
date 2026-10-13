@@ -20,6 +20,9 @@ While Yellow Legacy is not designed as a “Kaizo” project, Pokémon trainer f
     - [Make a Copy (Recommended)](https://docs.google.com/document/d/1JlZRhW2fcBUd7y23DB7MGfJCU95FK_yJI-QdRFdMawI/copy)
     - [Download as PDF](https://docs.google.com/document/d/1JlZRhW2fcBUd7y23DB7MGfJCU95FK_yJI-QdRFdMawI/export?format=pdf)
 
+### Pick Starter Mode
+Besides Normal and Hard, a new game can be started in **Pick Starter** mode. It uses Normal rules, but Professor Oak lets you choose your starter from all 151 Pokémon. See [**docs/pick_starter_mode.md**](docs/pick_starter_mode.md) for details, a playtest checklist and release notes.
+
 These videos also provide an overview of the hack and the ideology behind it:
 - Release 1.0: https://youtu.be/jTH2fVqHPwc
 - Prerelease: https://www.youtube.com/playlist?list=PLyv5bsGgaxonXuHoUUsv3mM7xzTwENccO
