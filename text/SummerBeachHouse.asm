@@ -12,6 +12,20 @@ _SummerBeachHouseSurfinDudeText1::
 	para "Give it a go?"
 	done
 
+_SummerBeachHouseSurfinDudePickStarterText1::
+	text "Whoa!"
+
+	para "Your #MON knows"
+	line "how to SURF! So,"
+	cont "I'm not alone..."
+
+	para "Great! You earned"
+	line "the right to SURF"
+	cont "with the DUDE!"
+
+	para "Give it a go?"
+	done
+
 _SummerBeachHouseSurfinDudeText2::
 	text "Come SURF anytime,"
 	line "my friend!"

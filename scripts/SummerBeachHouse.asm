@@ -22,6 +22,8 @@ ELSE
 ENDC
 	vc_patch_end
 	jr nz, .next
+	call SummerBeachHouseCheckPickStarterSurfer
+	jr nz, .next
 	ld hl, .SurfinDudeText4
 	call PrintText
 	jr .done
@@ -31,6 +33,12 @@ ENDC
 	set 0, [hl]
 	jr nz, .next2
 	ld hl, .SurfinDudeText1
+	ld a, [wd472]
+	bit 6, a
+	jr nz, .next3
+	call SummerBeachHouseCheckPickStarterSurfer
+	jr z, .next3
+	ld hl, .SurfinDudePickStarterText1 ; it isn't a PIKACHU that surfs
 	jr .next3
 .next2
 	ld hl, .SurfinDudeText3
@@ -54,6 +62,10 @@ ENDC
 
 .SurfinDudeText1
 	text_far _SummerBeachHouseSurfinDudeText1
+	text_end
+
+.SurfinDudePickStarterText1
+	text_far _SummerBeachHouseSurfinDudePickStarterText1
 	text_end
 .SurfinDudeText2
 	text_far _SummerBeachHouseSurfinDudeText2
@@ -83,7 +95,10 @@ SummerBeachHousePoster1Text:
 	ld hl, .SummerBeachHousePoster1Text2
 	ld a, [wd472]
 	bit 6, a
+	jr nz, .surfer
+	call SummerBeachHouseCheckPickStarterSurfer
 	jr z, .next
+.surfer
 	ld hl, .SummerBeachHousePoster1Text1
 .next
 	call PrintText
@@ -101,7 +116,10 @@ SummerBeachHousePoster2Text:
 	ld hl, .SummerBeachHousePoster2Text2
 	ld a, [wd472]
 	bit 6, a
+	jr nz, .surfer
+	call SummerBeachHouseCheckPickStarterSurfer
 	jr z, .next
+.surfer
 	ld hl, .SummerBeachHousePoster2Text1
 .next
 	call PrintText
@@ -119,7 +137,10 @@ SummerBeachHousePoster3Text:
 	ld hl, .SummerBeachHousePoster3Text2
 	ld a, [wd472]
 	bit 6, a
+	jr nz, .surfer
+	call SummerBeachHouseCheckPickStarterSurfer
 	jr z, .next
+.surfer
 	ld hl, .SummerBeachHousePoster3Text1
 .next
 	call PrintText
@@ -144,8 +165,10 @@ ELSE
 	bit 6, a
 ENDC
 	vc_patch_end
+	jr nz, .canSurf
+	call SummerBeachHouseCheckPickStarterSurfer
 	jr z, .asm_f2369
-
+.canSurf
 	ld hl, wPikachuMapScriptFlags
 	bit 1, [hl]
 	jr z, .next2
@@ -207,3 +230,40 @@ ENDC
 .SummerBeachHousePrinterText4
 	text_far _SummerBeachHousePrinterText4
 	text_end
+
+; In Pick Starter mode without a starter Pikachu, any party Pokémon that knows
+; SURF can play the surfing minigame (normally only a PIKACHU with SURF can).
+; Returns nz if that applies and such a Pokémon is in the party.
+SummerBeachHouseCheckPickStarterSurfer:
+	ld a, [wDifficulty]
+	cp DIFFICULTY_PICK_STARTER
+	jr nz, .no
+	ld a, [wPlayerStarter]
+	cp STARTER_PIKACHU
+	jr z, .no
+	ld a, [wPartyCount]
+	and a
+	jr z, .no
+	ld c, a
+	ld hl, wPartyMon1Moves
+.monLoop
+	push hl
+	ld b, NUM_MOVES
+.moveLoop
+	ld a, [hli]
+	cp SURF
+	jr z, .found
+	dec b
+	jr nz, .moveLoop
+	pop hl
+	ld de, PARTYMON_STRUCT_LENGTH
+	add hl, de
+	dec c
+	jr nz, .monLoop
+.no
+	xor a
+	ret
+.found
+	pop hl
+	or 1
+	ret

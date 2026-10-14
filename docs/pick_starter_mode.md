@@ -25,6 +25,7 @@ Pick Starter is a third play mode alongside **Normal** and **Hard**. It plays li
   - In Oak's lab, the "Pikachu escapes its Poké Ball" scene is skipped. Oak then gives his usual battle advice instead of "talk to it and see how it feels".
   - **Melanie** (Cerulean City) gives you **Bulbasaur** without needing a happy Pikachu.
   - **Charmander** (Route 24) and **Squirtle** (Officer Jenny, Vermilion City) are available as usual, so all three classic starters can be obtained.
+  - **Pikachu's Beach** (the surfing minigame in the Summer Beach House, Route 19) can be played with **any Pokémon in your party that knows Surf**, not just a Pikachu. The Surfin' Dude says "Your POKéMON knows how to SURF!". The minigame itself still shows Pikachu, and the beach-house posters and printer also unlock.
 
 
 ## Things to know
@@ -45,7 +46,6 @@ Pick Starter is a third play mode alongside **Normal** and **Hard**. It plays li
 
   The game is still completable with them, but treat them as a challenge pick. You'll likely lose the first rival battle (the story continues anyway). You can run from wild battles until you can buy Poké Balls in Viridian City and catch a second Pokémon. Ditto copies its opponent's moves, so it can fight from the start.
 - **Legendaries and Mew** can be picked too. They start at level 5 like everything else.
-- **Pikachu's Beach** (the surfing minigame in the Summer Beach House) still needs a Pikachu that knows Surf. A traded or caught Pikachu works.
 - At the start of the game, Oak still catches a wild Pikachu on Route 1. That Pikachu stays with him.
 
 
@@ -93,5 +93,6 @@ Regression in Normal and Hard:
 - New difficulty option, **PICK STARTER**: Normal rules, but you choose your starter from all 151 Pokémon in Oak's lab, using a scrollable list with front sprites.
 - Picking a Pokémon other than Pikachu means no follower. Pikachu-only scenes are skipped or reworded, and Melanie's Bulbasaur no longer needs a happy Pikachu.
 - Picking Pikachu gives the classic Yellow experience.
+- Without a starter Pikachu, any party Pokémon that knows Surf can play Pikachu's Beach.
 - Oak's lab now says "received **an** ABRA!" for names starting with a vowel.
 - Normal and Hard modes and existing saves are unchanged.
