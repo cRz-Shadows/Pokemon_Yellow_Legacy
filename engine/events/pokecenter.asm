@@ -58,7 +58,7 @@ DisplayPokemonCenterDialogue_::
 	jr nz, .playerPikachuNotOnScreen
 	call DisablePikachuOverworldSpriteDrawing
 	callfar IsStarterPikachuAliveInOurParty
-	call c, Func_6eaa
+	call c, PokeCenterNurseTurnAround
 .playerPikachuNotOnScreen
 	lb bc, 1, 8
 	call SetSpriteFacingAndImageIndex
@@ -77,7 +77,7 @@ DisplayPokemonCenterDialogue_::
 	call CheckPikachuFollowingPlayer
 	jr nz, .doNotReturnPikachu
 	callfar IsStarterPikachuAliveInOurParty
-	call c, Func_6eaa
+	call c, PokeCenterNurseTurnAround
 	ld a, $5
 	ld [wPikachuSpawnState], a
 	call EnablePikachuOverworldSpriteDrawing
@@ -130,9 +130,9 @@ TemPokemonOuNao:
 	text_far _TemPokemonOuNao
 	text_end
 
-; SUGGESTED NAME: PokeCenterNurseFacePikachu
-; Sets the nurse (sprite 1) to frame 4 and waits 64 frames during Pikachu healing (confidence: low)
-Func_6eaa:
+; Turns the nurse (sprite 1) to face the back wall and waits 64 frames.
+; Used when she takes the starter Pikachu to heal it and when she returns it.
+PokeCenterNurseTurnAround:
 	ld a, $1
 	ldh [hSpriteIndex], a
 	ld a, $4

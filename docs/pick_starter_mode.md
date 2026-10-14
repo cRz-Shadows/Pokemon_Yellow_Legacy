@@ -77,7 +77,8 @@ Story with a non-Pikachu starter:
 - [ ] Celadon (Mansion, Game Corner / Rocket Hideout)
 - [ ] Pokémon Tower
 - [ ] Saffron (Silph Co.)
-- [ ] Fuchsia, Safari Zone
+- [ ] Fuchsia, Safari Zone (with ¥0, refusing the gate guard 6+ times shows no garbage text)
+- [ ] Summer Beach House (Route 19): a non-Pikachu Surf user can play Pikachu's Beach
 - [ ] Cinnabar
 - [ ] Elite Four, Champion, Hall of Fame (Oak names your starter correctly)
 - [ ] Post-game

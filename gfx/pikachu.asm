@@ -150,13 +150,12 @@ INCBIN "gfx/pikachu/unknown_e718f.2bpp"
 ; 40x40 confused Pikachu with a question mark, frame 2 (anim script 23)
 PikaPicConfusedGFX2::
 INCBIN "gfx/pikachu/unknown_e731f.2bpp"
-; SUGGESTED NAME: PikaPicHeadTiltGFX1
-; 40x40 frame 1: Pikachu tilts head, eyes closed (anim script 24, ! bubble) (confidence: low)
-GFX_e74af::
+; 40x40 frame 1 of PikaPicAnimScript24 (after a "!" bubble): Pikachu turns its
+; head away with its eyes closed
+PikaPicHuffyGFX1::
 INCBIN "gfx/pikachu/unknown_e74af.2bpp"
-; SUGGESTED NAME: PikaPicHeadTiltGFX2
-; 40x40 frame 2: eyes-closed frowning Pikachu (anim script 24) (confidence: low)
-GFX_e763f::
+; 40x40 frame 2: Pikachu faces front, eyes closed and frowning
+PikaPicHuffyGFX2::
 INCBIN "gfx/pikachu/unknown_e763f.2bpp"
 ; Base pic: frowning Pikachu before its Thunderbolt (anim script 25)
 PikaPicThunderboltPic::

@@ -21,7 +21,7 @@ jobs:
       - name: Build
         run: |
           set -o pipefail
-          make -j$(nproc) yellow yellow_debug 2>&1 | tee build.log
+          make -j$(nproc) yellow yellow_debug yellow_vc 2>&1 | tee build.log
 
       - name: Check for new warnings
         run: python3 .github/scripts/check_warnings.py build.log
