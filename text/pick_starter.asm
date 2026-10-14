@@ -51,3 +51,24 @@ _PickStarterRivalTypeText::
 	para "My EEVEE can"
 	line "handle that!"
 	prompt
+
+_PickStarterRivalSwapText::
+	text "<RIVAL>: Your"
+	line "@"
+	text_ram wNameBuffer
+	text "?"
+	cont "Then I want a"
+	cont "@"
+	text_ram wStringBuffer
+	text "!"
+
+	para "Gramps! I'm"
+	line "swapping my EEVEE!"
+	prompt
+
+_PickStarterRivalSwappedText::
+	text "<RIVAL> got a"
+	line "@"
+	text_ram wStringBuffer
+	text "!@"
+	text_end

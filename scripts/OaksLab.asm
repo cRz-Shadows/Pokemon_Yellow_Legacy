@@ -351,7 +351,7 @@ OaksLabRivalStartBattleScript:
 	call GetSpritePosition1
 	ld a, OPP_RIVAL1
 	ld [wCurOpponent], a
-	ld a, $1
+	rival_team_fixed 1, 4
 	ld [wTrainerNo], a
 	ld hl, OaksLabRivalIPickedTheWrongPokemonText
 	ld de, OaksLabRivalAmIGreatOrWhatText
@@ -375,6 +375,10 @@ OaksLabRivalEndBattleScript:
 	; Jolteon if you beat him on Route 22, or Flareon if you
 	; skip or lose that battle.
 	; Otherwise, it will evolve into Vaporeon.
+	; A counter starter (Pick Starter mode) stays as it is.
+	ld a, [wRivalStarter]
+	cp FIRST_RIVAL_COUNTER_STARTER
+	jr nc, .kept_rival_starter
 	ld a, [wBattleResult]
 	and a
 	ld b, RIVAL_STARTER_VAPOREON
@@ -383,6 +387,7 @@ OaksLabRivalEndBattleScript:
 .got_rival_starter
 	ld a, b
 	ld [wRivalStarter], a
+.kept_rival_starter
 
 	ld a, PAD_SELECT | PAD_START | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
@@ -1064,6 +1069,7 @@ OaksLabPlayerReceivedMonText:
 	ld hl, OaksLabOakPickStarterText
 	call PrintText
 	callfar PickStarterMenu ; sets [wPlayerStarter]
+	callfar PickStarterSetRivalStarter
 	ld a, [wPlayerStarter]
 	ld [wNamedObjectIndex], a
 	call GetMonName

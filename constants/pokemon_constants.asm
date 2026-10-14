@@ -167,10 +167,17 @@ DEF NUM_POKEMON_INDEXES EQU const_value - 1
 ; player starter
 DEF STARTER_PIKACHU EQU PIKACHU
 
-; rival starters
+; rival starters (wRivalStarter)
 DEF RIVAL_STARTER_JOLTEON  EQU 1
 DEF RIVAL_STARTER_FLAREON  EQU 2
 DEF RIVAL_STARTER_VAPOREON EQU 3
+; Pick Starter mode: the rival counters a Bulbasaur/Charmander/Squirtle-line
+; pick with this starter's line; his teammates are the Jolteon/Flareon/Vaporeon
+; teams' (data/trainers/parties.asm)
+DEF RIVAL_STARTER_BULBASAUR  EQU 4
+DEF RIVAL_STARTER_CHARMANDER EQU 5
+DEF RIVAL_STARTER_SQUIRTLE   EQU 6
+DEF FIRST_RIVAL_COUNTER_STARTER EQU RIVAL_STARTER_BULBASAUR
 
 ; ghost Marowak in Pokémon Tower
 DEF RESTLESS_SOUL EQU MAROWAK

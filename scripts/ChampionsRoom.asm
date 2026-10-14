@@ -73,8 +73,7 @@ ChampionsRoomRivalReadyToBattleScript:
 	ld [wCurOpponent], a
 
 	; select which team to use during the encounter
-	ld a, [wRivalStarter]
-	add $0 ; Wow GameFreak
+	rival_team_by_variant 0, 5
 	ld [wTrainerNo], a
 .done
 	xor a

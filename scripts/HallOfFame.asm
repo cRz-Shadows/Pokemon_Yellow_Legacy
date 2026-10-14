@@ -145,6 +145,8 @@ HallOfFameOakCongratulationsScript:
 	ld [wToggleableObjectIndex], a
 	predef ShowObject
 	ld a, [wRivalStarter]
+	cp FIRST_RIVAL_COUNTER_STARTER
+	jr nc, .noEeveelution ; Pick Starter mode: the rival has a counter starter
 	cp RIVAL_STARTER_FLAREON
 	jr z, .UnhideFlareon
 	cp RIVAL_STARTER_VAPOREON
@@ -159,6 +161,7 @@ HallOfFameOakCongratulationsScript:
 .done
 	ld [wToggleableObjectIndex], a
 	predef ShowObject
+.noEeveelution
 	ld a, SCRIPT_HALLOFFAME_RESET_EVENTS_AND_SAVE
 	ld [wHallOfFameCurScript], a
 	ret
