@@ -1,0 +1,19 @@
+version: 2
+updates:
+  # actions/checkout, actions/cache, ... in .github/workflows
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      github-actions:
+        patterns: [ "*" ]
+
+  # PyBoy and ruff in .github/requirements.txt
+  - package-ecosystem: pip
+    directory: /.github
+    schedule:
+      interval: weekly
+    groups:
+      ci-python:
+        patterns: [ "*" ]

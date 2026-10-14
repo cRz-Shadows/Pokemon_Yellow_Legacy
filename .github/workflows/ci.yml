@@ -1,0 +1,333 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    # labeled/unlabeled so the save-layout-change and expect-identical-rom
+    # labels take effect without a new push
+    types: [ opened, synchronize, reopened, labeled, unlabeled ]
+
+permissions:
+  contents: read
+
+# A new push to a PR cancels the checks still running for the previous one
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+# Each job is its own check on the PR. The ROMs are passed between jobs through
+# the Actions cache (readable only by workflows), never uploaded as artifacts.
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: ./.github/actions/install-rgbds
+
+      - name: Build ROMs and the Virtual Console patch
+        run: |
+          set -o pipefail
+          make -j"$(nproc)" yellow yellow_debug yellow_vc 2>&1 | tee build.log
+
+      - name: Record changes to tracked files
+        run: git diff > tracked-changes.diff
+
+      - name: Save build for the other jobs
+        uses: actions/cache/save@v6
+        with:
+          key: build-head-${{ github.run_id }}
+          path: |
+            *.gbc
+            *.sym
+            *.map
+            *.patch
+            build.log
+            tracked-changes.diff
+
+      - name: Summary
+        run: |
+          {
+            echo '### ROM checksums'
+            echo '```'
+            sha1sum pokemon_yellow_legacy.gbc pokemon_yellow_legacy_debug.gbc
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  warnings:
+    name: Warnings
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/cache/restore@v6
+        with:
+          key: build-head-${{ github.run_id }}
+          path: |
+            *.gbc
+            *.sym
+            *.map
+            *.patch
+            build.log
+            tracked-changes.diff
+          fail-on-cache-miss: true
+
+      - name: Check for new warnings
+        run: python3 .github/scripts/check_warnings.py build.log
+
+  tracked-files:
+    name: Tracked files
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/cache/restore@v6
+        with:
+          key: build-head-${{ github.run_id }}
+          path: |
+            *.gbc
+            *.sym
+            *.map
+            *.patch
+            build.log
+            tracked-changes.diff
+          fail-on-cache-miss: true
+
+      # The build must not modify tracked files (e.g. regenerate sources)
+      - name: Check that the build left tracked files unchanged
+        run: |
+          if [ -s tracked-changes.diff ]; then
+            echo "The build modified tracked files:"
+            cat tracked-changes.diff
+            exit 1
+          fi
+          echo "No tracked files changed."
+
+  smoke-test:
+    name: Smoke test
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/cache/restore@v6
+        with:
+          key: build-head-${{ github.run_id }}
+          path: |
+            *.gbc
+            *.sym
+            *.map
+            *.patch
+            build.log
+            tracked-changes.diff
+          fail-on-cache-miss: true
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: .github/requirements.txt
+
+      - name: Install PyBoy
+        run: pip install -r .github/requirements.txt
+
+      # Plays the start of the game in each mode; see the script for details
+      - name: Smoke test
+        run: |
+          set -o pipefail
+          python .github/scripts/smoke_test.py pokemon_yellow_legacy pokemon_yellow_legacy_debug \
+            | tee smoke.log
+
+      - name: Upload screenshots of failures
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: smoke-test-failures
+          path: smoke_test_failures/
+          if-no-files-found: ignore
+
+      - name: Summary
+        if: always()
+        run: |
+          {
+            echo '### Smoke test'
+            echo '```'
+            cat smoke.log 2>/dev/null || echo 'did not run'
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  build-base:
+    name: Build base
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - uses: ./.github/actions/install-rgbds
+
+      # The PR's base, or the previous main commit for pushes. A failed base
+      # build doesn't fail this job; the comparison jobs then report "skipped".
+      - name: Build the base commit
+        env:
+          BASE_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          mkdir base-out
+          if [ -z "$BASE_SHA" ] || ! git cat-file -e "$BASE_SHA^{commit}" 2>/dev/null; then
+            echo "none" > base-out/status
+            echo "No base commit to compare with." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          git worktree add "$RUNNER_TEMP/base" "$BASE_SHA"
+          if make -C "$RUNNER_TEMP/base" -j"$(nproc)" yellow yellow_debug; then
+            cp "$RUNNER_TEMP"/base/pokemon_yellow_legacy*.{gbc,sym,map} base-out/
+            echo "$BASE_SHA" > base-out/status
+            echo "Base: $BASE_SHA" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "failed" > base-out/status
+            echo "The base commit $BASE_SHA doesn't build." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Save base build for the comparison jobs
+        uses: actions/cache/save@v6
+        with:
+          key: build-base-${{ github.run_id }}
+          path: base-out
+
+  rom-changes:
+    name: ROM changes
+    needs: [ build, build-base ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/cache/restore@v6
+        with:
+          key: build-head-${{ github.run_id }}
+          path: |
+            *.gbc
+            *.sym
+            *.map
+            *.patch
+            build.log
+            tracked-changes.diff
+          fail-on-cache-miss: true
+
+      - uses: actions/cache/restore@v6
+        with:
+          key: build-base-${{ github.run_id }}
+          path: base-out
+          fail-on-cache-miss: true
+
+      # Informational, unless the PR has the expect-identical-rom label
+      - name: Compare ROMs with the base build
+        env:
+          EXPECT_IDENTICAL_ROM: ${{ contains(github.event.pull_request.labels.*.name, 'expect-identical-rom') && '1' || '0' }}
+        run: |
+          set -o pipefail
+          python3 .github/scripts/compare_builds.py roms base-out . | tee -a "$GITHUB_STEP_SUMMARY"
+
+  save-layout:
+    name: Save layout
+    needs: [ build, build-base ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/cache/restore@v6
+        with:
+          key: build-head-${{ github.run_id }}
+          path: |
+            *.gbc
+            *.sym
+            *.map
+            *.patch
+            build.log
+            tracked-changes.diff
+          fail-on-cache-miss: true
+
+      - uses: actions/cache/restore@v6
+        with:
+          key: build-base-${{ github.run_id }}
+          path: base-out
+          fail-on-cache-miss: true
+
+      - name: Compare the save layout with the base build
+        env:
+          ALLOW_SAVE_LAYOUT_CHANGE: ${{ contains(github.event.pull_request.labels.*.name, 'save-layout-change') && '1' || '0' }}
+        run: |
+          set -o pipefail
+          python3 .github/scripts/compare_builds.py save base-out . | tee -a "$GITHUB_STEP_SUMMARY"
+
+  bank-space:
+    name: Bank space
+    needs: [ build, build-base ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/cache/restore@v6
+        with:
+          key: build-head-${{ github.run_id }}
+          path: |
+            *.gbc
+            *.sym
+            *.map
+            *.patch
+            build.log
+            tracked-changes.diff
+          fail-on-cache-miss: true
+
+      - uses: actions/cache/restore@v6
+        with:
+          key: build-base-${{ github.run_id }}
+          path: base-out
+          fail-on-cache-miss: true
+
+      # Informational only
+      - name: Compare free ROM space with the base build
+        run: |
+          set -o pipefail
+          python3 .github/scripts/compare_builds.py banks base-out . | tee -a "$GITHUB_STEP_SUMMARY"
+
+  lint-workflows:
+    name: Lint workflows
+    runs-on: ubuntu-latest
+    env:
+      ACTIONLINT_VERSION: 1.7.12
+      ACTIONLINT_SHA256: 8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install actionlint
+        run: |
+          tarball="actionlint_${ACTIONLINT_VERSION}_linux_amd64.tar.gz"
+          curl -sSfL -o "$RUNNER_TEMP/$tarball" \
+            "https://github.com/rhysd/actionlint/releases/download/v${ACTIONLINT_VERSION}/$tarball"
+          echo "$ACTIONLINT_SHA256  $RUNNER_TEMP/$tarball" | sha256sum -c -
+          tar -xzf "$RUNNER_TEMP/$tarball" -C "$RUNNER_TEMP" actionlint
+
+      # Also runs shellcheck on the run: scripts (shellcheck is on the runner)
+      - name: Lint workflows
+        run: '"$RUNNER_TEMP/actionlint" -color'
+
+  lint-python:
+    name: Lint Python
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+
+      - name: Install ruff
+        run: pip install "$(grep '^ruff==' .github/requirements.txt)"
+
+      - name: Lint the CI and release scripts
+        run: ruff check --config .github/ruff.toml .github/scripts tools/make_release_patches.py

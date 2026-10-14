@@ -23,7 +23,7 @@ def main():
         if any(p.search(line) for p in ALLOWED):
             continue
         # rgbasm prints the location on the following lines ("at file(line)")
-        context = [line] + [l for l in lines[i + 1:i + 4] if l.startswith((' ', '\t'))]
+        context = [line] + [nxt for nxt in lines[i + 1:i + 4] if nxt.startswith((' ', '\t'))]
         unexpected.append('\n'.join(context))
     if unexpected:
         print(f'{len(unexpected)} unexpected warning(s):')
