@@ -6,12 +6,13 @@ Pick Starter is a third play mode alongside **Normal** and **Hard**. It plays li
 ## Starting a game
 
 1. Choose **NEW GAME**.
-2. At **Select Difficulty**, choose **PICK STARTER** and confirm.
-3. When Oak gives you your first Pokémon in his lab, a list of all 151 Pokémon opens instead.
-   - **Up / Down** move one entry. Holding them scrolls.
+2. At **Select game mode**, choose **PICK STARTER** and confirm. The description says that only a Pikachu starter follows you.
+3. When Oak gives you your first Pokémon in his lab, he explains the controls and a list of all 151 Pokémon opens instead.
+   - **Up / Down** move one entry. Holding them scrolls, and the list wraps around at both ends.
    - **Left / Right** move a page.
-   - The highlighted Pokémon's number, name, types and front sprite are shown. The sprite appears once you stop scrolling.
-   - **A** asks "So, you want …?". **YES** takes it and **NO** returns to the list. You can't leave without choosing.
+   - The highlighted Pokémon's number, name, types and front sprite are shown. The sprite appears once you stop scrolling (after about 12 frames).
+   - **A** asks "So, you want …?". For a Pokémon with no damaging move at level 5, it adds "It can't attack yet. Are you sure?". **YES** takes it and **NO** returns to the list. You can't leave without choosing.
+   - The debug build's quick start skips the mode menu, so test Pick Starter with a regular new game.
 
 
 ## Rules
@@ -25,7 +26,7 @@ Pick Starter is a third play mode alongside **Normal** and **Hard**. It plays li
   - In Oak's lab, the "Pikachu escapes its Poké Ball" scene is skipped. Oak then gives his usual battle advice instead of "talk to it and see how it feels".
   - **Melanie** (Cerulean City) gives you **Bulbasaur** without needing a happy Pikachu.
   - **Charmander** (Route 24) and **Squirtle** (Officer Jenny, Vermilion City) are available as usual, so all three classic starters can be obtained.
-  - **Pikachu's Beach** (the surfing minigame in the Summer Beach House, Route 19) can be played with **any Pokémon in your party that knows Surf**, not just a Pikachu. The Surfin' Dude says "Your POKéMON knows how to SURF!". The minigame itself still shows Pikachu, and the beach-house posters and printer also unlock.
+  - **Pikachu's Beach** (the surfing minigame in the Summer Beach House, Route 19) can be played with **any Pokémon in your party that knows Surf**, not just a Pikachu. The Surfin' Dude names it ("Your CHARMANDER knows how to SURF!") and admits his board is built for a Pikachu: the minigame itself still shows Pikachu. The beach-house posters and printer unlock too.
 
 
 ## Things to know
@@ -46,12 +47,12 @@ Pick Starter is a third play mode alongside **Normal** and **Hard**. It plays li
 
   The game is still completable with them, but treat them as a challenge pick. You'll likely lose the first rival battle (the story continues anyway). You can run from wild battles until you can buy Poké Balls in Viridian City and catch a second Pokémon. Ditto copies its opponent's moves, so it can fight from the start.
 - **Legendaries and Mew** can be picked too. They start at level 5 like everything else.
-- At the start of the game, Oak still catches a wild Pikachu on Route 1. That Pikachu stays with him.
+- At the start of the game, Oak still catches a wild Pikachu on Route 1. In the lab he mentions it before letting you pick; that Pikachu stays with him.
 
 
 ## Save compatibility
 
-- The mode is stored in the existing difficulty byte: 0 = Normal, 1 = Hard, 2 = Pick Starter. Normal and Hard saves from earlier versions load and play unchanged.
+- The mode is stored in the existing difficulty byte: 0 = Normal, 1 = Hard, 2 = Pick Starter. The byte is a set of flags (bit 0 = Hard rules, bit 1 = pick the starter), so these values keep their meaning; the code checks it with the `check_hard_rules` and `check_pick_starter` macros. Normal and Hard saves from earlier versions load and play unchanged.
 - The save layout is unchanged. No RAM or SRAM addresses moved.
 - Don't load a Pick Starter save into a build from before this mode existed. Those builds treat any non-zero difficulty as Hard, so the game would play with Hard rules.
 
@@ -96,4 +97,16 @@ Regression in Normal and Hard:
 - Picking Pikachu gives the classic Yellow experience.
 - Without a starter Pikachu, any party Pokémon that knows Surf can play Pikachu's Beach.
 - Oak's lab now says "received **an** ABRA!" for names starting with a vowel.
-- Normal and Hard modes and existing saves are unchanged.
+
+**Fixes (all modes)**
+
+- Link Colosseum cup rules (shorter sleep, lower freeze chance) no longer carry over into normal battles after a cup battle.
+- The Safari Zone gate guard no longer prints garbage text and freezes the game after more than 5 refusals with no money.
+
+**1.1.1**
+
+- Fixed: in Pick Starter mode, the Summer Beach House posters printed garbage instead of their text.
+- The picker shows the controls (in Oak's lead-in), warns before taking a Pokémon that can't attack at level 5, loads the sprite sooner, and shows the right sprite at the "So, you want …?" prompt.
+- The Surfin' Dude names the Pokémon that knows Surf. The mode menu is titled "Select game mode", and the Pick Starter description says only a Pikachu starter follows you.
+
+Normal and Hard rules and existing saves are unchanged.

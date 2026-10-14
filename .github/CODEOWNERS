@@ -1,0 +1,5 @@
+# Changes to CI, release tooling and build tools get the maintainer as reviewer.
+# (Code-owner review is not required by branch protection; see docs/ci.md.)
+/.github/ @technicks89
+/tools/   @technicks89
+/Makefile @technicks89

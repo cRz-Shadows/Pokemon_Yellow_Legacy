@@ -172,9 +172,13 @@ def sha1(data):
 
 
 def main():
+    if len(sys.argv) != 4:
+        sys.exit(__doc__.strip())
     base_path, target_path, prefix = sys.argv[1:4]
-    base = open(base_path, 'rb').read()
-    target = open(target_path, 'rb').read()
+    with open(base_path, 'rb') as f:
+        base = f.read()
+    with open(target_path, 'rb') as f:
+        target = f.read()
     if sha1(base) != BASE_SHA1:
         sys.exit(f'{base_path} is not a clean Pokémon Yellow ROM (SHA-1 {sha1(base)}, '
                  f'expected {BASE_SHA1})')
@@ -185,8 +189,12 @@ def main():
         f.write(patch)
     print(f'{prefix}.bps: {len(patch):,} bytes, verified')
     instructions = os.path.join(os.path.dirname(__file__), '..', 'docs', 'patching_instructions.md')
-    text = open(instructions, encoding='utf-8').read()
-    text = text.replace('{PATCHED_SHA1}', sha1(target)).replace('{BASE_SHA1}', BASE_SHA1)
+    with open(instructions, encoding='utf-8') as f:
+        text = f.read()
+    text = (text.rstrip('\n') + '\n\n## This release\n\n'
+            f'- Patch: `{os.path.basename(prefix)}.bps`\n'
+            f'- Base ROM SHA-1: `{BASE_SHA1}`\n'
+            f'- Patched ROM SHA-1: `{sha1(target)}`\n')
     folder = os.path.basename(prefix)
     with zipfile.ZipFile(f'{prefix}.zip', 'w', zipfile.ZIP_DEFLATED) as z:
         z.writestr(f'{folder}/{folder}.bps', patch)

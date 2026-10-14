@@ -47,12 +47,12 @@ A similar series of bugs appears to exist in pokecrystal.
 ## `wPikachuFollowCommandBuffer` can overflow
 
 AppendPikachuFollowCommandToBuffer doesn't have any length checking for the buffer of Pikachu commands.
-This can be abused to write data into any address past d437, typically by putting pikachu to sleep in the Pewter Center with Jigglypuff.
+This can be abused to write data into any address past the buffer (`wPikachuFollowCommandBuffer`), typically by putting pikachu to sleep in the Pewter Center with Jigglypuff.
 While in this state, walking down writes 01, up 02, left 03, and right 04.
 This bug is generally known as "Pikawalk."
 A typical use for this would be to force the in game time to 255:59.
 
-**Fix:** TBD in [engine/pikachu/pikachu_follow.asm#1165](/engine/pikachu/pikachu_follow.asm#1165)
+**Fix:** TBD in `AppendPikachuFollowCommandToBuffer` ([engine/pikachu/pikachu_follow.asm](/engine/pikachu/pikachu_follow.asm))
 
 
 ## Unexpected Counter damage
@@ -60,4 +60,4 @@ A typical use for this would be to force the in game time to 255:59.
 Counter simply doubles the value of wDamage which can hold the last value of damage dealt whether it was from you, your opponent, a switched out opponent, or a player in another battle.
 This is because wDamage is used for both the player's damage and opponent's damage, and is not cleared out between switching or battles.
 
-**Fix:** TBD in [engine/battle/core.asm#L4960](/engine/battle/core.asm#L4960)
+**Fix:** TBD in `HandleCounterMove` ([engine/battle/core.asm](/engine/battle/core.asm))

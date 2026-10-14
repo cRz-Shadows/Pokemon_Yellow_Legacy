@@ -76,7 +76,7 @@ SleepEffect:
 	jr z, .setSleepCounter
 	ld b, a
 	call CheckLinkBattleCupRules
-	jr z, .asm_3f1ba ; cup rules shorten sleep to 1-3 turns
+	jr z, .asm_3f1ba ; no cup rules: keep 1-7 turns (cup rules shorten it to 1-3 below)
 	ld a, b
 	and $3
 	jr z, .setSleepCounter

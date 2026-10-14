@@ -42,7 +42,7 @@ RGBLINK ?= $(RGBDS)rgblink
 .SECONDEXPANSION:
 .PRECIOUS:
 .SECONDARY:
-.PHONY: all yellow yellow_debug yellow_vc clean tidy compare tools
+.PHONY: all yellow yellow_debug yellow_vc clean tidy compare tools test
 
 all: $(roms)
 yellow:       pokemon_yellow_legacy.gbc
@@ -67,7 +67,6 @@ tidy:
 	      $(patches:.patch=_vc.gbc) \
 	      $(patches:.patch=_vc.sym) \
 	      $(patches:.patch=_vc.map) \
-	      $(patches:%.patch=vc/%.constants.sym) \
 	      $(pokemon_yellow_legacy_obj) \
 	      $(pokemon_yellow_legacy_vc_obj) \
 	      $(pokemon_yellow_legacy_debug_obj) \
@@ -79,6 +78,15 @@ compare: $(roms) $(patches)
 
 tools:
 	$(MAKE) -C tools/
+
+# Runs the CI tests locally (needs: pip install -r .github/requirements.txt).
+# See docs/ci.md for the comparison checks, which need a build of the base commit.
+PYTHON ?= python3
+test: $(roms) $(patches)
+	$(PYTHON) -m unittest discover -s .github/scripts -p 'test_*.py'
+	$(PYTHON) .github/scripts/smoke_test.py pokemon_yellow_legacy pokemon_yellow_legacy_debug
+	$(PYTHON) .github/scripts/scenario_tests.py pokemon_yellow_legacy pokemon_yellow_legacy_vc
+	ruff check --config .github/ruff.toml .github/scripts tools/make_release_patches.py tools/upstream_rename.py
 
 
 RGBASMFLAGS = -Q8 -P includes.asm -Weverything -Wnumeric-string=2 -Wtruncation=1
@@ -115,10 +123,6 @@ endef
 $(foreach obj, $(pokemon_yellow_legacy_obj), $(eval $(call DEP,$(obj),$(obj:.o=.asm))))
 $(foreach obj, $(pokemon_yellow_legacy_debug_obj), $(eval $(call DEP,$(obj),$(obj:_debug.o=.asm))))
 $(foreach obj, $(pokemon_yellow_legacy_vc_obj), $(eval $(call DEP,$(obj),$(obj:_vc.o=.asm))))
-
-# Dependencies for VC files that need to run scan_includes
-%.constants.sym: %.constants.asm $(shell tools/scan_includes %.constants.asm) $(preinclude_deps) | rgbdscheck.o
-	$(RGBASM) $(RGBASMFLAGS) $< > $@
 
 endif
 

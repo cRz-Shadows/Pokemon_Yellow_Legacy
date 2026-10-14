@@ -1284,11 +1284,16 @@ wItemList:: ds 16
 
 wListPointer:: dw
 
+UNION
 ; used to store pointers, but never read
-wUnusedNamePointer::
-; Pick Starter menu: frames left before the highlighted mon's picture loads
-wPickStarterPicDelay::
-	dw
+wUnusedNamePointer:: dw
+
+NEXTU
+; Pick Starter menu (engine/menus/pick_starter.asm): frames left before the
+; highlighted mon's picture loads. Safe to share: the only writers of
+; wUnusedNamePointer (battle and link code) never run during the picker.
+wPickStarterPicDelay:: db
+ENDU
 
 wItemPrices:: dw
 

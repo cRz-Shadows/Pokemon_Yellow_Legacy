@@ -14,12 +14,15 @@ runs:
   steps:
     - name: Download and install RGBDS ${{ inputs.version }}
       shell: bash
+      env:
+        RGBDS_VERSION: ${{ inputs.version }}
+        RGBDS_SHA256: ${{ inputs.sha256 }}
       run: |
         dir="$RUNNER_TEMP/rgbds"
         mkdir -p "$dir"
         curl -sSfL -o "$dir/rgbds.tar.xz" \
-          "https://github.com/gbdev/rgbds/releases/download/${{ inputs.version }}/rgbds-linux-x86_64.tar.xz"
-        echo "${{ inputs.sha256 }}  $dir/rgbds.tar.xz" | sha256sum -c -
+          "https://github.com/gbdev/rgbds/releases/download/$RGBDS_VERSION/rgbds-linux-x86_64.tar.xz"
+        echo "$RGBDS_SHA256  $dir/rgbds.tar.xz" | sha256sum -c -
         tar -xJf "$dir/rgbds.tar.xz" -C "$dir"
         echo "$dir" >> "$GITHUB_PATH"
         "$dir/rgbasm" --version

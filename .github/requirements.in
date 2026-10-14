@@ -1,0 +1,5 @@
+# Python packages for the CI jobs. Edit this file, then regenerate the
+# hash-locked requirements.txt with:
+#   pip-compile --generate-hashes --strip-extras .github/requirements.in
+pyboy==2.8.1
+ruff==0.16.9

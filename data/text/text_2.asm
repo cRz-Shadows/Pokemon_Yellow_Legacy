@@ -1300,7 +1300,7 @@ _HookedMonAttackedText::
 	prompt
 
 _DifficultyText::
-	text "Select Difficulty"
+	text "Select game mode"
 	done
 
 _AreYouSureText::

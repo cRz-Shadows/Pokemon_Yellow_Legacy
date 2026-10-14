@@ -15,9 +15,15 @@ _SummerBeachHouseSurfinDudeText1::
 _SummerBeachHouseSurfinDudePickStarterText1::
 	text "Whoa!"
 
-	para "Your #MON knows"
-	line "how to SURF! So,"
-	cont "I'm not alone..."
+	para "Your @"
+	text_ram wNameBuffer
+	text_start
+	line "knows how to SURF!"
+	cont "So, I'm not alone!"
+
+	para "My board's built"
+	line "for a PIKACHU, but"
+	cont "it'll ride fine!"
 
 	para "Great! You earned"
 	line "the right to SURF"

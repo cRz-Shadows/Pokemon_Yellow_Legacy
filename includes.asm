@@ -56,3 +56,5 @@ INCLUDE "constants/pikachu_emotion_constants.asm"
 IF DEF(_YELLOW_VC)
 INCLUDE "vc/pokemon_yellow_legacy.constants.asm"
 ENDC
+
+INCLUDE "constants/ci_exports.asm"

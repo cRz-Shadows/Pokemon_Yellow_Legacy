@@ -35,6 +35,9 @@ OaksLab_ScriptPointers:
 	dw_const OaksLabOakGivesPokedexScript,           SCRIPT_OAKSLAB_OAK_GIVES_POKEDEX
 	dw_const OaksLabRivalLeavesWithPokedexScript,    SCRIPT_OAKSLAB_RIVAL_LEAVES_WITH_POKEDEX
 	dw_const OaksLabNoopScript,                      SCRIPT_OAKSLAB_NOOP
+	; read by the CI smoke test (.github/scripts/smoke_test.py)
+	EXPORT SCRIPT_OAKSLAB_RIVAL_CHALLENGES_PLAYER, SCRIPT_OAKSLAB_NOOP
+	EXPORT SCRIPT_OAKSLAB_PIKACHU_ESCAPES_POKEBALL, SCRIPT_OAKSLAB_PIKACHU_DISLIKES_POKEBALLS
 
 OaksLabDefaultScript:
 	CheckEvent EVENT_OAK_APPEARED_IN_PALLET
@@ -446,8 +449,7 @@ OaksLabPlayerWatchRivalExitScript:
 	ld [wToggleableObjectIndex], a
 	predef HideObject
 	call PlayDefaultMusic
-	ld a, [wPlayerStarter]
-	cp STARTER_PIKACHU
+	check_starter_pikachu
 	jr nz, .noStarterPikachu
 	ld a, SCRIPT_OAKSLAB_PIKACHU_ESCAPES_POKEBALL
 	ld [wOaksLabCurScript], a
@@ -882,8 +884,7 @@ OaksLabOak1Text:
 	call IsItemInBag
 	jr nz, .got_parcel
 	ld hl, .YouShouldTalkToIt
-	ld a, [wPlayerStarter]
-	cp STARTER_PIKACHU
+	check_starter_pikachu
 	jr z, .printStarterAdvice
 	ld hl, .YourPokemonCanFightText ; Pick Starter mode: no Pikachu following to talk to
 .printStarterAdvice
@@ -1058,8 +1059,7 @@ OaksLabRivalTakesText5:
 
 OaksLabPlayerReceivedMonText:
 	text_asm
-	ld a, [wDifficulty]
-	cp DIFFICULTY_PICK_STARTER
+	check_pick_starter
 	jr nz, .giveStarterPikachu
 	ld hl, OaksLabOakPickStarterText
 	call PrintText
@@ -1098,14 +1098,13 @@ OaksLabPlayerReceivedMonText:
 	call PrintText
 	xor a
 	ld [wMonDataLocation], a
-	ld a, 5
+	ld a, STARTER_LEVEL
 	ld [wCurEnemyLevel], a
 	ld a, [wPlayerStarter]
 	ld [wPokedexNum], a
 	ld [wCurPartySpecies], a
 	call AddPartyMon
-	ld a, [wPlayerStarter]
-	cp STARTER_PIKACHU
+	check_starter_pikachu
 	jr nz, .notPikachu
 	ld a, LIGHT_BALL_GSC
 	ld [wPartyMon1CatchRate], a
