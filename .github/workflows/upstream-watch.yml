@@ -1,0 +1,36 @@
+name: Upstream watch
+
+# Weekly: open or update an "upstream-sync" issue listing commits that
+# cRz-Shadows/Pokemon_Yellow_Legacy has and this fork doesn't.
+# Separate from ci.yml because it runs on a schedule, not on pushes or PRs.
+
+on:
+  schedule:
+    - cron: '0 13 * * 1'  # Mondays 13:00 UTC
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: Only print what would happen
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    name: Check upstream
+    # Forks of this fork don't need to watch
+    if: github.repository == 'technicks89/Pokemon_Yellow_Legacy'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Compare with upstream and update the issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          UPSTREAM: cRz-Shadows/Pokemon_Yellow_Legacy
+          DRY_RUN: ${{ inputs.dry_run && '1' || '0' }}
+        run: python3 .github/scripts/upstream_watch.py
