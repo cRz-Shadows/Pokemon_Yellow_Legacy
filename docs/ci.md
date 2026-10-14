@@ -14,7 +14,7 @@ Every pull request and every push to `main` runs `.github/workflows/ci.yml`. Eac
 | **Save layout** | Fails if any saved WRAM or SRAM variable (compared by name) or saved range moved, which would break old saves. Renames are listed but allowed. | yes, unless the `save-layout-change` label is set |
 | **Bank space** | Free ROM space (including empty banks), the tightest bank the PR changed, and a table of changed banks. | no |
 | **Lint workflows** | actionlint (plus shellcheck) on the workflow files. | yes |
-| **Lint Python** | ruff on the CI and release scripts (rules in `.github/ruff.toml`), and their unit tests (`.github/scripts/test_ci_scripts.py`). | yes |
+| **Lint Python** | ruff on the CI and release scripts (rules in `.github/ruff.toml`), and their unit tests (`.github/scripts/test_ci_scripts.py`, plus `test_data_tables.py`, which checks the type chart and the learnset order). | yes |
 
 The comparison checks are skipped, with a note, if there is no base commit or it doesn't build. When the Smoke test or Scenario tests fail, screenshots are uploaded as the `smoke-test-failures` or `scenario-test-failures` artifact.
 
