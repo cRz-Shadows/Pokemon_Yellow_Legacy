@@ -288,8 +288,3 @@ _CinnabarGymText_6::
 	text "This is the last"
 	line "question."
 	done
-
-_CinnabarGymText_7::
-	text "Come on, answer"
-	line "the question!"
-	done

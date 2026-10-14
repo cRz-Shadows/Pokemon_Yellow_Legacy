@@ -160,10 +160,10 @@ SpriteFunc_34a1::
 	ld c, [hl]
 	dec c
 	swap c
-	ldh a, [hSpriteOffset]
+	ldh a, [hSpriteImageIndex]
 	add c
 	ld c, a
-	ldh a, [hSpriteHeight]
+	ldh a, [hSpriteIndex]
 	swap a
 	add $2
 	ld l, a

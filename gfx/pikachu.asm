@@ -1,7 +1,7 @@
 SECTION "Pikachu Graphics 1", ROMX
 
 ; SUGGESTED NAME: PikaPicNeutralPic
-; Base pic: neutral smiling Pikachu (default talk anim; also unused Data_fe26b) (confidence: high)
+; Base pic: neutral smiling Pikachu (default talk anim) (confidence: high)
 Pic_e4000::
 INCBIN "gfx/pikachu/unknown_e4000.pic"
 ; SUGGESTED NAME: PikaPicNeutralBlinkGFX
@@ -57,7 +57,7 @@ INCBIN "gfx/pikachu/unknown_e476e.pic"
 GFX_e4841::
 INCBIN "gfx/pikachu/unknown_e4841.2bpp"
 ; SUGGESTED NAME: PikaPicSmilePic
-; Base pic: smiling, eyes-open Pikachu (anim script 8; also unused Data_fe26b) (confidence: high)
+; Base pic: smiling, eyes-open Pikachu (anim script 8) (confidence: high)
 Pic_e49d1::
 INCBIN "gfx/pikachu/unknown_e49d1.pic"
 ; SUGGESTED NAME: PikaPicSmileGrinGFX

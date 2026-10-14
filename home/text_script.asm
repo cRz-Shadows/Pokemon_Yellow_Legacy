@@ -1,9 +1,3 @@
-; SUGGESTED NAME: UnusedPokemonExclamationText
-; Unreferenced text_far to "#MON!" (confidence: medium)
-UnknownText_2812:: ; unreferenced
-	text_far _PokemonText
-	text_end
-
 ; this function is used to display sign messages, sprite dialog, etc.
 ; INPUT: [hTextID] = sprite ID or text ID
 DisplayTextID::

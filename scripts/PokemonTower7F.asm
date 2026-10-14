@@ -77,13 +77,13 @@ PokemonTower7FScript_60d2a:
 ; SUGGESTED NAME: PokemonTower7FJessieJamesRunDown4Movement
 ; Jessie/James run down 4 tiles (code $4 = fast step down) (confidence: medium)
 PokemonTower7FMovementData_60d7a:
-	db $4
+	db NPC_FAST_STEP_DOWN
 ; SUGGESTED NAME: PokemonTower7FJessieJamesRunDown3Movement
 ; Jessie/James run down 3 tiles (code $4 = fast step down) (confidence: medium)
 PokemonTower7FMovementData_60d7b:
-	db $4
-	db $4
-	db $4
+	db NPC_FAST_STEP_DOWN
+	db NPC_FAST_STEP_DOWN
+	db NPC_FAST_STEP_DOWN
 	db $FF
 
 PokemonTower7FScript1:

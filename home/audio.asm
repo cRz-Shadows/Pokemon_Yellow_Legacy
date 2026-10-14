@@ -138,17 +138,6 @@ PlayMusic::
 	ld a, b
 	jr PlaySound
 
-; SUGGESTED NAME: StopSFXChannels
-; Unreferenced: clears sound IDs for channels 5-8 and rNR10 (confidence: medium)
-Func_2223::
-	xor a
-	ld [wChannelSoundIDs + CHAN5], a
-	ld [wChannelSoundIDs + CHAN6], a
-	ld [wChannelSoundIDs + CHAN7], a
-	ld [wChannelSoundIDs + CHAN8], a
-	ldh [rNR10], a
-	ret
-
 StopAllMusic::
 	ld a, SFX_STOP_ALL_MUSIC
 	ld [wNewSoundID], a

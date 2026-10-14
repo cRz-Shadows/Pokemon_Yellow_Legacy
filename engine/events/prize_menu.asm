@@ -259,12 +259,6 @@ HandlePrizeChoice:
 	ld hl, OhFineThenText
 	jp PrintText
 
-; SUGGESTED NAME: UnusedPrizeData
-; Unreferenced 9-byte table of 0/1 flags in the prize menu code (confidence: low)
-UnknownPrizeData:
-; XXX what's this?
-	db $00,$01,$00,$01,$00,$01,$00,$00,$01
-
 HereYouGoText:
 	text_far _HereYouGoText
 	text_waitbutton

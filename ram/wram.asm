@@ -2178,9 +2178,9 @@ wPikachuMapScriptFlags:: db
 wSurfingMinigameHiScore:: dw ; little-endian BCD
 	ds 1
 wPrinterSettings:: db
-; SUGGESTED NAME: wLinkBattleCupRules
-; Colosseum cup rules: 0=none, 1=Poke Cup, 2=Pika Cup, 3=Petit Cup (sleep/freeze) (confidence: high)
-wUnknownSerialFlag_d499:: db
+; Colosseum cup rules: 0 = none, 1 = Poke Cup, 2 = Pika Cup, 3 = Petit Cup.
+; Only applied during link battles (see CheckLinkBattleCupRules).
+wLinkBattleCupRules:: db
 wPrinterConnectionOpen:: db
 wPrinterOpcode:: db
 wPikachuEmotionModifier:: db

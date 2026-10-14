@@ -369,7 +369,6 @@ INCLUDE "engine/overworld/specific_script_flags.asm"
 
 SECTION "Try Pikachu Movement", ROMX
 
-INCLUDE "engine/overworld/unused_load_missable_object_data.asm"
 INCLUDE "engine/events/try_pikachu_movement.asm"
 
 

@@ -21,19 +21,6 @@ PikaPicAnimThunderboltPals:
 	db 4, %11100100
 	db -1 ; end
 
-; SUGGESTED NAME: PikaPicAnimScriptUnused
-; Unreferenced pika pic animation script (Pic_e4000 + PikachuSprite gfx, BGFrames_1/2/3) (confidence: medium)
-Data_fe26b:
-	pikapic_loadgfx Pic_e4000
-	pikapic_loadgfx Pic_e49d1
-	pikapic_loadgfx PikachuSprite
-	pikapic_animation PikaPicAnimBGFrames_1, $80, $0, $0
-	pikapic_animation PikaPicAnimBGFrames_2, $b2, $5, $5
-	pikapic_animation PikaPicAnimBGFrames_3, $b6, $5, $5
-	pikapic_waitbgmap
-	pikapic_cry
-	pikapic_looptofinish
-
 PikaPicAnimScript0:
 PikaPicAnimScript1:
 PikaPicAnimScript29:

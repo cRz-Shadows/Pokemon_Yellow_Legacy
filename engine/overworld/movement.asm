@@ -916,13 +916,13 @@ Func_5274:
 Func_5288:
 ; nice lookup table
 ; a is supposedly [wNPCMovementDirections + $fe]
-	cp $5
+	cp NPC_FAST_STEP_UP
 	jr z, .asm_52af
-	cp $4
+	cp NPC_FAST_STEP_DOWN
 	jr z, .asm_52aa
-	cp $6
+	cp NPC_FAST_STEP_LEFT
 	jr z, .asm_52b4
-	cp $7
+	cp NPC_FAST_STEP_RIGHT
 	jr z, .asm_52b9
 	cp $11
 	jr z, .asm_52c3
@@ -960,20 +960,6 @@ Func_5288:
 .asm_52cd
 	call Func_532b
 	jr .asm_52fa
-; set 3? (unused)
-.asm_52d2
-	call Func_531f
-	jr .asm_530b
-.asm_52d7
-	call Func_5325
-	jr .asm_530b
-.asm_52dc
-	call Func_5331
-	jr .asm_530b
-.asm_52e1
-	call Func_532b
-	jr .asm_530b
-
 .asm_52e6
 	call Func_5337
 	call Func_5349
@@ -989,19 +975,6 @@ Func_5288:
 
 .asm_52fa
 	call Func_5337
-	ldh a, [hCurrentSpriteOffset]
-	ld l, a
-	ld [hl], $8
-	dec h
-	inc l
-	ld [hl], $3
-	call UpdateSpriteImage
-	scf
-	ret
-
-.asm_530b
-	call Func_5337
-	call Func_5349
 	ldh a, [hCurrentSpriteOffset]
 	ld l, a
 	ld [hl], $8

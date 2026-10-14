@@ -245,34 +245,10 @@ PikachuMovementData_fd224:
 	db $3c, 8 - 1, (2 << 4) | (16 - 1)
 	db $3f
 
-; SUGGESTED NAME: PikachuMovementData_Spin
-; Unused: Pikachu spins counterclockwise every 4 frames for 32 frames (no $00 start) (confidence: medium)
-PikachuMovementData_fd22c:
-	db $3b, 32 - 1, 4 - 1
-	db $3f
-
 ; SUGGESTED NAME: PikachuMovementData_TwoSlowHops
 ; Pikachu hops in place twice, slowly (16 frames per hop) (confidence: medium)
 PikachuMovementData_fd230:
 	db $00
 	db $3c, 16 - 1, (1 << 4) | (16 - 1)
 	db $3c, 16 - 1, (1 << 4) | (16 - 1)
-	db $3f
-
-; SUGGESTED NAME: PikachuMovementData_StepDance
-; Unused: Pikachu does turning steps with pauses, like a little dance (confidence: low)
-PikachuMovementData_fd238:
-	db $00
-	db $05, 8 - 1
-	db $39, 1 - 1
-	db $05, 8 - 1
-	db $06, 8 - 1
-	db $39, 1 - 1
-	db $06, 8 - 1
-	db $08, 8 - 1
-	db $39, 1 - 1
-	db $08, 8 - 1
-	db $07, 8 - 1
-	db $39, 1 - 1
-	db $07, 8 - 1
 	db $3f

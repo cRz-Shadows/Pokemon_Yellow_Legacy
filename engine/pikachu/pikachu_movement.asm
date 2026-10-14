@@ -934,25 +934,6 @@ LoadPikachuBallIconIntoVRAM:
 	lb bc, BANK(OverworldPikachuBallGFX), 1
 	jp CopyVideoDataDoubleAlternate
 
-; SUGGESTED NAME: LoadPikachuBallSpriteTilesIntoVRAM
-; Unused: copies the Poke Ball gfx over Pikachu's 3 overworld sprite frames in VRAM (confidence: medium)
-Func_fd851:
-	ld hl, vNPCSprites + $c * $10
-	ld a, 3
-.loop
-	push af
-	push hl
-	ld de, OverworldPikachuBallGFX
-	lb bc, BANK(OverworldPikachuBallGFX), 4
-	call CopyVideoDataAlternate
-	pop hl
-	ld de, 4 * $10
-	add hl, de
-	pop af
-	dec a
-	jr nz, .loop
-	ret
-
 OverworldPikachuBallGFX:
 INCBIN "gfx/overworld/pikachu_ball.2bpp"
 

@@ -74,9 +74,3 @@ CinnabarGymText_f217d:
 CinnabarGymText_f2182:
 	text_far _CinnabarGymText_6
 	text_end
-
-; SUGGESTED NAME: CinnabarGymUnusedAnswerQuestionText
-; Unused quiz remark: "Come on, answer the question!" (confidence: high)
-CinnabarGymText_f2187:
-	text_far _CinnabarGymText_7 ; unused
-	text_end

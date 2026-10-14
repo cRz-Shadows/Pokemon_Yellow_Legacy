@@ -198,17 +198,6 @@ CinnabarGymScript_75023:
 	call CinnabarGymFlagAction
 	ret
 
-; SUGGESTED NAME: CinnabarGymCheckTrainerBeaten
-; Unreferenced: tests EVENT_BEAT_CINNABAR_GYM_TRAINER_n for wTrainerHeaderFlagBit (confidence: high)
-CinnabarGymScript_75032:
-	ld a, [wTrainerHeaderFlagBit]
-	ldh [hGymGateIndex], a
-	ld c, a
-	ld b, FLAG_TEST
-	EventFlagAddress hl, EVENT_BEAT_CINNABAR_GYM_TRAINER_0
-	call CinnabarGymFlagAction
-	ret
-
 ; SUGGESTED NAME: CinnabarGymUnlockGate
 ; Sets the gate-unlocked event for this trainer and redraws the gate blocks (confidence: high)
 CinnabarGymScript_75041:

@@ -1,7 +1,3 @@
-_PokemonText::
-	text "#MON!"
-	done
-
 _PokemartGreetingText::
 	text "Hi there!"
 	next "May I help you?"
