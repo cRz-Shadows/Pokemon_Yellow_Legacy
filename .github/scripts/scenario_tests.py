@@ -18,6 +18,9 @@ the result.
 - Oak's lab: the rival comments on a picked EEVEE ("Copycat") and on a pick
   that can't attack yet (MAGIKARP) before his first battle. The type and
   legendary comments are covered by the smoke test.
+- Saving writes PIKACHU's happiness and mood to their own place in the save
+  (issue #103: the party/Pokédex save used vanilla's offset, 78 bytes early,
+  and overwrote other saved data), and the save checksum stays valid.
 - With the Virtual Console ROM (optional second argument), the VC patch lets
   the starter PIKACHU play without SURF.
 
@@ -137,6 +140,65 @@ def rival_comment(prefix, state, label, species, expect):
                 return f'rival: "{seen[-1]}"'
             g.press('a', 25)
         g.fail(f'expected the rival to say "{expect}", text was "{" | ".join(dict.fromkeys(seen))}"')
+    finally:
+        g.stop()
+
+
+# --- Saving ----------------------------------------------------------------
+
+def save_game(g):
+    """START -> SAVE -> YES, until the game says it saved."""
+    for _ in range(10):
+        g.pb.button('start', 4)
+        g.run(40)
+        if 'SAVE' in g.text():
+            break
+    else:
+        g.fail('the START menu never opened')
+    for _ in range(8):
+        t = g.text()
+        if t[t.find('>') + 1:t.find('>') + 5] == 'SAVE':
+            break
+        g.press('down', 15)
+    g.press('a', 90)
+    g.press('a', 60)  # YES
+    for _ in range(40):
+        if 'saved' in g.text():
+            return
+        g.run(30)
+    g.fail('the game never said it saved')
+
+
+def pikachu_happiness_save(prefix, state):
+    """Save, then read the cartridge RAM: the saved main data must hold
+    PIKACHU's happiness and mood at their own offset, and the bytes at vanilla's
+    offset ($179) must still match RAM."""
+    g = load(prefix, state, 'Save happiness')
+    try:
+        warp(g, 'REDS_HOUSE_2F', 'REDS_HOUSE_1F')
+        mem, syms = g.pb.memory, g.syms
+        start, happiness = syms['wMainDataStart'], syms['wPikachuHappiness']
+        vanilla = start + 0x179
+        if happiness == vanilla:
+            g.fail("wPikachuHappiness is at vanilla's offset; this test can't tell the difference")
+        values = [v for v in (0xa7, 0x5c, 0x3e) if v not in (mem[vanilla], mem[vanilla + 1])][:2]
+        mem[happiness], mem[happiness + 1] = values
+        save_game(g)
+
+        def sram(sym, offset=0):
+            return mem[1, syms[sym] + offset]
+        saved = [sram('sMainData', happiness - start + i) for i in range(2)]
+        if saved != values:
+            g.fail(f'saved happiness/mood {saved}, expected {values}')
+        at_vanilla = [sram('sMainData', 0x179 + i) for i in range(2)]
+        expect = [mem[vanilla], mem[vanilla + 1]]
+        if at_vanilla != expect:
+            g.fail(f"save data at vanilla's happiness offset is {at_vanilla}, RAM has {expect} (#103)")
+        size = syms['sGameDataEnd'] - syms['sGameData']
+        checksum = ~sum(sram('sGameData', i) for i in range(size)) & 0xff
+        if checksum != sram('sMainDataCheckSum'):
+            g.fail(f'save checksum {sram("sMainDataCheckSum"):#04x}, data sums to {checksum:#04x}')
+        return f'happiness/mood saved at their own offset ({values}), other data intact, checksum valid'
     finally:
         g.stop()
 
@@ -290,6 +352,7 @@ def main():
          lambda: rival_comment(p, pick, 'Rival eevee', 'EEVEE', 'Copycat')),
         ('Rival comment: Pick Starter, MAGIKARP',
          lambda: rival_comment(p, pick, 'Rival magikarp', 'MAGIKARP', 'even attack')),
+        ('Save: PIKACHU happiness offset', lambda: pikachu_happiness_save(p, normal)),
         ('Melanie: Pick Starter, CHARMANDER', lambda: melanie(p, pick, 'Melanie pick', None, True)),
         ('Melanie: Normal, unhappy PIKACHU', lambda: melanie(p, normal, 'Melanie unhappy', -47, False)),
         ('Melanie: Normal, happy PIKACHU', lambda: melanie(p, normal, 'Melanie happy', 50, True)),

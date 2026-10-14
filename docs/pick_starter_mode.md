@@ -117,5 +117,6 @@ Regression in Normal and Hard:
 
 - Pick Starter picker: SELECT shows the highlighted Pokémon's base stats or its level-5 moves instead of its types.
 - Pick Starter mode: your rival comments on your starter before your first battle.
+- Fixed (all modes): saving after a trade didn't store Pikachu's happiness and mood in the right place, and every save wrote them over 2 bytes of other saved data.
 
 Normal and Hard rules and existing saves are unchanged.
