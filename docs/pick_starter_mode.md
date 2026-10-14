@@ -11,6 +11,7 @@ Pick Starter is a third play mode alongside **Normal** and **Hard**. It plays li
    - **Up / Down** move one entry. Holding them scrolls, and the list wraps around at both ends.
    - **Left / Right** move a page.
    - The highlighted Pokémon's number, name, types and front sprite are shown. The sprite appears once you stop scrolling (after about 12 frames).
+   - **Select** switches the info next to the sprite between its **types**, its **base stats** (HP, Attack, Defense, Speed, Special) and the **moves it will know** at level 5. The choice stays while you scroll. The moves come from the same code that gives you the Pokémon, so they're exactly what you get.
    - **A** asks "So, you want …?". For a Pokémon with no damaging move at level 5, it adds "It can't attack yet. Are you sure?". **YES** takes it and **NO** returns to the list. You can't leave without choosing.
    - The debug build's quick start skips the mode menu, so test Pick Starter with a regular new game.
 
@@ -23,6 +24,7 @@ Pick Starter is a third play mode alongside **Normal** and **Hard**. It plays li
 - **If you pick anything else:**
   - Nothing follows you.
   - The Pikachu-only scenes are skipped. They check for the starter Pikachu, as they do in Normal mode when Pikachu is in the PC.
+  - In Oak's lab, your rival comments on your pick before your first battle: an Eevee like his ("Copycat!"), a legendary or Mew, a Pokémon that can't attack yet, or otherwise its (first) type. He still takes Eevee.
   - In Oak's lab, the "Pikachu escapes its Poké Ball" scene is skipped. Oak then gives his usual battle advice instead of "talk to it and see how it feels".
   - **Melanie** (Cerulean City) gives you **Bulbasaur** without needing a happy Pikachu.
   - **Charmander** (Route 24) and **Squirtle** (Officer Jenny, Vermilion City) are available as usual, so all three classic starters can be obtained.
@@ -66,6 +68,8 @@ New games:
 - [ ] Pick Starter + a non-Pikachu starter (try one each of: a regular pick, a weak pick from the table, a legendary)
 
 Story with a non-Pikachu starter:
+- [ ] Picker: SELECT cycles types, base stats and level-5 moves; the prompt still names the right Pokémon
+- [ ] Oak's lab: the rival comments on the pick (try an Eevee, a legendary, a weak pick and a regular pick)
 - [ ] Oak's lab: first rival battle, rival leaves, no Pikachu scene, Oak's advice line
 - [ ] Viridian City parcel and Pokédex
 - [ ] Viridian Forest and Brock
@@ -108,5 +112,10 @@ Regression in Normal and Hard:
 - Fixed: in Pick Starter mode, the Summer Beach House posters printed garbage instead of their text.
 - The picker shows the controls (in Oak's lead-in), warns before taking a Pokémon that can't attack at level 5, loads the sprite sooner, and shows the right sprite at the "So, you want …?" prompt.
 - The Surfin' Dude names the Pokémon that knows Surf. The mode menu is titled "Select game mode", and the Pick Starter description says only a Pikachu starter follows you.
+
+**Unreleased**
+
+- Pick Starter picker: SELECT shows the highlighted Pokémon's base stats or its level-5 moves instead of its types.
+- Pick Starter mode: your rival comments on your starter before your first battle.
 
 Normal and Hard rules and existing saves are unchanged.

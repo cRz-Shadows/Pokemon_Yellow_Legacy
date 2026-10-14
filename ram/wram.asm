@@ -1289,10 +1289,13 @@ UNION
 wUnusedNamePointer:: dw
 
 NEXTU
-; Pick Starter menu (engine/menus/pick_starter.asm): frames left before the
-; highlighted mon's picture loads. Safe to share: the only writers of
-; wUnusedNamePointer (battle and link code) never run during the picker.
+; Pick Starter menu (engine/menus/pick_starter.asm). Safe to share: the only
+; writers of wUnusedNamePointer (battle and link code) never run during the
+; picker.
+; frames left before the highlighted mon's picture loads
 wPickStarterPicDelay:: db
+; preview info shown next to the picture (PICK_STARTER_PAGE_* constant)
+wPickStarterPage:: db
 ENDU
 
 wItemPrices:: dw

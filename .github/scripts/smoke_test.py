@@ -10,6 +10,9 @@ first rival battle -> rival leaves -> talk to Oak.
   scene, and Oak gives his battle advice instead.
 Two more Pick Starter cases cover the picker's list wrap (UP from the top
 gives MEW) and paging (RIGHT moves a page).
+Before the rival battle, the rival must comment on a picked starter (its type,
+or that it's legendary), and say nothing extra about a PIKACHU.
+SELECT in the picker must cycle the preview: types, base stats, level-5 moves.
 The debug ROM must reach its debug menu.
 
 Usage: smoke_test.py ROM_PREFIX [DEBUG_ROM_PREFIX]
@@ -36,6 +39,11 @@ CASES = [
     ('Pick Starter: wrap to Mew', 2, ['up'], 'MEW'),
     ('Pick Starter: paging', 2, ['right', 'right', 'down'], 'PIDGEY'),  # #1 -> #8 -> #15 -> #16
 ]
+
+# The rival's comment on a picked starter (text() drops punctuation). The
+# EEVEE and "can't attack" comments are covered by the scenario tests.
+RIVAL_COMMENTS = {'CHARMANDER': 'FIRE type', 'MEW': 'legendary', 'PIDGEY': 'NORMAL type'}
+RIVAL_COMMENT_MARKERS = ('type  eh', 'legendary', 'Copycat', 'even attack')
 
 
 class TestFailure(Exception):
@@ -234,24 +242,35 @@ def get_starter(g, pick_buttons):
 def rival_battle_and_exit(g):
     """Walk toward the exit to trigger the rival's challenge, play through the
     battle (win or lose) until the rival has left and the player is free.
-    Returns the set of lab script states seen."""
+    Returns the set of lab script states seen and the text shown before the
+    battle (the rival's challenge)."""
     for _ in range(40):  # let the gift text finish
         g.press('b', 20)
     challenge = g.const('SCRIPT_OAKSLAB_RIVAL_CHALLENGES_PLAYER')
     noop = g.const('SCRIPT_OAKSLAB_NOOP')
+    challenge_text = []
+
+    def read_box():
+        if not g.mem('wIsInBattle'):
+            t = g.text()
+            challenge_text.append(' '.join(t[i * 20:(i + 1) * 20].strip() for i in range(13, 17)))
+
     for _ in range(60):
         if g.mem('wIsInBattle') or g.mem('wOaksLabCurScript') != challenge:
             break
         g.press('down', 10, hold=12)
+        read_box()
         g.press('b', 15)
     seen = set()
     for step in range(1500):
+        if step < 100:
+            read_box()
         seen.add(g.mem('wOaksLabCurScript'))
         if (g.mem('wOaksLabCurScript') == noop and step > 50
                 and g.mem('wJoyIgnore') == 0 and not g.mem('wIsInBattle')):
             for _ in range(30):  # finish any open text box
                 g.press('b', 20)
-            return seen
+            return seen, ' | '.join(challenge_text)
         g.press('a', 20)
     g.fail(f'the rival battle and exit never finished (lab script {g.mem("wOaksLabCurScript")})')
 
@@ -289,7 +308,12 @@ def test_case(prefix, label, difficulty, pick_buttons, expected):
         if g.saw_attack_warning:
             g.fail(f'the "can\'t attack yet" warning appeared for {expected}')
         pikachu = expected == 'PIKACHU'
-        seen = rival_battle_and_exit(g)
+        seen, challenge_text = rival_battle_and_exit(g)
+        comment = RIVAL_COMMENTS.get(expected)
+        if difficulty == 2 and comment and comment not in challenge_text:
+            g.fail(f'expected the rival to say "{comment}", he said "{challenge_text}"')
+        if not comment and any(m in challenge_text for m in RIVAL_COMMENT_MARKERS):
+            g.fail(f'the rival commented on {expected}: "{challenge_text}"')
         escape_scene = {g.const('SCRIPT_OAKSLAB_PIKACHU_ESCAPES_POKEBALL'),
                         g.const('SCRIPT_OAKSLAB_PIKACHU_DISLIKES_POKEBALLS')}
         if pikachu and not seen & escape_scene:
@@ -301,7 +325,8 @@ def test_case(prefix, label, difficulty, pick_buttons, expected):
         if want not in oak:
             g.fail(f'expected Oak to say "{want}...", he said "{oak}"')
         scene = 'escape scene played' if pikachu else 'no escape scene'
-        return f'received {expected}, level 5; rival battle done; {scene}; Oak: "{want}..."'
+        rival = f'rival said "{comment}"' if comment else 'no rival comment'
+        return f'received {expected}, level 5; {rival}; rival battle done; {scene}; Oak: "{want}..."'
     finally:
         g.stop()
 
@@ -329,6 +354,49 @@ def test_weak_starter_warning(prefix):
         g.stop()
 
 
+def test_picker_info(prefix):
+    """SELECT in the picker must cycle CHARMANDER's preview through its types,
+    base stats and level-5 moves, and back; the confirm prompt must still name
+    CHARMANDER after the moves page."""
+    g = Game(prefix, 'Picker info pages')
+    try:
+        new_game(g, 2)
+        walk_to_oaks_lab(g)
+        open_picker(g)
+        for _ in range(400):
+            if 'TYPE1' in g.text():
+                break
+            g.press('a', 25)
+        else:
+            g.fail('the Pick Starter picker never opened')
+        g.run(60)
+        for _ in range(3):
+            g.press('down', 16, hold=8)
+        g.run(120)
+        pages = (('stats', ('HP', 'ATTACK', 'DEFENSE', 'SPEED', 'SPECIAL', '52')),
+                 ('moves', ('SCRATCH', 'GROWL')),
+                 ('types', ('TYPE1', 'FIRE')))
+        for page, words in pages:
+            g.press('select', 30)
+            preview = g.text()[:20 * 9]
+            if 'CHARMANDER' not in preview or not all(w in preview for w in words):
+                g.fail(f'expected the {page} page with {words}, got "{" ".join(preview.split())}"')
+        g.press('select', 30)
+        g.press('select', 30)  # moves page again
+        for _ in range(10):
+            if 'you want' in g.text():
+                break
+            g.press('a', 60)
+        else:
+            g.fail('the confirm prompt never appeared')
+        g.run(60)
+        if 'CHARMANDER' not in g.text()[20 * 12:]:
+            g.fail(f'the confirm prompt after the moves page does not name CHARMANDER: "{g.text()[20 * 12:].strip()}"')
+        return 'SELECT shows base stats (ATTACK 52), moves (SCRATCH, GROWL), then types; prompt names CHARMANDER'
+    finally:
+        g.stop()
+
+
 def test_debug_menu(prefix):
     g = Game(prefix, 'Debug menu')
     try:
@@ -349,6 +417,7 @@ def test_debug_menu(prefix):
 def main():
     tests = [(case[0], lambda case=case: test_case(sys.argv[1], *case)) for case in CASES]
     tests.append(('Pick Starter: weak starter warning', lambda: test_weak_starter_warning(sys.argv[1])))
+    tests.append(('Pick Starter: picker info pages', lambda: test_picker_info(sys.argv[1])))
     if len(sys.argv) > 2:
         tests.append(('Debug menu', lambda: test_debug_menu(sys.argv[2])))
     failed = 0

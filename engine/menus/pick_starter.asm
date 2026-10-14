@@ -10,6 +10,13 @@ DEF PICK_STARTER_MAX_TOP   EQU NUM_POKEMON - PICK_STARTER_LIST_ROWS
 ; Until then the list stays responsive.
 DEF PICK_STARTER_PIC_DELAY EQU 12
 
+; what the preview shows next to the picture; SELECT cycles through them
+	const_def
+	const PICK_STARTER_PAGE_TYPES ; number, name and types
+	const PICK_STARTER_PAGE_STATS ; number, name and base stats
+	const PICK_STARTER_PAGE_MOVES ; number, name and moves at STARTER_LEVEL
+DEF NUM_PICK_STARTER_PAGES EQU const_value
+
 ; The list's state lives in the usual menu variables:
 ; [wListScrollOffset] = Pokédex index (0-based) of the top row
 ; [wCurrentMenuItem]  = highlighted row, 0 to PICK_STARTER_LIST_ROWS - 1
@@ -34,6 +41,7 @@ PickStarterMenu::
 	xor a
 	ld [wListScrollOffset], a
 	ld [wCurrentMenuItem], a
+	ld [wPickStarterPage], a ; PICK_STARTER_PAGE_TYPES
 	call ClearScreen
 	call PickStarter_Redraw
 	call PickStarter_DrawPic
@@ -45,6 +53,8 @@ PickStarterMenu::
 	ldh a, [hJoy5]
 	bit BIT_A_BUTTON, a
 	jp nz, .confirm
+	bit BIT_SELECT, a
+	jp nz, .nextPage
 	bit BIT_D_UP, a
 	jr nz, .up
 	bit BIT_D_DOWN, a
@@ -143,6 +153,18 @@ PickStarterMenu::
 	call PickStarter_Redraw
 	jp .loop
 
+.nextPage
+	ld hl, wPickStarterPage
+	ld a, [hl]
+	inc a
+	cp NUM_PICK_STARTER_PAGES
+	jr c, .storePage
+	xor a
+.storePage
+	ld [hl], a
+	call PickStarter_DrawInfo ; the picture stays
+	jp .loop
+
 .confirm
 	; show the highlighted mon's picture if it hasn't loaded yet
 	ld a, [wPickStarterPicDelay]
@@ -191,25 +213,39 @@ PickStarterMenu::
 	ld a, [wPlayerStarter]
 	ret
 
-; Draws the list and the highlighted mon's number, name and types, and
-; schedules its picture (see PICK_STARTER_PIC_DELAY).
-; Leaves the highlighted mon in [wCurPartySpecies] and its name in wNameBuffer.
+; Draws the list and the highlighted mon's info (see PickStarter_DrawInfo),
+; hides the old picture and schedules the new one (see PICK_STARTER_PIC_DELAY).
 PickStarter_Redraw:
+	hlcoord 0, 0
+	lb bc, 9, 8
+	call ClearScreenArea
 	ld hl, wStatusFlags5
 	set 6, [hl] ; no printing delay, or every letter would wait on the text speed
 	call PickStarter_DrawList
-	call PickStarter_DrawPreview
 	ld hl, wStatusFlags5
 	res 6, [hl]
+	call PickStarter_DrawInfo
 	ld a, PICK_STARTER_PIC_DELAY
 	ld [wPickStarterPicDelay], a
 	ret
 
-; Returns nz if the highlighted mon ([wCurSpecies]/[wCurPartySpecies]) would
-; know a damaging move at STARTER_LEVEL, i.e. among the moves AddPartyMon gives it.
+; Draws the highlighted mon's number, name and the [wPickStarterPage] info
+; right of the picture.
+; Leaves the highlighted mon in [wCurPartySpecies] and its name in wNameBuffer.
+PickStarter_DrawInfo:
+	ld hl, wStatusFlags5
+	set 6, [hl]
+	call PickStarter_DrawPreview
+	ld hl, wStatusFlags5
+	res 6, [hl]
+	ret
+
+; Writes the moves the mon in [wCurSpecies]/[wCurPartySpecies] would know at
+; STARTER_LEVEL to wEnemyMonMoves, the same way AddPartyMon gives them.
+; Also loads its header (types, base stats) into wMonHeader.
 ; wEnemyMonMoves is free here (battle data, reloaded when a battle starts);
 ; wBuffer can't be used because it shares space with wLearningMovesFromDayCare.
-PickStarter_CanAttack:
+PickStarter_GetMoves:
 	call GetMonHeader ; level 1 moves in wMonHMoves
 	ld hl, wMonHMoves
 	ld de, wEnemyMonMoves
@@ -220,7 +256,12 @@ PickStarter_CanAttack:
 	xor a
 	ld [wLearningMovesFromDayCare], a
 	ld de, wEnemyMonMoves
-	predef WriteMonMoves ; adds the moves learned up to STARTER_LEVEL
+	predef_jump WriteMonMoves ; adds the moves learned up to STARTER_LEVEL
+
+; Returns nz if the mon in [wCurSpecies]/[wCurPartySpecies] would know a
+; damaging move at STARTER_LEVEL (see PickStarter_GetMoves).
+PickStarter_CanAttack:
+	call PickStarter_GetMoves
 	ld hl, wEnemyMonMoves
 	ld c, NUM_MOVES
 .loop
@@ -254,8 +295,8 @@ PickStarter_DrawPic:
 	jp RunPaletteCommand
 
 PickStarter_DrawPreview:
-	hlcoord 0, 0
-	lb bc, 9, SCREEN_WIDTH
+	hlcoord 8, 0
+	lb bc, 9, SCREEN_WIDTH - 8
 	call ClearScreenArea
 	ld a, [wListScrollOffset]
 	ld b, a
@@ -276,13 +317,79 @@ PickStarter_DrawPreview:
 	ld [wCurSpecies], a
 	ld [wNamedObjectIndex], a
 	call GetMonName
-	hlcoord 9, 3
+	hlcoord 9, 2
 	call PlaceString
-	hlcoord 9, 5
+	ld a, [wPickStarterPage]
+	cp PICK_STARTER_PAGE_STATS
+	jr z, PickStarter_DrawStats
+	cp PICK_STARTER_PAGE_MOVES
+	jr z, PickStarter_DrawMoves
+	hlcoord 9, 4
 	ld de, PickStarterTypesText
 	call PlaceString
-	hlcoord 10, 6
+	hlcoord 10, 5
 	predef_jump PrintMonType ; uses [wCurSpecies]
+
+PickStarter_DrawStats:
+	call GetMonHeader ; uses [wCurSpecies]
+	ldh a, [hUILayoutFlags]
+	push af
+	set 2, a ; single-spaced <NEXT>
+	ldh [hUILayoutFlags], a
+	hlcoord 9, 4
+	ld de, PickStarterStatsText
+	call PlaceString
+	pop af
+	ldh [hUILayoutFlags], a
+	ld de, wMonHBaseStats
+	hlcoord 17, 4
+	ld b, NUM_STATS
+.loop
+	push bc
+	push de
+	push hl
+	lb bc, 1, 3
+	call PrintNumber
+	pop hl
+	ld bc, SCREEN_WIDTH
+	add hl, bc
+	pop de
+	inc de
+	pop bc
+	dec b
+	jr nz, .loop
+	ret
+
+; Move names are up to 12 letters, so they start one column further left.
+PickStarter_DrawMoves:
+	call PickStarter_GetMoves
+	ld de, wEnemyMonMoves
+	hlcoord 8, 4
+	ld b, NUM_MOVES
+.loop
+	push bc
+	push hl
+	ld a, [de]
+	inc de
+	push de
+	and a
+	ld de, PickStarterNoMoveText
+	jr z, .place
+	ld [wNamedObjectIndex], a
+	call GetMoveName
+.place
+	call PlaceString
+	pop de
+	pop hl
+	ld bc, SCREEN_WIDTH
+	add hl, bc
+	pop bc
+	dec b
+	jr nz, .loop
+	; GetMoveName overwrote the mon's name, which the confirm prompt prints
+	ld a, [wCurPartySpecies]
+	ld [wNamedObjectIndex], a
+	jp GetMonName
 
 PickStarter_DrawList:
 	hlcoord 0, 9
@@ -331,10 +438,88 @@ PickStarterTypesText:
 	db   "TYPE1/"
 	next "TYPE2/@"
 
+PickStarterStatsText: ; in wMonHBaseStats order
+	db   "HP"
+	next "ATTACK"
+	next "DEFENSE"
+	next "SPEED"
+	next "SPECIAL@"
+
+PickStarterNoMoveText:
+	db "-@"
+
 PickStarterConfirmText:
 	text_far _PickStarterConfirmText
 	text_end
 
 PickStarterConfirmCantAttackText:
 	text_far _PickStarterConfirmCantAttackText
+	text_end
+
+; Pick Starter mode: the rival's comment on the player's starter (not PIKACHU)
+; before his first battle in Oak's lab: an EEVEE like his, a legendary, a mon
+; that can't attack yet, or else its type.
+PickStarterRivalComment::
+	ld a, [wPlayerStarter]
+	ld [wCurPartySpecies], a
+	ld [wCurSpecies], a
+	ld [wNamedObjectIndex], a
+	call GetMonName
+	ld a, [wPlayerStarter]
+	ld hl, PickStarterRivalCopycatText
+	cp EEVEE
+	jr z, .print
+	ld hl, PickStarterLegendaries
+	ld de, 1
+	call IsInArray
+	ld hl, PickStarterRivalLegendaryText
+	jr c, .print
+	call PickStarter_CanAttack ; also loads the mon header
+	ld hl, PickStarterRivalCantAttackText
+	jr z, .print
+	; copy the name of its first type to wStringBuffer
+	ld a, [wMonHType1]
+	add a
+	ld c, a
+	ld b, 0
+	ld hl, TypeNames
+	add hl, bc
+	ld a, BANK(TypeNames)
+	call GetFarByte
+	ld e, a
+	inc hl
+	ld a, BANK(TypeNames)
+	call GetFarByte
+	ld h, a
+	ld l, e
+	ld de, wStringBuffer
+	ld bc, NAME_LENGTH ; longer than any type name
+	ld a, BANK(TypeNames)
+	call FarCopyData
+	ld hl, PickStarterRivalTypeText
+.print
+	jp PrintText
+
+PickStarterLegendaries:
+	db ARTICUNO
+	db ZAPDOS
+	db MOLTRES
+	db MEWTWO
+	db MEW
+	db -1 ; end
+
+PickStarterRivalCopycatText:
+	text_far _PickStarterRivalCopycatText
+	text_end
+
+PickStarterRivalLegendaryText:
+	text_far _PickStarterRivalLegendaryText
+	text_end
+
+PickStarterRivalCantAttackText:
+	text_far _PickStarterRivalCantAttackText
+	text_end
+
+PickStarterRivalTypeText:
+	text_far _PickStarterRivalTypeText
 	text_end

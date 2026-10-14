@@ -1145,12 +1145,32 @@ OaksLabOakDontGoAwayYetText:
 
 OaksLabRivalIllTakeYouOnText:
 	text_asm
+	check_pick_starter
+	jr nz, .noComment
+	check_starter_pikachu
+	jr z, .noComment
+; Pick Starter mode: the rival comments on the player's starter
+	ld hl, .WaitText
+	call PrintText
+	callfar PickStarterRivalComment
+	ld hl, .ComeOnText
+	call PrintText
+	jp TextScriptEnd
+.noComment
 	ld hl, .Text
 	call PrintText
 	jp TextScriptEnd
 
 .Text:
 	text_far _OaksLabRivalIllTakeYouOnText
+	text_end
+
+.WaitText:
+	text_far _OaksLabRivalWaitText
+	text_end
+
+.ComeOnText:
+	text_far _OaksLabRivalComeOnText
 	text_end
 
 OaksLabRivalIPickedTheWrongPokemonText:
