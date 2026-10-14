@@ -4,47 +4,116 @@ on:
   push:
     branches: [ main ]
   pull_request:
-
-env:
-  rgbds_version: v1.0.4
+    # labeled/unlabeled so adding the save-layout-change label reruns the checks
+    types: [ opened, synchronize, reopened, labeled, unlabeled ]
 
 jobs:
   build:
+    name: Build and smoke test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v7
 
-      - name: Checkout rgbds
-        uses: actions/checkout@v7
-        with:
-          path: rgbds
-          ref: ${{ env.rgbds_version }}
-          repository: gbdev/rgbds
-
-      - name: Install rgbds
-        working-directory: rgbds
-        run: |
-          sudo apt-get update
-          sudo apt-get install -yq bison libpng-dev pkg-config
-          sudo make -j$(nproc) install
-
-      - name: Remove rgbds
-        run: rm -rf rgbds
+      - name: Install RGBDS
+        uses: ./.github/actions/install-rgbds
 
       - name: Build
-        run: make -j$(nproc) yellow yellow_debug
+        run: |
+          set -o pipefail
+          make -j$(nproc) yellow yellow_debug 2>&1 | tee build.log
+
+      - name: Check for new warnings
+        run: python3 .github/scripts/check_warnings.py build.log
 
       # The build must not modify tracked files (e.g. regenerated sources)
       - name: Check for changes
         run: git diff --exit-code
 
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+
+      - name: Install PyBoy
+        run: pip install pyboy==2.8.1
+
+      # Plays the start of the game in each mode; see the script for details
+      - name: Smoke test
+        run: |
+          set -o pipefail
+          python .github/scripts/smoke_test.py pokemon_yellow_legacy pokemon_yellow_legacy_debug \
+            | tee smoke.log
+
+      - name: Upload smoke test screenshots
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: smoke-test-failures
+          path: smoke_test_failures/
+          if-no-files-found: ignore
+
       # ROMs aren't uploaded as artifacts; the checksums identify the build
       - name: Summary
+        if: always()
         run: |
           {
+            echo '### Smoke test'
+            echo '```'
+            cat smoke.log 2>/dev/null || echo 'did not run'
+            echo '```'
             echo '### ROM checksums'
             echo '```'
-            sha1sum pokemon_yellow_legacy.gbc pokemon_yellow_legacy_debug.gbc
+            sha1sum pokemon_yellow_legacy.gbc pokemon_yellow_legacy_debug.gbc 2>/dev/null || echo 'no ROMs built'
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
+
+  compare:
+    name: Compare with base
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Install RGBDS
+        uses: ./.github/actions/install-rgbds
+
+      - name: Find base commit
+        id: base
+        run: |
+          if [ "${{ github.event_name }}" = pull_request ]; then
+            base="${{ github.event.pull_request.base.sha }}"
+          else
+            base="${{ github.event.before }}"
+          fi
+          if [ -z "$base" ] || ! git cat-file -e "$base^{commit}" 2>/dev/null; then
+            echo "No base commit to compare with." >> "$GITHUB_STEP_SUMMARY"
+            base=
+          fi
+          echo "sha=$base" >> "$GITHUB_OUTPUT"
+
+      - name: Build
+        if: steps.base.outputs.sha != ''
+        run: make -j$(nproc) yellow yellow_debug
+
+      - name: Build base
+        id: base_build
+        if: steps.base.outputs.sha != ''
+        run: |
+          git worktree add "$RUNNER_TEMP/base" "${{ steps.base.outputs.sha }}"
+          if make -C "$RUNNER_TEMP/base" -j$(nproc) yellow yellow_debug; then
+            echo "ok=1" >> "$GITHUB_OUTPUT"
+          else
+            echo "The base commit doesn't build, so there is nothing to compare with." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Compare
+        if: steps.base_build.outputs.ok == '1'
+        env:
+          ALLOW_SAVE_LAYOUT_CHANGE: ${{ contains(github.event.pull_request.labels.*.name, 'save-layout-change') && '1' || '0' }}
+        run: |
+          set -o pipefail
+          echo "Compared with ${{ steps.base.outputs.sha }}" >> "$GITHUB_STEP_SUMMARY"
+          python3 .github/scripts/compare_builds.py "$RUNNER_TEMP/base" . | tee -a "$GITHUB_STEP_SUMMARY"

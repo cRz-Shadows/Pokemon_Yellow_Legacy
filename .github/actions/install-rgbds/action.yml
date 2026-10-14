@@ -1,0 +1,25 @@
+name: Install RGBDS
+description: Installs the official statically linked RGBDS release binaries
+
+inputs:
+  version:
+    description: RGBDS release tag
+    default: v1.0.4
+  sha256:
+    description: SHA-256 of rgbds-linux-x86_64.tar.xz for that release
+    default: 3e19e50ea602e316be709160acaf0a708b1fa6d32d219ec541f244442895dbb7
+
+runs:
+  using: composite
+  steps:
+    - name: Download and install RGBDS ${{ inputs.version }}
+      shell: bash
+      run: |
+        dir="$RUNNER_TEMP/rgbds"
+        mkdir -p "$dir"
+        curl -sSfL -o "$dir/rgbds.tar.xz" \
+          "https://github.com/gbdev/rgbds/releases/download/${{ inputs.version }}/rgbds-linux-x86_64.tar.xz"
+        echo "${{ inputs.sha256 }}  $dir/rgbds.tar.xz" | sha256sum -c -
+        tar -xJf "$dir/rgbds.tar.xz" -C "$dir"
+        echo "$dir" >> "$GITHUB_PATH"
+        "$dir/rgbasm" --version
