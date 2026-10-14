@@ -8,6 +8,7 @@ Every pull request and every push to `main` runs `.github/workflows/ci.yml`. Eac
 | **Warnings** | Fails on any build warning except the known title truncation (`.github/scripts/check_warnings.py`). | yes |
 | **Tracked files** | Fails if the build modified any tracked file. | yes |
 | **Smoke test** | Plays the opening in PyBoy: new game in Normal, Hard and Pick Starter (Charmander and Pikachu), starter, first rival battle, Oak's lab scenes; the debug ROM must reach its menu (`.github/scripts/smoke_test.py`). On failure, screenshots are uploaded as an artifact. | yes |
+| **Scenario tests** | Warps to specific events and checks them: Melanie's Bulbasaur (Pick Starter, unhappy and happy Pikachu), the Safari Zone gate with no money (6th refusal, 4th refusal is free), Pikachu's Beach in Pick Starter and Normal mode (`.github/scripts/scenario_tests.py`). | yes |
 | **Build base** | Builds the base commit (the PR's base, or the previous `main` commit) for the comparison checks. | no |
 | **ROM changes** | Reports whether each ROM is identical to the base build. | only with the `expect-identical-rom` label |
 | **Save layout** | Fails if a saved WRAM range or SRAM symbol moved, which would break old saves. | yes, unless the `save-layout-change` label is set |
@@ -31,6 +32,7 @@ make yellow yellow_debug yellow_vc 2>&1 | tee build.log
 python3 .github/scripts/check_warnings.py build.log
 pip install -r .github/requirements.txt
 python3 .github/scripts/smoke_test.py pokemon_yellow_legacy pokemon_yellow_legacy_debug
+python3 .github/scripts/scenario_tests.py pokemon_yellow_legacy
 # with a build of the base commit in base-out/:
 python3 .github/scripts/compare_builds.py roms base-out .    # also: save, banks
 ruff check --config .github/ruff.toml .github/scripts tools/make_release_patches.py
