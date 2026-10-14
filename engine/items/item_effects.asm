@@ -262,18 +262,18 @@ ItemUseBall:
 	ldh [hMultiplier], a
 	call Multiply
 
-; Determine BallFactor. It's 8 for Great Balls and 12 for the others.
+; Determine BallFactor. It's 12 for Poké Balls, 8 for Great Balls and 4 for
+; Ultra and Safari Balls.
 	ld a, [wCurItem]
+	ld b, 12
+	cp POKE_BALL
+	jr z, .gotBallFactor
+	ld b, 8
 	cp GREAT_BALL
-	ld a, 12
-	cp ULTRA_BALL
-	ld a, 4
-	cp SAFARI_BALL
-	ld a, 4
-	jr nz, .skip1
-	ld a, 8
-
-.skip1
+	jr z, .gotBallFactor
+	ld b, 4
+.gotBallFactor
+	ld a, b
 ; Note that the results of all division operations are floored.
 
 ; Calculate (MaxHP * 255) / BallFactor.
