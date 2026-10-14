@@ -8,8 +8,8 @@ GameCorner_Script:
 
 GameCornerSelectLuckySlotMachine:
 	ld hl, wCurrentMapScriptFlags
-	bit 6, [hl]
-	res 6, [hl]
+	bit BIT_CUR_MAP_LOADED_2, [hl]
+	res BIT_CUR_MAP_LOADED_2, [hl]
 	ret z
 	call Random
 	ldh a, [hRandomAdd]
@@ -25,8 +25,8 @@ GameCornerSelectLuckySlotMachine:
 
 GameCornerSetRocketHideoutDoorTile:
 	ld hl, wCurrentMapScriptFlags
-	bit 5, [hl]
-	res 5, [hl]
+	bit BIT_CUR_MAP_LOADED_1, [hl]
+	res BIT_CUR_MAP_LOADED_1, [hl]
 	ret z
 	CheckEvent EVENT_FOUND_ROCKET_HIDEOUT
 	ret nz
@@ -53,9 +53,9 @@ GameCornerDefaultScript:
 
 GameCornerRocketBattleScript:
 	ld a, [wIsInBattle]
-	cp $ff
+	cp LOST_BATTLE
 	jp z, GameCornerReenterMapAfterPlayerLoss
-	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, TEXT_GAMECORNER_ROCKET_AFTER_BATTLE
 	ldh [hTextID], a
@@ -107,7 +107,7 @@ GameCornerMovement_Rocket_WalkDirect:
 
 GameCornerRocketExitScript:
 	ld a, [wStatusFlags5]
-	bit 0, a
+	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
 	xor a
 	ld [wJoyIgnore], a
@@ -115,8 +115,8 @@ GameCornerRocketExitScript:
 	ld [wToggleableObjectIndex], a
 	predef HideObject
 	ld hl, wCurrentMapScriptFlags
-	set 5, [hl]
-	set 6, [hl]
+	set BIT_CUR_MAP_LOADED_1, [hl]
+	set BIT_CUR_MAP_LOADED_2, [hl]
 	ld a, SCRIPT_GAMECORNER_DEFAULT
 	ld [wGameCornerCurScript], a
 	ret
@@ -427,8 +427,8 @@ GameCornerRocketText:
 	ld hl, .ImGuardingThisPosterText
 	call PrintText
 	ld hl, wStatusFlags3
-	set 6, [hl]
-	set 7, [hl]
+	set BIT_TALKED_TO_TRAINER, [hl]
+	set BIT_PRINT_END_BATTLE_TEXT, [hl]
 	ld hl, .BattleEndText
 	ld de, .BattleEndText
 	call SaveEndBattleTextPointers
@@ -487,7 +487,7 @@ GameCornerOopsForgotCoinCaseText:
 
 GameCornerDrawCoinBox:
 	ld hl, wStatusFlags5
-	set 6, [hl]
+	set BIT_NO_TEXT_DELAY, [hl]
 	hlcoord 11, 0
 	lb bc, 5, 7
 	call TextBoxBorder
@@ -513,10 +513,10 @@ GameCornerDrawCoinBox:
 	call PlaceString
 	hlcoord 15, 5
 	ld de, wPlayerCoins
-	ld c, $82
+	ld c, 2 | LEADING_ZEROES
 	call PrintBCDNumber
 	ld hl, wStatusFlags5
-	res 6, [hl]
+	res BIT_NO_TEXT_DELAY, [hl]
 	ret
 
 GameCornerMoneyText:

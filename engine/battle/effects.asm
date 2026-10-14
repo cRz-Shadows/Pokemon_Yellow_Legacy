@@ -55,7 +55,7 @@ SleepEffect:
 	                        ; including the event where the target already has another status
 	ld a, [de]
 	ld b, a
-	and $7
+	and SLP_MASK
 	jr z, .notAlreadySleeping ; can't affect a mon that is already asleep
 	ld hl, AlreadyAsleepText
 	jp PrintText
@@ -72,7 +72,7 @@ SleepEffect:
 .setSleepCounter
 ; set target's sleep counter to a random number between 1 and 7
 	call BattleRandom
-	and $7
+	and SLP_MASK
 	jr z, .setSleepCounter
 	ld b, a
 	call CheckLinkBattleCupRules
@@ -369,7 +369,7 @@ CheckDefrost:
 	ld [wEnemyMonStatus], a ; set opponent status to 00 ["defrost" a frozen monster]
 	ld hl, wEnemyMon1Status
 	ld a, [wEnemyMonPartyPos]
-	ld bc, wEnemyMon2 - wEnemyMon1
+	ld bc, PARTYMON_STRUCT_LENGTH
 	call AddNTimes
 	xor a
 	ld [hl], a ; clear status in roster
@@ -382,7 +382,7 @@ CheckDefrost:
 	ld [wBattleMonStatus], a
 	ld hl, wPartyMon1Status
 	ld a, [wPlayerMonNumber]
-	ld bc, wPartyMon2 - wPartyMon1
+	ld bc, PARTYMON_STRUCT_LENGTH
 	call AddNTimes
 	xor a
 	ld [hl], a
@@ -720,7 +720,7 @@ UpdateLoweredStatDone:
 	call PrintStatText
 	pop de
 	ld a, [de]
-	cp $44
+	cp ATTACK_DOWN_SIDE_EFFECT ; for all side effects, move animation has already played, skip it
 	jr nc, .ApplyBadgeBoostsAndStatusPenalties
 	call PlayCurrentMoveAnimation2
 .ApplyBadgeBoostsAndStatusPenalties
@@ -751,7 +751,7 @@ CantLowerAnymore:
 
 MoveMissed:
 	ld a, [de]
-	cp $44
+	cp ATTACK_DOWN_SIDE_EFFECT
 	ret nc
 	jp ConditionalPrintButItFailed
 
@@ -794,7 +794,7 @@ PrintStatText:
 	jr .findStatName_inner
 .foundStatName
 	ld de, wStringBuffer
-	ld bc, $a
+	ld bc, STAT_NAME_LENGTH
 	jp CopyData
 
 INCLUDE "data/battle/stat_mod_names.asm"
@@ -1392,7 +1392,7 @@ DisableEffect:
 	or [hl]
 	inc hl
 	or [hl]
-	and $3f
+	and PP_MASK
 	pop hl ; wBattleMonPP or wEnemyMonPP
 	jr z, .moveMissedPopHL ; nothing to do if all moves have no PP left
 	add hl, bc

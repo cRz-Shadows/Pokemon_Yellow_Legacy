@@ -49,12 +49,12 @@ _RemovePokemon::
 .gotNicksPointer
 	call CopyDataUntil
 	ld hl, wPartyMons
-	ld bc, wPartyMon2 - wPartyMon1
+	ld bc, PARTYMON_STRUCT_LENGTH
 	ld a, [wRemoveMonFromBox]
 	and a
 	jr z, .gotMonStructs
 	ld hl, wBoxMons
-	ld bc, wBoxMon2 - wBoxMon1
+	ld bc, BOXMON_STRUCT_LENGTH
 .gotMonStructs
 	ld a, [wWhichPokemon]
 	call AddNTimes ; get address of the pokemon removed
@@ -68,7 +68,7 @@ _RemovePokemon::
 	ld bc, wBoxMonOT ; address of when to stop copying
 	jr .shiftOTs
 .copyUntilPartyMonOT
-	ld bc, wPartyMon2 - wPartyMon1
+	ld bc, PARTYMON_STRUCT_LENGTH
 	add hl, bc ; get address of pokemon after the pokemon removed
 	ld bc, wPartyMonOT ; address of when to stop copying
 .shiftOTs

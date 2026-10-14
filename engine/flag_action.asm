@@ -43,7 +43,7 @@ FlagAction:
 	ld a, b
 	and a
 	jr z, .reset
-	cp 2
+	cp FLAG_TEST
 	jr z, .read
 
 .set

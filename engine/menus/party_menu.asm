@@ -80,12 +80,12 @@ RedrawPartyMenu_::
 	push hl
 	ld bc, SCREEN_WIDTH + 1 ; down 1 row and right 1 column
 	ldh a, [hUILayoutFlags]
-	set 0, a
+	set BIT_PARTY_MENU_HP_BAR, a
 	ldh [hUILayoutFlags], a
 	add hl, bc
 	predef DrawHP2 ; draw HP bar and prints current / max HP
 	ldh a, [hUILayoutFlags]
-	res 0, a
+	res BIT_PARTY_MENU_HP_BAR, a
 	ldh [hUILayoutFlags], a
 	call SetPartyMenuHPBarColor ; color the HP bar (on SGB)
 	pop hl
@@ -112,7 +112,7 @@ RedrawPartyMenu_::
 	pop hl
 	pop de
 	inc de
-	ld bc, 2 * 20
+	ld bc, 2 * SCREEN_WIDTH
 	add hl, bc
 	pop bc
 	inc c
@@ -169,7 +169,7 @@ RedrawPartyMenu_::
 .placeEvolutionStoneString
 	pop hl
 	push hl
-	ld bc, 20 + 9 ; down 1 row and right 9 columns
+	ld bc, SCREEN_WIDTH + 9 ; down 1 row and right 9 columns
 	add hl, bc
 	call PlaceString
 	pop hl
@@ -186,7 +186,7 @@ RedrawPartyMenu_::
 	ld a, [hl]
 	push af
 	push hl
-	set 6, [hl] ; turn off letter printing delay
+	set BIT_NO_TEXT_DELAY, [hl]
 	ld a, [wPartyMenuTypeOrMessageID] ; message ID
 	cp FIRST_PARTY_MENU_TEXT_ID
 	jr nc, .printItemUseMessage

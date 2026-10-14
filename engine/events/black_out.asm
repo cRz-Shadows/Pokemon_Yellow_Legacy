@@ -40,9 +40,9 @@ ResetStatusAndHalveMoneyOnBlackout::
 
 .lostmoney
 	ld hl, wStatusFlags6
-	set 2, [hl]
-	res 3, [hl]
-	set 6, [hl]
-	ld a, %11111111
+	set BIT_FLY_OR_DUNGEON_WARP, [hl]
+	res BIT_FLY_WARP, [hl]
+	set BIT_ESCAPE_WARP, [hl]
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	predef_jump HealParty

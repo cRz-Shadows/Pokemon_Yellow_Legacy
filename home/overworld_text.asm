@@ -17,7 +17,7 @@ BoulderText::
 	text_far _BoulderText
 	text_asm
 	ld a, [wObtainedBadges]
-	bit 3, a ; RAINBOW BADGE
+	bit BIT_RAINBOWBADGE, a ; RAINBOW BADGE
 	jr z, .done
 	ld d, STRENGTH
 	callfar HasPartyMove

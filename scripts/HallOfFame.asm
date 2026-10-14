@@ -30,7 +30,7 @@ HallOfFameResetEventsAndSaveScript:
 	pop af
 	ld [wLetterPrintingDelayFlags], a
 	ld hl, wStatusFlags7
-	res 1, [hl]
+	res BIT_NO_MAP_MUSIC, [hl]
 	inc hl
 	set BIT_TEST_BATTLE, [hl] ; debug, unused?
 	xor a ; SCRIPT_*_DEFAULT
@@ -59,7 +59,7 @@ HallOfFameResetEventsAndSaveScript:
 	jp Init
 
 HallOfFameDefaultScript:
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld hl, wSimulatedJoypadStatesEnd
 	ld de, HallOfFameEntryMovement
@@ -72,7 +72,7 @@ HallOfFameDefaultScript:
 	ret
 
 HallOfFameEntryMovement:
-	db D_UP, 5
+	db PAD_UP, 5
 	db -1 ; end
 
 HallOfFameOakCongratulationsScript:
@@ -103,7 +103,7 @@ HallOfFameOakCongratulationsScript:
 .continue
 	ldh [hTextID], a
 	call DisplayTextID
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, HS_CERULEAN_CAVE_GUY
 	ld [wToggleableObjectIndex], a

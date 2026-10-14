@@ -109,7 +109,7 @@ BillsHouse_CheckPikachuEmotion::
 	ret
 
 BillsHousePikachuConfused::
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	xor a
 	ld [wPlayerMovingDirection], a
@@ -127,12 +127,12 @@ BillsHousePikachuConfused::
 	ret
 
 PikachuMovement_Confused:
-	db $00
-	db $20
-	db $20
-	db $20
-	db $1e
-	db $3f
+	db PIKAMOVEMENT_DELAY
+	db PIKAMOVEMENT_STEP_RIGHT
+	db PIKAMOVEMENT_STEP_RIGHT
+	db PIKAMOVEMENT_STEP_RIGHT
+	db PIKAMOVEMENT_STEP_UP
+	db PIKAMOVEMENT_END
 
 BillsHousePikachuWatchPlayer::
 	ld hl, PikachuMovement_WatchPlayer1
@@ -144,17 +144,17 @@ BillsHousePikachuWatchPlayer::
 	ret
 
 PikachuMovement_WatchPlayer1:
-	db $00
-	db $1f
-	db $1d
-	db $38
-	db $3f
+	db PIKAMOVEMENT_DELAY
+	db PIKAMOVEMENT_STEP_LEFT
+	db PIKAMOVEMENT_STEP_DOWN
+	db PIKAMOVEMENT_LOOK_RIGHT
+	db PIKAMOVEMENT_END
 
 PikachuMovement_WatchPlayer2:
-	db $00
-	db $1e
-	db $1f
-	db $1f
-	db $1d
-	db $38
-	db $3f
+	db PIKAMOVEMENT_DELAY
+	db PIKAMOVEMENT_STEP_UP
+	db PIKAMOVEMENT_STEP_LEFT
+	db PIKAMOVEMENT_STEP_LEFT
+	db PIKAMOVEMENT_STEP_DOWN
+	db PIKAMOVEMENT_LOOK_RIGHT
+	db PIKAMOVEMENT_END

@@ -1,6 +1,6 @@
 LoadFontTilePatterns::
 	ldh a, [rLCDC]
-	bit 7, a ; is the LCD enabled?
+	bit B_LCDC_ENABLE, a
 	jr nz, .on
 .off
 	ld hl, FontGraphics
@@ -11,12 +11,12 @@ LoadFontTilePatterns::
 .on
 	ld de, FontGraphics
 	ld hl, vFont
-	lb bc, BANK(FontGraphics), (FontGraphicsEnd - FontGraphics) / $8
+	lb bc, BANK(FontGraphics), (FontGraphicsEnd - FontGraphics) / TILE_1BPP_SIZE
 	jp CopyVideoDataDouble ; if LCD is on, transfer during V-blank
 
 LoadTextBoxTilePatterns::
 	ldh a, [rLCDC]
-	bit 7, a ; is the LCD enabled?
+	bit B_LCDC_ENABLE, a
 	jr nz, .on
 .off
 	ld hl, TextBoxGraphics
@@ -27,12 +27,12 @@ LoadTextBoxTilePatterns::
 .on
 	ld de, TextBoxGraphics
 	ld hl, vChars2 tile $60
-	lb bc, BANK(TextBoxGraphics), (TextBoxGraphicsEnd - TextBoxGraphics) / $10
+	lb bc, BANK(TextBoxGraphics), (TextBoxGraphicsEnd - TextBoxGraphics) / TILE_SIZE
 	jp CopyVideoData ; if LCD is on, transfer during V-blank
 
 LoadHpBarAndStatusTilePatterns::
 	ldh a, [rLCDC]
-	bit 7, a ; is the LCD enabled?
+	bit B_LCDC_ENABLE, a
 	jr nz, .on
 .off
 	ld hl, HpBarAndStatusGraphics

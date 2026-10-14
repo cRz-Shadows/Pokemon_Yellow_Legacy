@@ -63,7 +63,7 @@ PlaceNextChar::
 	jr nz, .NotNext
 	ld bc, 2 * SCREEN_WIDTH
 	ldh a, [hUILayoutFlags]
-	bit 2, a
+	bit BIT_SINGLE_SPACED_LINES, a
 	jr z, .ok
 	ld bc, SCREEN_WIDTH
 .ok
@@ -244,7 +244,7 @@ Paragraph::
 
 PageChar::
 	ldh a, [hUILayoutFlags]
-	bit 3, a
+	bit BIT_PAGE_CHAR_IS_NEXT, a
 	jr z, .pageChar
 	ld a, '<NEXT>'
 	jp PlaceNextChar.NotTerminator
@@ -322,7 +322,7 @@ ProtectedDelay3::
 TextCommandProcessor::
 	ld a, [wLetterPrintingDelayFlags]
 	push af
-	set 1, a
+	set BIT_TEXT_DELAY, a
 	ld e, a
 	ldh a, [hClearLetterPrintingDelayFlags]
 	xor e
@@ -501,7 +501,7 @@ TextCommand_PAUSE::
 	push bc
 	call Joypad
 	ldh a, [hJoyHeld]
-	and A_BUTTON | B_BUTTON
+	and PAD_A | PAD_B
 	jr nz, .done
 	ld c, 30 ; half a second
 	call DelayFrames
@@ -577,7 +577,7 @@ TextCommand_DOTS::
 	call Joypad
 	pop de
 	ldh a, [hJoyHeld] ; joypad state
-	and A_BUTTON | B_BUTTON
+	and PAD_A | PAD_B
 	jr nz, .next ; if so, skip the delay
 	ld c, 10
 	call DelayFrames
@@ -611,7 +611,7 @@ TextCommand_FAR::
 	ld a, [hli]
 
 	ldh [hLoadedROMBank], a
-	ld [MBC1RomBank], a
+	ld [rROMB], a
 
 	push hl
 	ld l, e
@@ -621,7 +621,7 @@ TextCommand_FAR::
 
 	pop af
 	ldh [hLoadedROMBank], a
-	ld [MBC1RomBank], a
+	ld [rROMB], a
 	jp NextTextCommand
 
 TextCommandJumpTable::

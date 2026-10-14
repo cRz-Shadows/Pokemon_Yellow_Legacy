@@ -77,44 +77,44 @@ SurfingPikachuFrames_Rotation7:
 
 ; Frameset 08: rotation step 8 of 14 = step 1 flipped (upside-down mid-flip)
 SurfingPikachuFrames_Rotation8:
-	frame $01, 8, OAM_HFLIP, OAM_VFLIP
-	frame $02, 8, OAM_HFLIP, OAM_VFLIP
+	frame $01, 8, OAM_XFLIP, OAM_YFLIP
+	frame $02, 8, OAM_XFLIP, OAM_YFLIP
 	dorestart
 
 ; Frameset 09: rotation step 9 of 14 = step 2 flipped (upside-down mid-flip)
 SurfingPikachuFrames_Rotation9:
-	frame $03, 8, OAM_HFLIP, OAM_VFLIP
-	frame $04, 8, OAM_HFLIP, OAM_VFLIP
+	frame $03, 8, OAM_XFLIP, OAM_YFLIP
+	frame $04, 8, OAM_XFLIP, OAM_YFLIP
 	dorestart
 
 ; Frameset 0a: rotation step 10 of 14 = step 3 flipped (upside-down mid-flip)
 SurfingPikachuFrames_Rotation10:
-	frame $05, 8, OAM_HFLIP, OAM_VFLIP
-	frame $06, 8, OAM_HFLIP, OAM_VFLIP
+	frame $05, 8, OAM_XFLIP, OAM_YFLIP
+	frame $06, 8, OAM_XFLIP, OAM_YFLIP
 	dorestart
 
 ; Frameset 0b: rotation step 11 of 14 = step 4 flipped (upside-down mid-flip)
 SurfingPikachuFrames_Rotation11:
-	frame $07, 8, OAM_HFLIP, OAM_VFLIP
-	frame $08, 8, OAM_HFLIP, OAM_VFLIP
+	frame $07, 8, OAM_XFLIP, OAM_YFLIP
+	frame $08, 8, OAM_XFLIP, OAM_YFLIP
 	dorestart
 
 ; Frameset 0c: rotation step 12 of 14 = step 5 flipped (upside-down mid-flip)
 SurfingPikachuFrames_Rotation12:
-	frame $09, 8, OAM_HFLIP, OAM_VFLIP
-	frame $0a, 8, OAM_HFLIP, OAM_VFLIP
+	frame $09, 8, OAM_XFLIP, OAM_YFLIP
+	frame $0a, 8, OAM_XFLIP, OAM_YFLIP
 	dorestart
 
 ; Frameset 0d: rotation step 13 of 14 = step 6 flipped (upside-down mid-flip)
 SurfingPikachuFrames_Rotation13:
-	frame $0b, 8, OAM_HFLIP, OAM_VFLIP
-	frame $0c, 8, OAM_HFLIP, OAM_VFLIP
+	frame $0b, 8, OAM_XFLIP, OAM_YFLIP
+	frame $0c, 8, OAM_XFLIP, OAM_YFLIP
 	dorestart
 
 ; Frameset 0e: rotation step 14 of 14 = step 7 flipped (upside-down mid-flip)
 SurfingPikachuFrames_Rotation14:
-	frame $0d, 8, OAM_HFLIP, OAM_VFLIP
-	frame $0e, 8, OAM_HFLIP, OAM_VFLIP
+	frame $0d, 8, OAM_XFLIP, OAM_YFLIP
+	frame $0e, 8, OAM_XFLIP, OAM_YFLIP
 	dorestart
 
 ; Frameset 0f: Pikachu's 2-frame idle loop on the results screen

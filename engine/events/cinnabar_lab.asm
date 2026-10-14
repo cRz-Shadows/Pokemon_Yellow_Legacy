@@ -1,9 +1,9 @@
 GiveFossilToCinnabarLab::
 	ld hl, wStatusFlags5
-	set 6, [hl]
+	set BIT_NO_TEXT_DELAY, [hl]
 	xor a
 	ld [wCurrentMenuItem], a
-	ld a, A_BUTTON | B_BUTTON
+	ld a, PAD_A | PAD_B
 	ld [wMenuWatchedKeys], a
 	ld a, [wFilteredBagItemsCount]
 	dec a
@@ -25,9 +25,9 @@ GiveFossilToCinnabarLab::
 	call UpdateSprites
 	call PrintFossilsInBag
 	ld hl, wStatusFlags5
-	res 6, [hl]
+	res BIT_NO_TEXT_DELAY, [hl]
 	call HandleMenuInput
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jr nz, .cancelledGivingFossil
 	ld hl, wFilteredBagItems
 	ld a, [wCurrentMenuItem]

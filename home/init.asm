@@ -35,14 +35,14 @@ DEF rLCDC_DEFAULT EQU %11100011
 	ldh [rOBP0], a
 	ldh [rOBP1], a
 
-	ld a, rLCDC_ENABLE_MASK
+	ld a, LCDC_ON
 	ldh [rLCDC], a
 	call DisableLCD
 
 	ld sp, wStack
 
-	ld hl, WRAM0_Begin
-	ld bc, WRAM1_End - WRAM0_Begin
+	ld hl, STARTOF(WRAM0)
+	ld bc, SIZEOF(WRAM0)
 .loop
 	ld [hl], 0
 	inc hl
@@ -53,15 +53,15 @@ DEF rLCDC_DEFAULT EQU %11100011
 
 	call ClearVram
 
-	ld hl, HRAM_Begin
-	ld bc, HRAM_End - HRAM_Begin - 1
+	ld hl, STARTOF(HRAM)
+	ld bc, SIZEOF(HRAM) - 1
 	call FillMemory
 
 	call ClearSprites
 
 	ld a, BANK(WriteDMACodeToHRAM)
 	ldh [hLoadedROMBank], a
-	ld [MBC1RomBank], a
+	ld [rROMB], a
 	call WriteDMACodeToHRAM
 
 	xor a
@@ -72,7 +72,7 @@ DEF rLCDC_DEFAULT EQU %11100011
 	ldh [rIF], a
 	ld [wUnusedAudioCounter], a
 	ld [wUnusedAudioCounter + 1], a
-	ld a, 1 << VBLANK + 1 << TIMER + 1 << SERIAL
+	ld a, IE_VBLANK | IE_TIMER | IE_SERIAL
 	ldh [rIE], a
 
 	ld a, 144 ; move the window off-screen
@@ -102,7 +102,7 @@ DEF rLCDC_DEFAULT EQU %11100011
 	ld a, BANK(SFX_Shooting_Star)
 	ld [wAudioROMBank], a
 	ld [wAudioSavedROMBank], a
-	ld a, $9c
+	ld a, HIGH(vBGMap1)
 	ldh [hAutoBGTransferDest + 1], a
 	xor a
 	ldh [hAutoBGTransferDest], a
@@ -121,8 +121,8 @@ DEF rLCDC_DEFAULT EQU %11100011
 	jp PrepareTitleScreen
 
 ClearVram::
-	ld hl, VRAM_Begin
-	ld bc, VRAM_End - VRAM_Begin
+	ld hl, STARTOF(VRAM)
+	ld bc, SIZEOF(VRAM)
 	xor a
 	jp FillMemory
 

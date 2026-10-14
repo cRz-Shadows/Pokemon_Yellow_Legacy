@@ -15,13 +15,13 @@ SurfingPikachuMinigame::
 	push af
 	xor a
 	ldh [rIF], a
-	ld a, $f
+	ld a, IE_VBLANK | IE_STAT | IE_TIMER | IE_SERIAL
 	ldh [rIE], a
-	ld a, $8
+	ld a, STAT_MODE_0 ; request an interrupt at the start of each HBlank
 	ldh [rSTAT], a
 	ldh a, [hAutoBGTransferDest + 1]
 	push af
-	ld a, $98
+	ld a, HIGH(vBGMap0)
 	ldh [hAutoBGTransferDest + 1], a
 	call SurfingPikachuMinigameIntro
 	call SurfingPikachuLoop
@@ -38,7 +38,7 @@ SurfingPikachuMinigame::
 	ldh [hLCDCPointer], a
 	ldh [hSCX], a
 	ldh [hSCY], a
-	ld a, $90
+	ld a, SCREEN_HEIGHT_PX ; keep the window below the visible screen
 	ldh [hWY], a
 	call DelayFrame
 	pop af
@@ -72,7 +72,7 @@ SurfingPikachuLoop:
 	call SurfingPikachu_CheckPressedSelect
 	ret nz
 	call RunSurfingMinigameRoutine
-	ld a, $3c
+	ld a, 15 * OBJ_SIZE
 	ld [wCurrentAnimatedObjectOAMBufferOffset], a
 	call RunObjectAnimations
 	call SurfingMinigame_MoveClouds
@@ -86,15 +86,15 @@ SurfingPikachuLoop:
 
 SurfingPikachu_CheckPressedSelect:
 	ld hl, wPikachuMapScriptFlags
-	bit 1, [hl]
+	bit BIT_PIKACHU_MAP_SURF_SELECT, [hl]
 	ret z
 	ldh a, [hJoyPressed]
-	and SELECT
+	and PAD_SELECT
 	ret
 
 SurfingMinigame_ToggleStartFlag:
 	ldh a, [hJoyPressed]
-	and START
+	and PAD_START
 	ret z
 	ld hl, wSurfingMinigameUnusedToggle
 	ld a, [hl]
@@ -179,14 +179,14 @@ SurfingPikachuMinigame_LoadGFXAndLayout:
 	call ClearObjectAnimationBuffers
 
 	ld hl, SurfingPikachu1Graphics1
-	ld de, $9000
-	ld bc, $500
+	ld de, vChars2
+	ld bc, 80 tiles
 	ld a, BANK(SurfingPikachu1Graphics1)
 	call FarCopyData
 
 	ld hl, SurfingPikachu1Graphics2
-	ld de, $8000
-	ld bc, $1000
+	ld de, vChars0
+	ld bc, 256 tiles
 	ld a, BANK(SurfingPikachu1Graphics2)
 	call FarCopyData
 
@@ -245,12 +245,12 @@ SurfingPikachuMinigame_LoadGFXAndLayout:
 	ld a, $60
 	ld [wSurfingMinigamePikachuHP + 1], a
 	ld hl, wSurfingMinigameWaveHeight
-	ld bc, $14
+	ld bc, SCREEN_WIDTH
 	ld a, $74
 	call FillMemory
 	call SurfingPikachuMinigame_InitStaticSpriteLayout
 	call SurfingPikachuMinigame_DrawStaticTilemapLayout
-	ld a, $e3
+	ld a, LCDC_ON | LCDC_WIN_9C00 | LCDC_WIN_ON | LCDC_OBJ_ON | LCDC_BG_ON
 	ldh [rLCDC], a
 	call SurfingPikachuMinigame_SetBGPals
 	ld a, $e4
@@ -313,7 +313,7 @@ SurfingPikachuMinigame_PlaceSpriteRowFromTiles:
 	ld [hl], $0
 	inc hl
 	ld a, c
-	add $8
+	add TILE_WIDTH
 	ld c, a
 	inc de
 	pop af
@@ -407,7 +407,7 @@ SurfingMinigame_StartGame:
 	call SpawnAnimatedObject
 	ld hl, wSurfingMinigameRoutineNumber
 	inc [hl]
-	ld a, $1
+	ld a, TRUE
 	ld [wSurfingMinigameMusicTempoEnabled], a
 	ret
 
@@ -441,7 +441,7 @@ SurfingMinigame_RunGame:
 	ret
 
 .dead
-	ld a, $1
+	ld a, TRUE
 	ld [wSurfingMinigameGameOver], a
 	ld a, $c
 	ld [wSurfingMinigameRoutineNumber], a
@@ -504,7 +504,7 @@ SurfingMinigame_ScrollToResultsScreen:
 	dec a
 	dec a
 	ldh [hSCX], a
-	ld a, $e0
+	ld a, TILEMAP_WIDTH_PX - 32 ; generate tiles 32 pixels behind the viewport
 	ld [wSurfingMinigameXOffset], a
 	call SurfingMinigame_GenerateBGMap
 	ret
@@ -600,7 +600,7 @@ SurfingMinigame_WaitLast:
 SurfingMinigame_ExitOnPressA:
 	call SurfingMinigame_UpdateLYOverrides
 	ldh a, [hJoyPressed]
-	and A_BUTTON
+	and PAD_A
 	ret z
 	ld hl, wSurfingMinigameRoutineNumber
 	set 7, [hl]
@@ -621,7 +621,7 @@ SurfingMinigame_GameOver:
 
 .waitPressA
 	ldh a, [hJoyPressed]
-	and A_BUTTON
+	and PAD_A
 	ret z
 	ld hl, wSurfingMinigameRoutineNumber
 	set 7, [hl]
@@ -847,10 +847,10 @@ SurfingMinigame_UpdateResultsPikachu:
 SurfingMinigame_DPadAction:
 	ld de, hJoy5
 	ld a, [de]
-	and D_LEFT
+	and PAD_LEFT
 	jr nz, .dLeft
 	ld a, [de]
-	and D_RIGHT
+	and PAD_RIGHT
 	jr nz, .dRight
 	ret
 
@@ -1211,7 +1211,7 @@ SurfingMinigame_SpawnWaterSpray:
 
 .GetYCoord:
 	ldh a, [hSCX]
-	and $8
+	and TILE_WIDTH ; select one of the two adjacent wave-height samples
 	jr nz, .getHeightPlus9
 	ld hl, wSurfingMinigameWaveHeight + 8
 	jr .gotHL
@@ -1330,7 +1330,7 @@ SurfingMinigame_MoveClouds:
 SurfingMinigame_ReadBGMapBuffer:
 	ld a, [wSurfingMinigameBGMapReadBuffer] ; ???
 	ldh a, [hSCX]
-	add $48
+	add 9 * TILE_WIDTH ; sample the wave nine tiles into the viewport
 	ld e, a
 	srl e
 	srl e
@@ -1348,11 +1348,11 @@ SurfingMinigame_ReadBGMapBuffer:
 	and a
 	jr z, .copy
 	dec c
-	ld de, $20
+	ld de, TILEMAP_WIDTH
 	add hl, de
 	ld a, h
-	and $3
-	or $98
+	and HIGH(TILEMAP_AREA - 1)
+	or HIGH(vBGMap0)
 	ld h, a
 	jr .loop
 
@@ -1372,7 +1372,7 @@ SurfingMinigame_ReadBGMapBuffer:
 
 SurfingMinigame_SetPikachuHeight:
 	ldh a, [hSCX]
-	and $8
+	and TILE_WIDTH ; select one of the two adjacent wave-height samples
 	jr nz, .rightHalf
 	ld hl, wSurfingMinigameWaveHeight + 7
 	jr .gotWaveHeight
@@ -1454,7 +1454,7 @@ SurfingMinigame_DrawHP:
 
 SurfingMinigame_DrawResultsScreen:
 	ld hl, wTileMap
-	ld bc, SCREEN_WIDTH * SCREEN_HEIGHT
+	ld bc, SCREEN_AREA
 	xor a
 	call FillMemory
 	ld hl, .BeachOutroTilemap
@@ -1463,7 +1463,7 @@ SurfingMinigame_DrawResultsScreen:
 	call CopyData
 	call .PlaceTextbox
 	ld hl, wShadowOAMSprite05XCoord
-	ld bc, 9 * 4
+	ld bc, 9 * OBJ_SIZE
 	xor a
 	call FillMemory
 	ld a, $1
@@ -1516,7 +1516,7 @@ INCBIN "gfx/surfing_pikachu/unknown_f8946.map"
 .placeRow:
 	ld [hl], d
 	inc hl
-	ld c, $10
+	ld c, SCREEN_WIDTH - 4 ; box interior width
 .loop
 	ld [hli], a
 	dec c
@@ -2335,8 +2335,8 @@ SurfingPikachuMinigameIntro:
 	ldh [hAutoBGTransferEnabled], a
 	call ClearObjectAnimationBuffers
 	ld hl, SurfingPikachu1Graphics3
-	ld de, $8800
-	ld bc, $900
+	ld de, vChars1
+	ld bc, 144 tiles
 	ld a, BANK(SurfingPikachu1Graphics3)
 	call FarCopyData
 	ld a, LOW(SurfingPikachuObjectSpawnData)
@@ -2362,11 +2362,11 @@ SurfingPikachuMinigameIntro:
 	xor a
 	ldh [hSCX], a
 	ldh [hSCY], a
-	ld a, $90
+	ld a, SCREEN_HEIGHT_PX ; keep the window below the visible screen
 	ldh [hWY], a
 	ld b, SET_PAL_SURFING_PIKACHU_MINIGAME
 	call RunPaletteCommand
-	ld a, $e3
+	ld a, LCDC_ON | LCDC_WIN_9C00 | LCDC_WIN_ON | LCDC_OBJ_ON | LCDC_BG_ON
 	ldh [rLCDC], a
 	ld a, $1
 	ldh [hAutoBGTransferEnabled], a
@@ -2398,7 +2398,7 @@ SurfingPikachuMinigameIntro:
 
 DrawSurfingPikachuMinigameIntroBackground:
 	ld hl, wTileMap
-	ld bc, SCREEN_WIDTH * SCREEN_HEIGHT
+	ld bc, SCREEN_AREA
 	ld a, $ff
 	call FillMemory
 	ld hl, SurfingMinigame_BeachIntroTilemap
@@ -2410,7 +2410,7 @@ DrawSurfingPikachuMinigameIntroBackground:
 	lb bc, 6, 12
 	call .CopyBox
 	hlcoord 3, 7
-	lb bc, 3, 15
+	lb bc, 3, SCREEN_WIDTH - 5 ; clear the instruction text area
 	call .FillBoxWithFF
 	ld hl, SurfingMinigame_UseControlPadTilemap
 	decoord 3, 7
@@ -2463,9 +2463,9 @@ SurfingMinigame_ToSurfRadTilemap: INCBIN "gfx/surfing_pikachu/unknown_f91bb.map"
 SurfingMinigame_TitleTilemap: INCBIN "gfx/surfing_pikachu/unknown_f91c8.map"
 
 SurfingMinigame_UpdateLYOverrides:
-	ld hl, wLYOverrides + $10
-	ld de, wLYOverrides + $11
-	ld c, $80
+	ld hl, wLYOverrides + 2 * TILE_HEIGHT
+	ld de, wLYOverrides + 2 * TILE_HEIGHT + 1
+	ld c, SCREEN_HEIGHT_PX - 2 * TILE_HEIGHT
 	ld a, [hl]
 	push af
 .loop
@@ -2538,7 +2538,7 @@ SurfingPikachuMinigame_NormalPals:
 
 SurfingPikachu_ClearTileMap:
 	ld hl, wTileMap
-	ld bc, SCREEN_WIDTH * SCREEN_HEIGHT
+	ld bc, SCREEN_AREA
 	xor a
 	call FillMemory
 	ret
@@ -2617,7 +2617,7 @@ SurfingMinigame_UpdatePikachuHeight:
 	ld hl, ANIM_OBJ_Y_COORD
 	add hl, bc
 	ld a, [hl]
-	cp $90
+	cp SCREEN_HEIGHT_PX
 	jr nc, .okay
 	cp e
 	jr nc, .reset

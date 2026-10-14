@@ -10,8 +10,8 @@ PokemonMansion3F_Script:
 
 Mansion3CheckReplaceSwitchDoorBlocks:
 	ld hl, wCurrentMapScriptFlags
-	bit 5, [hl]
-	res 5, [hl]
+	bit BIT_CUR_MAP_LOADED_1, [hl]
+	res BIT_CUR_MAP_LOADED_1, [hl]
 	ret z
 	CheckEvent EVENT_MANSION_SWITCH_ON
 	jr nz, .switchTurnedOn
@@ -61,16 +61,16 @@ PokemonMansion3FDefaultScript:
 	xor a
 	ld [wWhichDungeonWarp], a
 	ld a, [wStatusFlags3]
-	bit 4, a
+	bit BIT_ON_DUNGEON_WARP, a
 	ret nz
 	call ArePlayerCoordsInArray
 	ret nc
 	ld a, [wCoordIndex]
 	ld [wWhichDungeonWarp], a
 	ld hl, wStatusFlags3
-	set 4, [hl]
+	set BIT_ON_DUNGEON_WARP, [hl]
 	ld hl, wStatusFlags6
-	set 4, [hl]
+	set BIT_DUNGEON_WARP, [hl]
 	ret
 
 Mansion3Script_Switches::

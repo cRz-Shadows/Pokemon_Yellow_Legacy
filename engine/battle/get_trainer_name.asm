@@ -20,5 +20,5 @@ GetTrainerName_::
 	ld hl, wNameBuffer
 .foundName
 	ld de, wTrainerName
-	ld bc, $d
+	ld bc, TRAINER_NAME_LENGTH
 	jp CopyData

@@ -15,15 +15,15 @@ Audio1_UpdateMusic::
 	ld a, [wMuteAudioAndPauseMusic]
 	and a
 	jr z, .applyAffects
-	bit 7, a
+	bit BIT_MUTE_AUDIO, a
 	jr nz, .nextChannel
-	set 7, a
+	set BIT_MUTE_AUDIO, a
 	ld [wMuteAudioAndPauseMusic], a
 	xor a ; disable all channels' output
-	ldh [rNR51], a
-	ldh [rNR30], a
-	ld a, $80
-	ldh [rNR30], a
+	ldh [rAUDTERM], a
+	ldh [rAUD3ENA], a
+	ld a, AUD3ENA_ON
+	ldh [rAUD3ENA], a
 	jr .nextChannel
 .applyAffects
 	call Audio1_ApplyMusicAffects
@@ -161,7 +161,7 @@ Audio1_PlayNextNote:
 	cp $4
 	jr nz, .asm_918c
 	ld a, [wLowHealthAlarm]
-	bit 7, a
+	bit BIT_LOW_HEALTH_ALARM, a
 	jr z, .asm_918c
 	call Audio1_EnableChannelOutput
 	ret
@@ -191,10 +191,10 @@ Audio1_sound_ret:
 	cp CHAN7
 	jr nz, .skipSfxChannel3
 ; restart hardware channel 3 (wave channel) output
-	ld a, $0
-	ldh [rNR30], a
-	ld a, $80
-	ldh [rNR30], a
+	ld a, AUD3ENA_OFF
+	ldh [rAUD3ENA], a
+	ld a, AUD3ENA_ON
+	ldh [rAUD3ENA], a
 .skipSfxChannel3
 	jr nz, .dontDisable
 	ld a, [wDisableChannelOutputWhenSfxEnds]
@@ -206,7 +206,7 @@ Audio1_sound_ret:
 .dontDisable
 	jr .afterDisable
 .returnFromCall
-	res 1, [hl]
+	res BIT_SOUND_CALL, [hl]
 	ld d, $0
 	ld a, c
 	add a
@@ -228,9 +228,9 @@ Audio1_sound_ret:
 .disableChannelOutput
 	ld hl, Audio1_HWChannelDisableMasks
 	add hl, bc
-	ldh a, [rNR51]
+	ldh a, [rAUDTERM]
 	and [hl]
-	ldh [rNR51], a
+	ldh [rAUDTERM], a
 .afterDisable
 	ld a, [wChannelSoundIDs + CHAN5]
 	cp CRY_SFX_START
@@ -250,7 +250,7 @@ Audio1_sound_ret:
 	ret c
 .skipRewind
 	ld a, [wSavedVolume]
-	ldh [rNR50], a
+	ldh [rAUDVOL], a
 	xor a
 	ld [wSavedVolume], a
 .skipCry
@@ -386,7 +386,7 @@ Audio1_toggle_perfect_pitch:
 	ld hl, wChannelFlags1
 	add hl, bc
 	ld a, [hl]
-	xor $1
+	xor 1 << BIT_PERFECT_PITCH
 	ld [hl], a ; flip bit 0 of wChannelFlags1
 	jp Audio1_sound_ret
 
@@ -558,7 +558,7 @@ Audio1_volume:
 	cp volume_cmd
 	jr nz, Audio1_execute_music
 	call Audio1_GetNextMusicByte
-	ldh [rNR50], a ; store volume
+	ldh [rAUDVOL], a ; store volume
 	jp Audio1_sound_ret
 
 Audio1_execute_music:
@@ -648,7 +648,7 @@ Audio1_pitch_sweep:
 	bit BIT_EXECUTE_MUSIC, [hl]
 	jr nz, Audio1_note ; no
 	call Audio1_GetNextMusicByte
-	ldh [rNR10], a
+	ldh [rAUD1SWEEP], a
 	jp Audio1_sound_ret
 
 Audio1_note:
@@ -780,9 +780,9 @@ Audio1_note_pitch:
 	ld b, 0
 	ld hl, Audio1_HWChannelDisableMasks
 	add hl, bc
-	ldh a, [rNR51]
+	ldh a, [rAUDTERM]
 	and [hl]
-	ldh [rNR51], a ; disable hardware channel 3's output
+	ldh [rAUDTERM], a ; disable hardware channel 3's output
 	jr .done
 .notChannel3
 	ld b, REG_VOLUME_ENVELOPE
@@ -854,7 +854,7 @@ Audio1_EnableChannelOutput:
 	ld b, 0
 	call Audio1_ApplyMonoStereo
 	add hl, bc
-	ldh a, [rNR51]
+	ldh a, [rAUDTERM]
 	or [hl] ; set this channel's bits
 	ld d, a
 	ld a, c
@@ -876,7 +876,7 @@ Audio1_EnableChannelOutput:
 	add hl, bc
 	and [hl]
 	ld d, a
-	ldh a, [rNR51]
+	ldh a, [rAUDTERM]
 	ld hl, Audio1_HWChannelDisableMasks
 	add hl, bc
 	and [hl] ; reset this channel's output bits
@@ -884,7 +884,7 @@ Audio1_EnableChannelOutput:
 	ld d, a
 .skip
 	ld a, d
-	ldh [rNR51], a
+	ldh [rAUDTERM], a
 	ret
 
 Audio1_ApplyDutyCycleAndSoundLength:
@@ -935,10 +935,10 @@ Audio1_ApplyWavePatternAndFrequency:
 	ld e, [hl]
 	inc hl
 	ld d, [hl]
-	ld hl, rWave_0
-	ld b, $f
+	ld hl, _AUD3WAVERAM
+	ld b, AUD3WAVE_SIZE - 1
 	ld a, $0 ; stop hardware channel 3
-	ldh [rNR30], a
+	ldh [rAUD3ENA], a
 .loop
 	ld a, [de]
 	inc de
@@ -947,8 +947,8 @@ Audio1_ApplyWavePatternAndFrequency:
 	dec b
 	and a
 	jr nz, .loop
-	ld a, $80 ; start hardware channel 3
-	ldh [rNR30], a
+	ld a, AUD3ENA_ON ; start hardware channel 3
+	ldh [rAUD3ENA], a
 	pop de
 .notChannel3
 	ld a, d
@@ -971,7 +971,7 @@ Audio1_ApplyWavePatternAndFrequency:
 	cp $4
 	ret nz
 	ld a, [wLowHealthAlarm]
-	bit 7, a
+	bit BIT_LOW_HEALTH_ALARM, a
 	ret z
 	xor a
 	ld [wFrequencyModifier], a
@@ -1539,10 +1539,10 @@ Audio1_PlaySound::
 	ld a, [wSavedVolume]
 	and a
 	jr nz, .done
-	ldh a, [rNR50]
+	ldh a, [rAUDVOL]
 	ld [wSavedVolume], a
 	ld a, $77
-	ldh [rNR50], a ; full volume
+	ldh [rAUDVOL], a ; full volume
 .done
 	ret
 
@@ -1562,7 +1562,7 @@ Audio1_ApplyMonoStereo:
 	push af
 	push bc
 	ld a, [wOptions]
-	and %110000 ; channel options
+	and SOUND_MASK
 	srl a
 	ld c, a
 	ld b, 0

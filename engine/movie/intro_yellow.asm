@@ -15,7 +15,7 @@ PlayIntroScene:
 	jr nz, .go_to_title_screen
 	call JoypadLowSensitivity
 	ldh a, [hJoyPressed]
-	and A_BUTTON | B_BUTTON | START
+	and PAD_A | PAD_B | PAD_START
 	jr nz, .go_to_title_screen
 	call YellowIntro_RunCurrentScene
 	ld a, $0
@@ -43,7 +43,7 @@ PlayIntroScene:
 	ldh [hWY], a
 	call ClearObjectAnimationBuffers
 	ld hl, wTileMap
-	ld bc, SCREEN_WIDTH * SCREEN_HEIGHT
+	ld bc, SCREEN_AREA
 	xor a
 	call Bank3E_FillMemory
 	call YellowIntro_BlankOAMBuffer
@@ -582,7 +582,7 @@ YellowIntroScene14:
 	call MaskAllAnimatedObjectStructs
 	call YellowIntro_BlankOAMBuffer
 	ld hl, wTileMap
-	ld bc, $50
+	ld bc, SCREEN_WIDTH * 4
 	ld a, $1
 	call Bank3E_FillMemory
 	hlcoord 0, 4
@@ -590,7 +590,7 @@ YellowIntroScene14:
 	xor a
 	call Bank3E_FillMemory
 	hlcoord 0, 14
-	ld bc, $50
+	ld bc, SCREEN_WIDTH * 4
 	ld a, $1
 	call Bank3E_FillMemory
 	ld a, $1
@@ -834,7 +834,7 @@ InitYellowIntroGFXAndMusic:
 	ldh [hAutoBGTransferDest + 1], a
 	call YellowIntro_BlankTileMap
 	ld hl, wTileMap
-	ld bc, SCREEN_WIDTH * SCREEN_HEIGHT
+	ld bc, SCREEN_AREA
 	ld a, $1
 	call Bank3E_FillMemory
 	hlcoord 0, 4
@@ -892,7 +892,7 @@ LoadYellowIntroObjectAnimationDataPointers:
 
 YellowIntro_BlankTileMap:
 	ld hl, wTileMap
-	ld bc, SCREEN_WIDTH * SCREEN_HEIGHT
+	ld bc, SCREEN_AREA
 	ld a, $7f
 	call Bank3E_FillMemory
 	ret

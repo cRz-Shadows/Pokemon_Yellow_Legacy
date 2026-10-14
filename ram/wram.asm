@@ -149,7 +149,7 @@ SECTION "OAM Buffer", WRAM0
 ; buffer for OAM data. Copied to OAM by DMA
 wShadowOAM::
 ; wShadowOAMSprite00 - wShadowOAMSprite39
-FOR n, NUM_SPRITE_OAM_STRUCTS
+FOR n, OAM_COUNT
 wShadowOAMSprite{02d:n}:: sprite_oam_struct wShadowOAMSprite{02d:n}
 ENDR
 wShadowOAMEnd::
@@ -158,7 +158,7 @@ wShadowOAMEnd::
 SECTION "Tilemap", WRAM0
 
 ; buffer for tiles that are visible on screen (20 columns by 18 rows)
-wTileMap:: ds SCREEN_WIDTH * SCREEN_HEIGHT
+wTileMap:: ds SCREEN_AREA
 
 UNION
 ; buffer for temporarily saving and restoring current screen's tiles
@@ -261,7 +261,7 @@ wOverworldMap:: ds 1300
 wOverworldMapEnd::
 
 NEXTU
-wTempPic:: ds 7 * 7 tiles
+wTempPic:: ds PIC_SIZE tiles
 
 NEXTU
 wPrinterData::
@@ -312,7 +312,7 @@ wHandshakeFrameDelay:: db
 wPrinterSerialFrameDelay:: db
 wPrinterSendByteOffset:: dw
 wPrinterDataSize:: dw
-wPrinterTileBuffer:: ds SCREEN_HEIGHT * SCREEN_WIDTH
+wPrinterTileBuffer:: ds SCREEN_AREA
 wPrinterStatusIndicator:: dw
 ; Print command margins byte (hi nibble=lines before, lo=after; $00/$03/$10/$13)
 wPrinterMargins:: db
@@ -492,7 +492,7 @@ wNPCMovementScriptBank:: db
 
 ; This union spans 180 bytes.
 UNION
-wVermilionDockTileMapBuffer:: ds 5 * BG_MAP_WIDTH + SCREEN_WIDTH
+wVermilionDockTileMapBuffer:: ds 5 * TILEMAP_WIDTH + SCREEN_WIDTH
 wVermilionDockTileMapBufferEnd::
 
 NEXTU
@@ -509,7 +509,7 @@ wFilteredBagItems:: ds 4
 NEXTU
 ; Saved copy of OAM for the first frame of the animation to make it easy to
 ; flip back from the second frame.
-wMonPartySpritesSavedOAM:: ds $60
+wMonPartySpritesSavedOAM:: ds OBJ_SIZE * 4 * PARTY_LENGTH
 
 NEXTU
 wTrainerCardBlkPacket:: ds $40
@@ -556,7 +556,7 @@ wAnimPalette:: db
 NEXTU
 	ds 60
 ; temporary buffer when swapping party mon data
-wSwitchPartyMonTempBuffer:: ds 44 ; party_struct size
+wSwitchPartyMonTempBuffer:: ds PARTYMON_STRUCT_LENGTH
 
 NEXTU
 	ds 120
@@ -1263,7 +1263,7 @@ wPartyMenuBlkPacket:: ds $30
 NEXTU
 	ds 29
 ; storage buffer for various strings
-wStringBuffer:: ds 20
+wStringBuffer:: ds NAME_BUFFER_LENGTH
 
 NEXTU
 	ds 29
@@ -1276,7 +1276,7 @@ NEXTU
 wPartyHPBarAttributes:: ds PARTY_LENGTH
 ENDU
 
-wGymCityName:: ds 17
+wGymCityName:: ds GYM_CITY_LENGTH
 
 wGymLeaderName:: ds NAME_LENGTH
 
@@ -2058,7 +2058,7 @@ wWestConnectionHeader::  map_connection_struct wWest
 wEastConnectionHeader::  map_connection_struct wEast
 
 ; sprite set for the current map (11 sprite picture ID's)
-wSpriteSet:: ds 11
+wSpriteSet:: ds SPRITE_SET_LENGTH
 ; sprite set ID for the current map
 wSpriteSetID:: db
 
@@ -2073,7 +2073,7 @@ wMapBackgroundTile:: db
 wNumberOfWarps:: db
 
 ; current map warp entries
-wWarpEntries:: ds 32 * 4 ; Y, X, warp ID, map ID
+wWarpEntries:: ds MAX_WARP_EVENTS * 4 ; Y, X, warp ID, map ID
 
 ; if $ff, the player's coordinates are not updated when entering the map
 wDestinationWarpID:: db
@@ -2177,8 +2177,8 @@ wPikachuEmotionModifier:: db
 ; number of signs in the current map (up to 16)
 wNumSigns:: db
 
-wSignCoords:: ds 16 * 2 ; Y, X
-wSignTextIDs:: ds 16
+wSignCoords:: ds MAX_BG_EVENTS * 2 ; Y, X
+wSignTextIDs:: ds MAX_BG_EVENTS
 
 ; number of sprites on the current map (up to 16)
 wNumSprites:: db
@@ -2188,8 +2188,8 @@ wNumSprites:: db
 wYOffsetSinceLastSpecialWarp:: db
 wXOffsetSinceLastSpecialWarp:: db
 
-wMapSpriteData:: ds 16 * 2 ; movement byte 2, text ID
-wMapSpriteExtraData:: ds 16 * 2 ; trainer class/item ID, trainer set ID
+wMapSpriteData:: ds MAX_OBJECT_EVENTS * 2 ; movement byte 2, text ID
+wMapSpriteExtraData:: ds MAX_OBJECT_EVENTS * 2 ; trainer class/item ID, trainer set ID
 
 ; map height in 2x2 meta-tiles
 wCurrentMapHeight2:: db
@@ -2397,9 +2397,9 @@ wPlayerGender::
 
 	ds 54 ; unused
 
-wObtainedHiddenItemsFlags:: flag_array 112
+wObtainedHiddenItemsFlags:: flag_array MAX_HIDDEN_ITEMS
 
-wObtainedHiddenCoinsFlags:: flag_array 16
+wObtainedHiddenCoinsFlags:: flag_array MAX_HIDDEN_COINS
 
 ; $00 = walking
 ; $01 = biking
@@ -2572,12 +2572,12 @@ wEventFlags:: flag_array NUM_EVENTS
 
 UNION
 wGrassRate:: db
-wGrassMons:: ds 10 * 2
+wGrassMons:: ds WILDDATA_LENGTH - 1
 
 	ds 8
 
 wWaterRate:: db
-wWaterMons:: ds 10 * 2
+wWaterMons:: ds WILDDATA_LENGTH - 1
 
 NEXTU
 ; linked game's trainer name

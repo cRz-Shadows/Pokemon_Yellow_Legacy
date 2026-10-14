@@ -2,9 +2,7 @@
 ; scenario_tests.py) read from pokemon_yellow_legacy.sym, so they never parse
 ; assembly source. EXPORT only adds .sym entries; the ROM is unchanged.
 
-; wStatusFlags3 bit for a warp started by a script (pret's name)
-DEF BIT_WARP_FROM_CUR_SCRIPT EQU 3
-
+	; wStatusFlags3 bit for a warp started by a script (constants/ram_constants.asm)
 	EXPORT BIT_WARP_FROM_CUR_SCRIPT
 	EXPORT STARTER_LEVEL, MELANIE_HAPPINESS_THRESHOLD
 

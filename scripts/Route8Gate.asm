@@ -11,8 +11,8 @@ Route8Gate_ScriptPointers:
 
 Route8GateMovePlayerRightScript:
 	ld hl, wStatusFlags5
-	set 7, [hl]
-	ld a, D_RIGHT | B_BUTTON
+	set BIT_SCRIPTED_MOVEMENT_STATE, [hl]
+	ld a, PAD_RIGHT | PAD_B
 	ld [wSimulatedJoypadStatesEnd], a
 	ld a, $1
 	ld [wSimulatedJoypadStatesIndex], a
@@ -23,7 +23,7 @@ Route8GateMovePlayerRightScript:
 
 Route8GateDefaultScript:
 	ld a, [wStatusFlags1]
-	bit 6, a
+	bit BIT_GAVE_SAFFRON_GUARDS_DRINK, a
 	ret nz
 	ld hl, .PlayerInCoordsArray
 	call ArePlayerCoordsInArray
@@ -45,7 +45,7 @@ Route8GateDefaultScript:
 	ret
 .have_drink
 	ld hl, wStatusFlags1
-	set 6, [hl]
+	set BIT_GAVE_SAFFRON_GUARDS_DRINK, [hl]
 	ld a, TEXT_ROUTE8GATE_GUARD_GIVE_DRINK
 	ldh [hTextID], a
 	jp DisplayTextID

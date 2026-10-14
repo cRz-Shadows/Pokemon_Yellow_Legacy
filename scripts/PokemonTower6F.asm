@@ -48,15 +48,15 @@ PokemonTower6FMarowakCoords:
 
 PokemonTower6FMarowakBattleScript:
 	ld a, [wIsInBattle]
-	cp $ff
+	cp LOST_BATTLE
 	jp z, PokemonTower6FSetDefaultScript
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, [wStatusFlags3]
-	bit 6, a
+	bit BIT_TALKED_TO_TRAINER, a
 	ret nz
 	call UpdateSprites
-	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, [wBattleResult]
 	and a
@@ -74,13 +74,13 @@ PokemonTower6FMarowakBattleScript:
 .did_not_defeat
 	ld a, $1
 	ld [wSimulatedJoypadStatesIndex], a
-	ld a, $10
+	ld a, PAD_RIGHT
 	ld [wSimulatedJoypadStatesEnd], a
 	xor a
 	ld [wSpritePlayerStateData2MovementByte1], a
 	ld [wOverrideSimulatedJoypadStatesMask], a
 	ld hl, wStatusFlags5
-	set 7, [hl]
+	set BIT_SCRIPTED_MOVEMENT_STATE, [hl]
 	ld a, SCRIPT_POKEMONTOWER6F_PLAYER_MOVING
 	ld [wPokemonTower6FCurScript], a
 	ld [wCurMapScript], a

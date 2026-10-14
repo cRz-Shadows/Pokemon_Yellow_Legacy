@@ -5,7 +5,7 @@ TownMapText::
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	ld hl, wStatusFlags5
-	set 6, [hl]
+	set BIT_NO_TEXT_DELAY, [hl]
 	call GBPalWhiteOutWithDelay3
 	xor a
 	ldh [hWY], a
@@ -14,7 +14,7 @@ TownMapText::
 	call LoadFontTilePatterns
 	farcall DisplayTownMap
 	ld hl, wStatusFlags5
-	res 6, [hl]
+	res BIT_NO_TEXT_DELAY, [hl]
 	ld de, TextScriptEnd
 	push de
 	ldh a, [hLoadedROMBank]

@@ -6,13 +6,13 @@ EnterMapAnim::
 	push hl
 	call GBFadeInFromWhite
 	ld hl, wStatusFlags7
-	bit 7, [hl] ; used fly out of battle?
-	res 7, [hl]
+	bit BIT_USED_FLY, [hl]
+	res BIT_USED_FLY, [hl]
 	jr nz, .flyAnimation
 	ld a, SFX_TELEPORT_ENTER_1
 	call PlaySound
 	ld hl, wStatusFlags6
-	bit 4, [hl] ; used dungeon warp?
+	bit BIT_DUNGEON_WARP, [hl]
 	pop hl
 	jr nz, .dungeonWarpAnimation
 	call PlayerSpinWhileMovingDown
@@ -127,7 +127,7 @@ _LeaveMapAnim::
 	ld a, $4
 	call StopMusic
 	ld a, [wStatusFlags6]
-	bit 6, a ; is the last used pokemon center the destination?
+	bit BIT_ESCAPE_WARP, a
 	jr z, .flyAnimation
 ; if going to the last used pokemon center
 	ld hl, wPlayerSpinInPlaceAnimFrameDelay
@@ -213,13 +213,13 @@ LeaveMapThroughHoleAnim:
 	ld [wShadowOAMSprite02TileID], a
 	ld a, [wShadowOAMSprite01TileID]
 	ld [wShadowOAMSprite03TileID], a
-	ld a, $a0
+	ld a, SCREEN_HEIGHT_PX + OAM_Y_OFS
 	ld [wShadowOAMSprite00YCoord], a
 	ld [wShadowOAMSprite01YCoord], a
 	ld c, 2
 	call DelayFrames
 	; hide upper half of player's sprite
-	ld a, $a0
+	ld a, SCREEN_HEIGHT_PX + OAM_Y_OFS
 	ld [wShadowOAMSprite02YCoord], a
 	ld [wShadowOAMSprite03YCoord], a
 	call GBFadeOutToWhite
@@ -270,7 +270,7 @@ InitFacingDirectionList:
 	ld [wSavedPlayerScreenY], a
 	ld hl, PlayerSpinningFacingOrder
 	ld de, wFacingDirectionList
-	ld bc, 4
+	ld bc, OBJ_SIZE
 	call CopyData
 	ld a, [wSpritePlayerStateData1ImageIndex] ; (image index is locked to standing images)
 	ld hl, wFacingDirectionList
@@ -294,7 +294,7 @@ SpinPlayerSprite:
 	push hl
 	ld hl, wFacingDirectionList
 	ld de, wFacingDirectionList - 1
-	ld bc, 4
+	ld bc, OBJ_SIZE
 	call CopyData
 	ld a, [wFacingDirectionList - 1]
 	ld [wFacingDirectionList + 3], a
@@ -385,7 +385,7 @@ FishingAnim:
 	ld c, 10
 	call DelayFrames
 	ld hl, wMovementFlags
-	set 6, [hl] ; reserve the last 4 OAM entries
+	set BIT_LEDGE_OR_FISHING, [hl]
 	ld hl, vNPCSprites
 	ld a, [wPlayerGender] ; added gender check
 	and a      ; added gender check
@@ -417,7 +417,7 @@ FishingAnim:
 	ld hl, FishingRodOAM
 	add hl, bc
 	ld de, wShadowOAMSprite39
-	ld bc, $4
+	ld bc, OBJ_SIZE
 	call CopyData
 	ld c, 100
 	call DelayFrames
@@ -447,7 +447,7 @@ FishingAnim:
 	ld a, [wSpritePlayerStateData1ImageIndex] ; (image index is locked to standing images)
 	cp SPRITE_FACING_UP
 	jr nz, .skipHidingFishingRod
-	ld a, $a0
+	ld a, SCREEN_HEIGHT_PX + OAM_Y_OFS
 	ld [wShadowOAMSprite39YCoord], a
 
 .skipHidingFishingRod
@@ -470,7 +470,7 @@ FishingAnim:
 .done
 	call PrintText
 	ld hl, wMovementFlags
-	res 6, [hl] ; unreserve the last 4 OAM entries
+	res BIT_LEDGE_OR_FISHING, [hl]
 	call LoadFontTilePatterns
 	ret
 
@@ -497,7 +497,7 @@ FishingRodOAM:
 	dbsprite  9, 11,  4,  3, $fd, 0         ; down
 	dbsprite  9,  8,  4,  4, $fd, 0         ; up
 	dbsprite  8, 10,  0,  0, $fe, 0         ; left
-	dbsprite 11, 10,  0,  0, $fe, OAM_HFLIP ; right
+	dbsprite 11, 10,  0,  0, $fe, OAM_XFLIP ; right
 
 MACRO fishing_gfx
 	dw \1
@@ -535,7 +535,7 @@ _HandleMidJump::
 	ld a, 3
 	ld [wNumberOfNoRandomBattleStepsLeft], a
 	ld a, [wStatusFlags2]
-	set 0, a ; set bit for no encounters
+	set BIT_WILD_ENCOUNTER_COOLDOWN, a ; set bit for no encounters
 	ld [wStatusFlags2], a
 	ld a, 8
 	ld [wNoSprintSteps], a
@@ -550,9 +550,9 @@ _HandleMidJump::
 	ldh [hJoyReleased], a
 	ld [wPlayerJumpingYScreenCoordsIndex], a
 	ld hl, wMovementFlags
-	res 6, [hl] ; not jumping down a ledge any more
+	res BIT_LEDGE_OR_FISHING, [hl]
 	ld hl, wStatusFlags5
-	res 7, [hl] ; not simulating joypad states any more
+	res BIT_SCRIPTED_MOVEMENT_STATE, [hl]
 	xor a
 	ld [wJoyIgnore], a
 	ret

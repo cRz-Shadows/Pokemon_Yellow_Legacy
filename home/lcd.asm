@@ -3,16 +3,16 @@ DisableLCD::
 	ldh [rIF], a
 	ldh a, [rIE]
 	ld b, a
-	res 0, a
+	res B_IE_VBLANK, a
 	ldh [rIE], a
 
 .wait
 	ldh a, [rLY]
-	cp LY_VBLANK
+	cp LY_VBLANK + 1
 	jr nz, .wait
 
 	ldh a, [rLCDC]
-	and ~rLCDC_ENABLE_MASK
+	and ~LCDC_ON
 	ldh [rLCDC], a
 	ld a, b
 	ldh [rIE], a
@@ -20,6 +20,6 @@ DisableLCD::
 
 EnableLCD::
 	ldh a, [rLCDC]
-	set rLCDC_ENABLE, a
+	set B_LCDC_ENABLE, a
 	ldh [rLCDC], a
 	ret

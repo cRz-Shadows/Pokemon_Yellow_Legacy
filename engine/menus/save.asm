@@ -15,13 +15,13 @@ TryLoadSaveFile:
 .badsum
 	ld hl, wStatusFlags5
 	push hl
-	set 6, [hl]
+	set BIT_NO_TEXT_DELAY, [hl]
 	ld hl, FileDataDestroyedText
 	call PrintText
 	ld c, 100
 	call DelayFrames
 	pop hl
-	res 6, [hl]
+	res BIT_NO_TEXT_DELAY, [hl]
 	ld a, $1 ; bad checksum
 .done
 	ld [wSaveFileStatus], a
@@ -34,7 +34,7 @@ FileDataDestroyedText:
 LoadMainData:
 	call EnableSRAM
 	ld a, $1
-	ld [MBC1SRamBank], a
+	ld [rRAMB], a
 ; This vc_hook does not have to be in any particular location.
 ; It is defined here because it refers to the same labels as the two lines below.
 	vc_hook Unknown_save_limit
@@ -65,7 +65,7 @@ LoadMainData:
 	ld bc, wMainDataEnd - wMainDataStart
 	call CopyData
 	ld hl, wCurMapTileset
-	set 7, [hl]
+	set BIT_NO_PREVIOUS_MAP, [hl]
 	ld hl, sSpriteData
 	ld de, wSpriteDataStart
 	ld bc, wSpriteDataEnd - wSpriteDataStart
@@ -82,7 +82,7 @@ LoadMainData:
 LoadCurrentBoxData:
 	call EnableSRAM
 	ld a, $1
-	ld [MBC1SRamBank], a
+	ld [rRAMB], a
 	ld hl, sGameData
 	ld bc, sGameDataEnd - sGameData
 	call CalcCheckSum
@@ -100,7 +100,7 @@ LoadCurrentBoxData:
 LoadPartyAndDexData:
 	call EnableSRAM
 	ld a, $1
-	ld [MBC1SRamBank], a
+	ld [rRAMB], a
 	ld hl, sGameData
 	ld bc, sGameDataEnd - sGameData
 	call CalcCheckSum
@@ -189,7 +189,7 @@ OlderFileWillBeErasedText:
 SaveMainData:
 	call EnableSRAM
 	ld a, $1
-	ld [MBC1SRamBank], a
+	ld [rRAMB], a
 	ld hl, wPlayerName
 	ld de, sPlayerName
 	ld bc, NAME_LENGTH
@@ -219,7 +219,7 @@ SaveCurrentBoxData:
 ; stored pokémon
 	call EnableSRAM
 	ld a, $1
-	ld [MBC1SRamBank], a
+	ld [rRAMB], a
 	ld hl, wBoxDataStart
 	ld de, sCurBoxData
 	ld bc, wBoxDataEnd - wBoxDataStart
@@ -234,7 +234,7 @@ SaveCurrentBoxData:
 SavePartyAndDexData:
 	call EnableSRAM
 	ld a, $1
-	ld [MBC1SRamBank], a
+	ld [rRAMB], a
 	ld hl, wPartyDataStart
 	ld de, sPartyData
 	ld bc, wPartyDataEnd - wPartyDataStart
@@ -244,6 +244,8 @@ SavePartyAndDexData:
 	ld bc, wPokedexSeenEnd - wPokedexOwned
 	call CopyData
 	ld hl, wPikachuHappiness
+	; BUG: vanilla's offset of wPikachuHappiness (#103); this fork's main data is laid out
+	; differently, so this should be (wPikachuHappiness - wMainDataStart)
 	ld de, sMainData + $179
 	ld a, [hli]
 	ld [de], a
@@ -301,7 +303,7 @@ GetBoxSRAMLocation:
 ; out: b = box SRAM bank, hl = pointer to start of box
 	ld hl, BoxSRAMPointerTable
 	ld a, [wCurrentBoxNum]
-	and $7f
+	and BOX_NUM_MASK
 	cp NUM_BOXES / 2
 	ld b, 2
 	jr c, .next
@@ -333,16 +335,16 @@ ChangeBox::
 	and a
 	ret nz ; return if No was chosen
 	ld hl, wCurrentBoxNum
-	bit 7, [hl] ; is it the first time player is changing the box?
+	bit BIT_HAS_CHANGED_BOXES, [hl] ; is it the first time player is changing the box?
 	call z, EmptyAllSRAMBoxes ; if so, empty all boxes in SRAM
 	call DisplayChangeBoxMenu
 	call UpdateSprites
 	ld hl, hUILayoutFlags
-	set 1, [hl]
+	set BIT_DOUBLE_SPACED_MENU, [hl]
 	call HandleMenuInput
 	ld hl, hUILayoutFlags
-	res 1, [hl]
-	bit BIT_B_BUTTON, a
+	res BIT_DOUBLE_SPACED_MENU, [hl]
+	bit B_PAD_B, a
 	ret nz
 	ld a, $b6
 	call PlaySoundWaitForCurrent
@@ -353,7 +355,7 @@ ChangeBox::
 	ld hl, wBoxDataStart
 	call CopyBoxToOrFromSRAM ; copy old box from WRAM to SRAM
 	ld a, [wCurrentMenuItem]
-	set 7, a
+	set BIT_HAS_CHANGED_BOXES, a
 	ld [wCurrentBoxNum], a
 	call GetBoxSRAMLocation
 	ld de, wBoxDataStart
@@ -380,7 +382,7 @@ CopyBoxToOrFromSRAM:
 	push hl
 	call EnableSRAM
 	ld a, b
-	ld [MBC1SRamBank], a
+	ld [rRAMB], a
 	ld bc, wBoxDataEnd - wBoxDataStart
 	call CopyData
 	pop hl
@@ -402,7 +404,7 @@ CopyBoxToOrFromSRAM:
 DisplayChangeBoxMenu:
 	xor a
 	ldh [hAutoBGTransferEnabled], a
-	ld a, A_BUTTON | B_BUTTON
+	ld a, PAD_A | PAD_B
 	ld [wMenuWatchedKeys], a
 	ld a, 11
 	ld [wMaxMenuItem], a
@@ -413,7 +415,7 @@ DisplayChangeBoxMenu:
 	xor a
 	ld [wMenuWatchMovingOutOfBounds], a
 	ld a, [wCurrentBoxNum]
-	and $7f
+	and BOX_NUM_MASK
 	ld [wCurrentMenuItem], a
 	ld [wLastMenuItem], a
 	hlcoord 0, 0
@@ -425,14 +427,14 @@ DisplayChangeBoxMenu:
 	lb bc, 12, 7
 	call TextBoxBorder
 	ld hl, hUILayoutFlags
-	set 2, [hl]
+	set BIT_SINGLE_SPACED_LINES, [hl]
 	ld de, BoxNames
 	hlcoord 13, 1
 	call PlaceString
 	ld hl, hUILayoutFlags
-	res 2, [hl]
+	res BIT_SINGLE_SPACED_LINES, [hl]
 	ld a, [wCurrentBoxNum]
-	and $7f
+	and BOX_NUM_MASK
 	cp 9
 	jr c, .singleDigitBoxNum
 	sub 9
@@ -451,7 +453,7 @@ DisplayChangeBoxMenu:
 	hlcoord 18, 1
 	ld de, wBoxMonCounts
 	ld bc, SCREEN_WIDTH
-	ld a, $c
+	ld a, NUM_BOXES
 .loop
 	push af
 	ld a, [de]
@@ -494,10 +496,10 @@ EmptyAllSRAMBoxes:
 ; player changes the box)
 	call EnableSRAM
 	ld a, 2
-	ld [MBC1SRamBank], a
+	ld [rRAMB], a
 	call EmptySRAMBoxesInBank
 	ld a, 3
-	ld [MBC1SRamBank], a
+	ld [rRAMB], a
 	call EmptySRAMBoxesInBank
 	call DisableSRAM
 	ret
@@ -535,17 +537,17 @@ GetMonCountsForAllBoxes:
 	push hl
 	call EnableSRAM
 	ld a, $2
-	ld [MBC1SRamBank], a
+	ld [rRAMB], a
 	call GetMonCountsForBoxesInBank
 	ld a, $3
-	ld [MBC1SRamBank], a
+	ld [rRAMB], a
 	call GetMonCountsForBoxesInBank
 	call DisableSRAM
 	pop hl
 
 ; copy the count for the current box from WRAM
 	ld a, [wCurrentBoxNum]
-	and $7f
+	and BOX_NUM_MASK
 	ld c, a
 	ld b, 0
 	add hl, bc
@@ -575,7 +577,7 @@ CheckPreviousSaveFile:
 ; (which are stored at wPlayerID)s
 	call EnableSRAM
 	ld a, $01
-	ld [MBC1SRamBank], a
+	ld [rRAMB], a
 	ld a, [sPlayerName]
 	and a
 	jr z, .next
@@ -597,8 +599,8 @@ CheckPreviousSaveFile:
 	cp h
 .next
 	ld a, $00
-	ld [MBC1SRamBankingMode], a
-	ld [MBC1SRamEnable], a
+	ld [rBMODE], a
+	ld [rRAMG], a
 	ret
 
 SaveHallOfFameTeams:
@@ -639,7 +641,7 @@ LoadHallOfFameTeams:
 HallOfFame_Copy:
 	call EnableSRAM
 	xor a
-	ld [MBC1SRamBank], a
+	ld [rRAMB], a
 	call CopyData
 	call DisableSRAM
 	ret
@@ -657,21 +659,21 @@ ClearAllSRAMBanks:
 	ret
 
 PadSRAM_FF:
-	ld [MBC1SRamBank], a
-	ld hl, SRAM_Begin
-	ld bc, SRAM_End - SRAM_Begin
+	ld [rRAMB], a
+	ld hl, STARTOF(SRAM)
+	ld bc, SIZEOF(SRAM)
 	ld a, $ff
 	jp FillMemory
 
 EnableSRAM:
-	ld a, $1
-	ld [MBC1SRamBankingMode], a
-	ld a, SRAM_ENABLE
-	ld [MBC1SRamEnable], a
+	ld a, BMODE_ADVANCED
+	ld [rBMODE], a
+	ld a, RAMG_SRAM_ENABLE
+	ld [rRAMG], a
 	ret
 
 DisableSRAM:
-	ld a, SRAM_DISABLE
-	ld [MBC1SRamBankingMode], a
-	ld [MBC1SRamEnable], a
+	ld a, RAMG_SRAM_DISABLE
+	ld [rBMODE], a
+	ld [rRAMG], a
 	ret

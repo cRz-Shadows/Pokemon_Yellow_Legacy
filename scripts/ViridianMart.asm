@@ -42,8 +42,8 @@ ViridianMartDefaultScript:
 	ret
 
 .PlayerMovement:
-	db D_LEFT, 1
-	db D_UP, 2
+	db PAD_LEFT, 1
+	db PAD_UP, 2
 	db -1 ; end
 
 ViridianMartOaksParcelScript:
@@ -118,7 +118,7 @@ ViridianMartClerkText::
 ViridianCityFishingGuruText:
 	text_asm
 	ld a, [wStatusFlags1]
-	bit 3, a ; got old rod?
+	bit BIT_GOT_OLD_ROD, a ; got old rod?
 	jr nz, .got_old_rod
 	ld hl, .DoYouLikeToFishText
 	call PrintText
@@ -130,7 +130,7 @@ ViridianCityFishingGuruText:
 	call GiveItem
 	jr nc, .bag_full
 	ld hl, wStatusFlags1
-	set 3, [hl] ; got old rod
+	set BIT_GOT_OLD_ROD, [hl] ; got old rod
 	ld hl, .TakeThisText
 	jr .print_text
 .bag_full

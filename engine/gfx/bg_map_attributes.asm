@@ -24,17 +24,17 @@ LoadBGMapAttributes::
 	ld de, $10
 	add hl, de
 	ld a, h
-	ldh [rHDMA1], a
+	ldh [rVDMA_SRC_HIGH], a
 	ld a, l
-	ldh [rHDMA2], a
+	ldh [rVDMA_SRC_LOW], a
 	ld de, vBGMap0
 	ld a, d
-	ldh [rHDMA3], a
+	ldh [rVDMA_DEST_HIGH], a
 	ld a, e
-	ldh [rHDMA4], a
+	ldh [rVDMA_DEST_LOW], a
 
 	ldh a, [rLCDC]
-	and rLCDC_ENABLE_MASK ; is LCD off?
+	and LCDC_ON ; is LCD off?
 	jr z, .lcdOff ; if off, transfer immediately
 ; wait for VBlank if LCD is on
 .waitForVBlankLoop1
@@ -58,17 +58,17 @@ LoadBGMapAttributes::
 	ld d, a    ; offset of the attributes
 	add hl, de ; hl = new pointer
 	ld a, h
-	ldh [rHDMA1], a
+	ldh [rVDMA_SRC_HIGH], a
 	ld a, l
-	ldh [rHDMA2], a
+	ldh [rVDMA_SRC_LOW], a
 	ld de, vBGMap1 ; copy to vBGMap1
 	ld a, d
-	ldh [rHDMA3], a
+	ldh [rVDMA_DEST_HIGH], a
 	ld a, e
-	ldh [rHDMA4], a
+	ldh [rVDMA_DEST_LOW], a
 ; LCD check again
 	ldh a, [rLCDC]
-	and rLCDC_ENABLE_MASK ; is LCD off?
+	and LCDC_ON ; is LCD off?
 	jr z, .lcdOff2 ; if off, transfer immediately
 ; wait for VBlank if LCD is on
 .waitForVBlankLoop2
@@ -81,7 +81,7 @@ LoadBGMapAttributes::
 	jr nz, .waitForAccessibleVRAMLoop2 ; loop until we're in a safe period to transfer to VRAM
 .lcdOff2
 	ld a, c
-	ldh [rHDMA5], a
+	ldh [rVDMA_LEN], a
 	pop af
 	dec a
 	dec a
@@ -96,7 +96,7 @@ LoadBGMapAttributes::
 .done
 	call UpdateMusicManually
 	ldh a, [rIF]
-	res VBLANK, a
+	res B_IF_VBLANK, a
 	ldh [rIF], a
 	xor a
 	ldh [rVBK], a

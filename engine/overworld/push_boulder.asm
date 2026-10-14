@@ -1,9 +1,9 @@
 TryPushingBoulder::
 	ld a, [wStatusFlags1]
-	bit 0, a ; using Strength?
+	bit BIT_STRENGTH_ACTIVE, a
 	ret z
 	ld a, [wMiscFlags]
-	bit 1, a ; has boulder dust animation from previous push played yet?
+	bit BIT_BOULDER_DUST, a
 	ret nz
 	xor a
 	ldh [hTextID], a
@@ -18,17 +18,17 @@ TryPushingBoulder::
 	swap a
 	ld e, a
 	add hl, de
-	res 7, [hl]
+	res BIT_FACE_PLAYER, [hl]
 	call GetSpriteMovementByte2Pointer
 	ld a, [hl]
 	cp BOULDER_MOVEMENT_BYTE_2
 	jp nz, ResetBoulderPushFlags
 	ld hl, wMiscFlags
-	bit 6, [hl]
-	set 6, [hl] ; indicate that the player has tried pushing
+	bit BIT_TRIED_PUSH_BOULDER, [hl]
+	set BIT_TRIED_PUSH_BOULDER, [hl]
 	ret z ; the player must try pushing twice before the boulder will move
 	ldh a, [hJoyHeld]
-	and D_RIGHT | D_LEFT | D_UP | D_DOWN
+	and PAD_CTRL_PAD
 	ret z
 	predef CheckForCollisionWhenPushingBoulder
 	ld a, [wTileInFrontOfBoulderAndBoulderCollisionResult]
@@ -44,22 +44,22 @@ TryPushingBoulder::
 	cp SPRITE_FACING_RIGHT
 	jr z, .pushBoulderRight
 .pushBoulderDown
-	bit 7, b
+	bit B_PAD_DOWN, b
 	ret z
 	ld de, PushBoulderDownMovementData
 	jr .done
 .pushBoulderUp
-	bit 6, b
+	bit B_PAD_UP, b
 	ret z
 	ld de, PushBoulderUpMovementData
 	jr .done
 .pushBoulderLeft
-	bit 5, b
+	bit B_PAD_LEFT, b
 	ret z
 	ld de, PushBoulderLeftMovementData
 	jr .done
 .pushBoulderRight
-	bit 4, b
+	bit B_PAD_RIGHT, b
 	ret z
 	ld de, PushBoulderRightMovementData
 .done
@@ -67,7 +67,7 @@ TryPushingBoulder::
 	ld a, SFX_PUSH_BOULDER
 	call PlaySound
 	ld hl, wMiscFlags
-	set 1, [hl]
+	set BIT_BOULDER_DUST, [hl]
 	ret
 
 BoulderSwitchSoundCheck::
@@ -92,13 +92,13 @@ PushBoulderRightMovementData:
 
 DoBoulderDustAnimation::
 	ld a, [wStatusFlags5]
-	bit 0, a
+	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
 	callfar AnimateBoulderDust
 	call DiscardButtonPresses
 	ld [wJoyIgnore], a
 	call ResetBoulderPushFlags
-	set 7, [hl] ; [wMiscFlags]
+	set BIT_PUSHED_BOULDER, [hl]
 	ld a, [wBoulderSpriteIndex]
 	ldh [hSpriteIndex], a
 	call GetSpriteMovementByte2Pointer
@@ -118,6 +118,6 @@ DoBoulderDustAnimation::
 
 ResetBoulderPushFlags:
 	ld hl, wMiscFlags
-	res 1, [hl]
-	res 6, [hl]
+	res BIT_BOULDER_DUST, [hl]
+	res BIT_TRIED_PUSH_BOULDER, [hl]
 	ret

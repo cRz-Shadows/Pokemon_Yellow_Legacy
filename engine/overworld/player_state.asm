@@ -19,7 +19,7 @@ IsPlayerStandingOnWarp::
 	ld a, [hl] ; target map
 	ldh [hWarpDestinationMap], a
 	ld hl, wMovementFlags
-	set 2, [hl] ; standing on warp flag
+	set BIT_STANDING_ON_WARP, [hl]
 	ret
 .nextWarp1
 	inc hl
@@ -33,7 +33,7 @@ IsPlayerStandingOnWarp::
 
 CheckForceBikeOrSurf::
 	ld hl, wStatusFlags6
-	bit 5, [hl]
+	bit BIT_ALWAYS_ON_BIKE, [hl]
 	ret nz
 	ld hl, ForcedBikeOrSurfMaps
 	ld a, [wYCoord]
@@ -66,7 +66,7 @@ CheckForceBikeOrSurf::
 	jr z, .forceSurfing
 	;force bike riding
 	ld hl, wStatusFlags6
-	set 5, [hl]
+	set BIT_ALWAYS_ON_BIKE, [hl]
 	ld a, $1
 	ld [wWalkBikeSurfState], a
 	ld [wWalkBikeSurfStateCopy], a
@@ -210,7 +210,7 @@ IsPlayerStandingOnDoorTileOrWarpTile::
 	call IsInArray
 	jr nc, .done
 	ld hl, wMovementFlags
-	res 2, [hl]
+	res BIT_STANDING_ON_WARP, [hl]
 .done
 	pop bc
 	pop de

@@ -1,7 +1,7 @@
 PewterCity_Script:
 	call EnableAutoTextBoxDrawing
 	ld hl, wPikachuMapScriptFlags
-	res 7, [hl]
+	res BIT_PIKACHU_MAP_SCRIPT_ACTIVE, [hl]
 	ld hl, PewterCity_ScriptPointers
 	ld a, [wPewterCityCurScript]
 	call CallFunctionInTable
@@ -34,7 +34,7 @@ ENDC
 	ld hl, PewterCityPlayerLeavingEastCoords
 	call ArePlayerCoordsInArray
 	ret nc
-	ld a, SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_SELECT | PAD_START | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, TEXT_PEWTERCITY_YOUNGSTER
 	ldh [hTextID], a
@@ -61,7 +61,7 @@ PewterCitySuperNerd1ShowsPlayerMuseumScript:
 	call SetSpriteImageIndexFromPicID
 	call PlayDefaultMusic
 	ld hl, wMiscFlags
-	set 4, [hl]
+	set BIT_NO_SPRITE_UPDATES, [hl]
 	ld a, TEXT_PEWTERCITY_SUPER_NERD1_ITS_RIGHT_HERE
 	ldh [hTextID], a
 	call DisplayTextID
@@ -93,7 +93,7 @@ MovementData_PewterMuseumGuyExit:
 
 PewterCityHideSuperNerd1Script:
 	ld a, [wStatusFlags5]
-	bit 0, a
+	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
 	ld a, HS_MUSEUM_GUY
 	ld [wToggleableObjectIndex], a
@@ -126,7 +126,7 @@ PewterCityYoungsterShowsPlayerGymScript:
 	call SetSpriteImageIndexFromPicID
 	call PlayDefaultMusic
 	ld hl, wMiscFlags
-	set 4, [hl]
+	set BIT_NO_SPRITE_UPDATES, [hl]
 	ld a, TEXT_PEWTERCITY_YOUNGSTER_GO_TAKE_ON_BROCK
 	ldh [hTextID], a
 	call DisplayTextID
@@ -159,7 +159,7 @@ MovementData_PewterGymGuyExit:
 
 PewterCityHideYoungsterScript:
 	ld a, [wStatusFlags5]
-	bit 0, a
+	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
 	ld a, HS_GYM_GUY
 	ld [wToggleableObjectIndex], a

@@ -57,7 +57,7 @@ StartMenu_Pokemon::
 	inc hl
 	ld a, b
 	ld [hli], a ; max menu item ID
-	ld a, A_BUTTON | B_BUTTON
+	ld a, PAD_A | PAD_B
 	ld [hli], a ; menu watched keys
 	xor a
 	ld [hl], a
@@ -65,7 +65,7 @@ StartMenu_Pokemon::
 	push af
 	call LoadScreenTilesFromBuffer1 ; restore saved screen
 	pop af
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jp nz, .loop
 ; if the B button wasn't pressed
 	ld a, [wMaxMenuItem]
@@ -143,11 +143,11 @@ StartMenu_Pokemon::
 .canFly
 	call ChooseFlyDestination
 	ld a, [wStatusFlags6]
-	bit 3, a ; did the player decide to fly?
+	bit BIT_FLY_WARP, a
 	jr nz, .asm_5d4c
 	call LoadFontTilePatterns
 	ld hl, wStatusFlags4
-	set 1, [hl]
+	set BIT_UNKNOWN_4_1, [hl]
 	jp StartMenu_Pokemon
 .asm_5d4c
 	call HidePikachuDuringWarp
@@ -165,8 +165,8 @@ StartMenu_Pokemon::
 	jp z, .newBadgeRequired
 	farcall IsSurfingAllowed
 	ld hl, wStatusFlags1
-	bit 1, [hl]
-	res 1, [hl]
+	bit BIT_SURF_ALLOWED, [hl]
+	res BIT_SURF_ALLOWED, [hl]
 	jp z, .loop
 	ld a, [wCurPartySpecies]
 	cp STARTER_PIKACHU
@@ -231,12 +231,12 @@ StartMenu_Pokemon::
 	ld hl, .warpToLastPokemonCenterText
 	call PrintText
 	ld hl, wStatusFlags6
-	set 3, [hl]
-	set 6, [hl]
+	set BIT_FLY_WARP, [hl]
+	set BIT_ESCAPE_WARP, [hl]
 	call HidePikachuDuringWarp
 	ld hl, wStatusFlags4
-	set 1, [hl]
-	res 4, [hl]
+	set BIT_UNKNOWN_4_1, [hl]
+	res BIT_NO_BATTLES, [hl]
 	ld c, 60
 	call DelayFrames
 	call GBPalWhiteOutWithDelay3
@@ -253,7 +253,7 @@ StartMenu_Pokemon::
 .softboiled
 	ld hl, wPartyMon1MaxHP
 	ld a, [wWhichPokemon]
-	ld bc, wPartyMon2 - wPartyMon1
+	ld bc, PARTYMON_STRUCT_LENGTH
 	call AddNTimes
 	ld a, [hli]
 	ldh [hDividend], a
@@ -263,7 +263,7 @@ StartMenu_Pokemon::
 	ldh [hDivisor], a
 	ld b, 2 ; number of bytes
 	call Divide
-	ld bc, wPartyMon1HP - wPartyMon1MaxHP
+	ld bc, MON_HP - MON_MAXHP
 	add hl, bc
 	ld a, [hld]
 	ld b, a
@@ -303,7 +303,7 @@ StartMenu_Pokemon::
 ; writes a blank tile to all possible menu cursor positions on the party menu
 ErasePartyMenuCursors::
 	hlcoord 0, 1
-	ld bc, 2 * 20 ; menu cursor positions are 2 rows apart
+	ld bc, 2 * SCREEN_WIDTH ; menu cursor positions are 2 rows apart
 	ld a, 6 ; 6 menu cursor positions
 .loop
 	ld [hl], ' '
@@ -370,13 +370,13 @@ StartMenu_Item::
 	inc hl
 	ld a, 2
 	ld [hli], a ; max menu item ID
-	ld a, A_BUTTON | B_BUTTON
+	ld a, PAD_A | PAD_B
 	ld [hli], a ; menu watched keys
 	xor a
 	ld [hl], a ; old menu item id
 	call HandleMenuInput
 	call PlaceUnfilledArrowMenuCursor
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jr z, .useOrTossItem
 	jp ItemMenuLoop
 .useOrTossItem ; if the player made the choice to use or toss the item
@@ -393,7 +393,7 @@ StartMenu_Item::
 	cp BICYCLE
 	jr nz, .notBicycle
 	ld a, [wStatusFlags6]
-	bit 5, a
+	bit BIT_ALWAYS_ON_BIKE, a
 	jr z, .useItem_closeMenu
 	ld hl, CannotGetOffHereText
 	call PrintText
@@ -589,7 +589,7 @@ DrawTrainerInfo:
 	call PlaceString
 	hlcoord 8, 4
 	ld de, wPlayerMoney
-	ld c, $e3
+	ld c, 3 | LEADING_ZEROES | LEFT_ALIGN | MONEY_SIGN
 	call PrintBCDNumber
 	hlcoord 9, 6
 	ld de, wPlayTimeHours ; hours
@@ -677,7 +677,7 @@ TrainerInfo_DrawVerticalLine:
 
 StartMenu_SaveReset::
 	ld a, [wStatusFlags4]
-	bit 6, a ; is the player using the link feature?
+	bit BIT_LINK_CONNECTED, a
 	jp nz, Init
 	predef SaveMenu ; save the game
 	call LoadScreenTilesFromBuffer2 ; restore saved screen
@@ -715,12 +715,12 @@ SwitchPartyMon_ClearGfx:
 	jr nz, .clearMonBGLoop
 	pop af
 	ld hl, wShadowOAM
-	ld bc, $10
+	ld bc, OBJ_SIZE * 4
 	call AddNTimes
-	ld de, $4
+	ld de, OBJ_SIZE
 	ld c, e
 .clearMonOAMLoop
-	ld [hl], $a0
+	ld [hl], SCREEN_HEIGHT_PX + OAM_Y_OFS
 	add hl, de
 	dec c
 	jr nz, .clearMonOAMLoop
@@ -780,24 +780,24 @@ SwitchPartyMon_InitVarOrSwapData:
 	ldh a, [hSwapTemp]
 	ld [de], a
 	ld hl, wPartyMons
-	ld bc, wPartyMon2 - wPartyMon1
+	ld bc, PARTYMON_STRUCT_LENGTH
 	ld a, [wCurrentMenuItem]
 	call AddNTimes
 	push hl
 	ld de, wSwitchPartyMonTempBuffer
-	ld bc, wPartyMon2 - wPartyMon1
+	ld bc, PARTYMON_STRUCT_LENGTH
 	call CopyData
 	ld hl, wPartyMons
-	ld bc, wPartyMon2 - wPartyMon1
+	ld bc, PARTYMON_STRUCT_LENGTH
 	ld a, [wMenuItemToSwap]
 	call AddNTimes
 	pop de
 	push hl
-	ld bc, wPartyMon2 - wPartyMon1
+	ld bc, PARTYMON_STRUCT_LENGTH
 	call CopyData
 	pop de
 	ld hl, wSwitchPartyMonTempBuffer
-	ld bc, wPartyMon2 - wPartyMon1
+	ld bc, PARTYMON_STRUCT_LENGTH
 	call CopyData
 	ld hl, wPartyMonOT
 	ld a, [wCurrentMenuItem]

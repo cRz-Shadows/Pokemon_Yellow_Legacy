@@ -30,7 +30,7 @@ IF DEF(_DEBUG)
 	ld a, TEXT_DELAY_MEDIUM
 	ld [wOptions], a
 
-	ld a, A_BUTTON | B_BUTTON | START
+	ld a, PAD_A | PAD_B | PAD_START
 	ld [wMenuWatchedKeys], a
 	xor a
 	ld [wMenuJoypadPollCount], a
@@ -46,7 +46,7 @@ IF DEF(_DEBUG)
 	ld [wMenuWatchMovingOutOfBounds], a
 
 	call HandleMenuInput
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	ld hl, DisplayTitleScreen
 	ret nz
 
@@ -151,19 +151,19 @@ TestBattle_PartySpeciesInputLoop:
 	pop de
 	pop bc
 	ldh a, [hJoy5]
-	bit BIT_A_BUTTON, a
+	bit B_PAD_A, a
 	jp nz, TestBattle_NextPartySpecies
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jp nz, TestBattle_PrevPartySpecies
-	bit BIT_SELECT, a
+	bit B_PAD_SELECT, a
 	jp nz, DebugMenu
-	bit BIT_START, a
+	bit B_PAD_START, a
 	jp nz, TestBattle_BuildPartyAndSelectOpponent
-	bit BIT_D_RIGHT, a
+	bit B_PAD_RIGHT, a
 	jp nz, TestBattle_SelectPartyLevel
-	bit BIT_D_UP, a
+	bit B_PAD_UP, a
 	jp nz, TestBattle_SpeciesCursorUp
-	bit BIT_D_DOWN, a
+	bit B_PAD_DOWN, a
 	jp nz, TestBattle_SpeciesCursorDown
 	jr TestBattle_PartySpeciesInputLoop
 
@@ -296,17 +296,17 @@ TestBattle_PartyLevelInputLoop:
 	pop de
 	pop bc
 	ldh a, [hJoy5]
-	bit BIT_A_BUTTON, a
+	bit B_PAD_A, a
 	jp nz, TestBattle_IncPartyLevel
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jp nz, TestBattle_DecPartyLevel
-	bit BIT_START, a
+	bit B_PAD_START, a
 	jp nz, TestBattle_BuildPartyAndSelectOpponent
-	bit BIT_D_LEFT, a
+	bit B_PAD_LEFT, a
 	jp nz, TestBattle_SelectPartySpecies
-	bit BIT_D_UP, a
+	bit B_PAD_UP, a
 	jp nz, TestBattle_LevelCursorUp
-	bit BIT_D_DOWN, a
+	bit B_PAD_DOWN, a
 	jp nz, TestBattle_LevelCursorDown
 	jr TestBattle_PartyLevelInputLoop
 
@@ -556,11 +556,11 @@ TestBattle_BattleTypeInputLoop:
 	call JoypadLowSensitivity
 	pop bc
 	ldh a, [hJoy5]
-	bit BIT_A_BUTTON, a
+	bit B_PAD_A, a
 	jp nz, TestBattle_ToggleBattleType
-	bit BIT_START, a
+	bit B_PAD_START, a
 	jp nz, TestBattle_StartBattle
-	bit BIT_D_DOWN, a
+	bit B_PAD_DOWN, a
 	jp nz, TestBattle_SelectOpponentID
 	jr TestBattle_BattleTypeInputLoop
 
@@ -610,15 +610,15 @@ TestBattle_OpponentIDInputLoop:
 	call JoypadLowSensitivity
 	pop bc
 	ldh a, [hJoy5]
-	bit BIT_A_BUTTON, a
+	bit B_PAD_A, a
 	jp nz, TestBattle_NextOpponentID
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jp nz, TestBattle_PrevOpponentID
-	bit BIT_START, a
+	bit B_PAD_START, a
 	jp nz, TestBattle_StartBattle
-	bit BIT_D_RIGHT, a
+	bit B_PAD_RIGHT, a
 	jp nz, TestBattle_SelectOpponentLevel
-	bit BIT_D_UP, a
+	bit B_PAD_UP, a
 	jp nz, TestBattle_SelectBattleType
 	jr TestBattle_OpponentIDInputLoop
 
@@ -726,15 +726,15 @@ TestBattle_OpponentLevelInputLoop:
 	call JoypadLowSensitivity
 	pop bc
 	ldh a, [hJoy5]
-	bit BIT_A_BUTTON, a
+	bit B_PAD_A, a
 	jp nz, TestBattle_IncOpponentLevel
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jp nz, TestBattle_DecOpponentLevel
-	bit BIT_START, a
+	bit B_PAD_START, a
 	jp nz, TestBattle_StartBattle
-	bit BIT_D_LEFT, a
+	bit B_PAD_LEFT, a
 	jp nz, TestBattle_SelectOpponentID
-	bit BIT_D_UP, a
+	bit B_PAD_UP, a
 	jp nz, TestBattle_SelectBattleType
 	jr TestBattle_OpponentLevelInputLoop
 

@@ -1,7 +1,7 @@
 CeruleanGym_Script:
 	ld hl, wCurrentMapScriptFlags
-	bit 6, [hl]
-	res 6, [hl]
+	bit BIT_CUR_MAP_LOADED_2, [hl]
+	res BIT_CUR_MAP_LOADED_2, [hl]
 	call nz, .LoadNames
 	call EnableAutoTextBoxDrawing
 	ld hl, CeruleanGymTrainerHeaders
@@ -38,9 +38,9 @@ CeruleanGym_ScriptPointers:
 
 CeruleanGymMistyPostBattleScript:
 	ld a, [wIsInBattle]
-	cp $ff
+	cp LOST_BATTLE
 	jp z, CeruleanGymResetScripts
-	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, [wGameStage] ; Check if player has beat the game
 	and a
@@ -119,8 +119,8 @@ CeruleanGymMistyText:
 	ld hl, .PreBattleText
 	call PrintText
 	ld hl, wStatusFlags3
-	set 6, [hl]
-	set 7, [hl]
+	set BIT_TALKED_TO_TRAINER, [hl]
+	set BIT_PRINT_END_BATTLE_TEXT, [hl]
 	ld hl, CeruleanGymMistyReceivedCascadeBadgeText
 	ld de, CeruleanGymMistyReceivedCascadeBadgeText
 	call SaveEndBattleTextPointers

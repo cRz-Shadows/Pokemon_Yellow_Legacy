@@ -57,7 +57,7 @@ StartSimulatingJoypadStates::
 	ld [wOverrideSimulatedJoypadStatesMask], a
 	ld [wSpritePlayerStateData2MovementByte1], a
 	ld hl, wStatusFlags5
-	set 7, [hl]
+	set BIT_SCRIPTED_MOVEMENT_STATE, [hl]
 	ret
 
 IsItemInBag::
@@ -100,7 +100,7 @@ IsSurfingPikachuInParty::
 	jr nz, .noSurf
 .hasSurf
 	ld a, [wPikachuPartyFlags]
-	set 6, a
+	set BIT_STARTER_PIKACHU_HAS_SURF, a
 	ld [wPikachuPartyFlags], a
 .noSurf
 	pop hl
@@ -121,7 +121,7 @@ SetStarterPikachuInPartyFlag::
 	pop hl
 	ret nc
 	ld a, [wPikachuPartyFlags]
-	set 7, a
+	set BIT_STARTER_PIKACHU_IN_PARTY, a
 	ld [wPikachuPartyFlags], a
 	ret
 
@@ -295,15 +295,15 @@ SetSpriteMovementBytesToFE::
 SetSpriteMovementBytesToFF::
 	push hl
 	call GetSpriteMovementByte1Pointer
-	ld [hl], $FF
+	ld [hl], STAY
 	call GetSpriteMovementByte2Pointer
-	ld [hl], $FF ; prevent person from walking?
+	ld [hl], NONE
 	pop hl
 	ret
 
 ; returns the sprite movement byte 1 pointer for sprite [hSpriteIndex] in hl
 GetSpriteMovementByte1Pointer::
-	ld h, $C2
+	ld h, HIGH(wSpriteStateData2)
 	ldh a, [hSpriteIndex]
 	swap a
 	add 6

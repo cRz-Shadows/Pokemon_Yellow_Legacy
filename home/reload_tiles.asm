@@ -29,5 +29,5 @@ ReloadTilesetTilePatterns::
 ; shows the town map and lets the player choose a destination to fly to
 ChooseFlyDestination::
 	ld hl, wStatusFlags4
-	res 4, [hl]
+	res BIT_NO_BATTLES, [hl]
 	farjp LoadTownMap_Fly

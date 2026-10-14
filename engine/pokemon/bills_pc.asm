@@ -69,7 +69,7 @@ DisplayPCMainMenu::
 	ld de, LogOffPCText
 .next3
 	call PlaceString
-	ld a, A_BUTTON | B_BUTTON
+	ld a, PAD_A | PAD_B
 	ld [wMenuWatchedKeys], a
 	ld a, 2
 	ld [wTopMenuItemY], a
@@ -91,7 +91,7 @@ LogOffPCText:     db "LOG OFF@"
 
 BillsPC_::
 	ld hl, wStatusFlags5
-	set 6, [hl]
+	set BIT_NO_TEXT_DELAY, [hl]
 	xor a
 	ld [wParentMenuItem], a
 	inc a               ; MONSTER_NAME
@@ -100,7 +100,7 @@ BillsPC_::
 	ld a, [wListScrollOffset]
 	push af
 	ld a, [wMiscFlags]
-	bit 3, a ; accessing Bill's PC through another PC?
+	bit BIT_USING_GENERIC_PC, a
 	jr nz, BillsPCMenu
 ; accessing it directly
 	ld a, SFX_TURN_ON_PC
@@ -135,7 +135,7 @@ BillsPCMenu:
 	inc hl
 	ld a, 5
 	ld [hli], a ; wMaxMenuItem
-	ld a, A_BUTTON | B_BUTTON
+	ld a, PAD_A | PAD_B
 	ld [hli], a ; wMenuWatchedKeys
 	xor a
 	ld [hli], a ; wLastMenuItem
@@ -148,7 +148,7 @@ BillsPCMenu:
 	lb bc, 2, 9
 	call TextBoxBorder
 	ld a, [wCurrentBoxNum]
-	and $7f
+	and BOX_NUM_MASK
 	cp 9
 	jr c, .singleDigitBoxNum
 ; two digit box num
@@ -168,7 +168,7 @@ BillsPCMenu:
 	ldh [hAutoBGTransferEnabled], a
 	call Delay3
 	call HandleMenuInput
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jp nz, ExitBillsPC
 	call PlaceUnfilledArrowMenuCursor
 	ld a, [wCurrentMenuItem]
@@ -186,7 +186,7 @@ BillsPCMenu:
 
 ExitBillsPC:
 	ld a, [wMiscFlags]
-	bit 3, a ; accessing Bill's PC through another PC?
+	bit BIT_USING_GENERIC_PC, a
 	jr nz, .next
 ; accessing it directly
 	call LoadTextBoxTilePatterns
@@ -195,12 +195,12 @@ ExitBillsPC:
 	call WaitForSoundToFinish
 .next
 	ld hl, wMiscFlags
-	res 5, [hl]
+	res BIT_NO_MENU_BUTTON_SOUND, [hl]
 	call LoadScreenTilesFromBuffer2
 	pop af
 	ld [wListScrollOffset], a
 	ld hl, wStatusFlags5
-	res 6, [hl]
+	res BIT_NO_TEXT_DELAY, [hl]
 	ret
 
 BillsPCPrintBox:
@@ -254,7 +254,7 @@ BillsPCDeposit:
 	call WaitForSoundToFinish
 	ld hl, wBoxNumString
 	ld a, [wCurrentBoxNum]
-	and $7f
+	and BOX_NUM_MASK
 	cp 9
 	jr c, .singleDigitBoxNum
 	sub 9
@@ -393,11 +393,11 @@ BoxNoPCText:
 KnowsHMMove::
 ; returns whether mon with party index [wWhichPokemon] knows an HM move
 	ld hl, wPartyMon1Moves
-	ld bc, wPartyMon2 - wPartyMon1
+	ld bc, PARTYMON_STRUCT_LENGTH
 	jr .next
 ; unreachable
 	ld hl, wBoxMon1Moves
-	ld bc, wBoxMon2 - wBoxMon1
+	ld bc, BOXMON_STRUCT_LENGTH
 .next
 	ld a, [wWhichPokemon]
 	call AddNTimes
@@ -445,7 +445,7 @@ DisplayDepositWithdrawMenu:
 	inc hl
 	ld a, 2
 	ld [hli], a ; wMaxMenuItem
-	ld a, A_BUTTON | B_BUTTON
+	ld a, PAD_A | PAD_B
 	ld [hli], a ; wMenuWatchedKeys
 	xor a
 	ld [hl], a ; wLastMenuItem
@@ -456,7 +456,7 @@ DisplayDepositWithdrawMenu:
 	ld [wPartyAndBillsPCSavedMenuItem], a
 .loop
 	call HandleMenuInput
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jr nz, .exit
 	ld a, [wCurrentMenuItem]
 	and a

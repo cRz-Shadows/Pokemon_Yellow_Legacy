@@ -60,7 +60,7 @@ PewterJigglypuff::
 	call DelayFrames
 	call PlayDefaultMusic
 	ld a, [wPikachuPartyFlags]
-	bit 7, a
+	bit BIT_STARTER_PIKACHU_IN_PARTY, a
 	ret z
 	callfar CheckPikachuStatusCondition
 	ret c

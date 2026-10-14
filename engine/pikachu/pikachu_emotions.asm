@@ -3,7 +3,7 @@ IsPlayerTalkingToPikachu::
 	and a
 	ret z
 	ldh a, [hTextID]
-	cp $f
+	cp PIKACHU_SPRITE_INDEX
 	ret nz
 	call InitializePikachuTextID
 	xor a
@@ -111,7 +111,7 @@ StarterPikachuEmotionCommand_emote:
 
 ShowPikachuEmoteBubble:
 	ld [wWhichEmotionBubble], a
-	ld a, $f ; Pikachu
+	ld a, PIKACHU_SPRITE_INDEX
 	ld [wEmotionBubbleSpriteIndex], a
 	predef EmotionBubble
 	ret
@@ -167,7 +167,7 @@ StarterPikachuEmotionCommand_nop2:
 IF DEF(_DEBUG)
 	push hl
 	ld hl, wStatusFlags6
-	bit 1, [hl]
+	bit BIT_DEBUG_MODE, [hl]
 	pop hl
 	ret z
 	push de
@@ -215,7 +215,7 @@ ENDR
 IF DEF(_DEBUG)
 	push hl
 	ld hl, wStatusFlags6
-	bit 1, [hl]
+	bit BIT_DEBUG_MODE, [hl]
 	pop hl
 	ret z
 	push de
@@ -306,7 +306,7 @@ MapSpecificPikachuExpression:
 	cp POKEMON_FAN_CLUB
 	jr nz, .notFanClub
 	ld hl, wPikachuMapScriptFlags
-	bit 7, [hl]
+	bit BIT_PIKACHU_MAP_SCRIPT_ACTIVE, [hl]
 	ldpikaemotion a, PikachuEmotion29
 	jr z, .play_emotion
 	call CheckPikachuFollowingPlayer

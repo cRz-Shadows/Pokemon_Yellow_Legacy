@@ -24,12 +24,12 @@ PlayPikachuSoundClip::
 	push bc
 	push hl
 	ld a, $80
-	ldh [rNR52], a
+	ldh [rAUDENA], a
 	ld a, $77
-	ldh [rNR50], a
+	ldh [rAUDVOL], a
 	xor a
-	ldh [rNR30], a
-	ld hl, rWave_0 ; wave data
+	ldh [rAUD3ENA], a
+	ld hl, _AUD3WAVERAM
 	ld de, wRedrawRowOrColumnSrcTiles
 .saveWaveDataLoop
 	ld a, [hl]
@@ -38,7 +38,7 @@ PlayPikachuSoundClip::
 	ld a, $ff
 	ld [hli], a
 	ld a, l
-	cp $40 ; end of wave data
+	cp LOW(_AUD3WAVERAM + AUD3WAVE_SIZE) ; end of wave data
 	jr nz, .saveWaveDataLoop
 	vc_patch Unknown_PlayPikachuSoundClip_end
 IF DEF(_YELLOW_VC)
@@ -47,18 +47,18 @@ ELSE
 	ld a, $80
 ENDC
 	vc_patch_end
-	ldh [rNR30], a
-	ldh a, [rNR51]
+	ldh [rAUD3ENA], a
+	ldh a, [rAUDTERM]
 	or $44
-	ldh [rNR51], a
+	ldh [rAUDTERM], a
 	ld a, $ff
-	ldh [rNR31], a
+	ldh [rAUD3LEN], a
 	ld a, $20
-	ldh [rNR32], a
+	ldh [rAUD3LEVEL], a
 	ld a, $ff
-	ldh [rNR33], a
+	ldh [rAUD3LOW], a
 	ld a, $87
-	ldh [rNR34], a
+	ldh [rAUD3HIGH], a
 	pop hl
 	pop bc
 	call PlayPikachuPCM
@@ -66,23 +66,23 @@ ENDC
 	ld [wUnusedAudioCounter], a
 	ld [wUnusedAudioCounter + 1], a
 	ld a, $80
-	ldh [rNR52], a
+	ldh [rAUDENA], a
 	xor a
-	ldh [rNR30], a
-	ld hl, rWave_0
+	ldh [rAUD3ENA], a
+	ld hl, _AUD3WAVERAM
 	ld de, wRedrawRowOrColumnSrcTiles
 .reloadWaveDataLoop
 	ld a, [de]
 	inc de
 	ld [hli], a
 	ld a, l
-	cp $40 ; end of wave data
+	cp LOW(_AUD3WAVERAM + AUD3WAVE_SIZE) ; end of wave data
 	jr nz, .reloadWaveDataLoop
 	ld a, $80
-	ldh [rNR30], a
-	ldh a, [rNR51]
+	ldh [rAUD3ENA], a
+	ldh a, [rAUDTERM]
 	and $bb
-	ldh [rNR51], a
+	ldh [rAUDTERM], a
 	xor a
 	ld [wChannelSoundIDs + CHAN5], a
 	ld [wChannelSoundIDs + CHAN6], a

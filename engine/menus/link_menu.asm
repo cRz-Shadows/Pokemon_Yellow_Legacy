@@ -651,7 +651,7 @@ LinkMenu:
 	xor a
 	ld [wLetterPrintingDelayFlags], a
 	ld hl, wStatusFlags4
-	set 6, [hl]
+	set BIT_LINK_CONNECTED, [hl]
 	ld hl, LinkMenuBlankText
 	call PrintText
 	call SaveScreenTilesToBuffer1
@@ -683,7 +683,7 @@ LinkMenu:
 	ld [hl], a
 .waitForInputLoop
 	call HandleMenuInput
-	and A_BUTTON | B_BUTTON
+	and PAD_A | PAD_B
 	add a
 	add a
 	ld b, a
@@ -742,7 +742,7 @@ LinkMenu:
 	jr nz, .skipStartingTransfer
 	call DelayFrame
 	call DelayFrame
-	ld a, START_TRANSFER_INTERNAL_CLOCK
+	ld a, SC_START | SC_INTERNAL
 	ldh [rSC], a
 .skipStartingTransfer
 	ld b, ' '
@@ -750,7 +750,7 @@ LinkMenu:
 	ld d, ' '
 	ld e, '▷'
 	ld a, [wLinkMenuSelectionSendBuffer]
-	and (B_BUTTON << 2) ; was B button pressed?
+	and PAD_B << 2 ; was B button pressed?
 	jr nz, .updateCursorPosition
 ; A button was pressed
 	ld a, [wCurrentMenuItem]
@@ -771,7 +771,7 @@ LinkMenu:
 	call LinkMenuPlaceSelectionArrows
 	call LoadScreenTilesFromBuffer1
 	ld a, [wLinkMenuSelectionSendBuffer]
-	and (B_BUTTON << 2) ; was B button pressed?
+	and PAD_B << 2 ; was B button pressed?
 	jr nz, .choseCancel ; cancel if B pressed
 	ld a, [wCurrentMenuItem]
 	cp $2
@@ -812,7 +812,7 @@ LinkMenu:
 	vc_hook Wireless_net_stop
 	call PrintText
 	ld hl, wStatusFlags4
-	res 6, [hl]
+	res BIT_LINK_CONNECTED, [hl]
 	vc_hook Wireless_net_end
 	ret
 

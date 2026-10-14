@@ -23,7 +23,7 @@ IsStarterPikachuAliveInOurParty::
 	push de
 	push bc
 	ld hl, wPlayerName
-	ld d, $6 ; possible player length - 1
+	ld d, NAME_LENGTH_JP
 .nameCompareLoop
 	dec d
 	jr z, .sameOT
@@ -95,7 +95,7 @@ IsThisMonStarterPikachu:
 	ld bc, NAME_LENGTH
 	call AddNTimes
 	ld de, wPlayerName
-	ld b, $6
+	ld b, NAME_LENGTH_JP
 .loop
 	dec b
 	jr z, .isPlayerPikachu
@@ -222,7 +222,7 @@ IsSurfingStarterPikachuInParty::
 	push de
 	push bc
 	ld hl, wPlayerName
-	ld d, $6
+	ld d, NAME_LENGTH_JP
 .nameCompareLoop
 	dec d
 	jr z, .foundSurfingPlayerPikachu

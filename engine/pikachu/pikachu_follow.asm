@@ -367,7 +367,7 @@ SpawnPikachu_::
 	bit 7, [hl]
 	jp nz, PikachuFollow_FacePlayer
 	ld a, [wFontLoaded]
-	bit 0, a
+	bit BIT_FONT_LOADED, a
 	jp nz, PikachuFollow_Pause
 	call CheckPikachuFollowingPlayer
 	jp nz, PikachuFollow_Pause
@@ -523,7 +523,7 @@ PikachuFollow_StartNextStep:
 	cp $4
 	jp z, LedgeHopPikachuFollow
 	ld a, [hJoyHeld]
-	and B_BUTTON
+	and PAD_B
 	jp nz, FastPikachuFollow
 	call AreThereAtLeastTwoStepsInPikachuFollowCommandBuffer
 	jp c, FastPikachuFollow
@@ -947,7 +947,7 @@ TryDoubleAddPikachuStepVectorToScreenPixelCoords:
 	cp $1 ; biking
 	jr nz, AddPikachuStepVectorToScreenPixelCoords
 	ld a, [wMovementFlags]
-	bit 6, a
+	bit BIT_LEDGE_OR_FISHING, a
 	jr nz, AddPikachuStepVectorToScreenPixelCoords
 DoubleAddPikachuStepVectorToScreenPixelCoords:
 	ld hl, wSpritePikachuStateData1YStepVector - wSpritePikachuStateData1
@@ -1019,7 +1019,7 @@ UpdatePikachuWalkingSprite:
 	swap a
 	ld d, a
 	ld a, [wMovementFlags]
-	bit 7, a
+	bit BIT_SPINNING, a
 	jr nz, .copy_player
 	ld hl, wSpritePikachuStateData1FacingDirection - wSpritePikachuStateData1
 	add hl, bc
@@ -1027,7 +1027,7 @@ UpdatePikachuWalkingSprite:
 	or d
 	ld d, a
 	ld a, [wFontLoaded]
-	bit 0, a
+	bit BIT_FONT_LOADED, a
 	jr z, .normal_get_sprite_index
 	call HidePikachuIfOnPlayerTile
 	ret c
@@ -1291,7 +1291,7 @@ RecordPlayerStepForPikachu::
 	call ShouldRecordPikachuFollowCommand
 	ret nc
 	ld a, [wMovementFlags]
-	bit 6, a
+	bit BIT_LEDGE_OR_FISHING, a
 	jr nz, .asm_fcc1b
 	call GetPikachuFollowCommandForPlayerStep
 	ret c
@@ -1313,7 +1313,7 @@ ShouldRecordPikachuFollowCommand:
 	bit 7, a
 	jr nz, .asm_fcc40
 	ld a, [wPikachuPartyFlags]
-	bit 7, a
+	bit BIT_STARTER_PIKACHU_IN_PARTY, a
 	jr z, .asm_fcc40
 	ld a, [wWalkBikeSurfState]
 	and a
@@ -1329,13 +1329,13 @@ ShouldRecordPikachuFollowCommand:
 GetPikachuFollowCommandForPlayerStep:
 	xor a
 	ld a, [wPlayerDirection]
-	bit 3, a
+	bit PLAYER_DIR_BIT_UP, a
 	jr nz, .asm_fcc58
-	bit 2, a
+	bit PLAYER_DIR_BIT_DOWN, a
 	jr nz, .asm_fcc5b
-	bit 1, a
+	bit PLAYER_DIR_BIT_LEFT, a
 	jr nz, .asm_fcc5e
-	bit 0, a
+	bit PLAYER_DIR_BIT_RIGHT, a
 	jr nz, .asm_fcc61
 	scf
 	ret
@@ -1368,13 +1368,13 @@ GetPikachuFollowCommandForLedgeHop:
 	set 6, [hl]
 	xor a
 	ld a, [wPlayerDirection]
-	bit 3, a
+	bit PLAYER_DIR_BIT_UP, a
 	jr nz, .asm_fcc86
-	bit 2, a
+	bit PLAYER_DIR_BIT_DOWN, a
 	jr nz, .asm_fcc89
-	bit 1, a
+	bit PLAYER_DIR_BIT_LEFT, a
 	jr nz, .asm_fcc8c
-	bit 0, a
+	bit PLAYER_DIR_BIT_RIGHT, a
 	jr nz, .asm_fcc8f
 	scf
 	ret

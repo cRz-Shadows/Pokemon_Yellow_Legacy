@@ -6,7 +6,7 @@ SSAnneCaptainsRoomEventScript:
 	CheckEvent EVENT_GOT_HM01
 	ret nz
 	ld hl, wStatusFlags3
-	set 5, [hl]
+	set BIT_NO_NPC_FACE_PLAYER, [hl]
 	ret
 
 SSAnneCaptainsRoom_TextPointers:
@@ -30,7 +30,7 @@ SSAnneCaptainsRoomCaptainText:
 	call PrintText
 	SetEvent EVENT_GOT_HM01
 	ld hl, wStatusFlags3
-	res 5, [hl]
+	res BIT_NO_NPC_FACE_PLAYER, [hl]
 	jr .done
 .bag_full
 	ld hl, SSAnneCaptainsRoomCaptainHM01NoRoomText
@@ -63,7 +63,7 @@ SSAnneCaptainsRoomRubCaptainsBackText:
 	call PlayDefaultMusic
 	SetEvent EVENT_RUBBED_CAPTAINS_BACK
 	ld hl, wStatusFlags3
-	res 5, [hl]
+	res BIT_NO_NPC_FACE_PLAYER, [hl]
 	jp TextScriptEnd
 
 SSAnneCaptainsRoomCaptainIFeelMuchBetterText:

@@ -22,9 +22,9 @@ CeruleanCity_ScriptPointers:
 
 CeruleanCityRocketDefeatedScript:
 	ld a, [wIsInBattle]
-	cp $ff
+	cp LOST_BATTLE
 	jp z, CeruleanCityClearScripts
-	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	SetEvent EVENT_BEAT_CERULEAN_ROCKET_THIEF
 	ld a, TEXT_CERULEANCITY_ROCKET
@@ -76,7 +76,7 @@ ENDC
 	call PlayMusic
 	xor a
 	ldh [hJoyHeld], a
-	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, [wXCoord]
 	cp 20 ; is the player standing on the right side of the bridge?
@@ -124,7 +124,7 @@ CeruleanCityFaceRivalScript:
 
 CeruleanCityRivalBattleScript:
 	ld a, [wStatusFlags5]
-	bit 0, a
+	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
 	xor a
 	ld [wJoyIgnore], a
@@ -132,8 +132,8 @@ CeruleanCityRivalBattleScript:
 	ldh [hTextID], a
 	call DisplayTextID
 	ld hl, wStatusFlags3
-	set 6, [hl]
-	set 7, [hl]
+	set BIT_TALKED_TO_TRAINER, [hl]
+	set BIT_PRINT_END_BATTLE_TEXT, [hl]
 	ld hl, CeruleanCityRivalDefeatedText
 	ld de, CeruleanCityRivalVictoryText
 	call SaveEndBattleTextPointers
@@ -150,10 +150,10 @@ CeruleanCityRivalBattleScript:
 
 CeruleanCityRivalDefeatedScript:
 	ld a, [wIsInBattle]
-	cp $ff
+	cp LOST_BATTLE
 	jp z, CeruleanCityClearScripts
 	call CeruleanCityFaceRivalScript
-	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	SetEvent EVENT_BEAT_CERULEAN_RIVAL
 	ld a, TEXT_CERULEANCITY_RIVAL
@@ -201,7 +201,7 @@ CeruleanCityMovement4:
 
 CeruleanCityRivalCleanupScript:
 	ld a, [wStatusFlags5]
-	bit 0, a
+	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
 	ld a, HS_CERULEAN_RIVAL
 	ld [wToggleableObjectIndex], a
@@ -271,8 +271,8 @@ CeruleanCityRocketText:
 	ld hl, .Text
 	call PrintText
 	ld hl, wStatusFlags3
-	set 6, [hl]
-	set 7, [hl]
+	set BIT_TALKED_TO_TRAINER, [hl]
+	set BIT_PRINT_END_BATTLE_TEXT, [hl]
 	ld hl, .IGiveUpText
 	ld de, .IGiveUpText
 	call SaveEndBattleTextPointers

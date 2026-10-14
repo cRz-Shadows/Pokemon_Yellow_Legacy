@@ -20,7 +20,7 @@ ExternalClockTradeAnim:
 TradeAnimCommon:
 	ld a, [wOptions]
 	push af
-	and %110000 ; preserve speaker options
+	and SOUND_MASK ; preserve speaker options
 	ld [wOptions], a
 	ldh a, [hSCY]
 	push af
@@ -175,7 +175,7 @@ LoadTradingGFXAndMonNames:
 	ld a, $ff
 	ld [wUpdateSpritesEnabled], a
 	ld hl, wStatusFlags5
-	set 6, [hl] ; turn on instant text printing
+	set BIT_NO_TEXT_DELAY, [hl]
 	ld a, [wOnSGB]
 	and a
 	ld a, $e4 ; non-SGB OBP0
@@ -222,11 +222,11 @@ Trade_Cleanup:
 	xor a
 	call LoadGBPal
 	ld hl, wStatusFlags5
-	res 6, [hl] ; turn off instant text printing
+	res BIT_NO_TEXT_DELAY, [hl]
 	ret
 
 Trade_ShowPlayerMon:
-	ld a, %10101011
+	ld a, LCDC_ON | LCDC_WIN_9800 | LCDC_WIN_ON | LCDC_BLOCK21 | LCDC_BG_9C00 | LCDC_OBJ_8 | LCDC_OBJ_ON | LCDC_BG_ON
 	ldh [rLCDC], a
 	ld a, $50
 	ldh [hWY], a
@@ -281,7 +281,7 @@ Trade_DrawOpenEndOfLinkCable:
 	ld a, $a0
 	ldh [hSCX], a
 	call DelayFrame
-	ld a, %10001011
+	ld a, LCDC_ON | LCDC_WIN_9800 | LCDC_WIN_OFF | LCDC_BLOCK21 | LCDC_BG_9C00 | LCDC_OBJ_8 | LCDC_OBJ_ON | LCDC_BG_ON
 	ldh [rLCDC], a
 	hlcoord 6, 2
 	ld b, TILEMAP_LINK_CABLE
@@ -319,7 +319,7 @@ Trade_AnimateBallEnteringLinkCable:
 	ld [wLinkCableAnimBulgeToggle], a
 	add $7e
 	ld hl, wShadowOAMSprite00TileID
-	ld de, 4
+	ld de, OBJ_SIZE
 	ld c, e
 .cycleLinkCableBulgeTile
 	ld [hl], a
@@ -341,7 +341,7 @@ Trade_AnimateBallEnteringLinkCable:
 	ld a, $1
 	ldh [hAutoBGTransferEnabled], a
 	call ClearScreen
-	ld b, $98
+	ld b, HIGH(vBGMap0)
 	call CopyScreenTileBufferToVRAM
 	call Delay3
 	xor a
@@ -349,8 +349,8 @@ Trade_AnimateBallEnteringLinkCable:
 	ret
 
 Trade_BallInsideLinkCableOAMBlock:
-	dbsprite  0, 15,  0,  6, $7e, OAM_HFLIP
-	dbsprite  8, 15,  0,  6, $7e, OAM_HFLIP | OAM_VFLIP
+	dbsprite  0, 15,  0,  6, $7e, OAM_XFLIP
+	dbsprite  8, 15,  0,  6, $7e, OAM_XFLIP | OAM_YFLIP
 
 Trade_ShowEnemyMon:
 	ld a, TRADE_BALL_TILT_ANIM
@@ -455,7 +455,7 @@ Trade_InitGameboyTransferGfx:
 	ldh [hAutoBGTransferEnabled], a
 	call Trade_LoadMonPartySpriteGfx
 	call DelayFrame
-	ld a, %10101011
+	ld a, LCDC_ON | LCDC_WIN_9800 | LCDC_WIN_ON | LCDC_BLOCK21 | LCDC_BG_9C00 | LCDC_OBJ_8 | LCDC_OBJ_ON | LCDC_BG_ON
 	ldh [rLCDC], a
 	xor a
 	ldh [hSCX], a
@@ -728,20 +728,20 @@ Trade_CircleOAMBlocks:
 	trade_circle_oam Trade_CircleOAM3, $18, $18
 
 Trade_CircleOAM0:
-	dbsprite  2,  7,  0,  0, ICON_TRADEBUBBLE << 2 + 1, OAM_OBP1
-	dbsprite  2,  7,  0,  2, ICON_TRADEBUBBLE << 2 + 3, OAM_OBP1
+	dbsprite  2,  7,  0,  0, ICON_TRADEBUBBLE << 2 + 1, OAM_PAL1
+	dbsprite  2,  7,  0,  2, ICON_TRADEBUBBLE << 2 + 3, OAM_PAL1
 
 Trade_CircleOAM1:
-	dbsprite  6,  7,  0,  1, ICON_TRADEBUBBLE << 2 + 0, OAM_OBP1 | OAM_HFLIP
-	dbsprite  6,  7,  0,  3, ICON_TRADEBUBBLE << 2 + 2, OAM_OBP1 | OAM_HFLIP
+	dbsprite  6,  7,  0,  1, ICON_TRADEBUBBLE << 2 + 0, OAM_PAL1 | OAM_XFLIP
+	dbsprite  6,  7,  0,  3, ICON_TRADEBUBBLE << 2 + 2, OAM_PAL1 | OAM_XFLIP
 
 Trade_CircleOAM2:
-	dbsprite 10,  7,  0,  2, ICON_TRADEBUBBLE << 2 + 3, OAM_OBP1 | OAM_VFLIP
-	dbsprite 10,  7,  0,  0, ICON_TRADEBUBBLE << 2 + 1, OAM_OBP1 | OAM_VFLIP
+	dbsprite 10,  7,  0,  2, ICON_TRADEBUBBLE << 2 + 3, OAM_PAL1 | OAM_YFLIP
+	dbsprite 10,  7,  0,  0, ICON_TRADEBUBBLE << 2 + 1, OAM_PAL1 | OAM_YFLIP
 
 Trade_CircleOAM3:
-	dbsprite 14,  7,  0,  3, ICON_TRADEBUBBLE << 2 + 2, OAM_OBP1 | OAM_HFLIP | OAM_VFLIP
-	dbsprite 14,  7,  0,  1, ICON_TRADEBUBBLE << 2 + 0, OAM_OBP1 | OAM_HFLIP | OAM_VFLIP
+	dbsprite 14,  7,  0,  3, ICON_TRADEBUBBLE << 2 + 2, OAM_PAL1 | OAM_XFLIP | OAM_YFLIP
+	dbsprite 14,  7,  0,  1, ICON_TRADEBUBBLE << 2 + 0, OAM_PAL1 | OAM_XFLIP | OAM_YFLIP
 
 ; a = species
 Trade_LoadMonSprite:
@@ -765,7 +765,7 @@ Trade_ShowClearedWindow:
 	ld a, $1
 	ldh [hAutoBGTransferEnabled], a
 	call ClearScreen
-	ld a, %11100011
+	ld a, LCDC_DEFAULT
 	ldh [rLCDC], a
 	ld a, $7
 	ldh [rWX], a

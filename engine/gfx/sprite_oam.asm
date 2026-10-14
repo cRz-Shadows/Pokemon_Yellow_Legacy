@@ -113,13 +113,13 @@ PrepareOAMData::
 	inc hl
 	inc e
 	ld a, [hl]
-	bit 1, a ; is the tile allowed to set the sprite priority bit?
+	bit BIT_SPRITE_UNDER_GRASS, a
 	jr z, .skipPriority
 	ldh a, [hSpritePriority]
 	or [hl]
 .skipPriority
 	and $f0
-	bit OAM_OBP_NUM, a
+	bit B_OAM_PAL1, a
 	jr z, .spriteusesOBP0
 	or OAM_HIGH_PALS
 .spriteusesOBP0
@@ -140,8 +140,8 @@ PrepareOAMData::
 	; Clear unused OAM.
 .asm_4a41
 	ld a, [wMovementFlags]
-	bit 6, a ; jumping down ledge or fishing animation?
-	ld c, $a0
+	bit BIT_LEDGE_OR_FISHING, a
+	ld c, LOW(wShadowOAMEnd)
 	jr z, .clear
 
 ; Don't clear the last 4 entries because they are used for the shadow in the

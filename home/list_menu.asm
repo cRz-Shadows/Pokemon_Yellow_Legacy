@@ -16,7 +16,7 @@ DisplayListMenuID::
 .bankswitch
 	call BankswitchHome
 	ld hl, wStatusFlags5
-	set 6, [hl] ; turn off letter printing delay
+	set BIT_NO_TEXT_DELAY, [hl]
 	xor a
 	ld [wMenuItemToSwap], a ; 0 means no item is currently being swapped
 	ld [wListCount], a
@@ -55,10 +55,10 @@ DisplayListMenuID::
 	ld a, 0
 	ld [wTempFlag], a
 	jr nz, .noSort
-	ld a, A_BUTTON | B_BUTTON | SELECT | START
+	ld a, PAD_A | PAD_B | PAD_SELECT | PAD_START
 	jr .continue
 .noSort
-	ld a, A_BUTTON | B_BUTTON | SELECT
+	ld a, PAD_A | PAD_B | PAD_SELECT
 .continue
 	ld [wMenuWatchedKeys], a
 	ld c, 10
@@ -93,7 +93,7 @@ DisplayListMenuIDLoop::
 	push af
 	call PlaceMenuCursor
 	pop af
-	bit BIT_A_BUTTON, a
+	bit B_PAD_A, a
 	jp z, .checkOtherKeys
 .buttonAPressed
 	ld a, [wCurrentMenuItem]
@@ -189,17 +189,17 @@ DisplayListMenuIDLoop::
 	xor a
 	ld [hJoy7], a ; joypad state update flag
 	ld hl, wStatusFlags5
-	res 6, [hl] ; turn on letter printing delay
+	res BIT_NO_TEXT_DELAY, [hl]
 	jp BankswitchBack
 .checkOtherKeys ; check B, SELECT, Up, and Down keys
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jp nz, ExitListMenu ; if so, exit the menu
-	bit BIT_SELECT, a
+	bit B_PAD_SELECT, a
 	jp nz, HandleItemListSwapping ; if so, allow the player to swap menu entries
 	bit 3, a ; was the start button pressed?
 	jp nz, .sortItems ; if so, allow the player to swap menu entries
 	ld b, a
-	bit BIT_D_DOWN, b
+	bit B_PAD_DOWN, b
 	ld hl, wListScrollOffset
 	jr z, .upPressed
 .downPressed
@@ -248,17 +248,17 @@ DisplayChooseQuantityMenu::
 .waitForKeyPressLoop
 	call JoypadLowSensitivity
 	ldh a, [hJoyPressed] ; newly pressed buttons
-	bit BIT_A_BUTTON, a
+	bit B_PAD_A, a
 	jp nz, .buttonAPressed
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jp nz, .buttonBPressed
-	bit BIT_D_UP, a
+	bit B_PAD_UP, a
 	jr nz, .incrementQuantity
-	bit BIT_D_DOWN, a
+	bit B_PAD_DOWN, a
 	jr nz, .decrementQuantity
-	bit BIT_D_RIGHT, a
+	bit B_PAD_RIGHT, a
 	jr nz, .incrementQuantityLarge
-	bit BIT_D_LEFT, a
+	bit B_PAD_LEFT, a
 	jr nz, .decrementQuantityLarge
 	jr .waitForKeyPressLoop
 .incrementQuantityLarge
@@ -348,7 +348,7 @@ DisplayChooseQuantityMenu::
 	ld de, SpacesBetweenQuantityAndPriceText
 	call PlaceString
 	ld de, hMoney ; total price
-	ld c, $a3
+	ld c, 3 | LEADING_ZEROES | MONEY_SIGN
 	call PrintBCDNumber
 	hlcoord 9, 10
 .printQuantity
@@ -381,7 +381,7 @@ ExitListMenu::
 	xor a
 	ldh [hJoy7], a
 	ld hl, wStatusFlags5
-	res 6, [hl]
+	res BIT_NO_TEXT_DELAY, [hl]
 	call BankswitchBack
 	xor a
 	ld [wMenuItemToSwap], a ; 0 means no item is currently being swapped
@@ -472,7 +472,7 @@ PrintListMenuEntries::
 	pop hl
 	ld bc, SCREEN_WIDTH + 5 ; 1 row down and 5 columns right
 	add hl, bc
-	ld c, $a3 ; no leading zeroes, right-aligned, print currency symbol, 3 bytes
+	ld c, 3 | LEADING_ZEROES | MONEY_SIGN
 	call PrintBCDNumber
 .skipPrintingItemPrice
 	ld a, [wListMenuID]
@@ -508,7 +508,7 @@ PrintListMenuEntries::
 	ld [wLoadedMonLevel], a
 .skipCopyingLevel
 	pop hl
-	ld bc, $1c
+	ld bc, SCREEN_WIDTH + 8 ; 1 row down and 8 columns right
 	add hl, bc
 	call PrintLevel
 	pop af

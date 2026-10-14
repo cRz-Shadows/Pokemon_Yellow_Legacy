@@ -1,12 +1,12 @@
 VermilionGym_Script:
 	ld hl, wCurrentMapScriptFlags
-	bit 5, [hl]
-	res 5, [hl]
+	bit BIT_CUR_MAP_LOADED_1, [hl]
+	res BIT_CUR_MAP_LOADED_1, [hl]
 	push hl
 	call nz, .LoadNames
 	pop hl
-	bit 6, [hl]
-	res 6, [hl]
+	bit BIT_CUR_MAP_LOADED_2, [hl]
+	res BIT_CUR_MAP_LOADED_2, [hl]
 	call nz, VermilionGymSetDoorTile
 	call EnableAutoTextBoxDrawing
 	ld hl, VermilionGymTrainerHeaders
@@ -57,9 +57,9 @@ VermilionGym_ScriptPointers:
 
 VermilionGymLTSurgeAfterBattleScript:
 	ld a, [wIsInBattle]
-	cp $ff ; did we lose?
+	cp LOST_BATTLE
 	jp z, VermilionGymResetScripts
-	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, [wGameStage] ; Check if player has beat the game
 	and a
@@ -141,8 +141,8 @@ VermilionGymLTSurgeText:
 	ld hl, .PreBattleText
 	call PrintText
 	ld hl, wStatusFlags3
-	set 6, [hl]
-	set 7, [hl]
+	set BIT_TALKED_TO_TRAINER, [hl]
+	set BIT_PRINT_END_BATTLE_TEXT, [hl]
 	ld hl, VermilionGymLTSurgeReceivedThunderBadgeText
 	ld de, VermilionGymLTSurgeReceivedThunderBadgeText
 	call SaveEndBattleTextPointers

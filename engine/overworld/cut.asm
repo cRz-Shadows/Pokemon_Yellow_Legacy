@@ -33,7 +33,7 @@ UsedCut:
 	ld hl, wPartyMonNicks
 	call GetPartyMonName
 	ld hl, wStatusFlags5
-	set 6, [hl]
+	set BIT_NO_TEXT_DELAY, [hl]
 	call GBPalWhiteOutWithDelay3
 	call ClearSprites
 	call RestoreScreenTilesAndReloadTilePatterns
@@ -53,7 +53,7 @@ Cut2::
 	call PrintText
 	call LoadScreenTilesFromBuffer2
 	ld hl, wStatusFlags5
-	res 6, [hl]
+	res BIT_NO_TEXT_DELAY, [hl]
 	ld a, $ff
 	ld [wUpdateSpritesEnabled], a
 	call InitCutAnimOAM
@@ -104,13 +104,13 @@ InitCutAnimOAM:
 	call LoadCutGrassAnimationTilePattern
 	call WriteCutOrBoulderDustAnimationOAMBlock
 	ld hl, wShadowOAMSprite36Attributes
-	ld de, 4
-	ld a, $30
+	ld de, OBJ_SIZE
+	ld a, OAM_XFLIP | OAM_PAL1
 	ld c, e
 .loop
 	ld [hl], a
 	add hl, de
-	xor $60
+	xor OAM_YFLIP | OAM_XFLIP
 	dec c
 	jr nz, .loop
 	ret
@@ -127,8 +127,8 @@ WriteCutOrBoulderDustAnimationOAMBlock:
 	jp WriteOAMBlock
 
 CutOrBoulderDustAnimationTilesAndAttributes:
-	dbsprite  2, -1,  4,  4, $fd, OAM_OBP1 | OAM_HIGH_PALS
-	dbsprite  2, -1,  4,  6, $ff, OAM_OBP1 | OAM_HIGH_PALS
+	dbsprite  2, -1,  4,  4, $fd, OAM_PAL1 | OAM_HIGH_PALS
+	dbsprite  2, -1,  4,  6, $ff, OAM_PAL1 | OAM_HIGH_PALS
 
 GetCutOrBoulderDustAnimationOffsets:
 	ld hl, wSpritePlayerStateData1YPixels

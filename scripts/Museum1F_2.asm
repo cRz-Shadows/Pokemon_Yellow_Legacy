@@ -72,7 +72,7 @@ Museum1FPrintScientist1Text::
 	call PrintText
 	ld a, $1
 	ld [wSimulatedJoypadStatesIndex], a
-	ld a, D_DOWN | B_BUTTON
+	ld a, PAD_DOWN | PAD_B
 	ld [wSimulatedJoypadStatesEnd], a
 	call StartSimulatingJoypadStates
 	call UpdateSprites
