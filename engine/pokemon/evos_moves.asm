@@ -426,7 +426,7 @@ CanSpeciesLearnMoveAtLevel:
 	ld a, c
 	and a
 	jr nz, .asm_3b0ec
-	ld hl, Pointer_3b0ee
+	ld hl, SkipBaseMovesSpeciesList
 	ld a, [wCurPartySpecies]
 	ld de, $1
 	call IsInArray

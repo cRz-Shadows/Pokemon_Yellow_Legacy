@@ -90,7 +90,7 @@ endif
 $(pokemon_yellow_legacy_debug_obj): RGBASMFLAGS += -D _DEBUG
 $(pokemon_yellow_legacy_vc_obj):    RGBASMFLAGS += -D _YELLOW_VC
 
-%.patch: vc/%.constants.sym %_vc.gbc %.gbc vc/%.patch.template
+%.patch: %_vc.gbc %.gbc vc/%.patch.template
 	tools/make_patch $*_vc.sym $^ $@
 
 rgbdscheck.o: rgbdscheck.asm

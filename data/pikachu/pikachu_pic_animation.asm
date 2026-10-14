@@ -259,8 +259,8 @@ PikaPicAnimScript23:
 
 PikaPicAnimScript24:
 	pikapic_setduration 60
-	pikapic_loadgfx GFX_e74af
-	pikapic_loadgfx GFX_e763f
+	pikapic_loadgfx PikaPicHuffyGFX1
+	pikapic_loadgfx PikaPicHuffyGFX2
 	pikapic_animation PikaPicAnimBGFrames_5, $80, $0, $0
 	pikapic_animation PikaPicAnimBGFrames_30, $99, $0, $0
 	pikapic_waitbgmap
@@ -379,8 +379,8 @@ PikaPicAnimGFXHeaders:
 	pikapicanimgfx 25, PikaPicScaredGFX2     ; 30
 	pikapicanimgfx 25, PikaPicConfusedGFX1     ; 31
 	pikapicanimgfx 25, PikaPicConfusedGFX2     ; 32
-	pikapicanimgfx 25, GFX_e74af     ; 33
-	pikapicanimgfx 25, GFX_e763f     ; 34
+	pikapicanimgfx 25, PikaPicHuffyGFX1     ; 33
+	pikapicanimgfx 25, PikaPicHuffyGFX2     ; 34
 	pikapicanimgfx -1, PikaPicThunderboltPic     ; 35
 	pikapicanimgfx 25, PikaPicThunderboltChargeGFX     ; 36
 	pikapicanimgfx 25, PikaPicThunderboltGFX     ; 37

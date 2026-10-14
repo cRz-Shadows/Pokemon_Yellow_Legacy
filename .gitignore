@@ -18,6 +18,7 @@
 # *.map
 pokemon_yellow_legacy.map
 pokemon_yellow_legacy_debug.map
+pokemon_yellow_legacy_vc.map
 
 *.sym
 

@@ -1,8 +1,6 @@
-; This list is used by a unreferenced function.
-
-; SUGGESTED NAME: SkipBaseMovesSpeciesList
-; Species for which CanSpeciesLearnMoveAtLevel skips the base-moves check (confidence: low)
-Pointer_3b0ee:
+; Species for which CanSpeciesLearnMoveAtLevel skips the check against the
+; level 1 moves in their base stats. Only used by unreferenced code.
+SkipBaseMovesSpeciesList:
 	db NIDOKING
 	db IVYSAUR
 	db EXEGGUTOR
