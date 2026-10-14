@@ -998,7 +998,7 @@ AISwitchIfEnoughMons:
 	inc d
 .Fainted
 	push bc
-	ld bc, wEnemyMon2 - wEnemyMon1
+	ld bc, PARTYMON_STRUCT_LENGTH
 	add hl, bc
 	pop bc
 	dec c
@@ -1016,12 +1016,12 @@ SwitchEnemyMon:
 
 	ld a, [wEnemyMonPartyPos]
 	ld hl, wEnemyMon1HP
-	ld bc, wEnemyMon2 - wEnemyMon1
+	ld bc, PARTYMON_STRUCT_LENGTH
 	call AddNTimes
 	ld d, h
 	ld e, l
 	ld hl, wEnemyMonHP
-	ld bc, 4
+	ld bc, MON_STATUS + 1 - MON_HP ; also copies party pos in-between HP and status
 	call CopyData
 
 	ld hl, AIBattleWithdrawText
@@ -1055,7 +1055,7 @@ AICureStatus:	;shinpokerednote: CHANGED: modified to be more robust and also und
 ; cures the status of enemy's active pokemon
 	ld a, [wEnemyMonPartyPos]
 	ld hl, wEnemyMon1Status
-	ld bc, wEnemyMon2 - wEnemyMon1
+	ld bc, PARTYMON_STRUCT_LENGTH
 	call AddNTimes
 	xor a
 	ld [hl], a ; clear status in enemy team roster
@@ -1075,21 +1075,21 @@ AICureStatus:	;shinpokerednote: CHANGED: modified to be more robust and also und
 AIUseXAccuracy: ; unused
 	call AIPlayRestoringSFX
 	ld hl, wEnemyBattleStatus2
-	set 0, [hl]
+	set USING_X_ACCURACY, [hl]
 	ld a, X_ACCURACY
 	jp AIPrintItemUse
 
 AIUseGuardSpec:
 	call AIPlayRestoringSFX
 	ld hl, wEnemyBattleStatus2
-	set 1, [hl]
+	set PROTECTED_BY_MIST, [hl]
 	ld a, GUARD_SPEC
 	jp AIPrintItemUse
 
 AIUseDireHit: ; unused
 	call AIPlayRestoringSFX
 	ld hl, wEnemyBattleStatus2
-	set 2, [hl]
+	set GETTING_PUMPED, [hl]
 	ld a, DIRE_HIT
 	jp AIPrintItemUse
 
@@ -1144,22 +1144,22 @@ AICheckIfHPBelowFraction:
 	ret
 
 AIUseXAttack:
-	ld b, $A
+	ld b, ATTACK_UP1_EFFECT
 	ld a, X_ATTACK
 	jr AIIncreaseStat
 
 AIUseXDefend:
-	ld b, $B
+	ld b, DEFENSE_UP1_EFFECT
 	ld a, X_DEFEND
 	jr AIIncreaseStat
 
 AIUseXSpeed:
-	ld b, $C
+	ld b, SPEED_UP1_EFFECT
 	ld a, X_SPEED
 	jr AIIncreaseStat
 
 AIUseXSpecial:
-	ld b, $D
+	ld b, SPECIAL_UP1_EFFECT
 	ld a, X_SPECIAL
 	; fallthrough
 

@@ -15,7 +15,7 @@ LinkCableHelp::
 	ld [wMenuItemOffset], a ; not used
 	ld [wCurrentMenuItem], a
 	ld [wLastMenuItem], a
-	ld a, A_BUTTON | B_BUTTON
+	ld a, PAD_A | PAD_B
 	ld [wMenuWatchedKeys], a
 	ld a, 3
 	ld [wMaxMenuItem], a
@@ -25,7 +25,7 @@ LinkCableHelp::
 	ld [wTopMenuItemX], a
 .linkHelpLoop
 	ld hl, wStatusFlags5
-	set 6, [hl]
+	set BIT_NO_TEXT_DELAY, [hl]
 	hlcoord 0, 0
 	lb bc, 8, 13
 	call TextBoxBorder
@@ -35,13 +35,13 @@ LinkCableHelp::
 	ld hl, LinkCableHelpText2
 	call PrintText
 	call HandleMenuInput
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jr nz, .exit
 	ld a, [wCurrentMenuItem]
 	cp 3 ; pressed a on "STOP READING"
 	jr z, .exit
 	ld hl, wStatusFlags5
-	res 6, [hl]
+	res BIT_NO_TEXT_DELAY, [hl]
 	ld hl, LinkCableInfoTexts
 	add a
 	ld d, 0
@@ -54,7 +54,7 @@ LinkCableHelp::
 	jp .linkHelpLoop
 .exit
 	ld hl, wStatusFlags5
-	res 6, [hl]
+	res BIT_NO_TEXT_DELAY, [hl]
 	call LoadScreenTilesFromBuffer1
 	jp TextScriptEnd
 
@@ -98,7 +98,7 @@ ViridianSchoolBlackboard::
 	ld [wMenuItemOffset], a
 	ld [wCurrentMenuItem], a
 	ld [wLastMenuItem], a
-	ld a, D_LEFT | D_RIGHT | A_BUTTON | B_BUTTON
+	ld a, PAD_LEFT | PAD_RIGHT | PAD_A | PAD_B
 	ld [wMenuWatchedKeys], a
 	ld a, 2
 	ld [wMaxMenuItem], a
@@ -108,7 +108,7 @@ ViridianSchoolBlackboard::
 	ld [wTopMenuItemX], a
 .blackboardLoop
 	ld hl, wStatusFlags5
-	set 6, [hl]
+	set BIT_NO_TEXT_DELAY, [hl]
 	hlcoord 0, 0
 	lb bc, 6, 10
 	call TextBoxBorder
@@ -121,9 +121,9 @@ ViridianSchoolBlackboard::
 	ld hl, ViridianSchoolBlackboardText2
 	call PrintText
 	call HandleMenuInput ; pressing up and down is handled in here
-	bit BIT_B_BUTTON, a ; pressed b
+	bit B_PAD_B, a ; pressed b
 	jr nz, .exitBlackboard
-	bit BIT_D_RIGHT, a
+	bit B_PAD_RIGHT, a
 	jr z, .didNotPressRight
 	; move cursor to right column
 	ld a, 2
@@ -136,7 +136,7 @@ ViridianSchoolBlackboard::
 	ld [wMenuItemOffset], a
 	jr .blackboardLoop
 .didNotPressRight
-	bit BIT_D_LEFT, a
+	bit B_PAD_LEFT, a
 	jr z, .didNotPressLeftOrRight
 	; move cursor to left column
 	ld a, 2
@@ -158,7 +158,7 @@ ViridianSchoolBlackboard::
 	; we must have pressed a on a status condition
 	; so print the text
 	ld hl, wStatusFlags5
-	res 6, [hl]
+	res BIT_NO_TEXT_DELAY, [hl]
 	ld hl, ViridianBlackboardStatusPointers
 	add a
 	ld d, 0
@@ -171,7 +171,7 @@ ViridianSchoolBlackboard::
 	jp .blackboardLoop
 .exitBlackboard
 	ld hl, wStatusFlags5
-	res 6, [hl]
+	res BIT_NO_TEXT_DELAY, [hl]
 	call LoadScreenTilesFromBuffer1
 	jp TextScriptEnd
 

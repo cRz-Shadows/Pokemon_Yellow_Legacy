@@ -12,9 +12,9 @@ VermilionDock_Script:
 	SetEventReuseHL EVENT_STARTED_WALKING_OUT_OF_DOCK
 	call Delay3
 	ld hl, wStatusFlags5
-	set 7, [hl]
+	set BIT_SCRIPTED_MOVEMENT_STATE, [hl]
 	ld hl, wSimulatedJoypadStatesEnd
-	ld a, D_UP
+	ld a, PAD_UP
 	ld [hli], a
 	ld [hli], a
 	ld [hl], a
@@ -38,7 +38,7 @@ VermilionDock_Script:
 
 VermilionDockSSAnneLeavesScript:
 	SetEventForceReuseHL EVENT_SS_ANNE_LEFT
-	ld a, $ff
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	call StopAllMusic
 	ld c, BANK(Music_Surfing)
@@ -49,7 +49,7 @@ VermilionDockSSAnneLeavesScript:
 	ld [wSpritePlayerStateData1ImageIndex], a
 	ld c, 120
 	call DelayFrames
-	ld b, $9c
+	ld b, HIGH(vBGMap1)
 	call CopyScreenTileBufferToVRAM
 	hlcoord 0, 10
 	ld bc, SCREEN_WIDTH * 6
@@ -128,7 +128,7 @@ VermilionDock_AnimSmokePuffDriftRight:
 	ld a, [wSSAnneSmokeDriftAmount]
 	swap a
 	ld c, a
-	ld de, 4
+	ld de, OBJ_SIZE
 .drift_loop
 	inc [hl]
 	inc [hl]
@@ -156,10 +156,10 @@ VermilionDock_EmitSmokePuff:
 
 VermilionDockOAMBlock:
 	; tile id, attribute
-	db $fc, $10
-	db $fd, $10
-	db $fe, $10
-	db $ff, $10
+	db $fc, OAM_PAL1
+	db $fd, OAM_PAL1
+	db $fe, OAM_PAL1
+	db $ff, OAM_PAL1
 
 VermilionDock_SyncScrollWithLY:
 	ld h, d

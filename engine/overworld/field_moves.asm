@@ -18,12 +18,12 @@ TrySurf:
 	call HasPartyMove
 	jr nz, .no
 	ld a, [wObtainedBadges]
-	bit 4, a ; SOUL BADGE
+	bit BIT_SOULBADGE, a ; SOUL BADGE
 	jr z, .no
 	farcall IsSurfingAllowed
 	ld hl, wStatusFlags1
-	bit 1, [hl]
-	res 1, [hl]
+	bit BIT_SURF_ALLOWED, [hl]
+	res BIT_SURF_ALLOWED, [hl]
 	jr z, .no2
 	call InitializeFieldMoveTextBox
 	ld hl, PromptToSurfText
@@ -60,7 +60,7 @@ TryCut:
 	call HasPartyMove
 	jr nz, TrySurf.no2
 	ld a, [wObtainedBadges]
-	bit 1, a ; CASCADE BADGE
+	bit BIT_CASCADEBADGE, a ; CASCADE BADGE
 	jr z, TrySurf.no2
 	ld hl, PromptToCutText
 	call PrintText

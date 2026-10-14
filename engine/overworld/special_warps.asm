@@ -2,8 +2,8 @@ PrepareForSpecialWarp::
 	call LoadSpecialWarpData
 	predef LoadTilesetHeader
 	ld hl, wStatusFlags6
-	bit 2, [hl] ; dungeon warp or fly warp?
-	res 2, [hl]
+	bit BIT_FLY_OR_DUNGEON_WARP, [hl]
+	res BIT_FLY_OR_DUNGEON_WARP, [hl]
 	jr z, .debugNewGameWarp
 	ld a, [wDestinationMap]
 	jr .next
@@ -23,7 +23,7 @@ PrepareForSpecialWarp::
 	ld a, b
 .next2
 	ld hl, wStatusFlags6
-	bit 4, [hl] ; dungeon warp
+	bit BIT_DUNGEON_WARP, [hl]
 	ret nz
 	ld [wLastMap], a
 	ret
@@ -52,7 +52,7 @@ LoadSpecialWarpData:
 	bit BIT_DEBUG_MODE, a
 	; warp to wLastMap (PALLET_TOWN) for StartNewGameDebug
 	jr nz, .notNewGameWarp
-	bit 2, a
+	bit BIT_FLY_OR_DUNGEON_WARP, a
 	jr nz, .notNewGameWarp
 	ld hl, NewGameWarp
 .copyWarpData
@@ -71,16 +71,16 @@ LoadSpecialWarpData:
 .notNewGameWarp
 	ld a, [wLastMap] ; this value is overwritten before it's ever read
 	ld hl, wStatusFlags6
-	bit 4, [hl] ; dungeon warp
+	bit BIT_DUNGEON_WARP, [hl]
 	jr nz, .usedDungeonWarp
-	bit 6, [hl] ; blacked out
-	res 6, [hl]
+	bit BIT_ESCAPE_WARP, [hl]
+	res BIT_ESCAPE_WARP, [hl]
 	jr z, .otherDestination
 	ld a, [wLastBlackoutMap]
 	jr .usedFlyWarp
 .usedDungeonWarp
 	ld hl, wStatusFlags3
-	res 4, [hl]
+	res BIT_ON_DUNGEON_WARP, [hl]
 	ld a, [wDungeonWarpDestinationMap]
 	ld b, a
 	ld [wCurMap], a

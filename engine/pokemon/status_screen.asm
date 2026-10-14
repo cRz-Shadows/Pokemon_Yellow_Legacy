@@ -46,7 +46,7 @@ DrawHP_:
 	call DrawHPBar
 	pop hl
 	ld a, [hUILayoutFlags]
-	bit 0, a
+	bit BIT_PARTY_MENU_HP_BAR, a
 	jr z, .printFractionBelowBar
 	ld bc, $9 ; right of bar
 	jr .printFraction
@@ -83,7 +83,7 @@ StatusScreen:
 	call CalcStats ; Recalculate stats
 .DontRecalculate
 	ld hl, wStatusFlags2
-	set 1, [hl]
+	set BIT_NO_AUDIO_FADE_OUT, [hl]
 	ld a, $33
 	ld [rNR50], a ; Reduce the volume
 	call GBPalWhiteOutWithDelay3
@@ -132,7 +132,7 @@ StatusScreen:
 	call Joypad
 
 	ld a, [hJoyHeld]
-	and SELECT | START
+	and PAD_SELECT | PAD_START
 	jr z, .noblank
 	push hl
 	ld a, ' '
@@ -147,13 +147,13 @@ StatusScreen:
 .noblank
 
 	ld a, [hJoyHeld]
-	bit BIT_SELECT, a
+	bit B_PAD_SELECT, a
 	jr z, .checkstart
 	ld de, wLoadedMonHPExp
 	lb bc, 2, 5
 	jr .printnum
 .checkstart	;print DVs if start is held
-	bit BIT_START, a
+	bit B_PAD_START, a
 	jr z, .doregular
 	ld de, wDVCalcVar2 + 4
 	lb bc, 1, 2
@@ -204,7 +204,7 @@ StatusScreen:
 	ld de, wLoadedMonOTID
 	lb bc, LEADING_ZEROES | 2, 5
 	call PrintNumber ; ID Number
-	ld d, $0
+	ld d, STATUS_SCREEN_STATS_BOX
 	call PrintStatsBox
 	call Delay3
 	call GBPalNormal
@@ -309,14 +309,14 @@ PrintStatsBox:
 	lb bc, 8, 8
 	call TextBoxBorder ; Draws the box
 	hlcoord 1, 9 ; Start printing stats from here
-	ld bc, $19 ; Number offset
+	ld bc, SCREEN_WIDTH + 5 ; one row down and 5 columns right
 	jr .PrintStats
 .LevelUpStatsBox
 	hlcoord 9, 2
 	lb bc, 8, 9
 	call TextBoxBorder
 	hlcoord 11, 3
-	ld bc, $18
+	ld bc, SCREEN_WIDTH + 4 ; one row down and 4 columns right
 .PrintStats
 	push bc
 	push hl
@@ -329,7 +329,7 @@ PrintStatsBox:
 	;joenote - print stat exp if select is held
 	call Joypad
 	ld a, [hJoyHeld]
-	bit 2, a
+	bit B_PAD_SELECT, a
 	jr z, .checkstart
 	dec l	;shift alignment 2 tiles to the left
 	dec l
@@ -406,7 +406,7 @@ StatusScreen2:
 	ld a, [wNumMovesMinusOne]
 	inc a
 	ld c, a
-	ld a, $4
+	ld a, NUM_MOVES
 	sub c
 	ld b, a ; Number of moves ?
 	hlcoord 11, 10
@@ -443,10 +443,10 @@ StatusScreen2:
 	pop de
 	pop hl
 	push hl
-	ld bc, wPartyMon1PP - wPartyMon1Moves - 1
+	ld bc, MON_PP - MON_MOVES - 1
 	add hl, bc
 	ld a, [hl]
-	and $3f
+	and PP_MASK
 	ld [wStatusScreenCurrentPP], a
 	ld h, d
 	ld l, e
@@ -468,7 +468,7 @@ StatusScreen2:
 	pop bc
 	inc b
 	ld a, b
-	cp $4
+	cp NUM_MOVES
 	jr nz, .PrintPP
 .PPDone
 	hlcoord 9, 3
@@ -513,9 +513,9 @@ StatusScreen2:
 	pop af
 	ldh [hTileAnimations], a
 	ld hl, wStatusFlags2
-	res 1, [hl]
+	res BIT_NO_AUDIO_FADE_OUT, [hl]
 	ld a, $77
-	ldh [rNR50], a
+	ldh [rAUDVOL], a
 	call GBPalWhiteOut
 	jp ClearScreen
 

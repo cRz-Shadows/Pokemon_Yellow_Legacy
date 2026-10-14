@@ -5,8 +5,8 @@ DisplayTextID::
 	push af
 	farcall DisplayTextIDInit ; initialization
 	ld hl, wTextPredefFlag
-	bit 0, [hl]
-	res 0, [hl]
+	bit BIT_TEXT_PREDEF, [hl]
+	res BIT_TEXT_PREDEF, [hl]
 	jr nz, .skipSwitchToMapBank
 	ld a, [wCurMap]
 	call SwitchToMapRomBank
@@ -93,7 +93,7 @@ AfterDisplayingTextID::
 HoldTextDisplayOpen::
 	call Joypad
 	ldh a, [hJoyHeld]
-	bit BIT_A_BUTTON, a
+	bit B_PAD_A, a
 	jr nz, HoldTextDisplayOpen
 
 CloseTextDisplay::
@@ -107,8 +107,8 @@ CloseTextDisplay::
 	ldh [hAutoBGTransferEnabled], a ; disable continuous WRAM to VRAM transfer each V-blank
 ; loop to make sprites face the directions they originally faced before the dialogue
 	ld hl, wSprite01StateData2OrigFacingDirection
-	ld c, $0f
-	ld de, $10
+	ld c, NUM_SPRITESTATEDATA_STRUCTS - 1
+	ld de, SPRITESTATEDATA1_LENGTH
 .restoreSpriteFacingDirectionLoop
 	ld a, [hl] ; x#SPRITESTATEDATA2_ORIGFACINGDIRECTION
 	dec h
@@ -119,9 +119,9 @@ CloseTextDisplay::
 	jr nz, .restoreSpriteFacingDirectionLoop
 	call InitMapSprites ; reload sprite tile pattern data (since it was partially overwritten by text tile patterns)
 	ld hl, wFontLoaded
-	res 0, [hl]
+	res BIT_FONT_LOADED, [hl]
 	ld a, [wStatusFlags6]
-	bit 3, a ; used fly warp
+	bit BIT_FLY_WARP, a
 	call z, LoadPlayerSpriteGraphics
 	call LoadCurrentMapView
 	pop af
@@ -188,7 +188,7 @@ DisplayPlayerBlackedOutText::
 	ld hl, PlayerBlackedOutText
 	call PrintText
 	ld a, [wStatusFlags6]
-	res 5, a ; reset forced to use bike bit
+	res BIT_ALWAYS_ON_BIKE, a
 	ld [wStatusFlags6], a
 	CheckEvent EVENT_IN_SAFARI_ZONE
 	jr z, .didnotblackoutinsafari

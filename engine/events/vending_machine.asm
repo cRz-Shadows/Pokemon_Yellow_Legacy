@@ -7,7 +7,7 @@ VendingMachineMenu::
 	xor a
 	ld [wCurrentMenuItem], a
 	ld [wLastMenuItem], a
-	ld a, A_BUTTON | B_BUTTON
+	ld a, PAD_A | PAD_B
 	ld [wMenuWatchedKeys], a
 	ld a, 3
 	ld [wMaxMenuItem], a
@@ -16,7 +16,7 @@ VendingMachineMenu::
 	ld a, 1
 	ld [wTopMenuItemX], a
 	ld hl, wStatusFlags5
-	set 6, [hl]
+	set BIT_NO_TEXT_DELAY, [hl]
 	hlcoord 0, 3
 	lb bc, 8, 12
 	call TextBoxBorder
@@ -28,9 +28,9 @@ VendingMachineMenu::
 	ld de, DrinkPriceText
 	call PlaceString
 	ld hl, wStatusFlags5
-	res 6, [hl]
+	res BIT_NO_TEXT_DELAY, [hl]
 	call HandleMenuInput
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jr nz, .notThirsty
 	ld a, [wCurrentMenuItem]
 	cp 3 ; chose Cancel?

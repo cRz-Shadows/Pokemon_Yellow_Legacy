@@ -88,33 +88,33 @@ SurfingPikachuOAMData:
 
 .WaterSpray:
 	db 3
-	db $fc, $0b, $00, $10
-	db $04, $03, $0f, $10
-	db $04, $0b, $10, $10
+	db  -4,  11, $00, OAM_PAL1
+	db   4,   3, $0f, OAM_PAL1
+	db   4,  11, $10, OAM_PAL1
 
 .SmallSplash:
 	db 6
-	db $fc, $f0, $00, $30
-	db $fc, $08, $00, $10
-	db $04, $f0, $10, $30
-	db $04, $f8, $0f, $30
-	db $04, $00, $0f, $10
-	db $04, $08, $10, $10
+	db  -4, -16, $00, OAM_PAL1 | OAM_XFLIP
+	db  -4,   8, $00, OAM_PAL1
+	db   4, -16, $10, OAM_PAL1 | OAM_XFLIP
+	db   4,  -8, $0f, OAM_PAL1 | OAM_XFLIP
+	db   4,   0, $0f, OAM_PAL1
+	db   4,   8, $10, OAM_PAL1
 
 .LargeSplash:
 	db 12
-	db $f4, $f0, $00, $10
-	db $f4, $f8, $01, $10
-	db $f4, $00, $01, $30
-	db $f4, $08, $00, $30
-	db $fc, $f0, $10, $10
-	db $fc, $f8, $11, $10
-	db $fc, $00, $11, $30
-	db $fc, $08, $10, $30
-	db $04, $f0, $20, $10
-	db $04, $f8, $21, $10
-	db $04, $00, $21, $30
-	db $04, $08, $20, $30
+	db -12, -16, $00, OAM_PAL1
+	db -12,  -8, $01, OAM_PAL1
+	db -12,   0, $01, OAM_PAL1 | OAM_XFLIP
+	db -12,   8, $00, OAM_PAL1 | OAM_XFLIP
+	db  -4, -16, $10, OAM_PAL1
+	db  -4,  -8, $11, OAM_PAL1
+	db  -4,   0, $11, OAM_PAL1 | OAM_XFLIP
+	db  -4,   8, $10, OAM_PAL1 | OAM_XFLIP
+	db   4, -16, $20, OAM_PAL1
+	db   4,  -8, $21, OAM_PAL1
+	db   4,   0, $21, OAM_PAL1 | OAM_XFLIP
+	db   4,   8, $20, OAM_PAL1 | OAM_XFLIP
 
 .EmptySurfboard:
 	db 3
@@ -168,15 +168,15 @@ SurfingPikachuOAMData:
 .Frame34:
 .Frame35:
 	db 12
-	db $f4, $f0, $03, $20
-	db $f4, $f8, $02, $20
-	db $f4, $00, $01, $20
-	db $f4, $08, $00, $20
-	db $fc, $f0, $13, $20
-	db $fc, $f8, $12, $20
-	db $fc, $00, $11, $20
-	db $fc, $08, $10, $20
-	db $04, $f0, $23, $20
-	db $04, $f8, $22, $20
-	db $04, $00, $21, $20
-	db $04, $08, $20, $20
+	db -12, -16, $03, OAM_XFLIP
+	db -12,  -8, $02, OAM_XFLIP
+	db -12,   0, $01, OAM_XFLIP
+	db -12,   8, $00, OAM_XFLIP
+	db  -4, -16, $13, OAM_XFLIP
+	db  -4,  -8, $12, OAM_XFLIP
+	db  -4,   0, $11, OAM_XFLIP
+	db  -4,   8, $10, OAM_XFLIP
+	db   4, -16, $23, OAM_XFLIP
+	db   4,  -8, $22, OAM_XFLIP
+	db   4,   0, $21, OAM_XFLIP
+	db   4,   8, $20, OAM_XFLIP

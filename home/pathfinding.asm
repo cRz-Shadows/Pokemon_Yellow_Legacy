@@ -33,7 +33,7 @@ MoveSprite_::
 
 	pop bc
 	ld hl, wStatusFlags5
-	set 0, [hl]
+	set BIT_SCRIPTED_NPC_MOVEMENT, [hl]
 	pop hl
 	xor a
 	ld [wOverrideSimulatedJoypadStatesMask], a

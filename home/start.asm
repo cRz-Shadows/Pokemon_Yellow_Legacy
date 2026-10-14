@@ -1,5 +1,5 @@
 _Start::
-	cp GBC
+	cp BOOTUP_A_CGB
 	jr z, .cgb
 	xor a
 	jr .ok

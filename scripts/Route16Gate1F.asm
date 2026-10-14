@@ -1,6 +1,6 @@
 Route16Gate1F_Script:
 	ld hl, wStatusFlags6
-	res 5, [hl]
+	res BIT_ALWAYS_ON_BIKE, [hl]
 	call EnableAutoTextBoxDrawing
 	ld a, [wRoute16Gate1FCurScript]
 	ld hl, Route16Gate1F_ScriptPointers
@@ -32,7 +32,7 @@ Route16Gate1FDefaultScript:
 	ld [wSimulatedJoypadStatesIndex], a
 	ld b, $0
 	ld c, a
-	ld a, D_UP
+	ld a, PAD_UP
 	ld hl, wSimulatedJoypadStatesEnd
 	call FillMemory
 	call StartSimulatingJoypadStates
@@ -55,7 +55,7 @@ Route16Gate1FPlayerMovingUpScript:
 	ld a, [wSimulatedJoypadStatesIndex]
 	and a
 	ret nz
-	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 
 Route16Gate1FGuardScript:
@@ -64,7 +64,7 @@ Route16Gate1FGuardScript:
 	call DisplayTextID
 	ld a, $1
 	ld [wSimulatedJoypadStatesIndex], a
-	ld a, D_RIGHT | B_BUTTON
+	ld a, PAD_RIGHT | PAD_B
 	ld [wSimulatedJoypadStatesEnd], a
 	call StartSimulatingJoypadStates
 	ld a, SCRIPT_ROUTE16GATE1F_PLAYER_MOVING_RIGHT
@@ -78,7 +78,7 @@ Route16Gate1FPlayerMovingRightScript:
 	xor a
 	ld [wJoyIgnore], a
 	ld hl, wStatusFlags5
-	res 7, [hl]
+	res BIT_SCRIPTED_MOVEMENT_STATE, [hl]
 	ld a, SCRIPT_ROUTE16GATE1F_DEFAULT
 	ld [wRoute16Gate1FCurScript], a
 	ret

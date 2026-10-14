@@ -8,7 +8,7 @@ Route12SuperRodHouse_TextPointers:
 Route12SuperRodHouseFishingGuruText:
 	text_asm
 	ld a, [wStatusFlags1]
-	bit 5, a ; received super rod?
+	bit BIT_GOT_SUPER_ROD, a
 	jr nz, .got_item
 	ld hl, .DoYouLikeToFishText
 	call PrintText
@@ -20,7 +20,7 @@ Route12SuperRodHouseFishingGuruText:
 	call GiveItem
 	jr nc, .bag_full
 	ld hl, wStatusFlags1
-	set 5, [hl] ; received super rod
+	set BIT_GOT_SUPER_ROD, [hl]
 	ld hl, .ReceivedSuperRodText
 	jr .done
 .bag_full

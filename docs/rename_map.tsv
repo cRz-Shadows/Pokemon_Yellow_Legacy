@@ -1122,3 +1122,42 @@ _RemovePokemon.usePartyMonNicks2	_RemovePokemon.gotNicksPointer2	pret names (#12
 _RemovePokemon.usePartyMonOTs	_RemovePokemon.gotOTsPointer	pret names (#12), local label
 _RemovePokemon.usePartyMonStructs	_RemovePokemon.gotMonStructs	pret names (#12), local label
 _Start.gbc	_Start.cgb	pret names (#12), local label
+A_BUTTON	PAD_A	pret hardware.inc (#46), constant
+BG_MAP_HEIGHT	TILEMAP_HEIGHT	pret hardware.inc (#46), constant
+BG_MAP_WIDTH	TILEMAP_WIDTH	pret hardware.inc (#46), constant
+BIT_A_BUTTON	B_PAD_A	pret hardware.inc (#46), constant
+BIT_B_BUTTON	B_PAD_B	pret hardware.inc (#46), constant
+BIT_D_DOWN	B_PAD_DOWN	pret hardware.inc (#46), constant
+BIT_D_LEFT	B_PAD_LEFT	pret hardware.inc (#46), constant
+BIT_D_RIGHT	B_PAD_RIGHT	pret hardware.inc (#46), constant
+BIT_D_UP	B_PAD_UP	pret hardware.inc (#46), constant
+BIT_SELECT	B_PAD_SELECT	pret hardware.inc (#46), constant
+BIT_START	B_PAD_START	pret hardware.inc (#46), constant
+B_BUTTON	PAD_B	pret hardware.inc (#46), constant
+D_DOWN	PAD_DOWN	pret hardware.inc (#46), constant
+D_LEFT	PAD_LEFT	pret hardware.inc (#46), constant
+D_RIGHT	PAD_RIGHT	pret hardware.inc (#46), constant
+D_UP	PAD_UP	pret hardware.inc (#46), constant
+LEN_1BPP_TILE	TILE_1BPP_SIZE	pret hardware.inc (#46), constant
+LEN_2BPP_TILE	TILE_SIZE	pret hardware.inc (#46), constant
+MBC1RomBank	rROMB	pret hardware.inc (#46), constant
+MBC1SRamBank	rRAMB	pret hardware.inc (#46), constant
+MBC1SRamBankingMode	rBMODE	pret hardware.inc (#46), constant
+MBC1SRamEnable	rRAMG	pret hardware.inc (#46), constant
+NUM_SPRITE_OAM_STRUCTS	OAM_COUNT	pret hardware.inc (#46), constant
+OAMFLAG_CANBEMASKED	UNDER_GRASS	pret hardware.inc (#46), constant
+OAMFLAG_ENDOFDATA	FACING_END	pret hardware.inc (#46), constant
+OAM_BEHIND_BG	OAM_PRIO	pret hardware.inc (#46), constant
+OAM_HFLIP	OAM_XFLIP	pret hardware.inc (#46), constant
+OAM_OBP1	OAM_PAL1	pret hardware.inc (#46), constant
+OAM_OBP_NUM	B_OAM_PAL1	pret hardware.inc (#46), constant
+OAM_PRIORITY	B_OAM_PRIO	pret hardware.inc (#46), constant
+OAM_TILE_BANK	B_OAM_BANK1	pret hardware.inc (#46), constant
+OAM_VFLIP	OAM_YFLIP	pret hardware.inc (#46), constant
+OAM_X_FLIP	B_OAM_XFLIP	pret hardware.inc (#46), constant
+OAM_Y_FLIP	B_OAM_YFLIP	pret hardware.inc (#46), constant
+SRAM_DISABLE	RAMG_SRAM_DISABLE	pret hardware.inc (#46), constant
+SRAM_ENABLE	RAMG_SRAM_ENABLE	pret hardware.inc (#46), constant
+rLCDC_ENABLE	B_LCDC_ENABLE	pret hardware.inc (#46), constant
+rLCDC_ENABLE_MASK	LCDC_ON	pret hardware.inc (#46), constant
+rWave_0	_AUD3WAVERAM	pret hardware.inc (#46), constant

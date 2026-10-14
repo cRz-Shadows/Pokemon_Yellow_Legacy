@@ -63,9 +63,9 @@ PokemonTower2FRivalEncounterEventCoords:
 
 PokemonTower2FDefeatedRivalScript:
 	ld a, [wIsInBattle]
-	cp $ff
+	cp LOST_BATTLE
 	jp z, PokemonTower2FResetRivalEncounter
-	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	SetEvent EVENT_BEAT_POKEMON_TOWER_RIVAL
 	ld a, TEXT_POKEMONTOWER2F_RIVAL
@@ -111,7 +111,7 @@ PokemonTower2FRivalDownThenRightMovement:
 
 PokemonTower2FRivalExitsScript:
 	ld a, [wStatusFlags5]
-	bit 0, a
+	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
 	ld a, HS_POKEMON_TOWER_2F_RIVAL
 	ld [wToggleableObjectIndex], a
@@ -140,8 +140,8 @@ PokemonTower2FRivalText:
 	ld hl, .WhatBringsYouHereText
 	call PrintText
 	ld hl, wStatusFlags3
-	set 6, [hl]
-	set 7, [hl]
+	set BIT_TALKED_TO_TRAINER, [hl]
+	set BIT_PRINT_END_BATTLE_TEXT, [hl]
 	ld hl, .DefeatedText
 	ld de, .VictoryText
 	call SaveEndBattleTextPointers

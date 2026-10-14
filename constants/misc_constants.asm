@@ -8,17 +8,7 @@ DEF TRUE  EQU 1
 	const FLAG_SET   ; 1
 	const FLAG_TEST  ; 2
 
-; wOptions
-DEF TEXT_DELAY_FAST   EQU %001 ; 1
-DEF TEXT_DELAY_MEDIUM EQU %011 ; 3
-DEF TEXT_DELAY_SLOW   EQU %101 ; 5
-
-	const_def 6
-	const BIT_BATTLE_SHIFT     ; 6
-	const BIT_BATTLE_ANIMATION ; 7
-
 ; wStatusFlags6 flags
-DEF BIT_DEBUG_MODE EQU 1
 
 ; wDifficulty values, as chosen in the new-game menu. The byte is a set of flags
 ; (rules and how the starter is chosen are independent), so check it with the
@@ -39,3 +29,9 @@ DEF STARTER_LEVEL EQU 5
 
 ; Melanie (Cerulean City) offers BULBASAUR once Pikachu is this happy
 DEF MELANIE_HAPPINESS_THRESHOLD EQU 147
+
+; input
+DEF NO_INPUT EQU 0
+
+; SGB command MLT_REQ can be used to detect SGB hardware
+DEF JOYP_SGB_MLT_REQ EQU %00000011

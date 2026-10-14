@@ -79,8 +79,8 @@ Route1OakText:
 	call PlayMusic
 
 	ld hl, wStatusFlags3
-	set 6, [hl]
-	set 7, [hl]
+	set BIT_TALKED_TO_TRAINER, [hl]
+	set BIT_PRINT_END_BATTLE_TEXT, [hl]
 
 	call Delay3
 	ld a, OPP_PROF_OAK

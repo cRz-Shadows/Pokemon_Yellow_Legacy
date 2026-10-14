@@ -11,11 +11,11 @@ MtMoonB2F_Script:
 	call ArePlayerCoordsInArray
 	jr nc, .enable_battles
 	ld hl, wStatusFlags4
-	set 4, [hl]
+	set BIT_NO_BATTLES, [hl]
 	ret
 .enable_battles
 	ld hl, wStatusFlags4
-	res 4, [hl]
+	res BIT_NO_BATTLES, [hl]
 	ret
 
 MtMoonB2FFossilAreaCoords:
@@ -108,7 +108,7 @@ MtMoonB2FScript_CheckSuperNerdEncounter:
 
 MtMoonB2FDefeatedSuperNerdScript:
 	ld a, [wIsInBattle]
-	cp $ff
+	cp LOST_BATTLE
 	jp z, MtMoonB2FResetScripts
 	call UpdateSprites
 	call Delay3
@@ -207,9 +207,9 @@ MtMoonB2FSuperNerdMovement_ToDomeFossil:
 
 MtMoonB2FSuperNerdTakesOtherFossilScript:
 	ld a, [wStatusFlags5]
-	bit 0, a
+	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
-	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
@@ -245,7 +245,7 @@ MtMoonB2FScript_StartJessieJamesEncounter:
 	call PlayMusic
 	xor a
 	ldh [hJoyHeld], a
-	ld a, ~(A_BUTTON | B_BUTTON)
+	ld a, PAD_SELECT | PAD_START | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, HS_MT_MOON_B2F_JESSIE
 	call MtMoonB2FScript_ShowObject
@@ -260,10 +260,10 @@ MtMoonB2FScript_StartJessieJamesEncounter:
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	ld a, $1
 	ld [wSimulatedJoypadStatesIndex], a
-	ld a, D_UP | B_BUTTON
+	ld a, PAD_UP | PAD_B
 	ld [wSimulatedJoypadStatesEnd], a
 	call StartSimulatingJoypadStates
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, SCRIPT_MTMOONB2F_SCRIPT6
 	call MtMoonB2FSetScript
@@ -282,7 +282,7 @@ MtMoonB2FJamesRunLeftMovement:
 	db $FF
 
 MtMoonB2FScript6:
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, [wSimulatedJoypadStatesIndex]
 	and a
@@ -292,17 +292,17 @@ MtMoonB2FScript6:
 	ldh [hSpriteIndex], a
 	ld de, MtMoonB2FJessieRunLeftMovement
 	call MoveSprite
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, SCRIPT_MTMOONB2F_SCRIPT7
 	call MtMoonB2FSetScript
 	ret
 
 MtMoonB2FScript7:
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, [wStatusFlags5]
-	bit 0, a
+	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
 MtMoonB2FScript8:
 	ld a, $2
@@ -314,17 +314,17 @@ MtMoonB2FScript9:
 	ldh [hSpriteIndex], a
 	ld de, MtMoonB2FJamesRunLeftMovement
 	call MoveSprite
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, SCRIPT_MTMOONB2F_SCRIPT10
 	call MtMoonB2FSetScript
 	ret
 
 MtMoonB2FScript10:
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, [wStatusFlags5]
-	bit 0, a
+	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
 MtMoonB2FScript11:
 	ld a, $2
@@ -332,15 +332,15 @@ MtMoonB2FScript11:
 	ld a, SPRITE_FACING_LEFT
 	ld [wSprite06StateData1FacingDirection], a
 	call Delay3
-	ld a, ~(A_BUTTON | B_BUTTON)
+	ld a, PAD_SELECT | PAD_START | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, TEXT_MTMOONB2F_TEXT13
 	ldh [hTextID], a
 	call DisplayTextID
 MtMoonB2FScript12:
 	ld hl, wStatusFlags3
-	set 6, [hl]
-	set 7, [hl]
+	set BIT_TALKED_TO_TRAINER, [hl]
+	set BIT_PRINT_END_BATTLE_TEXT, [hl]
 	ld hl, MtMoonB2FJessieJamesEndBattleText
 	ld de, MtMoonB2FJessieJamesEndBattleText
 	call SaveEndBattleTextPointers
@@ -357,10 +357,10 @@ MtMoonB2FScript12:
 	ret
 
 MtMoonB2FScript13:
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, [wIsInBattle]
-	cp $ff
+	cp LOST_BATTLE
 	jp z, MtMoonB2FResetScripts
 	ld a, $2
 	ld [wSprite02StateData1MovementStatus], a
@@ -368,7 +368,7 @@ MtMoonB2FScript13:
 	xor a
 	ld [wSprite02StateData1FacingDirection], a
 	ld [wSprite06StateData1FacingDirection], a
-	ld a, ~(A_BUTTON | B_BUTTON)
+	ld a, PAD_SELECT | PAD_START | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
@@ -381,14 +381,14 @@ MtMoonB2FScript13:
 	ld c, BANK(Music_MeetJessieJames)
 	ld a, MUSIC_MEET_JESSIE_JAMES
 	call PlayMusic
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, SCRIPT_MTMOONB2F_SCRIPT14
 	call MtMoonB2FSetScript
 	ret
 
 MtMoonB2FScript14:
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	call GBFadeOutToBlack
 	ld a, HS_MT_MOON_B2F_JESSIE
@@ -500,8 +500,8 @@ MtMoonB2FSuperNerdText:
 	ld hl, MtMoonB2FSuperNerdTheyreBothMineText
 	call PrintText
 	ld hl, wStatusFlags3
-	set 6, [hl]
-	set 7, [hl]
+	set BIT_TALKED_TO_TRAINER, [hl]
+	set BIT_PRINT_END_BATTLE_TEXT, [hl]
 	ld hl, MtMoonB2FSuperNerdOkIllShareText
 	ld de, MtMoonB2FSuperNerdOkIllShareText
 	call SaveEndBattleTextPointers

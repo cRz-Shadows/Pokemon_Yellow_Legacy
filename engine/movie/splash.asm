@@ -15,7 +15,7 @@ LoadShootingStarGraphics:
 	call CopyVideoData
 	ld de, FallingStar
 	ld hl, vChars1 tile $22
-	lb bc, BANK(FallingStar), (FallingStarEnd - FallingStar) / $10
+	lb bc, BANK(FallingStar), (FallingStarEnd - FallingStar) / TILE_SIZE
 	call CopyVideoData
 	ld hl, GameFreakLogoOAMData
 	ld de, wShadowOAMSprite24
@@ -64,9 +64,9 @@ AnimateShootingStar:
 ; Clear big star OAM.
 	ld hl, wShadowOAM
 	ld c, 4
-	ld de, 4
+	ld de, OBJ_SIZE
 .clearOAMLoop
-	ld [hl], 160
+	ld [hl], SCREEN_HEIGHT_PX + OAM_Y_OFS
 	add hl, de
 	dec c
 	jr nz, .clearOAMLoop
@@ -145,7 +145,7 @@ AnimateShootingStar:
 ; shift the existing OAM entries down to make room for the next wave
 	ld hl, wShadowOAMSprite04
 	ld de, wShadowOAM
-	ld bc, $50
+	ld bc, OBJ_SIZE * 20
 	call CopyData
 
 	pop af
@@ -158,7 +158,7 @@ AnimateShootingStar:
 	ret
 
 SmallStarsOAM:
-	dbsprite  0,  0,  0,  0, $A2, OAM_BEHIND_BG | OAM_OBP1
+	dbsprite  0,  0,  0,  0, $A2, OAM_PRIO | OAM_PAL1
 SmallStarsOAMEnd:
 
 SmallStarsWaveCoordsPointerTable:
@@ -248,10 +248,10 @@ GameFreakLogoOAMData:
 GameFreakLogoOAMDataEnd:
 
 GameFreakShootingStarOAMData:
-	dbsprite 20,  0,  0,  0, $a0, OAM_OBP1 | OAM_HIGH_PALS
-	dbsprite 21,  0,  0,  0, $a0, OAM_OBP1 | OAM_HIGH_PALS | OAM_HFLIP
-	dbsprite 20,  1,  0,  0, $a1, OAM_OBP1 | OAM_HIGH_PALS
-	dbsprite 21,  1,  0,  0, $a1, OAM_OBP1 | OAM_HIGH_PALS | OAM_HFLIP
+	dbsprite 20,  0,  0,  0, $a0, OAM_PAL1 | OAM_HIGH_PALS
+	dbsprite 21,  0,  0,  0, $a0, OAM_PAL1 | OAM_HIGH_PALS | OAM_XFLIP
+	dbsprite 20,  1,  0,  0, $a1, OAM_PAL1 | OAM_HIGH_PALS
+	dbsprite 21,  1,  0,  0, $a1, OAM_PAL1 | OAM_HIGH_PALS | OAM_XFLIP
 GameFreakShootingStarOAMDataEnd:
 
 FallingStar:

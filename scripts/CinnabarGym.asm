@@ -7,13 +7,13 @@ CinnabarGym_Script:
 
 CinnabarGymSetMapAndTiles:
 	ld hl, wCurrentMapScriptFlags
-	bit 6, [hl]
-	res 6, [hl]
+	bit BIT_CUR_MAP_LOADED_2, [hl]
+	res BIT_CUR_MAP_LOADED_2, [hl]
 	push hl
 	call nz, .LoadNames
 	pop hl
-	bit 5, [hl]
-	res 5, [hl]
+	bit BIT_CUR_MAP_LOADED_1, [hl]
+	res BIT_CUR_MAP_LOADED_1, [hl]
 	call nz, UpdateCinnabarGymGateTileBlocks
 	ResetEvent EVENT_2A7
 	ret
@@ -122,7 +122,7 @@ CinnabarGymPikachuMovement_SuperNerd:
 ; If Pikachu is out and faces direction b, applies Pikachu movement data hl
 CinnabarGymMovePikachuOutOfWay:
 	ld a, [wPikachuPartyFlags]
-	bit 7, a
+	bit BIT_STARTER_PIKACHU_IN_PARTY, a
 	ret z
 	push hl
 	push bc
@@ -137,7 +137,7 @@ CinnabarGymMovePikachuOutOfWay:
 
 CinnabarGymGetOpponentTextScript:
 	ld a, [wStatusFlags5]
-	bit 0, a
+	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
 	xor a
 	ld [wJoyIgnore], a
@@ -149,7 +149,7 @@ CinnabarGymGetOpponentTextScript:
 CinnabarGymOpenGateScript:
 	call CinnabarGymCheckAndResetQuizBattleFlag
 	ld a, [wIsInBattle]
-	cp $ff
+	cp LOST_BATTLE
 	jp z, CinnabarGymResetScripts
 	ld a, [wTrainerHeaderFlagBit]
 	sub $2
@@ -208,9 +208,9 @@ CinnabarGymUnlockGate:
 CinnabarGymBlainePostBattleScript:
 	call CinnabarGymCheckAndResetQuizBattleFlag
 	ld a, [wIsInBattle]
-	cp $ff
+	cp LOST_BATTLE
 	jp z, CinnabarGymResetScripts
-	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, [wGameStage] ; Check if player has beat the game
 	and a
@@ -243,7 +243,7 @@ CinnabarGymReceiveTM38:
 	SetEventRange EVENT_BEAT_CINNABAR_GYM_TRAINER_0, EVENT_BEAT_CINNABAR_GYM_TRAINER_6
 
 	ld hl, wCurrentMapScriptFlags
-	set 5, [hl]
+	set BIT_CUR_MAP_LOADED_1, [hl]
 
 	jp CinnabarGymResetScripts
 
@@ -275,8 +275,8 @@ CinnabarGymStartBattleScript:
 	call EngageMapTrainer
 	call InitBattleEnemyParameters
 	ld hl, wStatusFlags3
-	set 6, [hl]
-	set 7, [hl]
+	set BIT_TALKED_TO_TRAINER, [hl]
+	set BIT_PRINT_END_BATTLE_TEXT, [hl]
 	ld a, [wSpriteIndex]
 	cp CINNABARGYM_BLAINE
 	jr z, .blaine

@@ -22,13 +22,13 @@ MainMenu:
 	ld [hl], a
 	ld [wDefaultMap], a
 	ld hl, wStatusFlags4
-	res 6, [hl]
+	res BIT_LINK_CONNECTED, [hl]
 	call ClearScreen
 	call RunDefaultPaletteCommand
 	call LoadTextBoxTilePatterns
 	call LoadFontTilePatterns
 	ld hl, wStatusFlags5
-	set 6, [hl]
+	set BIT_NO_TEXT_DELAY, [hl]
 	ld a, [wSaveFileStatus]
 	cp 1
 	jr z, .noSaveFile
@@ -49,7 +49,7 @@ MainMenu:
 	call PlaceString
 .next2
 	ld hl, wStatusFlags5
-	res 6, [hl]
+	res BIT_NO_TEXT_DELAY, [hl]
 	call UpdateSprites
 	xor a
 	ld [wCurrentMenuItem], a
@@ -59,12 +59,12 @@ MainMenu:
 	ld [wTopMenuItemX], a
 	inc a
 	ld [wTopMenuItemY], a
-	ld a, A_BUTTON | B_BUTTON | START
+	ld a, PAD_A | PAD_B | PAD_START
 	ld [wMenuWatchedKeys], a
 	ld a, [wSaveFileStatus]
 	ld [wMaxMenuItem], a
 	call HandleMenuInput
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jp nz, DisplayTitleScreen ; if so, go back to the title screen
 	ld c, 20
 	call DelayFrames
@@ -83,13 +83,13 @@ MainMenu:
 	cp 1
 	jp z, StartNewGame
 	call DisplayOptionMenu
-	ld a, 1
+	ld a, TRUE
 	ld [wOptionsInitialized], a
 	jp .mainMenuLoop
 .choseContinue
 	call DisplayContinueGameInfo
 	ld hl, wCurrentMapScriptFlags
-	set 5, [hl]
+	set BIT_CUR_MAP_LOADED_1, [hl]
 .inputLoop
 	xor a
 	ldh [hJoyPressed], a
@@ -97,9 +97,9 @@ MainMenu:
 	ldh [hJoyHeld], a
 	call Joypad
 	ldh a, [hJoyHeld]
-	bit BIT_A_BUTTON, a
+	bit B_PAD_A, a
 	jr nz, .pressedA
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jp nz, .mainMenuLoop ; pressed B
 	jr .inputLoop
 .pressedA
@@ -118,7 +118,7 @@ MainMenu:
 	xor a
 	ld [wDestinationMap], a
 	ld hl, wStatusFlags6
-	set 2, [hl] ; fly warp or dungeon warp
+	set BIT_FLY_OR_DUNGEON_WARP, [hl]
 	call PrepareForSpecialWarp
 	jp SpecialEnterMap
 
@@ -142,7 +142,7 @@ StartNewGame:
 	; fallthrough
 StartNewGameDebug:
 	call OakSpeech
-	ld a, $8
+	ld a, PLAYER_DIR_UP
 	ld [wPlayerMovingDirection], a
 	ld c, 20
 	call DelayFrames
@@ -155,7 +155,7 @@ SpecialEnterMap::
 	ldh [hJoy5], a
 	ld [wCableClubDestinationMap], a
 	ld hl, wStatusFlags6
-	set 0, [hl] ; count play time
+	set BIT_GAME_TIMER_COUNTING, [hl]
 	call ResetPlayerSpriteData
 	ld c, 20
 	call DelayFrames
@@ -265,11 +265,11 @@ CheckForPlayerNameInSRAM:
 ; Check if the player name data in SRAM has a string terminator character
 ; (indicating that a name may have been saved there) and return whether it does
 ; in carry.
-	ld a, SRAM_ENABLE
-	ld [MBC1SRamEnable], a
+	ld a, RAMG_SRAM_ENABLE
+	ld [rRAMG], a
 	ld a, $1
-	ld [MBC1SRamBankingMode], a
-	ld [MBC1SRamBank], a
+	ld [rBMODE], a
+	ld [rRAMB], a
 	ld b, NAME_LENGTH
 	ld hl, sPlayerName
 .loop
@@ -280,13 +280,13 @@ CheckForPlayerNameInSRAM:
 	jr nz, .loop
 ; not found
 	xor a
-	ld [MBC1SRamEnable], a
-	ld [MBC1SRamBankingMode], a
+	ld [rRAMG], a
+	ld [rBMODE], a
 	and a
 	ret
 .found
 	xor a
-	ld [MBC1SRamEnable], a
-	ld [MBC1SRamBankingMode], a
+	ld [rRAMG], a
+	ld [rBMODE], a
 	scf
 	ret

@@ -1,5 +1,3 @@
-DEF MAP_TILESET_SIZE EQU $60
-
 UpdatePlayerSprite:
 	ld a, [wSpritePlayerStateData2WalkAnimationCounter]
 	and a
@@ -57,7 +55,7 @@ UpdatePlayerSprite:
 .next
 	ld [wSpritePlayerStateData1FacingDirection], a ; facing direction
 	ld a, [wFontLoaded]
-	bit 0, a
+	bit BIT_FONT_LOADED, a
 	jr z, .moving
 .notMoving
 ; zero the animation counters
@@ -68,7 +66,7 @@ UpdatePlayerSprite:
 	jr .skipSpriteAnim
 .moving
 	ld a, [wMovementFlags]
-	bit 7, a ; is the player sprite spinning due to a spin tile?
+	bit BIT_SPINNING, a
 	jr nz, .skipSpriteAnim
 	ld a, [hCurrentSpriteOffset]
 	add $7
@@ -86,7 +84,7 @@ UpdatePlayerSprite:
 	and a
 	jr nz, .doneSpeed
 	ld a, [hJoyHeld]
-	and B_BUTTON
+	and PAD_B
 	jr z, .doneSpeed
 	ld c, 3
 .doneSpeed
@@ -121,7 +119,7 @@ UpdatePlayerSprite:
 	cp c
 	ld a, 0
 	jr nz, .next2
-	ld a, OAM_BEHIND_BG
+	ld a, OAM_PRIO
 .next2
 	ld [wSpritePlayerStateData2GrassPriority], a
 	ret
@@ -159,11 +157,11 @@ UpdateNPCSprite:
 	ld l, a
 	inc l
 	ld a, [hl]        ; x#SPRITESTATEDATA1_MOVEMENTSTATUS
-	bit 7, a ; is the face player flag set?
+	bit BIT_FACE_PLAYER, a
 	jp nz, MakeNPCFacePlayer
 	ld b, a
 	ld a, [wFontLoaded]
-	bit 0, a
+	bit BIT_FONT_LOADED, a
 	jp nz, NotYetMoving
 	ld a, b
 	cp $2
@@ -202,7 +200,7 @@ UpdateNPCSprite:
 ; reached end of wNPCMovementDirections list
 	ld [hl], a ; store $ff in movement byte 1, disabling scripted movement
 	ld hl, wStatusFlags5
-	res 0, [hl]
+	res BIT_SCRIPTED_NPC_MOVEMENT, [hl]
 	xor a
 	ld [wSimulatedJoypadStatesIndex], a
 	ld [wUnusedOverrideSimulatedJoypadStatesIndex], a
@@ -407,9 +405,9 @@ MakeNPCFacePlayer:
 ; Check if the behaviour of the NPC facing the player when spoken to is
 ; disabled. This is only done when rubbing the S.S. Anne captain's back.
 	ld a, [wStatusFlags3]
-	bit 5, a
+	bit BIT_NO_NPC_FACE_PLAYER, a
 	jr nz, NotYetMoving
-	res 7, [hl]
+	res BIT_FACE_PLAYER, [hl]
 	ld a, [wPlayerDirection]
 	bit PLAYER_DIR_BIT_UP, a
 	jr z, .notFacingDown
@@ -560,7 +558,7 @@ CheckSpriteAvailability:
 	cp c
 	ld a, 0
 	jr nz, .notInGrass
-	ld a, OAM_BEHIND_BG
+	ld a, OAM_PRIO
 .notInGrass
 	ld [hl], a       ; x#SPRITESTATEDATA2_GRASSPRIORITY
 	and a
@@ -751,11 +749,11 @@ DoScriptedNPCMovement:
 ; in sync, such as when the player is following the NPC somewhere. An NPC can't
 ; be moved in sync with the player using the other method.
 	ld a, [wStatusFlags5]
-	bit 7, a
+	bit BIT_SCRIPTED_MOVEMENT_STATE, a
 	ret z
 	ld hl, wStatusFlags4
-	bit 7, [hl]
-	set 7, [hl]
+	bit BIT_INIT_SCRIPTED_MOVEMENT, [hl]
+	set BIT_INIT_SCRIPTED_MOVEMENT, [hl]
 	jp z, InitScriptedNPCMovement
 	ld hl, wNPCMovementDirections2
 	ld a, [wNPCMovementDirections2Index]

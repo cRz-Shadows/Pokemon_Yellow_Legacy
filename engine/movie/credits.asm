@@ -65,7 +65,7 @@ DisplayCreditsMon:
 	xor a
 	ldh [hAutoBGTransferEnabled], a
 	ld hl, rLCDC
-	set 3, [hl]
+	set B_LCDC_BG_MAP, [hl]
 	call SaveScreenTilesToBuffer2
 	call FillMiddleOfScreenWithWhite
 	call GetNextCreditsMon
@@ -80,7 +80,7 @@ DisplayCreditsMon:
 	ldh [rBGP], a
 	call UpdateCGBPal_BGP
 	ld hl, rLCDC
-	res 3, [hl]
+	res B_LCDC_BG_MAP, [hl]
 	ld a, 1
 	ldh [hAutoBGTransferEnabled], a
 	ld b, 0
@@ -275,7 +275,7 @@ ShowTheEndGFX:
 	call FillMiddleOfScreenWithWhite
 	ld de, TheEndGfx
 	ld hl, vChars2 tile $60
-	lb bc, BANK(TheEndGfx), (TheEndGfxEnd - TheEndGfx) / $10
+	lb bc, BANK(TheEndGfx), (TheEndGfxEnd - TheEndGfx) / TILE_SIZE
 	call CopyVideoData
 	hlcoord 4, 8
 	ld de, TheEndTextString

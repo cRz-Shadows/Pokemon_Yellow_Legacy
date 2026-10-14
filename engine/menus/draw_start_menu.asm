@@ -10,7 +10,7 @@ DrawStartMenu::
 	lb bc, 12, 8
 .drawTextBoxBorder
 	call TextBoxBorder
-	ld a, D_DOWN | D_UP | START | B_BUTTON | A_BUTTON
+	ld a, PAD_DOWN | PAD_UP | PAD_START | PAD_B | PAD_A
 	ld [wMenuWatchedKeys], a
 	ld a, $02
 	ld [wTopMenuItemY], a ; Y position of first menu choice
@@ -22,7 +22,7 @@ DrawStartMenu::
 	xor a
 	ld [wMenuWatchMovingOutOfBounds], a
 	ld hl, wStatusFlags5
-	set 6, [hl] ; no pauses between printing each letter
+	set BIT_NO_TEXT_DELAY, [hl]
 	hlcoord 12, 2
 	CheckEvent EVENT_GOT_POKEDEX
 ; case for not having pokedex
@@ -41,7 +41,7 @@ DrawStartMenu::
 	ld de, wPlayerName ; player's name
 	call PrintStartMenuItem
 	ld a, [wStatusFlags4]
-	bit 6, a ; is the player using the link feature?
+	bit BIT_LINK_CONNECTED, a
 ; case for not using link feature
 	ld de, StartMenuSaveText
 	jr z, .printSaveOrResetText
@@ -54,7 +54,7 @@ DrawStartMenu::
 	ld de, StartMenuExitText
 	call PlaceString
 	ld hl, wStatusFlags5
-	res 6, [hl] ; turn pauses between printing letters back on
+	res BIT_NO_TEXT_DELAY, [hl]
 	ret
 
 StartMenuPokedexText:

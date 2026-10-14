@@ -83,7 +83,7 @@ DisplayNameRaterScreen::
 DisplayNamingScreen:
 	push hl
 	ld hl, wStatusFlags5
-	set 6, [hl]
+	set BIT_NO_TEXT_DELAY, [hl]
 	call GBPalWhiteOutWithDelay3
 	call ClearScreen
 	call UpdateSprites
@@ -166,7 +166,7 @@ DisplayNamingScreen:
 	xor a
 	ld [wAnimCounter], a
 	ld hl, wStatusFlags5
-	res 6, [hl]
+	res BIT_NO_TEXT_DELAY, [hl]
 	ld a, [wIsInBattle]
 	and a
 	jp z, LoadTextBoxTilePatterns
@@ -232,11 +232,11 @@ DisplayNamingScreen:
 	cp NAME_MON_SCREEN
 	jr nc, .checkMonNameLength
 	ld a, [wNamingScreenNameLength]
-	cp $7 ; max length of player/rival names
+	cp PLAYER_NAME_LENGTH - 1
 	jr .checkNameLength
 .checkMonNameLength
 	ld a, [wNamingScreenNameLength]
-	cp $a ; max length of pokemon nicknames
+	cp NAME_LENGTH - 1
 .checkNameLength
 	jr c, .addLetter
 	ret
@@ -385,7 +385,7 @@ PrintNicknameAndUnderscores:
 	ld b, 7 ; player or rival max name length
 	jr .gotUnderscoreCount
 .pokemon
-	ld b, 10 ; pokemon max name length
+	ld b, NAME_LENGTH - 1
 .gotUnderscoreCount
 	ld a, $76 ; underscore tile id
 .placeUnderscoreLoop
@@ -399,7 +399,7 @@ PrintNicknameAndUnderscores:
 	cp 7 ; player or rival max name length
 	jr .checkEmptySpaces
 .pokemon2
-	cp 10 ; pokemon max name length
+	cp NAME_LENGTH - 1
 .checkEmptySpaces
 	jr nz, .emptySpacesRemaining
 	; when all spaces are filled, force the cursor onto the ED tile

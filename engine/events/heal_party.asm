@@ -11,7 +11,7 @@ HealParty:
 	push hl
 	push de
 
-	ld hl, wPartyMon1Status - wPartyMon1HP
+	ld hl, MON_STATUS - MON_HP
 	add hl, de
 	xor a
 	ld [hl], a
@@ -19,7 +19,7 @@ HealParty:
 	push de
 	ld b, NUM_MOVES ; A Pokémon has 4 moves
 .pp
-	ld hl, wPartyMon1Moves - wPartyMon1HP
+	ld hl, MON_MOVES - MON_HP
 	add hl, de
 
 	ld a, [hl]
@@ -27,7 +27,7 @@ HealParty:
 	jr z, .nextmove
 
 	dec a
-	ld hl, wPartyMon1PP - wPartyMon1HP
+	ld hl, MON_PP - MON_HP
 	add hl, de
 
 	push hl
@@ -50,7 +50,7 @@ HealParty:
 	push bc
 	ld b, a
 	ld a, [hl]
-	and $c0
+	and PP_UP_MASK
 	add b
 	ld [hl], a
 	pop bc
@@ -60,7 +60,7 @@ HealParty:
 	jr nz, .pp
 	pop de
 
-	ld hl, wPartyMon1MaxHP - wPartyMon1HP
+	ld hl, MON_MAXHP - MON_HP
 	add hl, de
 	ld a, [hli]
 	ld [de], a
@@ -72,7 +72,7 @@ HealParty:
 	pop hl
 
 	push hl
-	ld bc, wPartyMon2 - wPartyMon1
+	ld bc, PARTYMON_STRUCT_LENGTH
 	ld h, d
 	ld l, e
 	add hl, bc

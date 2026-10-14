@@ -49,7 +49,7 @@ OaksLabDefaultScript:
 	ld [wToggleableObjectIndex], a
 	predef ShowObject
 	ld hl, wStatusFlags4
-	res 4, [hl]
+	res BIT_NO_BATTLES, [hl]
 
 	ld a, SCRIPT_OAKSLAB_OAK_ENTERS_LAB
 	ld [wOaksLabCurScript], a
@@ -73,7 +73,7 @@ OakEntryMovement:
 
 OaksLabToggleOaksScript:
 	ld a, [wStatusFlags5]
-	bit 0, a
+	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
 	ld a, HS_OAKS_LAB_OAK_2
 	ld [wToggleableObjectIndex], a
@@ -110,7 +110,7 @@ OaksLabPlayerEntersLabScript:
 	ret
 
 PlayerEntryMovementRLE:
-	db D_UP, 8
+	db PAD_UP, 8
 	db -1 ; end
 
 OaksLabFollowedOakScript:
@@ -125,7 +125,7 @@ OaksLabFollowedOakScript:
 	ldh [hSpriteFacingDirection], a
 	call SetSpriteFacingDirectionAndDelay
 	ld hl, wStatusFlags7
-	res 1, [hl]
+	res BIT_NO_MAP_MUSIC, [hl]
 	call DelayFrame
 	call PlayDefaultMusic
 
@@ -135,7 +135,7 @@ OaksLabFollowedOakScript:
 
 OaksLabOakChooseMonSpeechScript:
 	SetEvent EVENT_OAK_ASKED_TO_CHOOSE_MON
-	ld a, SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_SELECT | PAD_START | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, TEXT_OAKSLAB_RIVAL_FED_UP_WITH_WAITING
 	ldh [hTextID], a
@@ -183,7 +183,7 @@ OaksLabPlayerDontGoAwayScript:
 	call DisplayTextID
 	ld a, $1
 	ld [wSimulatedJoypadStatesIndex], a
-	ld a, D_UP | B_BUTTON
+	ld a, PAD_UP | PAD_B
 	ld [wSimulatedJoypadStatesEnd], a
 	call StartSimulatingJoypadStates
 	ld a, PLAYER_DIR_UP
@@ -221,7 +221,7 @@ OaksLabChoseStarterScript:
 
 OaksLabRivalTakesPokeballScript:
 	ld a, [wStatusFlags5]
-	bit 0, a
+	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	jr nz, .asm_1c564
 	ld a, HS_STARTER_BALL_1
 	ld [wToggleableObjectIndex], a
@@ -236,7 +236,7 @@ OaksLabRivalTakesPokeballScript:
 	ld a, EEVEE
 	ld [wNamedObjectIndex], a
 	call GetMonName
-	ld a, ~(A_BUTTON | B_BUTTON)
+	ld a, PAD_SELECT | PAD_START | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, TEXT_OAKSLAB_RIVAL_RECEIVED_MON
 	ldh [hTextID], a
@@ -257,7 +257,7 @@ OaksLabRivalTakesPokeballScript:
 	ld [wPlayerMovingDirection], a
 	ld a, $2
 	ld [wSimulatedJoypadStatesIndex], a
-	ld a, D_RIGHT | B_BUTTON
+	ld a, PAD_RIGHT | PAD_B
 	ld [wSimulatedJoypadStatesEnd], a
 	ld [wSimulatedJoypadStatesEnd + 1], a
 	call StartSimulatingJoypadStates
@@ -269,7 +269,7 @@ OaksLabPlayerWalksToOakScript:
 	jr z, .asm_1c599
 	ld a, $1
 	ld [wSimulatedJoypadStatesIndex], a
-	ld a, D_LEFT | B_BUTTON
+	ld a, PAD_LEFT | PAD_B
 	ld [wSimulatedJoypadStatesEnd], a
 	jr .asm_1c5a6
 
@@ -286,10 +286,10 @@ OaksLabPlayerWalksToOakScript:
 	ret
 
 OaksLabRLE_PlayerWalksToOak:
-	db D_UP, 2
-	db D_LEFT, 3
-	db D_DOWN, 1
-	db D_LEFT, 1
+	db PAD_UP, 2
+	db PAD_LEFT, 3
+	db PAD_DOWN, 1
+	db PAD_LEFT, 1
 	db $FF
 
 OaksLabPlayerReceivesPikachuScript:
@@ -343,7 +343,7 @@ OaksLabRivalChallengesPlayerScript:
 
 OaksLabRivalStartBattleScript:
 	ld a, [wStatusFlags5]
-	bit 0, a
+	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
 
 	ld a, OAKSLAB_RIVAL
@@ -357,8 +357,8 @@ OaksLabRivalStartBattleScript:
 	ld de, OaksLabRivalAmIGreatOrWhatText
 	call SaveEndBattleTextPointers
 	ld hl, wStatusFlags3
-	set 6, [hl]
-	set 7, [hl]
+	set BIT_TALKED_TO_TRAINER, [hl]
+	set BIT_PRINT_END_BATTLE_TEXT, [hl]
 	xor a
 	ld [wJoyIgnore], a
 	ld a, PLAYER_DIR_UP
@@ -368,7 +368,7 @@ OaksLabRivalStartBattleScript:
 	ret
 
 OaksLabRivalEndBattleScript:
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 
 	; If you beat your rival here, his Eevee will evolve into
@@ -384,7 +384,7 @@ OaksLabRivalEndBattleScript:
 	ld a, b
 	ld [wRivalStarter], a
 
-	ld a, ~(A_BUTTON | B_BUTTON)
+	ld a, PAD_SELECT | PAD_START | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, PLAYER_DIR_UP
 	ld [wPlayerMovingDirection], a
@@ -441,9 +441,9 @@ OaksLabRivalStartsExitScript:
 
 OaksLabPlayerWatchRivalExitScript:
 	ld a, [wStatusFlags5]
-	bit 0, a
+	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	jr nz, .checkRivalPosition
-	ld a, ~(A_BUTTON | B_BUTTON)
+	ld a, PAD_SELECT | PAD_START | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, HS_OAKS_LAB_RIVAL
 	ld [wToggleableObjectIndex], a
@@ -553,11 +553,11 @@ OaksLabRivalFaceUpOakFaceDownScript:
 
 OaksLabOakGivesPokedexScript:
 	ld a, [wStatusFlags5]
-	bit 0, a
+	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
 	call EnableAutoTextBoxDrawing
 	call PlayDefaultMusic
-	ld a, ~(A_BUTTON | B_BUTTON)
+	ld a, PAD_SELECT | PAD_START | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	call OaksLabRivalFaceUpOakFaceDownScript
 	ld a, TEXT_OAKSLAB_RIVAL_MY_POKEMON_HAS_GROWN_STRONGER
@@ -627,7 +627,7 @@ OaksLabOakGivesPokedexScript:
 
 OaksLabRivalLeavesWithPokedexScript:
 	ld a, [wStatusFlags5]
-	bit 0, a
+	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
 	call PlayDefaultMusic
 	ld a, HS_OAKS_LAB_RIVAL
@@ -870,7 +870,7 @@ OaksLabOak1Text:
 	CheckEventReuseA EVENT_BATTLED_RIVAL_IN_OAKS_LAB
 	jr nz, .check_got_parcel
 	ld a, [wStatusFlags4]
-	bit 3, a
+	bit BIT_GOT_STARTER, a
 	jr nz, .already_got_pokemon
 	ld hl, .GoAheadItsYours
 	call PrintText
@@ -1112,7 +1112,7 @@ OaksLabPlayerReceivedMonText:
 	call DisablePikachuOverworldSpriteDrawing
 	SetEvent EVENT_GOT_STARTER
 	ld hl, wStatusFlags4
-	set 3, [hl]
+	set BIT_GOT_STARTER, [hl]
 	jp TextScriptEnd
 
 OaksLabOakGivesText:

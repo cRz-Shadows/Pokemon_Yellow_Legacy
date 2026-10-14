@@ -3,10 +3,10 @@ ApplyOutOfBattlePoisonDamage:
 	add a
 	jp c, .noBlackOut ; no black out if joypad states are being simulated
 	ld a, [wPikachuMapScriptFlags]
-	bit 7, a
+	bit BIT_PIKACHU_MAP_SCRIPT_ACTIVE, a
 	jp nz, .noBlackOut
 	ld a, [wStatusFlags4]
-	bit 6, a
+	bit BIT_LINK_CONNECTED, a
 	jp nz, .noBlackOut
 	ld a, [wPartyCount]
 	and a
@@ -77,7 +77,7 @@ ApplyOutOfBattlePoisonDamage:
 	ld a, [de]
 	inc a
 	jr z, .applyDamageLoopDone
-	ld bc, wPartyMon2 - wPartyMon1
+	ld bc, PARTYMON_STRUCT_LENGTH
 	add hl, bc
 	push hl
 	ld hl, wWhichPokemon
@@ -94,7 +94,7 @@ ApplyOutOfBattlePoisonDamage:
 	and (1 << PSN)
 	or e
 	ld e, a
-	ld bc, wPartyMon2 - wPartyMon1
+	ld bc, PARTYMON_STRUCT_LENGTH
 	add hl, bc
 	dec d
 	jr nz, .countPoisonedLoop
@@ -115,7 +115,7 @@ ApplyOutOfBattlePoisonDamage:
 	ldh [hTextID], a
 	call DisplayTextID
 	ld hl, wStatusFlags4
-	set 5, [hl]
+	set BIT_BATTLE_OVER_OR_BLACKOUT, [hl]
 	ld a, $ff
 	jr .done
 .noBlackOut

@@ -27,7 +27,7 @@ InitOutsideMapSprites:
 ; if so, choose the appropriate one
 	ld b, a ; b = spriteSetID
 	ld a, [wFontLoaded]
-	bit 0, a ; reloading upper half of tile patterns after displaying text?
+	bit BIT_FONT_LOADED, a ; reloading upper half of tile patterns after displaying text?
 	jr nz, .loadSpriteSet ; if so, forcibly reload the sprite set
 	ld a, [wSpriteSetID]
 	cp b ; has the sprite set ID changed?
@@ -170,7 +170,7 @@ ReloadWalkingTilePatterns:
 
 LoadStillTilePattern:
 	ld a, [wFontLoaded]
-	bit 0, a ; reloading upper half of tile patterns after displaying text?
+	bit BIT_FONT_LOADED, a ; reloading upper half of tile patterns after displaying text?
 	ret nz ; if so, skip loading data into the lower half
 	call ReadSpriteSheetData
 	ret nc

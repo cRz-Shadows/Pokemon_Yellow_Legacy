@@ -11,7 +11,7 @@ PlayDefaultMusicFadeOutCurrent::
 	ld c, 10
 	ld d, 0
 	ld a, [wStatusFlags4]
-	bit 5, a ; has a battle just ended?
+	bit BIT_BATTLE_OVER_OR_BLACKOUT, a
 	jr z, PlayDefaultMusicCommon
 	xor a
 	ld [wLastMusicSoundID], a

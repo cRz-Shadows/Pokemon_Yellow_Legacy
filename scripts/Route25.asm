@@ -10,15 +10,15 @@ Route25_Script:
 
 Route25ToggleBillsScript:
 	ld hl, wPikachuMapScriptFlags
-	res 2, [hl]
-	res 3, [hl]
-	res 4, [hl]
-	res 7, [hl]
+	res BIT_PIKACHU_MAP_2, [hl]
+	res BIT_PIKACHU_MAP_3, [hl]
+	res BIT_PIKACHU_MAP_4, [hl]
+	res BIT_PIKACHU_MAP_SCRIPT_ACTIVE, [hl]
 	xor a
 	ld [wBillsHouseCurScript], a
 	ld hl, wCurrentMapScriptFlags
-	bit 6, [hl]
-	res 6, [hl]
+	bit BIT_CUR_MAP_LOADED_2, [hl]
+	res BIT_CUR_MAP_LOADED_2, [hl]
 	ret z
 	CheckEventHL EVENT_LEFT_BILLS_HOUSE_AFTER_HELPING
 	ret nz

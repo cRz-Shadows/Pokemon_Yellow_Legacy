@@ -12,8 +12,8 @@ Route7Gate_ScriptPointers:
 
 Route7GateMovePlayerLeftScript:
 	ld hl, wStatusFlags5
-	set 7, [hl]
-	ld a, D_LEFT | B_BUTTON
+	set BIT_SCRIPTED_MOVEMENT_STATE, [hl]
+	ld a, PAD_LEFT | PAD_B
 	ld [wSimulatedJoypadStatesEnd], a
 	ld a, $1
 	ld [wSimulatedJoypadStatesIndex], a
@@ -24,7 +24,7 @@ Route7GateMovePlayerLeftScript:
 
 Route7DefaultScript:
 	ld a, [wStatusFlags1]
-	bit 6, a
+	bit BIT_GAVE_SAFFRON_GUARDS_DRINK, a
 	ret nz
 	ld hl, .PlayerInCoordsArray
 	call ArePlayerCoordsInArray
@@ -49,7 +49,7 @@ Route7DefaultScript:
 	ldh [hTextID], a
 	call DisplayTextID
 	ld hl, wStatusFlags1
-	set 6, [hl]
+	set BIT_GAVE_SAFFRON_GUARDS_DRINK, [hl]
 	ret
 
 .PlayerInCoordsArray:

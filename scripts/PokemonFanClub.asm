@@ -12,18 +12,18 @@ PokemonFanClub_ScriptPointers:
 
 PokemonFanClubScript0:
 	ld hl, wPikachuMapScriptFlags
-	bit 7, [hl]
+	bit BIT_PIKACHU_MAP_SCRIPT_ACTIVE, [hl]
 	call z, PokemonFanClubScript_PikachuReactsToSeel
 	ld hl, wPikachuMapScriptFlags
-	set 7, [hl]
+	set BIT_PIKACHU_MAP_SCRIPT_ACTIVE, [hl]
 	ret
 
 PokemonFanClubScript1:
 	ld hl, wPikachuMapScriptFlags
-	bit 7, [hl]
+	bit BIT_PIKACHU_MAP_SCRIPT_ACTIVE, [hl]
 	call z, PokemonFanClubScript_MaybePikachuReactsToSeel
 	ld hl, wPikachuMapScriptFlags
-	set 7, [hl]
+	set BIT_PIKACHU_MAP_SCRIPT_ACTIVE, [hl]
 	ret
 
 ; 25/256 chance on entry to run PokemonFanClubScript_PikachuReactsToSeel
@@ -37,7 +37,7 @@ PokemonFanClubScript_MaybePikachuReactsToSeel:
 ; If Pikachu is out and healthy: exclamation, Pikachu walks over and Seel faces it
 PokemonFanClubScript_PikachuReactsToSeel:
 	ld a, [wPikachuPartyFlags]
-	bit 7, a
+	bit BIT_STARTER_PIKACHU_IN_PARTY, a
 	ret z
 	callfar CheckPikachuStatusCondition
 	ret c
@@ -241,10 +241,10 @@ PokemonFanClubChairmanText:
 	xor a
 	ld [wUpdateSpritesEnabled], a
 	ld hl, wStatusFlags5
-	set 6, [hl]
+	set BIT_NO_TEXT_DELAY, [hl]
 	callfar PrintFanClubPortrait
 	ld hl, wStatusFlags5
-	res 6, [hl]
+	res BIT_NO_TEXT_DELAY, [hl]
 	call GBPalWhiteOutWithDelay3
 	call ReloadTilesetTilePatterns
 	call RestoreScreenTilesAndReloadTilePatterns

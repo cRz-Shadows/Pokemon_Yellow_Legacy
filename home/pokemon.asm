@@ -195,7 +195,7 @@ PartyMenuInit::
 	call BankswitchHome
 	call LoadHpBarAndStatusTilePatterns
 	ld hl, wStatusFlags5
-	set 6, [hl] ; turn off letter printing delay
+	set BIT_NO_TEXT_DELAY, [hl]
 	xor a ; PLAYER_PARTY_DATA
 	ld [wMonDataLocation], a
 	ld [wMenuWatchMovingOutOfBounds], a
@@ -218,7 +218,7 @@ PartyMenuInit::
 	ld [hli], a ; max menu item ID
 	ld a, [wForcePlayerToChooseMon]
 	and a
-	ld a, A_BUTTON | B_BUTTON
+	ld a, PAD_A | PAD_B
 	jr z, .next
 	xor a
 	ld [wForcePlayerToChooseMon], a
@@ -236,7 +236,7 @@ HandlePartyMenuInput::
 	ld [wPartyMenuAnimMonEnabled], a
 	call HandleMenuInput_
 	push af ; save hJoy5 OR wMenuWrapping enabled, if no inputs were selected within a certain period of time
-	bit 1, a ; was B button pressed?
+	bit B_PAD_B, a ; was B button pressed?
 	ld a, $0
 	ld [wPartyMenuAnimMonEnabled], a
 	ld a, [wCurrentMenuItem]
@@ -253,13 +253,13 @@ HandlePartyMenuInput::
 	call PlaceUnfilledArrowMenuCursor
 	ld b, a
 	ld hl, wStatusFlags5
-	res 6, [hl] ; turn on letter printing delay
+	res BIT_NO_TEXT_DELAY, [hl]
 	ld a, [wMenuItemToSwap]
 	and a
 	jp nz, .swappingPokemon
 	pop af
 	ldh [hTileAnimations], a
-	bit 1, b
+	bit B_PAD_B, b
 	jr nz, .noPokemonChosen
 	ld a, [wPartyCount]
 	and a
@@ -289,7 +289,7 @@ HandlePartyMenuInput::
 	scf
 	ret
 .swappingPokemon
-	bit BIT_B_BUTTON, b
+	bit B_PAD_B, b
 	jr z, .handleSwap ; if not, handle swapping the pokemon
 .cancelSwap ; if the B button was pressed
 	farcall ErasePartyMenuCursors

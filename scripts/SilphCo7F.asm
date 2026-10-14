@@ -10,8 +10,8 @@ SilphCo7F_Script:
 
 SilphCo7F_GateCallbackScript:
 	ld hl, wCurrentMapScriptFlags
-	bit 5, [hl]
-	res 5, [hl]
+	bit BIT_CUR_MAP_LOADED_1, [hl]
+	res BIT_CUR_MAP_LOADED_1, [hl]
 	ret z
 	ld hl, .GateCoordinates
 	call SilphCo7F_SetCardKeyDoorYScript
@@ -127,7 +127,7 @@ SilphCo7FDefaultScript:
 	jp nc, CheckFightingMapTrainers
 	xor a
 	ldh [hJoyHeld], a
-	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, PLAYER_DIR_DOWN
 	ld [wPlayerMovingDirection], a
@@ -168,7 +168,7 @@ SilphCo7FDefaultScript:
 
 SilphCo7FRivalStartBattleScript:
 	ld a, [wStatusFlags5]
-	bit 0, a
+	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
 	xor a
 	ld [wJoyIgnore], a
@@ -177,8 +177,8 @@ SilphCo7FRivalStartBattleScript:
 	call DisplayTextID
 	call Delay3
 	ld hl, wStatusFlags3
-	set 6, [hl]
-	set 7, [hl]
+	set BIT_TALKED_TO_TRAINER, [hl]
+	set BIT_PRINT_END_BATTLE_TEXT, [hl]
 	ld hl, SilphCo7FRivalDefeatedText
 	ld de, SilphCo7FRivalVictoryText
 	call SaveEndBattleTextPointers
@@ -193,9 +193,9 @@ SilphCo7FRivalStartBattleScript:
 
 SilphCo7FRivalAfterBattleScript:
 	ld a, [wIsInBattle]
-	cp $ff
+	cp LOST_BATTLE
 	jp z, SilphCo7FSetDefaultScript
-	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	SetEvent EVENT_BEAT_SILPH_CO_RIVAL
 	ld a, PLAYER_DIR_DOWN
@@ -239,7 +239,7 @@ SilphCo7FRivalAfterBattleScript:
 
 SilphCo7FRivalExitScript:
 	ld a, [wStatusFlags5]
-	bit 0, a
+	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
 	ld a, HS_SILPH_CO_7F_RIVAL
 	ld [wToggleableObjectIndex], a
@@ -283,7 +283,7 @@ SilphCo7FSilphWorkerM1Text:
 ; lapras guy
 	text_asm
 	ld a, [wStatusFlags4]
-	bit 0, a ; got lapras?
+	bit BIT_GOT_LAPRAS, a
 	jr z, .give_lapras
 	CheckEvent EVENT_BEAT_SILPH_CO_GIOVANNI
 	jr nz, .saved_silph
@@ -303,7 +303,7 @@ SilphCo7FSilphWorkerM1Text:
 	ld hl, .LaprasDescriptionText
 	call PrintText
 	ld hl, wStatusFlags4
-	set 0, [hl]
+	set BIT_GOT_LAPRAS, [hl]
 	jr .done
 .saved_silph
 	ld hl, .SavedText

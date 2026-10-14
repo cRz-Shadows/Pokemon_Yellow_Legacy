@@ -111,7 +111,7 @@ TrainerWalkUpToPlayer::
 	dec a
 	ld c, a             ; bc = steps yet to go to reach player
 	ld b, $0
-	ld a, $40           ; a = direction to go to
+	ld a, NPC_MOVEMENT_UP
 	jr .writeWalkScript
 .facingRight
 	ld a, [wTrainerScreenX]
@@ -124,7 +124,7 @@ TrainerWalkUpToPlayer::
 	dec a
 	ld c, a             ; bc = steps yet to go to reach player
 	ld b, $0
-	ld a, $c0           ; a = direction to go to
+	ld a, NPC_MOVEMENT_RIGHT
 	jr .writeWalkScript
 .facingLeft
 	ld a, [wTrainerScreenX]
@@ -137,7 +137,7 @@ TrainerWalkUpToPlayer::
 	dec a
 	ld c, a             ; bc = steps yet to go to reach player
 	ld b, $0
-	ld a, $80           ; a = direction to go to
+	ld a, NPC_MOVEMENT_LEFT
 .writeWalkScript
 	ld hl, wNPCMovementDirections2
 	ld de, wNPCMovementDirections2
@@ -222,7 +222,7 @@ TrainerEngage:
 	and a
 	jr z, .noEngage
 	ld hl, wMiscFlags
-	set 0, [hl]
+	set BIT_SEEN_BY_TRAINER, [hl]
 	call EngageMapTrainer
 	ld a, $ff
 .noEngage

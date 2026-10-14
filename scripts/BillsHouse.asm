@@ -21,8 +21,8 @@ BillsHouse_ScriptPointers:
 
 BillsHouse_CheckMetBill:
 	ld hl, wPikachuMapScriptFlags
-	bit 7, [hl]
-	set 7, [hl]
+	bit BIT_PIKACHU_MAP_SCRIPT_ACTIVE, [hl]
+	set BIT_PIKACHU_MAP_SCRIPT_ACTIVE, [hl]
 	ret nz
 	CheckEventHL EVENT_MET_BILL_2
 	jr z, .notMetBill
@@ -40,7 +40,7 @@ BillsHouse_CheckMetBill:
 
 BillsHouseScript0:
 	ld a, [wPikachuPartyFlags]
-	bit 7, a
+	bit BIT_STARTER_PIKACHU_IN_PARTY, a
 	jr z, .done
 	callfar CheckPikachuStatusCondition
 	jr c, .done
@@ -56,7 +56,7 @@ BillsHouseScript1:
 	ret
 
 BillsHouseScript2:
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, [wSpritePlayerStateData1FacingDirection]
 	and a ; cp SPRITE_FACING_DOWN
@@ -92,7 +92,7 @@ BillMovement_WalkAroundPlayer:
 
 BillsHouseScript3:
 	ld a, [wStatusFlags5]
-	bit 0, a
+	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
 	ld a, HS_BILL_POKEMON
 	ld [wToggleableObjectIndex], a
@@ -116,26 +116,26 @@ BillsHouseScript3:
 	ret
 
 PikachuMovement_EnterCellSeparatorDown:
-	db $00
-	db $1e
-	db $1e
-	db $1e
-	db $3f
+	db PIKAMOVEMENT_DELAY
+	db PIKAMOVEMENT_STEP_UP
+	db PIKAMOVEMENT_STEP_UP
+	db PIKAMOVEMENT_STEP_UP
+	db PIKAMOVEMENT_END
 
 PikachuMovement_EnterCellSeparatorNotDown:
-	db $00
-	db $1e
-	db $1f
-	db $1e
-	db $1e
-	db $20
-	db $36
-	db $3f
+	db PIKAMOVEMENT_DELAY
+	db PIKAMOVEMENT_STEP_UP
+	db PIKAMOVEMENT_STEP_LEFT
+	db PIKAMOVEMENT_STEP_UP
+	db PIKAMOVEMENT_STEP_UP
+	db PIKAMOVEMENT_STEP_RIGHT
+	db PIKAMOVEMENT_LOOK_UP
+	db PIKAMOVEMENT_END
 
 BillsHouseScript4:
 	CheckEvent EVENT_USED_CELL_SEPARATOR_ON_BILL
 	ret z
-	ld a, SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_SELECT | PAD_START | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, SCRIPT_BILLSHOUSE_SCRIPT5
 	ld [wBillsHouseCurScript], a
@@ -159,7 +159,7 @@ BillsHouseScript5:
 	ld c, 8
 	call DelayFrames
 	ld hl, wPikachuPartyFlags
-	bit 7, [hl]
+	bit BIT_STARTER_PIKACHU_IN_PARTY, [hl]
 	jr z, .pikachuNotFollowing
 	call CheckPikachuFollowingPlayer
 	jr z, .pikachuNotFollowing
@@ -195,13 +195,13 @@ BillMovement_ExitCellSeparator:
 	db -1 ; end
 
 PikachuMovement_ExitCellSeparator:
-	db $00
-	db $37
-	db $3f
+	db PIKAMOVEMENT_DELAY
+	db PIKAMOVEMENT_LOOK_LEFT
+	db PIKAMOVEMENT_END
 
 BillsHouseScript6:
 	ld a, [wStatusFlags5]
-	bit 0, a
+	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
 	SetEvent EVENT_MET_BILL_2 ; this event seems redundant
 	SetEvent EVENT_MET_BILL
@@ -214,7 +214,7 @@ BillsHouseScript7:
 	ld [wPlayerMovingDirection], a
 	ld a, SPRITE_FACING_UP
 	ld [wSpritePlayerStateData1FacingDirection], a
-	ld a, ~(A_BUTTON | B_BUTTON)
+	ld a, PAD_SELECT | PAD_START | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld de, BillsHouseRLE_PlayerWalksToBill
 	ld hl, wSimulatedJoypadStatesEnd
@@ -228,7 +228,7 @@ BillsHouseScript7:
 
 ; Simulated joypad RLE list: player walks right 3 steps to stand in front of Bill
 BillsHouseRLE_PlayerWalksToBill:
-	db D_RIGHT, $3
+	db PAD_RIGHT, $3
 	db $FF
 
 BillsHouseScript8:

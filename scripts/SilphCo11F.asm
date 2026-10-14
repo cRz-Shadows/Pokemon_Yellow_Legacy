@@ -10,8 +10,8 @@ SilphCo11F_Script:
 
 SilphCo11FGateCallbackScript:
 	ld hl, wCurrentMapScriptFlags
-	bit 5, [hl]
-	res 5, [hl]
+	bit BIT_CUR_MAP_LOADED_1, [hl]
+	res BIT_CUR_MAP_LOADED_1, [hl]
 	ret z
 	ld hl, SilphCo11GateCoords
 	call SilphCo11F_SetCardKeyDoorYScript
@@ -120,7 +120,7 @@ SilphCo11FScript_CheckGiovanniEncounter:
 	ld [wSavedCoordIndex], a
 	xor a
 	ldh [hJoyHeld], a
-	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, TEXT_SILPHCO11F_GIOVANNI
 	ldh [hTextID], a
@@ -156,7 +156,7 @@ SilphCo11FSetPlayerAndGiovanniFacing:
 
 SilphCo11FGiovanniAfterBattleScript:
 	ld a, [wIsInBattle]
-	cp $ff
+	cp LOST_BATTLE
 	jp z, SilphCo11FResetCurScript
 	ld a, [wSavedCoordIndex]
 	cp 1 ; index of second, upper-right entry in SilphCo11FDefaultScript.PlayerCoordsArray
@@ -169,7 +169,7 @@ SilphCo11FGiovanniAfterBattleScript:
 	ld b, SPRITE_FACING_DOWN
 .continue
 	call SilphCo11FSetPlayerAndGiovanniFacing
-	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_RIGHT | PAD_LEFT | PAD_UP | PAD_DOWN
 	ld [wJoyIgnore], a
 	ld a, TEXT_SILPHCO11F_GIOVANNI_YOU_RUINED_OUR_PLANS
 	ldh [hTextID], a
@@ -186,7 +186,7 @@ SilphCo11FGiovanniAfterBattleScript:
 
 SilphCo11FGiovanniStartBattleScript:
 	ld a, [wStatusFlags5]
-	bit 0, a
+	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
 	ld a, SILPHCO11F_GIOVANNI
 	ldh [hSpriteIndex], a
@@ -206,8 +206,8 @@ SilphCo11FGiovanniStartBattleScript:
 	xor a
 	ld [wJoyIgnore], a
 	ld hl, wStatusFlags3
-	set 6, [hl]
-	set 7, [hl]
+	set BIT_TALKED_TO_TRAINER, [hl]
+	set BIT_PRINT_END_BATTLE_TEXT, [hl]
 	ld hl, SilphCo11FGiovanniILostAgainText
 	ld de, SilphCo11FGiovanniILostAgainText
 	call SaveEndBattleTextPointers
@@ -243,7 +243,7 @@ SilphCo11FScript_StartJessieJamesEncounter:
 	call PlayMusic
 	xor a
 	ldh [hJoyHeld], a
-	ld a, SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_SELECT | PAD_START | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
@@ -252,7 +252,7 @@ SilphCo11FScript_StartJessieJamesEncounter:
 	call DisplayTextID
 	xor a
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	SetEvent EVENT_782
 	ld a, SCRIPT_SILPHCO11F_SCRIPT5
@@ -325,17 +325,17 @@ SilphCo11FScript5:
 	ld a, SILPHCO11F_JAMES
 	ldh [hTextID], a
 	call MoveSprite
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, SCRIPT_SILPHCO11F_SCRIPT6
 	call SilphCo11FSetCurScript
 	ret
 
 SilphCo11FScript6:
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, [wStatusFlags5]
-	bit 0, a
+	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
 SilphCo11FScript7:
 	ld a, $2
@@ -348,7 +348,7 @@ SilphCo11FScript7:
 	ld [hl], SPRITE_FACING_UP
 .asm_6235e
 	call Delay3
-	ld a, SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_SELECT | PAD_START | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 SilphCo11FScript8:
 	ld de, SilphCo11FJessieMovement_PlayerX3
@@ -363,19 +363,19 @@ SilphCo11FScript8:
 	ld a, SILPHCO11F_JESSIE
 	ldh [hTextID], a
 	call MoveSprite
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, SCRIPT_SILPHCO11F_SCRIPT9
 	call SilphCo11FSetCurScript
 	ret
 
 SilphCo11FScript9:
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, [wStatusFlags5]
-	bit 0, a
+	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
-	ld a, SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_SELECT | PAD_START | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 SilphCo11FScript10:
 	ld a, $2
@@ -393,8 +393,8 @@ SilphCo11FScript10:
 	call DisplayTextID
 SilphCo11FScript11:
 	ld hl, wStatusFlags3
-	set 6, [hl]
-	set 7, [hl]
+	set BIT_TALKED_TO_TRAINER, [hl]
+	set BIT_PRINT_END_BATTLE_TEXT, [hl]
 	ld hl, SilphCo11FJessieJamesEndBattleText
 	ld de, SilphCo11FJessieJamesEndBattleText
 	call SaveEndBattleTextPointers
@@ -410,10 +410,10 @@ SilphCo11FScript11:
 	ret
 
 SilphCo11FScript12:
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, [wIsInBattle]
-	cp $ff
+	cp LOST_BATTLE
 	jp z, SilphCo11FResetCurScript
 	ld a, $2
 	ld [wSprite04StateData1MovementStatus], a
@@ -421,7 +421,7 @@ SilphCo11FScript12:
 	xor a
 	ld [wSprite04StateData1FacingDirection], a
 	ld [wSprite06StateData1FacingDirection], a
-	ld a, SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_SELECT | PAD_START | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
@@ -434,14 +434,14 @@ SilphCo11FScript12:
 	ld c, BANK(Music_MeetJessieJames)
 	ld a, MUSIC_MEET_JESSIE_JAMES
 	call PlayMusic
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, SCRIPT_SILPHCO11F_SCRIPT13
 	call SilphCo11FSetCurScript
 	ret
 
 SilphCo11FScript13:
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	call GBFadeOutToBlack
 	ld a, HS_SILPH_CO_11F_JAMES

@@ -14,6 +14,13 @@ Usage: tools/upstream_rename.py [FILE ...]   (no files: stdin -> stdout;
 Only global labels are renamed automatically. Renamed local labels are listed
 in the map as Parent.old / Parent.new for reference; fix those by hand if a
 patch touches them.
+
+The map also covers the old hardware, joypad and OAM constant names that
+constants/hardware.inc replaced (#46), except START, SELECT and the interrupt
+bit names, which are also ordinary words in dialogue. Magic numbers that this
+fork replaced with named constants (bit 6 -> BIT_NO_TEXT_DELAY) can't be
+mapped; an upstream patch that touches those lines conflicts and needs a hand
+merge.
 """
 
 import os

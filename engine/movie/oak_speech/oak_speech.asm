@@ -310,7 +310,7 @@ IntroDisplayPicCenteredOrUpperRight:
 	call OpenSRAM
 	ld hl, sSpriteBuffer1
 	ld de, sSpriteBuffer0
-	ld bc, $310
+	ld bc, 2 * SPRITEBUFFERSIZE
 	call CopyData
 	call CloseSRAM
 	ld de, vFrontPic
@@ -331,7 +331,7 @@ IntroDisplayPicCenteredOrUpperRight:
 DifficultyChoice::
 	call SaveScreenTilesToBuffer1
 	ld hl, wStatusFlags5
-	set 6, [hl] ; no printing delay
+	set BIT_NO_TEXT_DELAY, [hl] ; no printing delay
 	hlcoord 2, 5
 	lb bc, 2 * NUM_DIFFICULTIES - 1, 14 ; one item every other row
 	call TextBoxBorder
@@ -339,7 +339,7 @@ DifficultyChoice::
 	ld de, DifficultyMenuText
 	call PlaceString
 	ld hl, wStatusFlags5
-	res 6, [hl] ; turn on the printing delay
+	res BIT_NO_TEXT_DELAY, [hl] ; turn on the printing delay
 	xor a
 	ld [wCurrentMenuItem], a
 	ld [wLastMenuItem], a
@@ -350,7 +350,7 @@ DifficultyChoice::
 	ld [wTopMenuItemY], a
 	ld a, 3
 	ld [wTopMenuItemX], a
-	ld a, A_BUTTON
+	ld a, PAD_A
 	ld [wMenuWatchedKeys], a
 	call HandleMenuInput
 	jp LoadScreenTilesFromBuffer1

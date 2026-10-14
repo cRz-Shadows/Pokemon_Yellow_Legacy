@@ -6,15 +6,15 @@ ActivatePC::
 	call PrintText
 	call WaitForSoundToFinish
 	ld hl, wMiscFlags
-	set 3, [hl]
+	set BIT_USING_GENERIC_PC, [hl]
 	call LoadScreenTilesFromBuffer2
 	call Delay3
 PCMainMenu:
 	farcall DisplayPCMainMenu
 	ld hl, wMiscFlags
-	set 5, [hl]
+	set BIT_NO_MENU_BUTTON_SOUND, [hl]
 	call HandleMenuInput
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jp nz, LogOff
 	ld a, [wMaxMenuItem]
 	cp 2
@@ -49,8 +49,8 @@ PCMainMenu:
 	jp LogOff        ;otherwise, it's 4, and you're logging off
 .playersPC
 	ld hl, wMiscFlags
-	res 5, [hl]
-	set 3, [hl]
+	res BIT_NO_MENU_BUTTON_SOUND, [hl]
+	set BIT_USING_GENERIC_PC, [hl]
 	ld a, SFX_ENTER_PC
 	call PlaySound
 	call WaitForSoundToFinish
@@ -94,8 +94,8 @@ LogOff:
 	call PlaySound
 	call WaitForSoundToFinish
 	ld hl, wMiscFlags
-	res 3, [hl]
-	res 5, [hl]
+	res BIT_USING_GENERIC_PC, [hl]
+	res BIT_NO_MENU_BUTTON_SOUND, [hl]
 	ret
 
 TurnedOnPC1Text:

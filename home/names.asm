@@ -4,23 +4,23 @@ GetMonName::
 	push af
 	ld a, BANK(MonsterNames)
 	ldh [hLoadedROMBank], a
-	ld [MBC1RomBank], a
+	ld [rROMB], a
 	ld a, [wNamedObjectIndex]
 	dec a
 	ld hl, MonsterNames
-	ld c, 10
+	ld c, NAME_LENGTH - 1
 	ld b, 0
 	call AddNTimes
 	ld de, wNameBuffer
 	push de
-	ld bc, 10
+	ld bc, NAME_LENGTH - 1
 	call CopyData
 	ld hl, wNameBuffer + 10
 	ld [hl], '@'
 	pop de
 	pop af
 	ldh [hLoadedROMBank], a
-	ld [MBC1RomBank], a
+	ld [rROMB], a
 	pop hl
 	ret
 

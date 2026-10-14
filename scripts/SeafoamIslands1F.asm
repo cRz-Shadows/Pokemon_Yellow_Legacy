@@ -2,8 +2,8 @@ SeafoamIslands1F_Script:
 	call EnableAutoTextBoxDrawing
 	SetEvent EVENT_IN_SEAFOAM_ISLANDS
 	ld hl, wMiscFlags
-	bit 7, [hl]
-	res 7, [hl]
+	bit BIT_PUSHED_BOULDER, [hl]
+	res BIT_PUSHED_BOULDER, [hl]
 	jr z, .noBoulderWasPushed
 	ld hl, Seafoam1HolesCoords
 	call CheckBoulderCoords

@@ -44,7 +44,7 @@ GetAnimationSpeed:
 	push bc
 	ld hl, wMonPartySpritesSavedOAM
 	ld de, wShadowOAM
-	ld bc, $60
+	ld bc, OBJ_SIZE * 4 * PARTY_LENGTH
 	call CopyData
 	pop bc
 	xor a
@@ -52,7 +52,7 @@ GetAnimationSpeed:
 .animateSprite
 	push bc
 	ld hl, wShadowOAMSprite00TileID
-	ld bc, $10
+	ld bc, OBJ_SIZE * 4
 	ld a, [wCurrentMenuItem]
 	call AddNTimes
 	ld a, [hl] ; contains tile number
@@ -295,7 +295,7 @@ WriteMonPartySpriteOAM:
 .makeCopy
 	ld hl, wShadowOAM
 	ld de, wMonPartySpritesSavedOAM
-	ld bc, $60
+	ld bc, OBJ_SIZE * 4 * PARTY_LENGTH
 	jp CopyData
 
 GetPartyMonSpriteID:

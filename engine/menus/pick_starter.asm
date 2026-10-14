@@ -51,22 +51,22 @@ PickStarterMenu::
 	call DelayFrame
 	call JoypadLowSensitivity
 	ldh a, [hJoy5]
-	bit BIT_A_BUTTON, a
+	bit B_PAD_A, a
 	jp nz, .confirm
-	bit BIT_SELECT, a
+	bit B_PAD_SELECT, a
 	jp nz, .nextPage
-	bit BIT_D_UP, a
+	bit B_PAD_UP, a
 	jr nz, .up
-	bit BIT_D_DOWN, a
+	bit B_PAD_DOWN, a
 	jr nz, .down
-	bit BIT_D_LEFT, a
+	bit B_PAD_LEFT, a
 	jr nz, .pageUp
-	bit BIT_D_RIGHT, a
+	bit B_PAD_RIGHT, a
 	jp nz, .pageDown
 	; no input: count down to loading the highlighted mon's picture,
 	; but not while the d-pad is held, since auto-repeat is coming
 	ldh a, [hJoyHeld]
-	and D_UP | D_DOWN | D_LEFT | D_RIGHT
+	and PAD_UP | PAD_DOWN | PAD_LEFT | PAD_RIGHT
 	jr nz, .loop
 	ld hl, wPickStarterPicDelay
 	ld a, [hl]
@@ -220,10 +220,10 @@ PickStarter_Redraw:
 	lb bc, 9, 8
 	call ClearScreenArea
 	ld hl, wStatusFlags5
-	set 6, [hl] ; no printing delay, or every letter would wait on the text speed
+	set BIT_NO_TEXT_DELAY, [hl] ; no printing delay, or every letter would wait on the text speed
 	call PickStarter_DrawList
 	ld hl, wStatusFlags5
-	res 6, [hl]
+	res BIT_NO_TEXT_DELAY, [hl]
 	call PickStarter_DrawInfo
 	ld a, PICK_STARTER_PIC_DELAY
 	ld [wPickStarterPicDelay], a
@@ -234,10 +234,10 @@ PickStarter_Redraw:
 ; Leaves the highlighted mon in [wCurPartySpecies] and its name in wNameBuffer.
 PickStarter_DrawInfo:
 	ld hl, wStatusFlags5
-	set 6, [hl]
+	set BIT_NO_TEXT_DELAY, [hl]
 	call PickStarter_DrawPreview
 	ld hl, wStatusFlags5
-	res 6, [hl]
+	res BIT_NO_TEXT_DELAY, [hl]
 	ret
 
 ; Writes the moves the mon in [wCurSpecies]/[wCurPartySpecies] would know at
@@ -334,7 +334,7 @@ PickStarter_DrawStats:
 	call GetMonHeader ; uses [wCurSpecies]
 	ldh a, [hUILayoutFlags]
 	push af
-	set 2, a ; single-spaced <NEXT>
+	set BIT_SINGLE_SPACED_LINES, a ; single-spaced <NEXT>
 	ldh [hUILayoutFlags], a
 	hlcoord 9, 4
 	ld de, PickStarterStatsText

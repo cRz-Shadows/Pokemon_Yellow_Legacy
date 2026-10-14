@@ -14,7 +14,7 @@ DetermineWildOpponent:
 	bit BIT_DEBUG_MODE, a
 	jr z, .notDebugMode
 	ldh a, [hJoyHeld]
-	bit BIT_B_BUTTON, a ; disable wild encounters
+	bit B_PAD_B, a ; disable wild encounters
 	ret nz
 .notDebugMode
 	ld a, [wNumberOfNoRandomBattleStepsLeft]
@@ -32,7 +32,7 @@ InitBattleCommon:
 	ld hl, wLetterPrintingDelayFlags
 	ld a, [hl]
 	push af
-	res 1, [hl]
+	res BIT_TEXT_DELAY, [hl] ; no delay
 	call InitBattleVariables
 	ld a, [wEnemyMonSpecies2]
 	sub OPP_ID_OFFSET
@@ -51,7 +51,7 @@ InitBattleCommon:
 	predef CopyUncompressedPicToTilemap
 	ld a, $ff
 	ld [wEnemyMonPartyPos], a
-	ld a, $2
+	ld a, TRAINER_BATTLE
 	ld [wIsInBattle], a
 
 ; Is this a major story battle?
@@ -62,7 +62,7 @@ InitBattleCommon:
 	jp _InitBattleCommon
 
 InitWildBattle:
-	ld a, $1
+	ld a, WILD_BATTLE
 	ld [wIsInBattle], a
 	callfar LoadEnemyMonData
 	callfar DoBattleTransitionAndInitBattleVariables
@@ -121,12 +121,12 @@ _InitBattleCommon:
 	call PrintText
 	call SaveScreenTilesToBuffer1
 	call ClearScreen
-	ld a, $98
+	ld a, HIGH(vBGMap0)
 	ldh [hAutoBGTransferDest + 1], a
 	ld a, $1
 	ldh [hAutoBGTransferEnabled], a
 	call Delay3
-	ld a, $9c
+	ld a, HIGH(vBGMap1)
 	ldh [hAutoBGTransferDest + 1], a
 	call LoadScreenTilesFromBuffer1
 	hlcoord 9, 7

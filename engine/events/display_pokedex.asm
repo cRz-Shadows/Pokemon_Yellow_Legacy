@@ -1,9 +1,9 @@
 _DisplayPokedex::
 	ld hl, wStatusFlags5
-	set 6, [hl]
+	set BIT_NO_TEXT_DELAY, [hl]
 	predef ShowPokedexData
 	ld hl, wStatusFlags5
-	res 6, [hl]
+	res BIT_NO_TEXT_DELAY, [hl]
 	call ReloadMapData
 	ld c, 10
 	call DelayFrames

@@ -129,7 +129,7 @@ TransformEffect_:
 	ld l, e
 	pop de
 .gotStatsOrModsToCopy
-	ld bc, $8
+	ld bc, (NUM_STATS - 1) * 2
 	jp CopyData
 
 .failed

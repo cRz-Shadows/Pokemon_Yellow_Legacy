@@ -17,9 +17,9 @@ DisplayPokemonCenterDialogue_::
 	and a
 	jp z, .naotenho
 	ld hl, wStatusFlags4
-	bit 2, [hl]
-	set 1, [hl]
-	set 2, [hl]
+	bit BIT_USED_POKECENTER, [hl]
+	set BIT_UNKNOWN_4_1, [hl]
+	set BIT_USED_POKECENTER, [hl]
 	jr nz, .skipShallWeHealYourPokemon
 	ld hl, ShallWeHealYourPokemonText
 	call PrintText

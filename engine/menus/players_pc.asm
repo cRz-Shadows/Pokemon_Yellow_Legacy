@@ -6,7 +6,7 @@ PlayerPC::
 	ld [wBagSavedMenuItem], a
 	ld [wParentMenuItem], a
 	ld a, [wMiscFlags]
-	bit 3, a ; accessing player's PC through another PC?
+	bit BIT_USING_GENERIC_PC, a
 	jr nz, PlayerPCMenu
 ; accessing it directly
 	ld a, SFX_TURN_ON_PC
@@ -16,11 +16,11 @@ PlayerPC::
 
 PlayerPCMenu:
 	ld hl, wStatusFlags5
-	set 6, [hl]
+	set BIT_NO_TEXT_DELAY, [hl]
 	ld a, [wParentMenuItem]
 	ld [wCurrentMenuItem], a
 	ld hl, wMiscFlags
-	set 5, [hl]
+	set BIT_NO_MENU_BUTTON_SOUND, [hl]
 	call LoadScreenTilesFromBuffer2
 	hlcoord 0, 0
 	lb bc, 8, 14
@@ -38,7 +38,7 @@ PlayerPCMenu:
 	inc hl
 	ld a, 3
 	ld [hli], a ; wMaxMenuItem
-	ld a, A_BUTTON | B_BUTTON
+	ld a, PAD_A | PAD_B
 	ld [hli], a ; wMenuWatchedKeys
 	xor a
 	ld [hl], a
@@ -49,7 +49,7 @@ PlayerPCMenu:
 	ld hl, WhatDoYouWantText
 	call PrintText
 	call HandleMenuInput
-	bit 1, a
+	bit B_PAD_B, a
 	jp nz, ExitPlayerPC
 	call PlaceUnfilledArrowMenuCursor
 	ld a, [wCurrentMenuItem]
@@ -63,7 +63,7 @@ PlayerPCMenu:
 
 ExitPlayerPC:
 	ld a, [wMiscFlags]
-	bit 3, a ; accessing player's PC through another PC?
+	bit BIT_USING_GENERIC_PC, a
 	jr nz, .next
 ; accessing it directly
 	ld a, SFX_TURN_OFF_PC
@@ -71,13 +71,13 @@ ExitPlayerPC:
 	call WaitForSoundToFinish
 .next
 	ld hl, wMiscFlags
-	res 5, [hl]
+	res BIT_NO_MENU_BUTTON_SOUND, [hl]
 	call LoadScreenTilesFromBuffer2
 	xor a
 	ld [wListScrollOffset], a
 	ld [wBagSavedMenuItem], a
 	ld hl, wStatusFlags5
-	res 6, [hl]
+	res BIT_NO_TEXT_DELAY, [hl]
 	xor a
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	ret

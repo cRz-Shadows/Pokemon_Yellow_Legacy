@@ -217,3 +217,5 @@ DEF NUM_ATTACKS EQU const_value - 1
 	const BAIT_ANIM ; throw bait
 
 DEF NUM_ATTACK_ANIMS EQU const_value - 1
+
+DEF CANNOT_MOVE EQU $ff

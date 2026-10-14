@@ -35,7 +35,7 @@ Route24DefaultScript:
 	call DisplayTextID
 	CheckAndResetEvent EVENT_NUGGET_REWARD_AVAILABLE
 	ret z
-	ld a, D_DOWN | B_BUTTON
+	ld a, PAD_DOWN | PAD_B
 	ld [wSimulatedJoypadStatesEnd], a
 	ld a, $1
 	ld [wSimulatedJoypadStatesIndex], a
@@ -61,10 +61,10 @@ Route24PlayerMovingScript:
 
 Route24AfterRocketBattleScript:
 	ld a, [wIsInBattle]
-	cp $ff
+	cp LOST_BATTLE
 	jp z, Route24SetDefaultScript
 	call UpdateSprites
-	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	SetEvent EVENT_BEAT_ROUTE24_ROCKET
 	ld a, TEXT_ROUTE24_COOLTRAINER_M1
@@ -121,8 +121,8 @@ Route24CooltrainerM1Text:
 	ld hl, .JoinTeamRocketText
 	call PrintText
 	ld hl, wStatusFlags3
-	set 6, [hl]
-	set 7, [hl]
+	set BIT_TALKED_TO_TRAINER, [hl]
+	set BIT_PRINT_END_BATTLE_TEXT, [hl]
 	ld hl, .DefeatedText
 	ld de, .DefeatedText
 	call SaveEndBattleTextPointers

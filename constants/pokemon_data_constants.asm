@@ -44,7 +44,7 @@ DEF MON_SPD_EXP    rw
 DEF MON_SPC_EXP    rw
 DEF MON_DVS        rw
 DEF MON_PP         rb NUM_MOVES
-DEF BOXMON_STRUCT_LENGTH EQU _RS
+DEF BOXMON_STRUCT_LENGTH EQU _RS ; $21
 DEF MON_LEVEL      rb
 DEF MON_STATS      rw NUM_STATS
 rsset MON_STATS
@@ -53,7 +53,7 @@ DEF MON_ATK        rw
 DEF MON_DEF        rw
 DEF MON_SPD        rw
 DEF MON_SPC        rw
-DEF PARTYMON_STRUCT_LENGTH EQU _RS
+DEF PARTYMON_STRUCT_LENGTH EQU _RS ; $2c
 
 DEF PARTY_LENGTH EQU 6
 
@@ -64,7 +64,6 @@ DEF HOF_MON           EQU $10
 DEF HOF_TEAM          EQU PARTY_LENGTH * HOF_MON
 DEF HOF_TEAM_CAPACITY EQU 50
 
-
 ; mon data locations
 ; Note that some values are not supported by all functions that use these values.
 	const_def
@@ -74,15 +73,14 @@ DEF HOF_TEAM_CAPACITY EQU 50
 	const DAYCARE_DATA      ; 3
 	const BATTLE_MON_DATA   ; 4
 
-
-; See data/pokemon/evos_moves.asm
-
 ; Evolution types
 	const_def 1
 	const EVOLVE_LEVEL ; 1
 	const EVOLVE_ITEM  ; 2
 	const EVOLVE_TRADE ; 3
 
+; evolution data (see data/pokemon/evos_moves.asm)
+DEF NUM_EVOS_IN_BUFFER EQU 3
 
 ; wMonHGrowthRate values
 ; GrowthRateTable indexes (see data/growth_rates.asm)
@@ -98,3 +96,7 @@ DEF NUM_GROWTH_RATES EQU const_value
 ; wild data (see data/wild/maps/*.asm)
 DEF NUM_WILDMONS EQU 10
 DEF WILDDATA_LENGTH EQU 1 + NUM_WILDMONS * 2
+
+; PP in box_struct (see macros/ram.asm)
+DEF PP_UP_MASK EQU %11000000 ; number of PP Up used
+DEF PP_MASK    EQU %00111111 ; currently remaining PP

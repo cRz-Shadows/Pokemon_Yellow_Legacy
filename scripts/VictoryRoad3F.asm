@@ -10,8 +10,8 @@ VictoryRoad3F_Script:
 
 VictoryRoad3FCheckBoulderEventScript:
 	ld hl, wCurrentMapScriptFlags
-	bit 5, [hl]
-	res 5, [hl]
+	bit BIT_CUR_MAP_LOADED_1, [hl]
+	res BIT_CUR_MAP_LOADED_1, [hl]
 	ret z
 	CheckEventHL EVENT_VICTORY_ROAD_3_BOULDER_ON_SWITCH1
 	ret z
@@ -28,8 +28,8 @@ VictoryRoad3F_ScriptPointers:
 
 VictoryRoad3FDefaultScript:
 	ld hl, wMiscFlags
-	bit 7, [hl]
-	res 7, [hl]
+	bit BIT_PUSHED_BOULDER, [hl]
+	res BIT_PUSHED_BOULDER, [hl]
 	jp z, .check_switch_hole
 	ld hl, .SwitchOrHoleCoords
 	call CheckBoulderCoords
@@ -38,10 +38,10 @@ VictoryRoad3FDefaultScript:
 	cp $1
 	jr nz, .handle_hole
 	ldh a, [hTextID]
-	cp $f ; Pikachu
+	cp PIKACHU_SPRITE_INDEX
 	jp z, .check_switch_hole
 	ld hl, wCurrentMapScriptFlags
-	set 5, [hl]
+	set BIT_CUR_MAP_LOADED_1, [hl]
 	SetEvent EVENT_VICTORY_ROAD_3_BOULDER_ON_SWITCH1
 	ld a, 1
 	ld [wBoulderSFXCheck], a
@@ -70,13 +70,13 @@ VictoryRoad3FDefaultScript:
 	cp $1
 	jr nz, .hole
 	ld hl, wStatusFlags3
-	res 4, [hl]
+	res BIT_ON_DUNGEON_WARP, [hl]
 	ld hl, wStatusFlags6
-	res 4, [hl]
+	res BIT_DUNGEON_WARP, [hl]
 	ret
 .hole
 	ld a, [wStatusFlags3]
-	bit 4, a
+	bit BIT_ON_DUNGEON_WARP, a
 	jp z, CheckFightingMapTrainers
 	ret
 

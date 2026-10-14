@@ -3,7 +3,7 @@ DisplayOptionMenu_:
 .optionMenuLoop
 	call JoypadLowSensitivity
 	ldh a, [hJoy5]
-	and START | B_BUTTON
+	and PAD_START | PAD_B
 	jr nz, .exitOptionMenu
 	call OptionsControl
 	jr c, .dpadDelay
@@ -43,9 +43,9 @@ OptionMenuJumpTable:
 OptionsMenu_TextSpeed:
 	call GetTextSpeed
 	ldh a, [hJoy5]
-	bit 4, a ; right
+	bit B_PAD_RIGHT, a
 	jr nz, .pressedRight
-	bit 5, a
+	bit B_PAD_LEFT, a
 	jr nz, .pressedLeft
 	jr .nonePressed
 .pressedRight
@@ -68,7 +68,7 @@ OptionsMenu_TextSpeed:
 .save
 	ld b, a
 	ld a, [wOptions]
-	and $f0
+	and ~TEXT_DELAY_MASK
 	or b
 	ld [wOptions], a
 .nonePressed
@@ -98,10 +98,10 @@ SlowText:
 
 GetTextSpeed:
 	ld a, [wOptions]
-	and $f
-	cp $5
+	and TEXT_DELAY_MASK
+	cp TEXT_DELAY_SLOW
 	jr z, .slowTextOption
-	cp $1
+	cp TEXT_DELAY_FAST
 	jr z, .fastTextOption
 ; mid text option
 	ld c, $1
@@ -109,23 +109,23 @@ GetTextSpeed:
 	ret
 .slowTextOption
 	ld c, $2
-	lb de, 3, 1
+	lb de, TEXT_DELAY_MEDIUM, TEXT_DELAY_FAST
 	ret
 .fastTextOption
 	ld c, $0
-	lb de, 5, 3
+	lb de, TEXT_DELAY_SLOW, TEXT_DELAY_MEDIUM
 	ret
 
 OptionsMenu_BattleAnimations:
 	ldh a, [hJoy5]
-	and D_RIGHT | D_LEFT
+	and PAD_LEFT | PAD_RIGHT
 	jr nz, .buttonPressed
 	ld a, [wOptions]
-	and $80 ; mask other bits
+	and 1 << BIT_BATTLE_ANIMATION
 	jr .nothingPressed
 .buttonPressed
 	ld a, [wOptions]
-	xor $80
+	xor 1 << BIT_BATTLE_ANIMATION
 	ld [wOptions], a
 .nothingPressed
 	ld bc, $0
@@ -153,14 +153,14 @@ AnimationOffText:
 
 OptionsMenu_BattleStyle:
 	ldh a, [hJoy5]
-	and D_LEFT | D_RIGHT
+	and PAD_LEFT | PAD_RIGHT
 	jr nz, .buttonPressed
 	ld a, [wOptions]
-	and $40 ; mask other bits
+	and 1 << BIT_BATTLE_SHIFT
 	jr .nothingPressed
 .buttonPressed
 	ld a, [wOptions]
-	xor $40
+	xor 1 << BIT_BATTLE_SHIFT
 	ld [wOptions], a
 .nothingPressed
 	ld bc, $0
@@ -189,19 +189,19 @@ BattleStyleSetText:
 
 OptionsMenu_SpeakerSettings:
 	ld a, [wOptions]
-	and $30
+	and SOUND_MASK
 	swap a
 	ld c, a
 	ldh a, [hJoy5]
-	bit 4, a
+	bit B_PAD_RIGHT, a
 	jr nz, .pressedRight
-	bit 5, a
+	bit B_PAD_LEFT, a
 	jr nz, .pressedLeft
 	jr .nothingPressed
 .pressedRight
 	ld a, c
 	inc a
-	and $3
+	and SOUND_MASK >> 4
 	jr .save
 .pressedLeft
 	ld a, c
@@ -212,9 +212,9 @@ OptionsMenu_SpeakerSettings:
 	swap a
 	ld b, a
 	xor a
-	ldh [rNR51], a
+	ldh [rAUDTERM], a
 	ld a, [wOptions]
-	and $cf
+	and ~SOUND_MASK
 	or b
 	ld [wOptions], a
 .nothingPressed
@@ -248,9 +248,9 @@ Earphone3SoundText:
 OptionsMenu_GBPrinterBrightness:
 	call GetGBPrinterBrightness
 	ldh a, [hJoy5]
-	bit 4, a
+	bit B_PAD_RIGHT, a
 	jr nz, .pressedRight
-	bit 5, a
+	bit B_PAD_LEFT, a
 	jr nz, .pressedLeft
 	jr .nothingPressed
 .pressedRight
@@ -308,30 +308,30 @@ GetGBPrinterBrightness:
 	ld a, [wPrinterSettings]
 	and a
 	jr z, .setLightest
-	cp $20
+	cp PRINTER_BRIGHTNESS_LIGHTER
 	jr z, .setLighter
-	cp $60
+	cp PRINTER_BRIGHTNESS_DARKER
 	jr z, .setDarker
-	cp $7f
+	cp PRINTER_BRIGHTNESS_DARKEST
 	jr z, .setDarkest
 	ld c, $2
-	lb de, $20, $60
+	lb de, PRINTER_BRIGHTNESS_LIGHTER, PRINTER_BRIGHTNESS_DARKER
 	ret
 .setLightest
 	ld c, $0
-	lb de, $7f, $20
+	lb de, PRINTER_BRIGHTNESS_DARKEST, PRINTER_BRIGHTNESS_LIGHTER
 	ret
 .setLighter
 	ld c, $1
-	lb de, $0, $40
+	lb de, PRINTER_BRIGHTNESS_LIGHTEST, PRINTER_BRIGHTNESS_NORMAL
 	ret
 .setDarker
 	ld c, $3
-	lb de, $40, $7f
+	lb de, PRINTER_BRIGHTNESS_NORMAL, PRINTER_BRIGHTNESS_DARKEST
 	ret
 .setDarkest
 	ld c, $4
-	lb de, $60, $0
+	lb de, PRINTER_BRIGHTNESS_DARKER, PRINTER_BRIGHTNESS_LIGHTEST
 	ret
 
 OptionsMenu_Dummy:
@@ -340,7 +340,7 @@ OptionsMenu_Dummy:
 
 OptionsMenu_Cancel:
 	ldh a, [hJoy5]
-	and A_BUTTON
+	and PAD_A
 	jr nz, .pressedCancel
 	and a
 	ret
@@ -351,9 +351,9 @@ OptionsMenu_Cancel:
 OptionsControl:
 	ld hl, wOptionsCursorLocation
 	ldh a, [hJoy5]
-	cp D_DOWN
+	cp PAD_DOWN
 	jr z, .pressedDown
-	cp D_UP
+	cp PAD_UP
 	jr z, .pressedUp
 	and a
 	ret
@@ -433,7 +433,7 @@ InitOptionsMenu:
 	ret
 
 AllOptionsText:
-	db "TEXT SPEED :"
+	db   "TEXT SPEED :"
 	next "ANIMATION  :"
 	next "BATTLESTYLE:"
 	next "SOUND:"

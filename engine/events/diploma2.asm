@@ -93,15 +93,15 @@ DisplayDiplomaBottom:
 	call PlaceString
 	hlcoord 12, 15
 	ld de, wPlayTimeHours
-	lb bc, $40 | 1, 3
+	lb bc, LEFT_ALIGN | 1, 3
 	call PrintNumber
 	ld [hl], $16
 	inc hl
 	ld de, wPlayTimeMinutes
-	lb bc, $80 | 1, 2
+	lb bc, LEADING_ZEROES | 1, 2
 	call PrintNumber
 	ld a, [wNumSetBits]
-	cp 151
+	cp NUM_POKEMON
 	ret nz
 	ld de, DiplomaMewTiles
 	hlcoord 2, 0
@@ -145,7 +145,7 @@ DiplomaMewTiles:
 DiplomaPlayTime:  db "PLAY TIME@"
 
 DiplomaDrawHorizontalBorder:
-	ld c, 10
+	ld c, SCREEN_WIDTH / 2
 .loop
 	ld [hl], $02
 	inc hl
@@ -156,7 +156,7 @@ DiplomaDrawHorizontalBorder:
 	ret
 
 DiplomaDrawVerticalBorder:
-	ld c, 9
+	ld c, SCREEN_HEIGHT / 2
 	ld de, SCREEN_WIDTH
 .loop
 	ld [hl], $04

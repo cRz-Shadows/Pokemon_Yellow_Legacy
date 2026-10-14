@@ -17,8 +17,8 @@ ExecuteCurMapScriptInTable::
 	pop af
 	push hl
 	ld hl, wStatusFlags7
-	bit 4, [hl]
-	res 4, [hl]
+	bit BIT_USE_CUR_MAP_SCRIPT, [hl]
+	res BIT_USE_CUR_MAP_SCRIPT, [hl]
 	jr z, .useProvidedIndex   ; test if map script index was overridden manually
 	ld a, [wCurMapScript]
 .useProvidedIndex
@@ -31,7 +31,7 @@ ExecuteCurMapScriptInTable::
 LoadGymLeaderAndCityName::
 	push de
 	ld de, wGymCityName
-	ld bc, $11
+	ld bc, GYM_CITY_LENGTH
 	call CopyData   ; load city name
 	pop hl
 	ld de, wGymLeaderName
@@ -62,15 +62,15 @@ ReadTrainerHeaderInfo::
 	ld [wTrainerHeaderFlagBit], a  ; store flag's bit
 	jr .done
 .nonZeroOffset
-	cp $2
+	cp TRAINER_EVENT_FLAG_POINTER
 	jr z, .readPointer ; read flag's byte ptr
-	cp $4
+	cp TRAINER_BEFORE_BATTLE_TEXT
 	jr z, .readPointer ; read before battle text
-	cp $6
+	cp TRAINER_AFTER_BATTLE_TEXT
 	jr z, .readPointer ; read after battle text
-	cp $8
+	cp TRAINER_WON_BATTLE_TEXT
 	jr z, .readPointer ; read end battle text
-	cp $a
+	cp TRAINER_LOST_BATTLE_TEXT
 	jr nz, .done
 .readPointer
 	ld a, [hli]
@@ -87,7 +87,7 @@ TalkToTrainer::
 	call StoreTrainerHeaderPointer
 	xor a
 	call ReadTrainerHeaderInfo     ; read flag's bit
-	ld a, $2
+	ld a, TRAINER_EVENT_FLAG_POINTER
 	call ReadTrainerHeaderInfo     ; read flag's byte ptr
 	ld a, [wPartyCount]
 	and a
@@ -104,20 +104,20 @@ TalkToTrainer::
 	call ReadTrainerHeaderInfo     ; print after battle text
 	jp PrintText
 .trainerNotYetFought
-	ld a, $4
+	ld a, TRAINER_BEFORE_BATTLE_TEXT
 	call ReadTrainerHeaderInfo     ; print before battle text
 	call PrintText
 	ld a, $a
 	call ReadTrainerHeaderInfo     ; read end battle text (2)
 	push de
-	ld a, $8
+	ld a, TRAINER_WON_BATTLE_TEXT
 	call ReadTrainerHeaderInfo     ; read end battle text
 	pop de
 	call SaveEndBattleTextPointers
 	ld hl, wStatusFlags7
-	set 4, [hl]                    ; activate map script index override (index is set below)
+	set BIT_USE_CUR_MAP_SCRIPT, [hl] ; activate map script index override (index is set below)
 	ld hl, wMiscFlags
-	bit 0, [hl]                    ; test if player is already engaging the trainer (because the trainer saw the player)
+	bit BIT_SEEN_BY_TRAINER, [hl]
 	ret nz
 ; if the player talked to the trainer of his own volition
 	call EngageMapTrainer
@@ -145,12 +145,12 @@ ENDC
 	ret
 .trainerEngaging
 	ld hl, wStatusFlags7
-	set 3, [hl]
+	set BIT_TRAINER_BATTLE, [hl]
 	ld [wEmotionBubbleSpriteIndex], a
 	xor a ; EXCLAMATION_BUBBLE
 	ld [wWhichEmotionBubble], a
 	predef EmotionBubble
-	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	xor a
 	ldh [hJoyHeld], a
@@ -162,7 +162,7 @@ ENDC
 ; display the before battle text after the enemy trainer has walked up to the player's sprite
 DisplayEnemyTrainerTextAndStartBattle::
 	ld a, [wStatusFlags5]
-	and $1
+	and 1 << BIT_SCRIPTED_NPC_MOVEMENT
 	ret nz ; return if the enemy trainer hasn't finished walking to the player's sprite
 	ld [wJoyIgnore], a
 	ld a, [wSpriteIndex]
@@ -175,26 +175,26 @@ StartTrainerBattle::
 	ld [wJoyIgnore], a
 	call InitBattleEnemyParameters
 	ld hl, wStatusFlags3
-	set 6, [hl]
-	set 7, [hl]
+	set BIT_TALKED_TO_TRAINER, [hl]
+	set BIT_PRINT_END_BATTLE_TEXT, [hl]
 	ld hl, wStatusFlags4
-	set 1, [hl]
+	set BIT_UNKNOWN_4_1, [hl]
 	ld hl, wCurMapScript
 	inc [hl]        ; increment map script index (next script function is usually EndTrainerBattle)
 	ret
 
 EndTrainerBattle::
 	ld hl, wCurrentMapScriptFlags
-	set 5, [hl]
-	set 6, [hl]
+	set BIT_CUR_MAP_LOADED_1, [hl]
+	set BIT_CUR_MAP_LOADED_2, [hl]
 	ld hl, wStatusFlags3
-	res 7, [hl]
+	res BIT_PRINT_END_BATTLE_TEXT, [hl]
 	ld hl, wMiscFlags
-	res 0, [hl]                  ; player is no longer engaged by any trainer
+	res BIT_SEEN_BY_TRAINER, [hl]
 	ld a, [wIsInBattle]
-	cp $ff
+	cp LOST_BATTLE
 	jp z, ResetButtonPressedAndMapScript
-	ld a, $2
+	ld a, TRAINER_EVENT_FLAG_POINTER
 	call ReadTrainerHeaderInfo
 	ld a, [wTrainerHeaderFlagBit]
 	ld c, a
@@ -213,8 +213,8 @@ EndTrainerBattle::
 	predef HideObject
 .skipRemoveSprite
 	ld hl, wStatusFlags5
-	bit 4, [hl]
-	res 4, [hl]
+	bit BIT_UNKNOWN_5_4, [hl]
+	res BIT_UNKNOWN_5_4, [hl]
 	ret nz
 
 ResetButtonPressedAndMapScript::
@@ -274,7 +274,7 @@ CheckForEngagingTrainers::
 	ld [wTrainerHeaderFlagBit], a
 	cp -1
 	ret z
-	ld a, $2
+	ld a, TRAINER_EVENT_FLAG_POINTER
 	call ReadTrainerHeaderInfo       ; read trainer flag's byte ptr
 	ld b, FLAG_TEST
 	ld a, [wTrainerHeaderFlagBit]
@@ -302,7 +302,7 @@ CheckForEngagingTrainers::
 	and a
 	ret nz        ; break if the trainer is engaging
 .continue
-	ld hl, $c
+	ld hl, TRAINER_STRUCT_SIZE
 	add hl, de
 	ld d, h
 	ld e, l
@@ -342,15 +342,15 @@ EngageMapTrainer::
 PrintEndBattleText::
 	push hl
 	ld hl, wStatusFlags3
-	bit 7, [hl]
-	res 7, [hl]
+	bit BIT_PRINT_END_BATTLE_TEXT, [hl]
+	res BIT_PRINT_END_BATTLE_TEXT, [hl]
 	pop hl
 	ret z
 	ldh a, [hLoadedROMBank]
 	push af
 	ld a, [wEndBattleTextRomBank]
 	ldh [hLoadedROMBank], a
-	ld [MBC1RomBank], a
+	ld [rROMB], a
 	push hl
 	call SaveTrainerName
 	ld hl, TrainerEndBattleText
@@ -358,7 +358,7 @@ PrintEndBattleText::
 	pop hl
 	pop af
 	ldh [hLoadedROMBank], a
-	ld [MBC1RomBank], a
+	ld [rROMB], a
 	farcall SetEnemyTrainerToStayAndFaceAnyDirection
 	jp WaitForSoundToFinish
 

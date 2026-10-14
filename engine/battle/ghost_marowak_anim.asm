@@ -55,7 +55,7 @@ MarowakAnim:
 CopyMonPicFromBGToSpriteVRAM:
 	ld de, vFrontPic
 	ld hl, vSprites
-	ld bc, 7 * 7
+	ld bc, PIC_SIZE
 	call CopyVideoData
 	ld a, $10
 	ld [wBaseCoordY], a
@@ -77,7 +77,7 @@ CopyMonPicFromBGToSpriteVRAM:
 	ld [hli], a
 	ld a, d
 	ld [hli], a
-	ld a, OAM_OBP1 | OAM_HIGH_PALS
+	ld a, OAM_PAL1 | OAM_HIGH_PALS
 	ld [hli], a
 	inc d
 	dec c

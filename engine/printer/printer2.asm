@@ -85,11 +85,11 @@ Printer_GetMonStats:
 	hlcoord 9, 8
 	ld de, .Stats
 	ldh a, [hUILayoutFlags]
-	set 2, a
+	set BIT_SINGLE_SPACED_LINES, a
 	ldh [hUILayoutFlags], a
 	call PlaceString
 	ldh a, [hUILayoutFlags]
-	res 2, a
+	res BIT_SINGLE_SPACED_LINES, a
 	ldh [hUILayoutFlags], a
 
 	hlcoord 16, 8
