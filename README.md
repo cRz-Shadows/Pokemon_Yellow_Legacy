@@ -11,6 +11,8 @@ While Yellow Legacy is not designed as a “Kaizo” project, Pokémon trainer f
 
 ## Download and Play
 
+* To play, download the `.bps` patch from the [**Releases**](../../releases) page and apply it to a clean English Pokémon Yellow ROM. See [**docs/patching_instructions.md**](docs/patching_instructions.md).
+* Maintainers make the patch with `tools/make_release_patches.py` (it needs a clean Yellow ROM and the built ROM).
 * ### **You should use RGBDS version 1.0.4.** The build requires 1.0.0 or newer.
 * To set up the repository, see [**INSTALL.md**](INSTALL.md).
 
