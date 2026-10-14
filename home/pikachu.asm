@@ -1,6 +1,5 @@
-; SUGGESTED NAME: HidePikachuDuringWarp
-; Sets Pikachu hidden flag (state flags bit 7) and hides its sprite during warps/fly (confidence: medium)
-Func_1510::
+; Sets Pikachu hidden flag (state flags bit 7) and hides its sprite during warps/fly
+HidePikachuDuringWarp::
 	push hl
 	ld hl, wPikachuOverworldStateFlags
 	set 7, [hl]
@@ -9,9 +8,8 @@ Func_1510::
 	pop hl
 	ret
 
-; SUGGESTED NAME: UnhidePikachuAfterWarp
-; Clears the Pikachu hidden flag (state flags bit 7) after a warp animation (confidence: medium)
-Func_151d::
+; Clears the Pikachu hidden flag (state flags bit 7) after a warp animation
+UnhidePikachuAfterWarp::
 	push hl
 	ld hl, wPikachuOverworldStateFlags
 	res 7, [hl]

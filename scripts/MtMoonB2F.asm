@@ -79,14 +79,13 @@ IF DEF(_DEBUG)
 	ret nz
 ENDC
 	CheckEitherEventSet EVENT_GOT_DOME_FOSSIL, EVENT_GOT_HELIX_FOSSIL
-	call z, MtMoonB2FScript_49d28
+	call z, MtMoonB2FScript_CheckSuperNerdEncounter
 	CheckEvent EVENT_BEAT_MT_MOON_3_TRAINER_0
-	call z, MtMoonB2FScript_49e15
+	call z, MtMoonB2FScript_StartJessieJamesEncounter
 	ret
 
-; SUGGESTED NAME: MtMoonB2FScript_CheckSuperNerdEncounter
-; Before fossils: Super Nerd challenges the player at (13,8), else check trainers (confidence: high)
-MtMoonB2FScript_49d28:
+; Before fossils: Super Nerd challenges the player at (13,8), else check trainers
+MtMoonB2FScript_CheckSuperNerdEncounter:
 	CheckEvent EVENT_BEAT_MT_MOON_EXIT_SUPER_NERD
 	jp nz, .asm_49d4b
 	ld a, [wYCoord]
@@ -124,34 +123,34 @@ MtMoonB2FMoveSuperNerdScript:
 	ld a, MTMOONB2F_SUPER_NERD
 	ldh [hSpriteIndex], a
 	call SetSpriteMovementBytesToFF
-	ld hl, CoordsData_49dc7
+	ld hl, MtMoonB2FBelowDomeFossilCoords
 	call ArePlayerCoordsInArray
 	jr c, .asm_49da8
-	ld hl, CoordsData_49dc0
+	ld hl, MtMoonB2FDomeFossilAreaCoords
 	call ArePlayerCoordsInArray
 	jr c, .asm_49db0
-	ld hl, CoordsData_49dd5
+	ld hl, MtMoonB2FBelowHelixFossilCoords
 	call ArePlayerCoordsInArray
 	jr c, .asm_49d9b
-	ld hl, CoordsData_49dce
+	ld hl, MtMoonB2FHelixFossilAreaCoords
 	call ArePlayerCoordsInArray
 	jr c, .asm_49da3
 	jp CheckFightingMapTrainers
 
 .asm_49d9b
 	ld b, SPRITE_FACING_LEFT
-	ld hl, PikachuMovementData_49dd8
+	ld hl, MtMoonB2FPikachuMovement_HelixSide
 	call MtMoonB2FScript_ApplyPikachuMovementData
 .asm_49da3
-	ld de, MovementData_49ddd
+	ld de, MtMoonB2FSuperNerdMovement_ToDomeFossil
 	jr .asm_49db3
 
 .asm_49da8
 	ld b, SPRITE_FACING_RIGHT
-	ld hl, PikachuMovementData_49dca
+	ld hl, MtMoonB2FPikachuMovement_DomeSide
 	call MtMoonB2FScript_ApplyPikachuMovementData
 .asm_49db0
-	ld de, MovementData_49ddc
+	ld de, MtMoonB2FSuperNerdMovement_ToHelixFossil
 .asm_49db3
 	ld a, MTMOONB2F_SUPER_NERD
 	ldh [hSpriteIndex], a
@@ -160,57 +159,49 @@ MtMoonB2FMoveSuperNerdScript:
 	call MtMoonB2FSetScript
 	ret
 
-; SUGGESTED NAME: MtMoonB2FDomeFossilAreaCoords
-; Tiles around the Dome Fossil; Super Nerd then walks to the Helix Fossil (confidence: high)
-CoordsData_49dc0:
+; Tiles around the Dome Fossil; Super Nerd then walks to the Helix Fossil
+MtMoonB2FDomeFossilAreaCoords:
 	dbmapcoord 12,  7
 	dbmapcoord 11,  6
 	dbmapcoord 12,  5
 	db -1 ; end
 
-; SUGGESTED NAME: MtMoonB2FBelowDomeFossilCoords
-; Tile below the Dome Fossil, where Pikachu must also move out of the way (confidence: high)
-CoordsData_49dc7:
+; Tile below the Dome Fossil, where Pikachu must also move out of the way
+MtMoonB2FBelowDomeFossilCoords:
 	dbmapcoord 12,  7
 	db -1 ; end
 
-; SUGGESTED NAME: MtMoonB2FPikachuMovement_DomeSide
-; Pikachu sidestep when the Super Nerd walks to the Helix Fossil (confidence: medium)
-PikachuMovementData_49dca:
+; Pikachu sidestep when the Super Nerd walks to the Helix Fossil
+MtMoonB2FPikachuMovement_DomeSide:
 	db $00
 	db $35
 	db $33
 	db $3f
 
-; SUGGESTED NAME: MtMoonB2FHelixFossilAreaCoords
-; Tiles around the Helix Fossil; Super Nerd then walks to the Dome Fossil (confidence: high)
-CoordsData_49dce:
+; Tiles around the Helix Fossil; Super Nerd then walks to the Dome Fossil
+MtMoonB2FHelixFossilAreaCoords:
 	dbmapcoord 13,  7
 	dbmapcoord 14,  6
 	dbmapcoord 14,  5
 	db -1 ; end
 
-; SUGGESTED NAME: MtMoonB2FBelowHelixFossilCoords
-; Tile below the Helix Fossil, where Pikachu must also move out of the way (confidence: high)
-CoordsData_49dd5:
+; Tile below the Helix Fossil, where Pikachu must also move out of the way
+MtMoonB2FBelowHelixFossilCoords:
 	dbmapcoord 13,  7
 	db -1 ; end
 
-; SUGGESTED NAME: MtMoonB2FPikachuMovement_HelixSide
-; Pikachu sidestep when the Super Nerd walks to the Dome Fossil (confidence: medium)
-PikachuMovementData_49dd8:
+; Pikachu sidestep when the Super Nerd walks to the Dome Fossil
+MtMoonB2FPikachuMovement_HelixSide:
 	db $00
 	db $35
 	db $34
 	db $3f
 
-; SUGGESTED NAME: MtMoonB2FSuperNerdMovement_ToHelixFossil
-; Super Nerd walks right then up to take the other (Helix) fossil (confidence: high)
-MovementData_49ddc:
+; Super Nerd walks right then up to take the other (Helix) fossil
+MtMoonB2FSuperNerdMovement_ToHelixFossil:
 	db NPC_MOVEMENT_RIGHT
-; SUGGESTED NAME: MtMoonB2FSuperNerdMovement_ToDomeFossil
-; Super Nerd walks up to take the other (Dome) fossil (confidence: high)
-MovementData_49ddd:
+; Super Nerd walks up to take the other (Dome) fossil
+MtMoonB2FSuperNerdMovement_ToDomeFossil:
 	db NPC_MOVEMENT_UP
 	db -1 ; end
 
@@ -240,9 +231,8 @@ MtMoonB2FSuperNerdTakesOtherFossilScript:
 	call MtMoonB2FSetScript
 	ret
 
-; SUGGESTED NAME: MtMoonB2FScript_StartJessieJamesEncounter
-; At (3,5): plays Jessie & James music, shows them and starts their intro (confidence: high)
-MtMoonB2FScript_49e15:
+; At (3,5): plays Jessie & James music, shows them and starts their intro
+MtMoonB2FScript_StartJessieJamesEncounter:
 	ld a, [wXCoord]
 	cp $3
 	ret nz
@@ -279,13 +269,11 @@ MtMoonB2FScript_49e15:
 	call MtMoonB2FSetScript
 	ret
 
-; SUGGESTED NAME: MtMoonB2FJessieRunLeftMovement
-; Jessie runs left 6 tiles (code $06 = fast step left) (confidence: medium)
-MovementData_f9e65:
+; Jessie runs left 6 tiles (code $06 = fast step left)
+MtMoonB2FJessieRunLeftMovement:
 	db NPC_FAST_STEP_LEFT
-; SUGGESTED NAME: MtMoonB2FJamesRunLeftMovement
-; James runs left 5 tiles (code $06 = fast step left) (confidence: medium)
-MovementData_f9e66:
+; James runs left 5 tiles (code $06 = fast step left)
+MtMoonB2FJamesRunLeftMovement:
 	db NPC_FAST_STEP_LEFT
 	db NPC_FAST_STEP_LEFT
 	db NPC_FAST_STEP_LEFT
@@ -302,7 +290,7 @@ MtMoonB2FScript6:
 	call Delay3
 	ld a, MTMOONB2F_JESSIE
 	ldh [hSpriteIndex], a
-	ld de, MovementData_f9e65
+	ld de, MtMoonB2FJessieRunLeftMovement
 	call MoveSprite
 	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
 	ld [wJoyIgnore], a
@@ -324,7 +312,7 @@ MtMoonB2FScript8:
 MtMoonB2FScript9:
 	ld a, MTMOONB2F_JAMES
 	ldh [hSpriteIndex], a
-	ld de, MovementData_f9e66
+	ld de, MtMoonB2FJamesRunLeftMovement
 	call MoveSprite
 	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
 	ld [wJoyIgnore], a

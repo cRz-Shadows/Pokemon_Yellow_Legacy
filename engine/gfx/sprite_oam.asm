@@ -78,7 +78,7 @@ PrepareOAMData::
 	jr z, .hidden
 	jr nc, .asm_4a41
 .hidden
-	call Func_4a7b
+	call GetSpriteVRAMTileOffset
 	ld [wSavedSpriteImageIndex], a
 	ldh a, [hOAMBufferOffset]
 
@@ -186,9 +186,8 @@ GetSpriteScreenXY:
 	ld [de], a  ; [x#SPRITESTATEDATA1_XADJUSTED]
 	ret
 
-; SUGGESTED NAME: GetSpriteVRAMTileOffset
-; Returns the VRAM tile offset (slot*12, special case for 4-tile slot $b) of a sprite (confidence: high)
-Func_4a7b:
+; Returns the VRAM tile offset (slot*12, special case for 4-tile slot $b) of a sprite
+GetSpriteVRAMTileOffset:
 	push bc
 	ld a, [wSavedSpriteImageIndex]
 	swap a                   ; high nybble determines sprite used (0 is always player sprite, next are some npcs)

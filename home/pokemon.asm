@@ -278,7 +278,7 @@ HandlePartyMenuInput::
 	ret
 .asm_128f
 	pop af
-	ld hl, PartyMenuText_12cc
+	ld hl, PartyMenuPikachuNoResponseText
 	call PrintText
 	xor a
 	ld [wMenuItemToSwap], a
@@ -304,9 +304,8 @@ HandlePartyMenuInput::
 	farcall SwitchPartyMon
 	jp HandlePartyMenuInput
 
-; SUGGESTED NAME: PartyMenuPikachuNoResponseText
-; "There isn't any response..." when picking starter Pikachu while it isn't following (confidence: high)
-PartyMenuText_12cc::
+; "There isn't any response..." when picking starter Pikachu while it isn't following
+PartyMenuPikachuNoResponseText::
 	text_far _SleepingPikachuText1
 	text_end
 

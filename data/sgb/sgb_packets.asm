@@ -130,9 +130,8 @@ BlkPacket_GameFreakIntro:
 	ATTR_BLK_DATA %011, 3,3,0, 12,11, 14,13 ; falling stars (right): pal 3
 	ds 12, 0
 
-; SUGGESTED NAME: BlkPacket_PikachusBeachTitle
-; SGB ATTR_BLK packet used by SetPal_PikachusBeachTitle (confidence: high)
-UnknownPacket_72751:
+; SGB ATTR_BLK packet used by SetPal_PikachusBeachTitle
+BlkPacket_PikachusBeachTitle:
 	ATTR_BLK 1
 	ATTR_BLK_DATA %111, 1,1,0, 04,00, 15,05
 	ds 8

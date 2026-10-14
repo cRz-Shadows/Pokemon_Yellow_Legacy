@@ -2,14 +2,14 @@ Printer_GetMonStats:
 	call GBPalWhiteOutWithDelay3
 	call ClearScreen
 	call LoadHpBarAndStatusTilePatterns
-	ld de, GFX_ea563
+	ld de, PrinterHPLabelGFX
 	ld hl, vChars2 + $710
-	lb bc, BANK(GFX_ea563), (GFX_ea563End - GFX_ea563) / 8
+	lb bc, BANK(PrinterHPLabelGFX), (GFX_ea563End - PrinterHPLabelGFX) / 8
 	call CopyVideoDataDouble
 
-	ld de, GFX_ea56b
+	ld de, PrinterLevelLabelGFX
 	ld hl, vChars2 + $6e0
-	lb bc, BANK(GFX_ea56b), (GFX_ea56bEnd - GFX_ea56b) / 8
+	lb bc, BANK(PrinterLevelLabelGFX), (GFX_ea56bEnd - PrinterLevelLabelGFX) / 8
 	call CopyVideoDataDouble
 
 	xor a
@@ -176,22 +176,20 @@ Printer_GetMonStats:
 .Blank:
 	db "--------------@"
 
-; SUGGESTED NAME: PrinterHPLabelGFX
-; 1bpp "HP" label tiles used on the printed Pokémon stats page (confidence: high)
-GFX_ea563:
+; 1bpp "HP" label tiles used on the printed Pokémon stats page
+PrinterHPLabelGFX:
 INCBIN "gfx/printer/hp.1bpp"
 GFX_ea563End:
 
-; SUGGESTED NAME: PrinterLevelLabelGFX
-; 1bpp "Lv" label tiles used on the printed Pokémon stats page (confidence: high)
-GFX_ea56b:
+; 1bpp "Lv" label tiles used on the printed Pokémon stats page
+PrinterLevelLabelGFX:
 INCBIN "gfx/printer/lv.1bpp"
 GFX_ea56bEnd:
 
 PrinterDebug_LoadGFX:
 	ld hl, vChars1 + $7e0
-	ld de, GFX_ea597
-	lb bc, BANK(GFX_ea597), (GFX_ea597End - GFX_ea597) / 16
+	ld de, PrinterDebugBitDigitsGFX
+	lb bc, BANK(PrinterDebugBitDigitsGFX), (GFX_ea597End - PrinterDebugBitDigitsGFX) / 16
 	call CopyVideoData
 
 	ld hl, wShadowOAMSprite32
@@ -211,9 +209,8 @@ PrinterDebug_LoadGFX:
 	jr nz, .loop
 	ret
 
-; SUGGESTED NAME: PrinterDebugBitDigitsGFX
-; "0"/"1" tiles used to show printer status flag bits as sprites in printer debug (confidence: high)
-GFX_ea597:
+; "0"/"1" tiles used to show printer status flag bits as sprites in printer debug
+PrinterDebugBitDigitsGFX:
 INCBIN "gfx/printer/01.2bpp"
 GFX_ea597End:
 
@@ -249,136 +246,126 @@ PrinterDebug_DoFunction:
 	jp hl
 
 .Jumptable:
-	dw Func_ea623
-	dw Func_ea6d2
-	dw Func_ea6af
-	dw Func_ea645
-	dw Func_ea701
-	dw Func_ea6bd
-	dw Func_ea671
-	dw Func_ea701
-	dw Func_ea6af
-	dw Func_ea68a
-	dw Func_ea701
-	dw Func_ea6af
-	dw Func_ea721
-	dw Func_ea610
-	dw Func_ea61a
-	dw Func_ea6af
-	dw Func_ea61e
-	dw Func_ea72f
-	dw Func_ea732
+	dw PrinterDebug_InitSerial
+	dw PrinterDebug_CheckConnectionStatus
+	dw PrinterDebug_WaitSerial
+	dw PrinterDebug_StartTransmittingTilemap
+	dw PrinterDebug_TransmissionLoop
+	dw PrinterDebug_WaitSerialAndLoopBack2
+	dw PrinterDebug_EndTilemapTransmission
+	dw PrinterDebug_TransmissionLoop
+	dw PrinterDebug_WaitSerial
+	dw PrinterDebug_SignalSendHeader
+	dw PrinterDebug_TransmissionLoop
+	dw PrinterDebug_WaitSerial
+	dw PrinterDebug_WaitUntilFinished
+	dw PrinterDebug_Quit
+	dw PrinterDebug_Next_
+	dw PrinterDebug_WaitSerial
+	dw PrinterDebug_Restart
+	dw PrinterDebug_WaitLoopBack
+	dw PrinterDebug_WaitLoopBack_
 
-; SUGGESTED NAME: PrinterDebug_Next
-; Debug copy of Printer_Next: advances wPrinterSendState (confidence: high)
-Func_ea606:
+; Debug copy of Printer_Next: advances wPrinterSendState
+PrinterDebug_Next:
 	ld hl, wPrinterSendState
 	inc [hl]
 	ret
 
-; SUGGESTED NAME: PrinterDebug_Back
-; Debug copy of Printer_Back: steps wPrinterSendState back one (confidence: high)
-Func_ea60b:
+; Debug copy of Printer_Back: steps wPrinterSendState back one
+PrinterDebug_Back:
 	ld hl, wPrinterSendState
 	dec [hl]
 	ret
 
-; SUGGESTED NAME: PrinterDebug_Quit
-; Debug copy of Printer_Quit: clears status flags and sets send-state done bit 7 (confidence: high)
-Func_ea610:
+; Debug copy of Printer_Quit: clears status flags and sets send-state done bit 7
+PrinterDebug_Quit:
 	xor a
 	ld [wPrinterStatusFlags], a
 	ld hl, wPrinterSendState
 	set 7, [hl]
 	ret
 
-; SUGGESTED NAME: PrinterDebug_Next_
-; Debug copy of Printer_Next_: wrapper that advances the send state (confidence: high)
-Func_ea61a:
-	call Func_ea606
+; Debug copy of Printer_Next_: wrapper that advances the send state
+PrinterDebug_Next_:
+	call PrinterDebug_Next
 	ret
 
-; SUGGESTED NAME: PrinterDebug_Restart
-; Resets wPrinterSendState to 0 to retry from init (cf. Printer_LoopBack, which uses 1) (confidence: high)
-Func_ea61e:
+; Resets wPrinterSendState to 0 to retry from init (cf. Printer_LoopBack, which uses 1)
+PrinterDebug_Restart:
 	xor a
 	ld [wPrinterSendState], a
 	ret
 
-; SUGGESTED NAME: PrinterDebug_InitSerial
-; Debug copy of Printer_InitSerial: sends the init ($01) packet (confidence: high)
-Func_ea623:
-	call Func_ea784
-	ld hl, Data_ea9de
-	call Func_ea76b
+; Debug copy of Printer_InitSerial: sends the init ($01) packet
+PrinterDebug_InitSerial:
+	call PrinterDebug_ResetData
+	ld hl, PrinterDebugInitPacket
+	call PrinterDebug_CopyDataHeader
 	xor a
 	ld [wPrinterDataSize], a
 	ld [wPrinterDataSize + 1], a
 	ld a, [wPrinterQueueLength]
 	ld [wPrinterRowIndex], a
-	call Func_ea606
-	call Func_ea74c
+	call PrinterDebug_Next
+	call PrinterDebug_PrepareToSend
 	ld a, $1
 	ld [wPrinterStatusIndicator], a
 	ret
 
-; SUGGESTED NAME: PrinterDebug_StartTransmittingTilemap
-; Sends 2 tile rows (with sprites composited) as a data ($04) packet; ends when none left (confidence: high)
-Func_ea645:
-	call Func_ea784
+; Sends 2 tile rows (with sprites composited) as a data ($04) packet; ends when none left
+PrinterDebug_StartTransmittingTilemap:
+	call PrinterDebug_ResetData
 	ld hl, wPrinterRowIndex
 	ld a, [hl]
 	and a
-	jr z, Func_ea671
-	ld hl, Data_ea9ea
-	call Func_ea76b
+	jr z, PrinterDebug_EndTilemapTransmission
+	ld hl, PrinterDebugDataPacket
+	call PrinterDebug_CopyDataHeader
 	call PrinterDebug_PrepOAMForPrinting
 	ld a, $80
 	ld [wPrinterDataSize], a
 	ld a, $2
 	ld [wPrinterDataSize + 1], a
-	call Func_ea7a2
-	call Func_ea606
-	call Func_ea74c
+	call PrinterDebug_ComputeChecksum
+	call PrinterDebug_Next
+	call PrinterDebug_PrepareToSend
 	ld a, $2
 	ld [wPrinterStatusIndicator], a
 	ret
 
-; SUGGESTED NAME: PrinterDebug_EndTilemapTransmission
-; Debug copy: sends the empty data ($04) packet that ends image transfer (confidence: high)
-Func_ea671:
+; Debug copy: sends the empty data ($04) packet that ends image transfer
+PrinterDebug_EndTilemapTransmission:
 	ld a, $6
 	ld [wPrinterSendState], a
-	ld hl, Data_ea9f0
-	call Func_ea76b
+	ld hl, PrinterDebugEndDataPacket
+	call PrinterDebug_CopyDataHeader
 	xor a
 	ld [wPrinterDataSize], a
 	ld [wPrinterDataSize + 1], a
-	call Func_ea606
-	call Func_ea74c
+	call PrinterDebug_Next
+	call PrinterDebug_PrepareToSend
 	ret
 
-; SUGGESTED NAME: PrinterDebug_SignalSendHeader
-; Debug copy: sends the print ($02) packet with its 4-byte parameters (confidence: high)
-Func_ea68a:
-	call Func_ea784
-	ld hl, Data_ea9e4
-	call Func_ea76b
-	call Func_ea7d2
+; Debug copy: sends the print ($02) packet with its 4-byte parameters
+PrinterDebug_SignalSendHeader:
+	call PrinterDebug_ResetData
+	ld hl, PrinterDebugPrintPacket
+	call PrinterDebug_CopyDataHeader
+	call PrinterDebug_StageHeaderForSend
 	ld a, $4
 	ld [wPrinterDataSize], a
 	ld a, $0
 	ld [wPrinterDataSize + 1], a
-	call Func_ea7a2
-	call Func_ea606
-	call Func_ea74c
+	call PrinterDebug_ComputeChecksum
+	call PrinterDebug_Next
+	call PrinterDebug_PrepareToSend
 	ld a, $3
 	ld [wPrinterStatusIndicator], a
 	ret
 
-; SUGGESTED NAME: PrinterDebug_WaitSerial
-; Debug copy of Printer_WaitSerial: waits 6 frames then advances the send state (confidence: high)
-Func_ea6af:
+; Debug copy of Printer_WaitSerial: waits 6 frames then advances the send state
+PrinterDebug_WaitSerial:
 	ld hl, wPrinterSerialFrameDelay
 	inc [hl]
 	ld a, [hl]
@@ -386,12 +373,11 @@ Func_ea6af:
 	ret c
 	xor a
 	ld [hl], a
-	call Func_ea606
+	call PrinterDebug_Next
 	ret
 
-; SUGGESTED NAME: PrinterDebug_WaitSerialAndLoopBack2
-; Waits 6 frames, decrements rows left, and goes back two states to send next rows (confidence: high)
-Func_ea6bd:
+; Waits 6 frames, decrements rows left, and goes back two states to send next rows
+PrinterDebug_WaitSerialAndLoopBack2:
 	ld hl, wPrinterSerialFrameDelay
 	inc [hl]
 	ld a, [hl]
@@ -401,14 +387,13 @@ Func_ea6bd:
 	ld [hl], a
 	ld hl, wPrinterRowIndex
 	dec [hl]
-	call Func_ea60b
-	call Func_ea60b
+	call PrinterDebug_Back
+	call PrinterDebug_Back
 	ret
 
-; SUGGESTED NAME: PrinterDebug_CheckConnectionStatus
-; Checks printer reply ($81 + no errors) after init; else jumps to the retry states (confidence: high)
-Func_ea6d2:
-	call Func_ea742
+; Checks printer reply ($81 + no errors) after init; else jumps to the retry states
+PrinterDebug_CheckConnectionStatus:
+	call PrinterDebug_CheckSerialBusy
 	ret c
 	ld a, [wPrinterHandshake]
 	cp $ff
@@ -425,7 +410,7 @@ Func_ea6d2:
 	jr nz, .asm_ea6fb
 	ld hl, wPrinterConnectionOpen
 	set 1, [hl]
-	call Func_ea606
+	call PrinterDebug_Next
 	ret
 
 .asm_ea6fb
@@ -433,10 +418,9 @@ Func_ea6d2:
 	ld [wPrinterSendState], a
 	ret
 
-; SUGGESTED NAME: PrinterDebug_TransmissionLoop
-; Waits for packet reply; advances, re-sends if busy, or goes to error wait on error (confidence: high)
-Func_ea701:
-	call Func_ea742
+; Waits for packet reply; advances, re-sends if busy, or goes to error wait on error
+PrinterDebug_TransmissionLoop:
+	call PrinterDebug_CheckSerialBusy
 	ret c
 	ld a, [wPrinterStatusFlags]
 	and $f0
@@ -444,11 +428,11 @@ Func_ea701:
 	ld a, [wPrinterStatusFlags]
 	and $1
 	jr nz, .asm_ea717
-	call Func_ea606
+	call PrinterDebug_Next
 	ret
 
 .asm_ea717
-	call Func_ea60b
+	call PrinterDebug_Back
 	ret
 
 .asm_ea71b
@@ -456,24 +440,21 @@ Func_ea701:
 	ld [wPrinterSendState], a
 	ret
 
-; SUGGESTED NAME: PrinterDebug_WaitUntilFinished
-; Waits until the printer reports no errors and not printing, then advances (confidence: high)
-Func_ea721:
-	call Func_ea742
+; Waits until the printer reports no errors and not printing, then advances
+PrinterDebug_WaitUntilFinished:
+	call PrinterDebug_CheckSerialBusy
 	ret c
 	ld a, [wPrinterStatusFlags]
 	and $f3
 	ret nz
-	call Func_ea606
+	call PrinterDebug_Next
 	ret
 
-; SUGGESTED NAME: PrinterDebug_WaitLoopBack
-; Advances state, then falls into PrinterDebug_WaitLoopBack_ (confidence: high)
-Func_ea72f:
-	call Func_ea606
-; SUGGESTED NAME: PrinterDebug_WaitLoopBack_
-; Waits until idle with no error bits, then resets send state to 0 to retry (confidence: high)
-Func_ea732:
+; Advances state, then falls into PrinterDebug_WaitLoopBack_
+PrinterDebug_WaitLoopBack:
+	call PrinterDebug_Next
+; Waits until idle with no error bits, then resets send state to 0 to retry
+PrinterDebug_WaitLoopBack_:
 	ld a, [wPrinterOpcode]
 	and a
 	ret nz
@@ -484,9 +465,8 @@ Func_ea732:
 	ld [wPrinterSendState], a
 	ret
 
-; SUGGESTED NAME: PrinterDebug_CheckSerialBusy
-; Returns carry if a serial packet is still being sent (wPrinterOpcode nonzero) (confidence: high)
-Func_ea742:
+; Returns carry if a serial packet is still being sent (wPrinterOpcode nonzero)
+PrinterDebug_CheckSerialBusy:
 	ld a, [wPrinterOpcode]
 	and a
 	jr nz, .asm_ea74a
@@ -497,9 +477,8 @@ Func_ea742:
 	scf
 	ret
 
-; SUGGESTED NAME: PrinterDebug_PrepareToSend
-; Debug copy of Printer_PrepareToSend: starts a packet by sending magic byte $88 (confidence: high)
-Func_ea74c:
+; Debug copy of Printer_PrepareToSend: starts a packet by sending magic byte $88
+PrinterDebug_PrepareToSend:
 .asm_ea74c
 	ld a, [wPrinterOpcode]
 	and a
@@ -517,9 +496,8 @@ Func_ea74c:
 	ldh [rSC], a
 	ret
 
-; SUGGESTED NAME: PrinterDebug_CopyDataHeader
-; Debug copy of CopyPrinterDataHeader: copies a 6-byte packet header/checksum (confidence: high)
-Func_ea76b:
+; Debug copy of CopyPrinterDataHeader: copies a 6-byte packet header/checksum
+PrinterDebug_CopyDataHeader:
 	ld a, [hli]
 	ld [wPrinterDataHeader], a
 	ld a, [hli]
@@ -534,9 +512,8 @@ Func_ea76b:
 	ld [wPrinterDataHeader + 5], a
 	ret
 
-; SUGGESTED NAME: PrinterDebug_ResetData
-; Debug copy of ResetPrinterData: clears header, checksum, size, and send buffer (confidence: high)
-Func_ea784:
+; Debug copy of ResetPrinterData: clears header, checksum, size, and send buffer
+PrinterDebug_ResetData:
 	xor a
 	ld hl, wPrinterDataHeader
 	ld [hli], a
@@ -554,28 +531,26 @@ Func_ea784:
 	call FillMemory
 	ret
 
-; SUGGESTED NAME: PrinterDebug_ComputeChecksum
-; Debug copy of ComputePrinterChecksum: sums header and data into the checksum (confidence: high)
-Func_ea7a2:
+; Debug copy of ComputePrinterChecksum: sums header and data into the checksum
+PrinterDebug_ComputeChecksum:
 	ld hl, $0
 	ld bc, $4
 	ld de, wPrinterDataHeader
-	call Func_ea7c5
+	call PrinterDebug_AddToChecksum
 	ld a, [wPrinterDataSize]
 	ld c, a
 	ld a, [wPrinterDataSize + 1]
 	ld b, a
 	ld de, wPrinterSendDataSource1
-	call Func_ea7c5
+	call PrinterDebug_AddToChecksum
 	ld a, l
 	ld [wPrinterDataHeader + 4], a
 	ld a, h
 	ld [wPrinterDataHeader + 5], a
 	ret
 
-; SUGGESTED NAME: PrinterDebug_AddToChecksum
-; Adds bc bytes at de into the 16-bit sum in hl (confidence: high)
-Func_ea7c5:
+; Adds bc bytes at de into the 16-bit sum in hl
+PrinterDebug_AddToChecksum:
 .asm_ea7c5
 	ld a, [de]
 	inc de
@@ -590,17 +565,16 @@ Func_ea7c5:
 	jr nz, .asm_ea7c5
 	ret
 
-; SUGGESTED NAME: PrinterDebug_StageHeaderForSend
-; Fills print packet params: 1 sheet, margins (wcae2), palette $e4, exposure setting (confidence: high)
-Func_ea7d2:
+; Fills print packet params: 1 sheet, margins (wPrinterMargins), palette $e4, exposure setting
+PrinterDebug_StageHeaderForSend:
 	ld a, $1
 	ld [wPrinterSendDataSource1], a
-	ld a, [wcae2]
+	ld a, [wPrinterMargins]
 	ld [wPrinterStatusReceived], a
 	ld a, $e4
-	ld [wc6f2], a
+	ld [wPrinterPrintCmdPalette], a
 	ld a, [wPrinterSettingsTempCopy]
-	ld [wc6f3], a
+	ld [wPrinterPrintCmdExposure], a
 	ret
 
 PrinterDebug_PrepOAMForPrinting:
@@ -658,7 +632,7 @@ PrinterDebug_PrepOAMForPrinting:
 	ret
 
 .UnnecessaryCall:
-	ld hl, wcbdc
+	ld hl, wPrinterOAMTileBuffer
 	ld bc, $20
 	xor a
 	call FillMemory
@@ -731,7 +705,7 @@ PrinterDebug_PrepOAMForPrinting:
 	and $f
 	or $80
 	ld d, a
-	ld hl, wcbdc
+	ld hl, wPrinterOAMTileBuffer
 	lb bc, BANK(.GetVRAMAddress), $1
 	call CopyVideoData
 	pop hl
@@ -782,7 +756,7 @@ PrinterDebug_PrepOAMForPrinting:
 	ret
 
 .XFlip:
-	ld hl, wcbdc
+	ld hl, wPrinterOAMTileBuffer
 	ld c, 16
 .byte_loop
 	ld d, [hl]
@@ -799,8 +773,8 @@ PrinterDebug_PrepOAMForPrinting:
 	ret
 
 .YFlip:
-	ld hl, wcbdc
-	ld de, wcbea
+	ld hl, wPrinterOAMTileBuffer
+	ld de, wPrinterOAMTileBufferLastRow
 	ld c, $4
 .swap_loop
 	ld b, [hl]
@@ -823,8 +797,8 @@ PrinterDebug_PrepOAMForPrinting:
 
 .ApplyObjectPalettes:
 	push hl
-	ld hl, wcbdc
-	ld de, wcbec
+	ld hl, wPrinterOAMTileBuffer
+	ld de, wPrinterOAMTileRemapBuffer
 	ld a, 8
 .loop1
 	push af
@@ -971,7 +945,7 @@ PrinterDebug_PrepOAMForPrinting:
 	add hl, bc
 	ld e, l
 	ld d, h
-	ld hl, wcbec
+	ld hl, wPrinterOAMTileRemapBuffer
 	ld c, $8
 .coord_copy_loop
 	call .GetBitMask
@@ -1005,33 +979,27 @@ PrinterDebug_PrepOAMForPrinting:
 	pop hl
 	ret
 
-; SUGGESTED NAME: PrinterDebugInitPacket
-; Debug copy of PrinterDataPacket1: init ($01) packet header and checksum (confidence: high)
-Data_ea9de:
+; Debug copy of PrinterDataPacket1: init ($01) packet header and checksum
+PrinterDebugInitPacket:
 	db  1, 0, $00, 0
 	dw 1
-; SUGGESTED NAME: PrinterDebugPrintPacket
-; Debug copy of PrinterDataPacket2: print ($02) packet header, 4 data bytes (confidence: high)
-Data_ea9e4:
+; Debug copy of PrinterDataPacket2: print ($02) packet header, 4 data bytes
+PrinterDebugPrintPacket:
 	db  2, 0, $04, 0
 	dw 0
-; SUGGESTED NAME: PrinterDebugDataPacket
-; Debug copy of PrinterDataPacket3: data ($04) packet header, $280 data bytes (confidence: high)
-Data_ea9ea:
+; Debug copy of PrinterDataPacket3: data ($04) packet header, $280 data bytes
+PrinterDebugDataPacket:
 	db  4, 0, $80, 2
 	dw 0
-; SUGGESTED NAME: PrinterDebugEndDataPacket
-; Debug copy of PrinterDataPacket4: empty data ($04) packet that ends the image (confidence: high)
-Data_ea9f0:
+; Debug copy of PrinterDataPacket4: empty data ($04) packet that ends the image
+PrinterDebugEndDataPacket:
 	db  4, 0, $00, 0
 	dw 4
-; SUGGESTED NAME: PrinterDebugBreakPacket
-; Unused break ($08) packet header and checksum (confidence: high)
-Data_ea9f6:
+; Unused break ($08) packet header and checksum
+PrinterDebugBreakPacket:
 	db  8, 0, $00, 0
 	dw 8
-; SUGGESTED NAME: PrinterDebugStatusPacket
-; Unused status ($0F) packet header and checksum (confidence: high)
-Data_ea9fc:
+; Unused status ($0F) packet header and checksum
+PrinterDebugStatusPacket:
 	db 15, 0, $00, 0
 	dw 15

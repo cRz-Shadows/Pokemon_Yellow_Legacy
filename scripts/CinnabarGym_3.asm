@@ -17,10 +17,9 @@ CinnabarGymPrintGymGuideText::
 	text_far _CinnabarGymGymGuideBeatBlaineText
 	text_end
 
-; SUGGESTED NAME: PrintCinnabarGymTrainerQuizRemark
-; Prints quiz remark e from CinnabarGymTrainerQuizRemarkTexts (confidence: high)
-Func_f2150::
-	ld hl, TextPointers_f215d
+; Prints quiz remark e from CinnabarGymTrainerQuizRemarkTexts
+PrintCinnabarGymTrainerQuizRemark::
+	ld hl, CinnabarGymTrainerQuizRemarkTexts
 	ld d, 0
 	add hl, de
 	add hl, de
@@ -29,48 +28,41 @@ Func_f2150::
 	ld l, a
 	jp PrintText
 
-; SUGGESTED NAME: CinnabarGymTrainerQuizRemarkTexts
-; Remarks Super Nerds 2-7 make when talked to before their quiz gate is solved (confidence: high)
-TextPointers_f215d:
-	dw CinnabarGymText_f2169
-	dw CinnabarGymText_f216e
-	dw CinnabarGymText_f2173
-	dw CinnabarGymText_f2178
-	dw CinnabarGymText_f217d
-	dw CinnabarGymText_f2182
+; Remarks Super Nerds 2-7 make when talked to before their quiz gate is solved
+CinnabarGymTrainerQuizRemarkTexts:
+	dw CinnabarGymSuperNerd2QuizRemarkText
+	dw CinnabarGymSuperNerd3QuizRemarkText
+	dw CinnabarGymSuperNerd4QuizRemarkText
+	dw CinnabarGymSuperNerd5QuizRemarkText
+	dw CinnabarGymSuperNerd6QuizRemarkText
+	dw CinnabarGymSuperNerd7QuizRemarkText
 
-; SUGGESTED NAME: CinnabarGymSuperNerd2QuizRemarkText
-; Super Nerd 2: "This GYM is also known as the QUIZ GYM..." (confidence: high)
-CinnabarGymText_f2169:
+; Super Nerd 2: "This GYM is also known as the QUIZ GYM..."
+CinnabarGymSuperNerd2QuizRemarkText:
 	text_far _CinnabarGymText_1
 	text_end
 
-; SUGGESTED NAME: CinnabarGymSuperNerd3QuizRemarkText
-; Super Nerd 3: "Think you can do it?" (confidence: high)
-CinnabarGymText_f216e:
+; Super Nerd 3: "Think you can do it?"
+CinnabarGymSuperNerd3QuizRemarkText:
 	text_far _CinnabarGymText_2
 	text_end
 
-; SUGGESTED NAME: CinnabarGymSuperNerd4QuizRemarkText
-; Super Nerd 4: "This one's tricky!" (confidence: high)
-CinnabarGymText_f2173:
+; Super Nerd 4: "This one's tricky!"
+CinnabarGymSuperNerd4QuizRemarkText:
 	text_far _CinnabarGymText_3
 	text_end
 
-; SUGGESTED NAME: CinnabarGymSuperNerd5QuizRemarkText
-; Super Nerd 5: "#MON enjoy quizzes too!" (confidence: high)
-CinnabarGymText_f2178:
+; Super Nerd 5: "#MON enjoy quizzes too!"
+CinnabarGymSuperNerd5QuizRemarkText:
 	text_far _CinnabarGymText_4
 	text_end
 
-; SUGGESTED NAME: CinnabarGymSuperNerd6QuizRemarkText
-; Super Nerd 6: "I like it here at QUIZ GYM." (confidence: high)
-CinnabarGymText_f217d:
+; Super Nerd 6: "I like it here at QUIZ GYM."
+CinnabarGymSuperNerd6QuizRemarkText:
 	text_far _CinnabarGymText_5
 	text_end
 
-; SUGGESTED NAME: CinnabarGymSuperNerd7QuizRemarkText
-; Super Nerd 7: "This is the last question." (confidence: high)
-CinnabarGymText_f2182:
+; Super Nerd 7: "This is the last question."
+CinnabarGymSuperNerd7QuizRemarkText:
 	text_far _CinnabarGymText_6
 	text_end

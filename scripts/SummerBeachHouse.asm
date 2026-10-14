@@ -13,7 +13,7 @@ SummerBeachHouse_TextPointers:
 
 SummerBeachHouseSurfinDudeText:
 	text_asm
-	ld a, [wd472]
+	ld a, [wPikachuPartyFlags]
 	vc_patch Bypass_need_Pikachu_with_Surf_for_minigame
 IF DEF (_YELLOW_VC)
 	bit 7, a
@@ -81,7 +81,7 @@ SummerBeachHousePikachuText:
 SummerBeachHousePoster1Text:
 	text_asm
 	ld hl, .SummerBeachHousePoster1Text2
-	ld a, [wd472]
+	ld a, [wPikachuPartyFlags]
 	bit 6, a
 	jr z, .next
 	ld hl, .SummerBeachHousePoster1Text1
@@ -99,7 +99,7 @@ SummerBeachHousePoster1Text:
 SummerBeachHousePoster2Text:
 	text_asm
 	ld hl, .SummerBeachHousePoster2Text2
-	ld a, [wd472]
+	ld a, [wPikachuPartyFlags]
 	bit 6, a
 	jr z, .next
 	ld hl, .SummerBeachHousePoster2Text1
@@ -117,7 +117,7 @@ SummerBeachHousePoster2Text:
 SummerBeachHousePoster3Text:
 	text_asm
 	ld hl, .SummerBeachHousePoster3Text2
-	ld a, [wd472]
+	ld a, [wPikachuPartyFlags]
 	bit 6, a
 	jr z, .next
 	ld hl, .SummerBeachHousePoster3Text1
@@ -136,7 +136,7 @@ SummerBeachHousePrinterText:
 	text_asm
 	ld a, 1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
-	ld a, [wd472]
+	ld a, [wPikachuPartyFlags]
 	vc_patch Bypass_need_Pikachu_with_Surf_for_high_score
 IF DEF(_YELLOW_VC)
 	bit 7, a
@@ -165,7 +165,7 @@ ENDC
 	call YesNoChoice
 	ld a, [wCurrentMenuItem]
 	and a
-	jp z, Func_f23d0
+	jp z, SummerBeachHousePrintHighScoreScript
 	call SaveScreenTilesToBuffer2
 	ld hl, wStatusFlags5
 	set 6, [hl]

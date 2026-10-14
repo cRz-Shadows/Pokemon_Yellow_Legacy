@@ -355,7 +355,7 @@ ComputePrinterChecksum:
 Printer_StageHeaderForSend:
 	ld a, $1
 	ld [wPrinterSendDataSource1], a
-	ld a, [wcae2]
+	ld a, [wPrinterMargins]
 	ld [wPrinterSendDataSource1 + 1], a
 	ld a, %11100100
 	ld [wPrinterSendDataSource1 + 2], a

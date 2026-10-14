@@ -140,7 +140,7 @@ CalculatePikachuPlacementCoords::
 	inc hl
 	ld [hl], $fe
 	push hl
-	ld hl, wd472
+	ld hl, wPikachuPartyFlags
 	set 5, [hl]
 	pop hl
 	ret
@@ -193,11 +193,11 @@ SetPikachuSpawnOutside::
 	cp ROCK_TUNNEL_1F
 	jr z, .rock_tunnel_1
 	ld a, [wCurMap]
-	ld hl, Pointer_fc64b
+	ld hl, PikachuSpawnBelowPlayerMaps
 	call Pikachu_IsInArray ; similar to IsInArray, but not the same
 	jr c, .map_list_1
 	ld a, [wCurMap]
-	ld hl, Pointer_fc653
+	ld hl, PikachuSpawnOnPlayerIfFacingDownMaps
 	call Pikachu_IsInArray
 	jr nc, .not_map_list_2
 	ld a, [wSpritePlayerStateData1FacingDirection]
@@ -234,9 +234,8 @@ SetPikachuSpawnOutside::
 	ld [wPikachuSpawnState], a
 	ret
 
-; SUGGESTED NAME: PikachuSpawnBelowPlayerMaps
-; Maps where SetPikachuSpawnOutside puts Pikachu one tile below the player (state 4) (confidence: high)
-Pointer_fc64b::
+; Maps where SetPikachuSpawnOutside puts Pikachu one tile below the player (state 4)
+PikachuSpawnBelowPlayerMaps::
 	db VICTORY_ROAD_2F
 	db ROUTE_7_GATE
 	db ROUTE_8_GATE
@@ -246,9 +245,8 @@ Pointer_fc64b::
 	db ROUTE_11_GATE_1F
 	db $ff
 
-; SUGGESTED NAME: PikachuSpawnOnPlayerIfFacingDownMaps
-; Maps where, if player faces down, Pikachu spawns on player's tile facing down (state 3) (confidence: high)
-Pointer_fc653::
+; Maps where, if player faces down, Pikachu spawns on player's tile facing down (state 3)
+PikachuSpawnOnPlayerIfFacingDownMaps::
 	db VIRIDIAN_FOREST_NORTH_GATE
 	db CERULEAN_BADGE_HOUSE
 	db CERULEAN_TRASHED_HOUSE
@@ -265,7 +263,7 @@ SetPikachuSpawnWarpPad::
 	cp VIRIDIAN_FOREST_SOUTH_GATE
 	jr z, .viridian_forest_entrance
 	ld a, [wCurMap]
-	ld hl, Pointer_fc68e
+	ld hl, PikachuSpawnRightOfPlayerWarpMaps
 	call Pikachu_IsInArray
 	jr c, .in_array
 	jr .not_in_array
@@ -292,9 +290,8 @@ SetPikachuSpawnWarpPad::
 	ld [wPikachuSpawnState], a
 	ret
 
-; SUGGESTED NAME: PikachuSpawnRightOfPlayerWarpMaps
-; Maps where SetPikachuSpawnWarpPad uses spawn state 1 (Pikachu right of player) (confidence: high)
-Pointer_fc68e::
+; Maps where SetPikachuSpawnWarpPad uses spawn state 1 (Pikachu right of player)
+PikachuSpawnRightOfPlayerWarpMaps::
 	db VIRIDIAN_FOREST
 	db SAFARI_ZONE_CENTER_REST_HOUSE
 	db SAFARI_ZONE_WEST_REST_HOUSE
@@ -368,12 +365,12 @@ SpawnPikachu_::
 	ld hl, wSpritePikachuStateData1MovementStatus - wSpritePikachuStateData1
 	add hl, bc
 	bit 7, [hl]
-	jp nz, Func_fc745
+	jp nz, PikachuFollow_FacePlayer
 	ld a, [wFontLoaded]
 	bit 0, a
-	jp nz, Func_fc76a
+	jp nz, PikachuFollow_Pause
 	call CheckPikachuFollowingPlayer
-	jp nz, Func_fc76a
+	jp nz, PikachuFollow_Pause
 	ld a, [hl]
 	and $7f
 	cp $a
@@ -383,26 +380,25 @@ SpawnPikachu_::
 	add a
 	ld e, a
 	ld d, 0
-	ld hl, PointerTable_fc710
+	ld hl, PikachuMovementStatusJumptable
 	add hl, de
 	ld a, [hli]
 	ld h, [hl]
 	ld l, a
 	jp hl
 
-; SUGGESTED NAME: PikachuMovementStatusJumptable
-; Jumptable of follow-sprite handlers indexed by Pikachu's movement status (0-9) (confidence: high)
-PointerTable_fc710:
-	dw Func_fc793
-	dw Func_fc7aa
-	dw Func_fc803
-	dw asm_fc9c3
-	dw asm_fca1c
-	dw asm_fc9ee
-	dw asm_fc87f
-	dw asm_fc904
-	dw asm_fc937
-	dw asm_fc969
+; Jumptable of follow-sprite handlers indexed by Pikachu's movement status (0-9)
+PikachuMovementStatusJumptable:
+	dw PikachuFollow_Init
+	dw PikachuFollow_StartNextStep
+	dw PikachuFollow_Idle
+	dw NormalPikachuFollow_Continue
+	dw LedgeHopPikachuFollow_Continue
+	dw FastPikachuFollow_Continue
+	dw PikachuIdle_Hop
+	dw PikachuIdle_WalkInPlace
+	dw PikachuIdle_Shuffle
+	dw PikachuIdle_Spin
 	dw .nop
 
 .nop:
@@ -431,9 +427,8 @@ TrySpawnPikachu:
 	xor a
 	ret
 
-; SUGGESTED NAME: PikachuFollow_FacePlayer
-; Clears movement status bit 7 and, if not following, turns Pikachu to face the player (confidence: medium)
-Func_fc745:
+; Clears movement status bit 7 and, if not following, turns Pikachu to face the player
+PikachuFollow_FacePlayer:
 	ld hl, wSpritePikachuStateData1MovementStatus - wSpritePikachuStateData1
 	add hl, bc
 	res 7, [hl]
@@ -457,16 +452,15 @@ Func_fc745:
 	call UpdatePikachuWalkingSprite
 	ret
 
-; SUGGESTED NAME: PikachuFollow_Pause
-; Text open/not following: reset anim, re-place sprite, set status 1, rebuild follow buffer (confidence: medium)
-Func_fc76a:
+; Text open/not following: reset anim, re-place sprite, set status 1, rebuild follow buffer
+PikachuFollow_Pause:
 	xor a
 	ld hl, wSpritePikachuStateData1IntraAnimFrameCounter - wSpritePikachuStateData1
 	add hl, bc
 	ld [hli], a
 	ld [hl], a
 	call UpdatePikachuWalkingSprite
-	call Func_fc82e
+	call CheckPlayerMidStep
 	jr c, .skip
 	push bc
 	callfar InitializeSpriteScreenPosition
@@ -481,9 +475,8 @@ Func_fc76a:
 	call RefreshPikachuFollow
 	ret
 
-; SUGGESTED NAME: PikachuFollow_Init
-; Status 0: build follow buffer, init sprite screen position, set status 1 (ready) (confidence: high)
-Func_fc793:
+; Status 0: build follow buffer, init sprite screen position, set status 1 (ready)
+PikachuFollow_Init:
 	call RefreshPikachuFollow
 	push bc
 	callfar InitializeSpriteScreenPosition
@@ -495,17 +488,16 @@ Func_fc793:
 	ld [hl], $1
 	ret
 
-; SUGGESTED NAME: PikachuFollow_StartNextStep
-; Status 1: dequeue a follow command and start a normal, fast or ledge-hop step (else idle) (confidence: high)
-Func_fc7aa:
-	call Func_fcc92
-	jp c, Func_fc803
+; Status 1: dequeue a follow command and start a normal, fast or ledge-hop step (else idle)
+PikachuFollow_StartNextStep:
+	call DequeuePikachuFollowCommand
+	jp c, PikachuFollow_Idle
 	dec a
 	ld l, a
 	ld h, $0
 	add hl, hl
 	add hl, hl
-	ld de, Pointer_fc7e3
+	ld de, PikachuFollowCommandStepData
 	add hl, de
 	ld d, h
 	ld e, l
@@ -529,7 +521,7 @@ Func_fc7aa:
 	add hl, bc
 	ld [hl], a
 	cp $4
-	jp z, Func_fca0a
+	jp z, LedgeHopPikachuFollow
 	ld a, [hJoyHeld]
 	and B_BUTTON
 	jp nz, FastPikachuFollow
@@ -537,9 +529,8 @@ Func_fc7aa:
 	jp c, FastPikachuFollow
 	jp NormalPikachuFollow
 
-; SUGGESTED NAME: PikachuFollowCommandStepData
-; Per follow command 1-8: facing, X step, Y step, new movement status (3=walk, 4=hop) (confidence: high)
-Pointer_fc7e3:
+; Per follow command 1-8: facing, X step, Y step, new movement status (3=walk, 4=hop)
+PikachuFollowCommandStepData:
 	db  0,  0
 	db  1,  3
 	db  4,  0
@@ -557,10 +548,9 @@ Pointer_fc7e3:
 	db 12,  1
 	db  0,  4
 
-; SUGGESTED NAME: PikachuFollow_Idle
-; No queued step: periodically look a random way, or start a random idle animation (confidence: medium)
-Func_fc803:
-	call Func_fcae2
+; No queued step: periodically look a random way, or start a random idle animation
+PikachuFollow_Idle:
+	call HidePikachuIfOnPlayerTile
 	ret c
 	ld hl, wSpritePikachuStateData2WalkAnimationCounter - wSpritePikachuStateData1
 	add hl, bc
@@ -570,7 +560,7 @@ Func_fc803:
 	call GetPikachuFollowCommand
 	pop hl
 	cp $5
-	jr nc, Func_fc842
+	jr nc, PikachuIdle_StartRandomAnimation
 	ld [hl], $20
 	call Random
 	and $c
@@ -586,18 +576,16 @@ Func_fc803:
 	call UpdatePikachuWalkingSprite
 	ret
 
-; SUGGESTED NAME: CheckPlayerMidStep
-; Returns carry if the player is mid-step (wWalkCounter nonzero) (confidence: high)
-Func_fc82e:
+; Returns carry if the player is mid-step (wWalkCounter nonzero)
+CheckPlayerMidStep:
 	ld a, [wWalkCounter]
 	and a
 	ret z
 	scf
 	ret
 
-; SUGGESTED NAME: PikachuIdle_EndAnimation
-; Ends an idle animation: set counter to $10 and movement status back to 1 (confidence: high)
-Func_fc835:
+; Ends an idle animation: set counter to $10 and movement status back to 1
+PikachuIdle_EndAnimation:
 	ld hl, wSpritePikachuStateData2WalkAnimationCounter - wSpritePikachuStateData1
 	add hl, bc
 	ld [hl], $10
@@ -606,9 +594,8 @@ Func_fc835:
 	ld [hl], $1
 	ret
 
-; SUGGESTED NAME: PikachuIdle_StartRandomAnimation
-; Picks one of four idle animations at random (hop, walk in place, shuffle, spin) (confidence: high)
-Func_fc842:
+; Picks one of four idle animations at random (hop, walk in place, shuffle, spin)
+PikachuIdle_StartRandomAnimation:
 	ld hl, $0
 	push af
 	call Random
@@ -616,7 +603,7 @@ Func_fc842:
 	and %11
 	ld e, a
 	ld d, $0
-	ld hl, PointerTable_fc85a
+	ld hl, PikachuIdleAnimationJumptable
 	add hl, de
 	add hl, de
 	ld a, [hli]
@@ -625,17 +612,15 @@ Func_fc842:
 	pop af
 	jp hl
 
-; SUGGESTED NAME: PikachuIdleAnimationJumptable
-; Jumptable of the four idle-animation start routines (confidence: high)
-PointerTable_fc85a:
-	dw Func_fc862
-	dw Func_fc8f8
-	dw Func_fc92b
-	dw Func_fc95d
+; Jumptable of the four idle-animation start routines
+PikachuIdleAnimationJumptable:
+	dw PikachuIdle_StartHop
+	dw PikachuIdle_StartWalkInPlace
+	dw PikachuIdle_StartShuffle
+	dw PikachuIdle_StartSpin
 
-; SUGGESTED NAME: PikachuIdle_StartHop
-; Starts the hop idle animation (status 6, 17 frames), clearing the pixel offsets (confidence: high)
-Func_fc862:
+; Starts the hop idle animation (status 6, 17 frames), clearing the pixel offsets
+PikachuIdle_StartHop:
 	dec a
 	add a
 	add a
@@ -647,20 +632,19 @@ Func_fc862:
 	add hl, bc
 	ld [hl], $6
 	xor a
-	ld [wd432], a
-	ld [wd433], a
+	ld [wPikachuHopYOffset], a
+	ld [wPikachuHopXOffset], a
 	ld hl, wSpritePikachuStateData2WalkAnimationCounter - wSpritePikachuStateData1
 	add hl, bc
 	ld [hl], $11
-; SUGGESTED NAME: PikachuIdle_Hop
-; Status 6: moves Pikachu's pixel position along the hop offset table each frame (confidence: high)
-asm_fc87f:
-	ld a, [wd432]
+; Status 6: moves Pikachu's pixel position along the hop offset table each frame
+PikachuIdle_Hop:
+	ld a, [wPikachuHopYOffset]
 	ld e, a
-	ld a, [wd433]
+	ld a, [wPikachuHopXOffset]
 	ld d, a
-	call Func_fc82e
-	jr c, Func_fc8c7
+	call CheckPlayerMidStep
+	jr c, PikachuIdle_AbortHop
 	call SetPikachuOverworldStateFlag2
 	ld hl, wSpritePikachuStateData1YPixels - wSpritePikachuStateData1
 	add hl, bc
@@ -677,17 +661,17 @@ asm_fc87f:
 	ld a, [hl]
 	dec a
 	add a
-	add LOW(Pointer_fc8d6)
+	add LOW(PikachuIdleHopOffsets)
 	ld l, a
-	ld a, HIGH(Pointer_fc8d6)
+	ld a, HIGH(PikachuIdleHopOffsets)
 	adc 0
 	ld h, a
 	ld a, [hli]
-	ld [wd432], a
+	ld [wPikachuHopYOffset], a
 	add e
 	ld e, a
 	ld a, [hl]
-	ld [wd433], a
+	ld [wPikachuHopXOffset], a
 	add d
 	ld d, a
 	ld hl, wSpritePikachuStateData1YPixels - wSpritePikachuStateData1
@@ -700,11 +684,10 @@ asm_fc87f:
 	add hl, bc
 	dec [hl]
 	ret nz
-	jp Func_fc835
+	jp PikachuIdle_EndAnimation
 
-; SUGGESTED NAME: PikachuIdle_AbortHop
-; Player started moving mid-hop: undo the current pixel offset and end the animation (confidence: high)
-Func_fc8c7:
+; Player started moving mid-hop: undo the current pixel offset and end the animation
+PikachuIdle_AbortHop:
 	ld hl, wSpritePikachuStateData1YPixels - wSpritePikachuStateData1
 	add hl, bc
 	ld a, [hl]
@@ -715,11 +698,10 @@ Func_fc8c7:
 	ld a, [hl]
 	sub d
 	ld [hl], a
-	jp Func_fc835
+	jp PikachuIdle_EndAnimation
 
-; SUGGESTED NAME: PikachuIdleHopOffsets
-; (Y, X) pixel offsets for the hop idle animation: two side-to-side hops (confidence: high)
-Pointer_fc8d6:
+; (Y, X) pixel offsets for the hop idle animation: two side-to-side hops
+PikachuIdleHopOffsets:
 	db  0,  0
 	db -2,  1
 	db -4,  2
@@ -738,20 +720,18 @@ Pointer_fc8d6:
 	db -2, -1
 	db  0,  0
 
-; SUGGESTED NAME: PikachuIdle_StartWalkInPlace
-; Starts walk-in-place idle animation (status 7, $30 frames) (confidence: high)
-Func_fc8f8:
+; Starts walk-in-place idle animation (status 7, $30 frames)
+PikachuIdle_StartWalkInPlace:
 	ld hl, wSpritePikachuStateData1MovementStatus - wSpritePikachuStateData1
 	add hl, bc
 	ld [hl], $7
 	ld hl, wSpritePikachuStateData2WalkAnimationCounter - wSpritePikachuStateData1
 	add hl, bc
 	ld [hl], $30
-; SUGGESTED NAME: PikachuIdle_WalkInPlace
-; Status 7: cycles walk frames 0-3 every 8 frames; aborts if player moves (confidence: high)
-asm_fc904:
-	call Func_fc82e
-	jp c, Func_fc835
+; Status 7: cycles walk frames 0-3 every 8 frames; aborts if player moves
+PikachuIdle_WalkInPlace:
+	call CheckPlayerMidStep
+	jp c, PikachuIdle_EndAnimation
 	call SetPikachuOverworldStateFlag2
 	ld hl, wSpritePikachuStateData1IntraAnimFrameCounter - wSpritePikachuStateData1
 	add hl, bc
@@ -772,22 +752,20 @@ asm_fc904:
 	add hl, bc
 	dec [hl]
 	ret nz
-	jp Func_fc835
+	jp PikachuIdle_EndAnimation
 
-; SUGGESTED NAME: PikachuIdle_StartShuffle
-; Starts shuffle idle animation (status 8, $20 frames) (confidence: medium)
-Func_fc92b:
+; Starts shuffle idle animation (status 8, $20 frames)
+PikachuIdle_StartShuffle:
 	ld hl, wSpritePikachuStateData2WalkAnimationCounter - wSpritePikachuStateData1
 	add hl, bc
 	ld [hl], $20
 	ld hl, wSpritePikachuStateData1MovementStatus - wSpritePikachuStateData1
 	add hl, bc
 	ld [hl], $8
-; SUGGESTED NAME: PikachuIdle_Shuffle
-; Status 8: toggles walk frame 0/1 every 8 frames; aborts if player moves (confidence: medium)
-asm_fc937:
-	call Func_fc82e
-	jp c, Func_fc835
+; Status 8: toggles walk frame 0/1 every 8 frames; aborts if player moves
+PikachuIdle_Shuffle:
+	call CheckPlayerMidStep
+	jp c, PikachuIdle_EndAnimation
 	call SetPikachuOverworldStateFlag2
 	ld hl, wSpritePikachuStateData1IntraAnimFrameCounter - wSpritePikachuStateData1
 	add hl, bc
@@ -807,22 +785,20 @@ asm_fc937:
 	add hl, bc
 	dec [hl]
 	ret nz
-	jp Func_fc835
+	jp PikachuIdle_EndAnimation
 
-; SUGGESTED NAME: PikachuIdle_StartSpin
-; Starts spin idle animation (status 9, $20 frames) (confidence: high)
-Func_fc95d:
+; Starts spin idle animation (status 9, $20 frames)
+PikachuIdle_StartSpin:
 	ld hl, wSpritePikachuStateData2WalkAnimationCounter - wSpritePikachuStateData1
 	add hl, bc
 	ld [hl], $20
 	ld hl, wSpritePikachuStateData1MovementStatus - wSpritePikachuStateData1
 	add hl, bc
 	ld [hl], $9
-; SUGGESTED NAME: PikachuIdle_Spin
-; Status 9: turns Pikachu clockwise every 8 frames; aborts if player moves (confidence: high)
-asm_fc969:
-	call Func_fc82e
-	jp c, Func_fc835
+; Status 9: turns Pikachu clockwise every 8 frames; aborts if player moves
+PikachuIdle_Spin:
+	call CheckPlayerMidStep
+	jp c, PikachuIdle_EndAnimation
 	call SetPikachuOverworldStateFlag2
 	ld hl, wSpritePikachuStateData1IntraAnimFrameCounter - wSpritePikachuStateData1
 	add hl, bc
@@ -844,7 +820,7 @@ asm_fc969:
 	add hl, bc
 	dec [hl]
 	ret nz
-	jp Func_fc835
+	jp PikachuIdle_EndAnimation
 
 .TurnClockwise:
 	push hl
@@ -883,9 +859,8 @@ NormalPikachuFollow:
 	add hl, bc
 	ld [hl], $3
 	call AddPikachuStepVector
-; SUGGESTED NAME: NormalPikachuFollow_Continue
-; Status 3: advance a normal-speed follow step (2px/frame, 4 on bike) until done (confidence: high)
-asm_fc9c3:
+; Status 3: advance a normal-speed follow step (2px/frame, 4 on bike) until done
+NormalPikachuFollow_Continue:
 	call TryDoubleAddPikachuStepVectorToScreenPixelCoords
 	call GetPikachuWalkingAnimationSpeed
 	call UpdatePikachuWalkingSprite
@@ -908,9 +883,8 @@ FastPikachuFollow:
 	add hl, bc
 	ld [hl], $5
 	call AddPikachuStepVector
-; SUGGESTED NAME: FastPikachuFollow_Continue
-; Status 5: advance a fast follow step (4px/frame for 4 frames) until done (confidence: high)
-asm_fc9ee:
+; Status 5: advance a fast follow step (4px/frame for 4 frames) until done
+FastPikachuFollow_Continue:
 	call DoubleAddPikachuStepVectorToScreenPixelCoords
 	call GetPikachuWalkingAnimationSpeed
 	call UpdatePikachuWalkingSprite
@@ -925,9 +899,8 @@ asm_fc9ee:
 	ld [hl], $1
 	ret
 
-; SUGGESTED NAME: LedgeHopPikachuFollow
-; Starts a 2-tile ledge hop step (status 4, 8 frames at 4px/frame) (confidence: high)
-Func_fca0a:
+; Starts a 2-tile ledge hop step (status 4, 8 frames at 4px/frame)
+LedgeHopPikachuFollow:
 	ld hl, wSpritePikachuStateData2WalkAnimationCounter - wSpritePikachuStateData1
 	add hl, bc
 	ld [hl], $8
@@ -936,9 +909,8 @@ Func_fca0a:
 	ld [hl], $4
 	call AddPikachuStepVector
 	call AddPikachuStepVector
-; SUGGESTED NAME: LedgeHopPikachuFollow_Continue
-; Status 4: advance the 2-tile ledge hop step until done (confidence: high)
-asm_fca1c:
+; Status 4: advance the 2-tile ledge hop step until done
+LedgeHopPikachuFollow_Continue:
 	call DoubleAddPikachuStepVectorToScreenPixelCoords
 	call GetPikachuWalkingAnimationSpeed
 	call UpdatePikachuWalkingSprite
@@ -1057,7 +1029,7 @@ UpdatePikachuWalkingSprite:
 	ld a, [wFontLoaded]
 	bit 0, a
 	jr z, .normal_get_sprite_index
-	call Func_fcae2
+	call HidePikachuIfOnPlayerTile
 	ret c
 	jr .load_sprite_index
 
@@ -1086,9 +1058,8 @@ UpdatePikachuWalkingSprite:
 	ld [wSpritePikachuStateData1ImageIndex], a
 	ret
 
-; SUGGESTED NAME: HidePikachuIfOnPlayerTile
-; If Pikachu's map coords equal the player's, hide its sprite and return carry (confidence: high)
-Func_fcae2:
+; If Pikachu's map coords equal the player's, hide its sprite and return carry
+HidePikachuIfOnPlayerTile:
 	ld hl, wSpritePikachuStateData2MapY - wSpritePikachuStateData1
 	add hl, bc
 	ld a, [wYCoord]
@@ -1315,35 +1286,33 @@ CheckAbsoluteValueLessThan2:
 	cp $2
 	ret
 
-; SUGGESTED NAME: RecordPlayerStepForPikachu
-; Called when player starts a step: queues matching follow command for Pikachu (confidence: high)
-Func_fcc08::
-	call Func_fcc23
+; Called when player starts a step: queues matching follow command for Pikachu
+RecordPlayerStepForPikachu::
+	call ShouldRecordPikachuFollowCommand
 	ret nc
 	ld a, [wMovementFlags]
 	bit 6, a
 	jr nz, .asm_fcc1b
-	call Func_fcc42
+	call GetPikachuFollowCommandForPlayerStep
 	ret c
 	call AppendPikachuFollowCommandToBuffer
 	ret
 
 .asm_fcc1b
-	call Func_fcc64
+	call GetPikachuFollowCommandForLedgeHop
 	ret c
 	call AppendPikachuFollowCommandToBuffer
 	ret
 
-; SUGGESTED NAME: ShouldRecordPikachuFollowCommand
-; Carry if Pikachu is out and following (flags, alive in party, not biking/surfing) (confidence: high)
-Func_fcc23:
+; Carry if Pikachu is out and following (flags, alive in party, not biking/surfing)
+ShouldRecordPikachuFollowCommand:
 	ld a, [wPikachuOverworldStateFlags]
 	bit 5, a
 	jr nz, .asm_fcc40
 	ld a, [wPikachuOverworldStateFlags]
 	bit 7, a
 	jr nz, .asm_fcc40
-	ld a, [wd472]
+	ld a, [wPikachuPartyFlags]
 	bit 7, a
 	jr z, .asm_fcc40
 	ld a, [wWalkBikeSurfState]
@@ -1356,9 +1325,8 @@ Func_fcc23:
 	and a
 	ret
 
-; SUGGESTED NAME: GetPikachuFollowCommandForPlayerStep
-; Converts wPlayerDirection into a 1-tile follow command (1-4); carry if none (confidence: high)
-Func_fcc42:
+; Converts wPlayerDirection into a 1-tile follow command (1-4); carry if none
+GetPikachuFollowCommandForPlayerStep:
 	xor a
 	ld a, [wPlayerDirection]
 	bit 3, a
@@ -1388,9 +1356,8 @@ Func_fcc42:
 	ld a, $4
 	ret
 
-; SUGGESTED NAME: GetPikachuFollowCommandForLedgeHop
-; Every other ledge-hop step, returns a 2-tile follow command (5-8); else carry (confidence: high)
-Func_fcc64:
+; Every other ledge-hop step, returns a 2-tile follow command (5-8); else carry
+GetPikachuFollowCommandForLedgeHop:
 	ld hl, wPikachuOverworldStateFlags
 	bit 6, [hl]
 	jr z, .asm_fcc6e
@@ -1428,9 +1395,8 @@ Func_fcc64:
 	ld a, $8
 	ret
 
-; SUGGESTED NAME: DequeuePikachuFollowCommand
-; Pops oldest follow command from the buffer into a (carry if only one or none) (confidence: high)
-Func_fcc92:
+; Pops oldest follow command from the buffer into a (carry if only one or none)
+DequeuePikachuFollowCommand:
 	ld hl, wPikachuFollowCommandBufferSize
 	ld a, [hl]
 	cp $ff

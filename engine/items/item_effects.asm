@@ -820,7 +820,7 @@ ItemUseEvoStone:
 	jr c, .canceledItemUse
 	ld a, b
 	ld [wCurPartySpecies], a
-	call Func_d85d
+	call CanMonEvolveWithUsedStone
 	jr nc, .noEffect
 	callfar IsThisPartyMonStarterPikachu
 	jr nc, .notPlayerPikachu
@@ -859,9 +859,8 @@ ItemUseEvoStone:
 	pop af
 	ret
 
-; SUGGESTED NAME: CanMonEvolveWithUsedStone
-; Sets carry if wLoadedMon has an EVOLVE_ITEM entry matching wCurItem (confidence: high)
-Func_d85d:
+; Sets carry if wLoadedMon has an EVOLVE_ITEM entry matching wCurItem
+CanMonEvolveWithUsedStone:
 	ld hl, EvosMovesPointerTable
 	ld a, [wLoadedMon]
 	dec a
@@ -918,7 +917,7 @@ ItemUseVitamin:
 ItemUseMedicine:
 	ld a, [wPartyCount]
 	and a
-	jp z, Func_e4bf
+	jp z, ItemUseNoPartyMon
 	ld a, [wWhichPokemon]
 	push af
 	ld a, [wCurItem]
@@ -1699,7 +1698,7 @@ ItemUseEscapeRope:
 	ld hl, wStatusFlags6
 	set 3, [hl]
 	set 6, [hl]
-	call Func_1510
+	call HidePikachuDuringWarp
 	ld hl, wStatusFlags4
 	res 4, [hl]
 	ResetEvent EVENT_IN_SAFARI_ZONE
@@ -2576,9 +2575,8 @@ ItemUseNotYoursToUse:
 	ld hl, ItemUseNotYoursToUseText
 	jr ItemUseFailed
 
-; SUGGESTED NAME: ItemUseNoPartyMon
-; Prints "You don't have a #MON!" and sets wActionResultOrTookBattleTurn to 2 (confidence: high)
-Func_e4bf:
+; Prints "You don't have a #MON!" and sets wActionResultOrTookBattleTurn to 2
+ItemUseNoPartyMon:
 	ld a, $2
 	ld [wActionResultOrTookBattleTurn], a
 	ld hl, DontHavePokemonText

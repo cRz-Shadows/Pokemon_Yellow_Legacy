@@ -93,9 +93,9 @@ OverworldLoopLessDelay::
 	and a
 	jp z, OverworldLoop ; jump if a hidden object or bookshelf was found, but not if a card key door was found
 	xor a
-	ld [wd436], a ; new yellow address
+	ld [wPlayerTalkingToPikachu], a ; new yellow address
 	call IsSpriteOrSignInFrontOfPlayer
-	call Func_0ffe
+	call CheckTalkingToPikachu
 	ldh a, [hTextID]
 	and a
 
@@ -132,7 +132,7 @@ OverworldLoopLessDelay::
 	ld hl, wMiscFlags
 	res 2, [hl]
 	xor a
-	ld [wd435], a
+	ld [wPikachuCollisionCounter], a
 	ld a, 1
 	ld [wCheckFor180DegreeTurn], a
 	ld a, [wPlayerMovingDirection] ; the direction that was pressed last time
@@ -191,7 +191,7 @@ OverworldLoopLessDelay::
 	cp b
 	jr z, .noDirectionChange
 	ld a, $8
-	ld [wd435], a
+	ld [wPikachuCollisionCounter], a
 ; unlike in red/blue, yellow does not have the 180 degrees odd code
 	ld hl, wMiscFlags
 	set 2, [hl]
@@ -233,7 +233,7 @@ OverworldLoopLessDelay::
 .noCollision
 	ld a, $08
 	ld [wWalkCounter], a
-	callfar Func_fcc08
+	callfar RecordPlayerStepForPikachu
 	jr .moveAhead2
 
 .moveAhead
@@ -1202,7 +1202,7 @@ IsSpriteInFrontOfPlayer2::
 	cp $f
 	jr nz, .dontwritetowd436
 	ld a, $FF
-	ld [wd436], a
+	ld [wPlayerTalkingToPikachu], a
 .dontwritetowd436
 	scf
 	ret
@@ -1278,7 +1278,7 @@ CollisionCheckOnLand::
 	ldh a, [hJoyHeld]
 	and $2
 	jr nz, .noSpriteCollision
-	ld hl, wd435
+	ld hl, wPikachuCollisionCounter
 	ld a, [hl]
 	and a
 	jr z, .noSpriteCollision
@@ -1779,7 +1779,7 @@ RunMapScript::
 LoadWalkingPlayerSpriteGraphics::
 ; new sprite copy stuff
 	xor a
-	ld [wd473], a
+	ld [wSurfingSpriteOverride], a
 	ld b, BANK(RedSprite)
 	ld de, RedSprite
 	ld a, [wPlayerGender]
@@ -1790,7 +1790,7 @@ LoadWalkingPlayerSpriteGraphics::
 	jr LoadPlayerSpriteGraphicsCommon
 
 LoadSurfingPlayerSpriteGraphics2::
-	ld a, [wd473]
+	ld a, [wSurfingSpriteOverride]
 	and a
 	jr z, .asm_0d75
 	dec a
@@ -1798,7 +1798,7 @@ LoadSurfingPlayerSpriteGraphics2::
 	dec a
 	jr z, .asm_0d7c
 .asm_0d75
-	ld a, [wd472]
+	ld a, [wPikachuPartyFlags]
 	bit 6, a
 	jr z, LoadSurfingPlayerSpriteGraphics
 .asm_0d7c
@@ -1842,11 +1842,10 @@ LoadPlayerSpriteGraphicsCommon::
 ; function to load data from the map header
 LoadMapHeader::
 	farcall MarkTownVisitedAndLoadToggleableObjects
-	jr asm_0dbd
+	jr LoadMapHeaderCommon
 
-; SUGGESTED NAME: LoadMapHeaderCommon
-; Shared body of LoadMapHeader: switches bank and copies the current map header (confidence: high)
-asm_0dbd:
+; Shared body of LoadMapHeader: switches bank and copies the current map header
+LoadMapHeaderCommon:
 	ld a, [wCurMapTileset]
 	ld [wUnusedCurMapTilesetCopy], a
 	ld a, [wCurMap]
@@ -2178,9 +2177,8 @@ IsSpinning::
 	ret z ; no spinning
 	farjp LoadSpinnerArrowTiles ; spin while moving
 
-; SUGGESTED NAME: CheckTalkingToPikachu
-; Home-bank jump to IsPlayerTalkingToPikachu from the overworld loop (confidence: high)
-Func_0ffe::
+; Home-bank jump to IsPlayerTalkingToPikachu from the overworld loop
+CheckTalkingToPikachu::
 	jpfar IsPlayerTalkingToPikachu
 
 InitSprites::

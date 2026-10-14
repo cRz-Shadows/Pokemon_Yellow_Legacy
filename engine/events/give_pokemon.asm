@@ -44,7 +44,7 @@ _GivePokemon::
 	ret
 .addToParty
 	call SetPokedexOwnedFlag
-	ld hl, UnknownTerminator_f6794
+	ld hl, GivePokemonEmptyText
 	call PrintText
 	call AddPartyMon
 	ld a, 1
@@ -70,9 +70,8 @@ SetPokedexOwnedFlag:
 	ld hl, GotMonText
 	jp PrintText
 
-; SUGGESTED NAME: GivePokemonEmptyText
-; Empty text (text_end) printed before AddPartyMon when giving a mon (confidence: high)
-UnknownTerminator_f6794:
+; Empty text (text_end) printed before AddPartyMon when giving a mon
+GivePokemonEmptyText:
 	text_end
 
 GotMonText:

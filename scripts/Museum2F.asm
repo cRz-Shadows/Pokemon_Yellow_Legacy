@@ -30,10 +30,10 @@ Museum2FBrunetteGirlText:
 
 Museum2FHikerText:
 	text_asm
-	ld a, [wd472]
+	ld a, [wPikachuPartyFlags]
 	bit 7, a
 	jr nz, .asm_5c1f6
-	ld hl, Museum2FText_5c20e
+	ld hl, Museum2FHikerDefaultText
 	call PrintText
 	jr .asm_5c20b
 
@@ -41,31 +41,28 @@ Museum2FHikerText:
 	ld a, [wPikachuHappiness]
 	cp 101
 	jr c, .asm_5c205
-	ld hl, Museum2FText_5c218
+	ld hl, Museum2FHikerPikachuAttachedText
 	call PrintText
 	jr .asm_5c20b
 
 .asm_5c205
-	ld hl, Museum2FText_5c213
+	ld hl, Museum2FHikerWantsPikachuText
 	call PrintText
 .asm_5c20b
 	jp TextScriptEnd
 
-; SUGGESTED NAME: Museum2FHikerDefaultText
-; Hiker's normal text when starter Pikachu isn't in the party (confidence: high)
-Museum2FText_5c20e:
+; Hiker's normal text when starter Pikachu isn't in the party
+Museum2FHikerDefaultText:
 	text_far _Museum2FHikerText
 	text_end
 
-; SUGGESTED NAME: Museum2FHikerWantsPikachuText
-; Hiker asks for Pikachu (Pikachu happiness < 101) (confidence: high)
-Museum2FText_5c213:
+; Hiker asks for Pikachu (Pikachu happiness < 101)
+Museum2FHikerWantsPikachuText:
 	text_far _Museum2FPikachuText1
 	text_end
 
-; SUGGESTED NAME: Museum2FHikerPikachuAttachedText
-; Hiker sees Pikachu is too attached to you (happiness >= 101) (confidence: high)
-Museum2FText_5c218:
+; Hiker sees Pikachu is too attached to you (happiness >= 101)
+Museum2FHikerPikachuAttachedText:
 	text_far _Museum2FPikachuText2
 	text_end
 

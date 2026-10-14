@@ -16,7 +16,7 @@ DrawFrameBlock:
 	inc a
 	ld [wFBTileCounter], a
 	ld a, $2
-	ld [wdef4], a
+	ld [wTempObjectPalette], a
 	ld a, [wSubAnimTransform]
 	dec a
 	jr z, .flipHorizontalAndVertical   ; SUBANIMTYPE_HVFLIP
@@ -50,9 +50,9 @@ DrawFrameBlock:
 	ld [de], a ; store X
 	cp 88
 	jr c, .asm_78056
-	ld a, [wdef4]
+	ld a, [wTempObjectPalette]
 	inc a
-	ld [wdef4], a
+	ld [wTempObjectPalette], a
 .asm_78056
 	inc hl
 	inc de
@@ -62,7 +62,7 @@ DrawFrameBlock:
 	inc de
 	ld a, [hli]
 	ld b, a
-	ld a, [wdef4]
+	ld a, [wTempObjectPalette]
 	or b
 	ld [de], a ; store flags
 	inc de
@@ -84,9 +84,9 @@ DrawFrameBlock:
 	ld [de], a ; store X
 	cp 88
 	jr c, .asm_78087
-	ld a, [wdef4]
+	ld a, [wTempObjectPalette]
 	inc a
-	ld [wdef4], a
+	ld [wTempObjectPalette], a
 .asm_78087
 	inc hl
 	inc de
@@ -107,7 +107,7 @@ DrawFrameBlock:
 	jr z, .storeFlags1
 	ld b, 0
 .storeFlags1
-	ld a, [wdef4]
+	ld a, [wTempObjectPalette]
 	or b
 	ld [de], a
 	inc de
@@ -127,9 +127,9 @@ DrawFrameBlock:
 	ld [de], a ; store X
 	cp 88
 	jr c, .asm_780c8
-	ld a, [wdef4]
+	ld a, [wTempObjectPalette]
 	inc a
-	ld [wdef4], a
+	ld [wTempObjectPalette], a
 .asm_780c8
 	inc hl
 	inc de
@@ -147,7 +147,7 @@ DrawFrameBlock:
 	res 5, a
 .storeFlags2
 	ld b, a
-	ld a, [wdef4]
+	ld a, [wTempObjectPalette]
 	or b
 	ld [de], a
 	inc de
@@ -596,9 +596,8 @@ SetAnimationPalette:
 	call UpdateCGBPal_OBP1
 	ret
 
-; SUGGESTED NAME: RefreshBGMapsAfterAnimation
-; After a move animation: blanks BG map 0, then copies the tilemap to BG map 1 (confidence: medium)
-Func_78e98:
+; After a move animation: blanks BG map 0, then copies the tilemap to BG map 1
+RefreshBGMapsAfterAnimation:
 	call SaveScreenTilesToBuffer2
 	xor a
 	ldh [hAutoBGTransferEnabled], a
@@ -1186,14 +1185,14 @@ _AnimationWaterDroplets:
 	ld hl, wShadowOAM
 .loop
 	ld a, $1
-	ld [wdef4], a
+	ld [wTempObjectPalette], a
 	ld a, [wBaseCoordY]
 	ld [hli], a ; Y
 	cp 40
 	jr c, .asm_792d7
-	ld a, [wdef4]
+	ld a, [wTempObjectPalette]
 	inc a
-	ld [wdef4], a
+	ld [wTempObjectPalette], a
 .asm_792d7
 	ld a, [wBaseCoordX]
 	add 27
@@ -1201,14 +1200,14 @@ _AnimationWaterDroplets:
 	ld [hli], a ; X
 	cp 88
 	jr c, .asm_792ee
-	ld a, [wdef4]
+	ld a, [wTempObjectPalette]
 	add $2
 	and $3
-	ld [wdef4], a
+	ld [wTempObjectPalette], a
 .asm_792ee
 	ld a, [wDropletTile]
 	ld [hli], a ; tile
-	ld a, [wdef4]
+	ld a, [wTempObjectPalette]
 	ld [hli], a ; attribute
 	ld a, [wBaseCoordX]
 	cp 144
@@ -1353,28 +1352,28 @@ BattleAnimWriteOAMEntry:
 ; tile = d
 ; attributes = variable (depending on coords)
 	ld a, $1
-	ld [wdef4], a
+	ld [wTempObjectPalette], a
 	ld a, e
 	add 8
 	ld e, a
 	ld [hli], a
 	cp 40
 	jr c, .asm_793d8
-	ld a, [wdef4]
+	ld a, [wTempObjectPalette]
 	inc a
-	ld [wdef4], a
+	ld [wTempObjectPalette], a
 .asm_793d8
 	ld a, [wBaseCoordX]
 	ld [hli], a
 	cp 88
 	jr c, .asm_793e8
-	ld a, [wdef4]
+	ld a, [wTempObjectPalette]
 	add $2
-	ld [wdef4], a
+	ld [wTempObjectPalette], a
 .asm_793e8
 	ld a, d
 	ld [hli], a
-	ld a, [wdef4]
+	ld a, [wTempObjectPalette]
 	ld [hli], a
 	ret
 
@@ -1580,7 +1579,7 @@ AnimationSpiralBallsInward:
 	cp $ff
 	jr z, .done
 	ld a, $2
-	ld [wdef4], a
+	ld [wTempObjectPalette], a
 	ld a, [wSpiralBallsBaseY]
 	add [hl]
 	ld [de], a ; Y
@@ -1592,7 +1591,7 @@ AnimationSpiralBallsInward:
 	cp 88
 	jr c, .asm_79524
 	ld a, $3
-	ld [wdef4], a
+	ld [wTempObjectPalette], a
 .asm_79524
 	inc hl
 	inc de
@@ -1600,7 +1599,7 @@ AnimationSpiralBallsInward:
 	ld a, [de]
 	and $f0
 	ld b, a
-	ld a, [wdef4]
+	ld a, [wTempObjectPalette]
 	or b
 	ld [de], a
 	inc de
@@ -2210,9 +2209,8 @@ AnimationHideEnemyMonPic:
 	ldh [hAutoBGTransferEnabled], a
 	jp Delay3
 
-; SUGGESTED NAME: AnimationShowMonAfterSubstitute
-; When a substitute breaks, redraws the mon (minimized sprite, or flash + show pic) (confidence: high)
-Func_79929:
+; When a substitute breaks, redraws the mon (minimized sprite, or flash + show pic)
+AnimationShowMonAfterSubstitute:
 	ld hl, wPlayerMonMinimized
 	ldh a, [hWhoseTurn]
 	and a
@@ -2536,7 +2534,7 @@ FallingObjects_UpdateOAMEntry:
 	ld hl, wShadowOAM
 	add hl, de
 	ld a, $1
-	ld [wdef4], a
+	ld [wTempObjectPalette], a
 	ld a, [hl]
 	inc a
 	inc a
@@ -2547,9 +2545,9 @@ FallingObjects_UpdateOAMEntry:
 	ld [hli], a ; Y
 	cp 40
 	jr c, .asm_79e51
-	ld a, [wdef4]
+	ld a, [wTempObjectPalette]
 	inc a
-	ld [wdef4], a
+	ld [wTempObjectPalette], a
 .asm_79e51
 	ld a, [wFallingObjectMovementByte]
 	ld b, a
@@ -2569,10 +2567,10 @@ FallingObjects_UpdateOAMEntry:
 	ld [hli], a ; X
 	cp 88
 	jr c, .asm_79e75
-	ld a, [wdef4]
+	ld a, [wTempObjectPalette]
 	add $2
 	and $3
-	ld [wdef4], a
+	ld [wTempObjectPalette], a
 .asm_79e75
 	inc hl
 	xor a ; no horizontal flip
@@ -2585,16 +2583,16 @@ FallingObjects_UpdateOAMEntry:
 	ld [hli], a ; X
 	cp 88
 	jr c, .asm_79e5c
-	ld a, [wdef4]
+	ld a, [wTempObjectPalette]
 	add $2
 	and $3
-	ld [wdef4], a
+	ld [wTempObjectPalette], a
 .asm_79e5c
 	inc hl
 	ld a, (1 << OAM_X_FLIP)
 .next2
 	ld b, a
-	ld a, [wdef4]
+	ld a, [wTempObjectPalette]
 	or b
 	ld [hl], a ; attribute
 	ret

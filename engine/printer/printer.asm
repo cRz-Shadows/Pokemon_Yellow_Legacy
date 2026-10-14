@@ -24,7 +24,7 @@ PrintPokedexEntry:
 .not_caught
 	ld a, 19
 .got_size
-	ld [wcae2], a
+	ld [wPrinterMargins], a
 	call Printer_CopyTileMapToPrinterTileBuffer
 	call ClearScreen
 	callfar Pokedex_DrawInterface
@@ -48,7 +48,7 @@ PrintPokedexEntry:
 	ld a, $7
 	call Printer_StartTransmission
 	ld a, $3
-	ld [wcae2], a
+	ld [wPrinterMargins], a
 	call Printer_CopyTileMapToPrinterTileBuffer
 	call LoadScreenTilesFromBuffer1
 	ld a, $1
@@ -128,7 +128,7 @@ PrintSurfingMinigameHighScore::
 	ldh [rIE], a
 	call StartTransmission_Send9Rows
 	ld a, $13
-	ld [wcae2], a
+	ld [wPrinterMargins], a
 	call Printer_CopyTileMapToPrinterTileBuffer
 	call Printer_ResetJoypadHRAM
 .loop
@@ -170,7 +170,7 @@ PrintDiploma::
 	ldh [rIE], a
 	call StartTransmission_Send9Rows
 	ld a, $10
-	ld [wcae2], a
+	ld [wPrinterMargins], a
 	call Printer_CopyTileMapToPrinterTileBuffer
 	call PrintDiplomaPage
 	jr c, .quit
@@ -185,7 +185,7 @@ PrintDiploma::
 	call DisplayDiplomaBottom
 	call StartTransmission_Send9Rows
 	ld a, $3
-	ld [wcae2], a
+	ld [wPrinterMargins], a
 	call Printer_CopyTileMapToPrinterTileBuffer
 	call LoadScreenTilesFromBuffer1
 	call PrintDiplomaPage
@@ -228,7 +228,7 @@ PrintDiplomaPage:
 PrintPCBox::
 	ld a, [wBoxDataStart]
 	and a
-	jp z, Func_e8df4
+	jp z, PrintPCBox_NoPokemon
 	ld a, [wUpdateSpritesEnabled]
 	push af
 	xor a
@@ -247,7 +247,7 @@ PrintPCBox::
 	call PrintPCBox_DrawPage1
 	call StartTransmission_Send9Rows
 	ld a, $10
-	ld [wcae2], a
+	ld [wPrinterMargins], a
 	call Printer_CopyTileMapToPrinterTileBuffer
 	call LoadScreenTilesFromBuffer1
 	call PrintPCBoxPage
@@ -262,7 +262,7 @@ PrintPCBox::
 	call PrintPCBox_DrawPage2
 	call StartTransmission_Send9Rows
 	ld a, $0
-	ld [wcae2], a
+	ld [wPrinterMargins], a
 	call Printer_CopyTileMapToPrinterTileBuffer
 	call LoadScreenTilesFromBuffer1
 	call PrintPCBoxPage
@@ -277,7 +277,7 @@ PrintPCBox::
 	call PrintPCBox_DrawPage3
 	call StartTransmission_Send9Rows
 	ld a, $0
-	ld [wcae2], a
+	ld [wPrinterMargins], a
 	call Printer_CopyTileMapToPrinterTileBuffer
 	call LoadScreenTilesFromBuffer1
 	call PrintPCBoxPage
@@ -292,7 +292,7 @@ PrintPCBox::
 	call PrintPCBox_DrawPage4
 	call StartTransmission_Send9Rows
 	ld a, $3
-	ld [wcae2], a
+	ld [wPrinterMargins], a
 	call Printer_CopyTileMapToPrinterTileBuffer
 	call LoadScreenTilesFromBuffer1
 	call PrintPCBoxPage
@@ -310,9 +310,8 @@ PrintPCBox::
 	ld [wUpdateSpritesEnabled], a
 	ret
 
-; SUGGESTED NAME: PrintPCBox_NoPokemon
-; Prints "no Pokémon" text instead of printing when the current PC box is empty (confidence: high)
-Func_e8df4:
+; Prints "no Pokémon" text instead of printing when the current PC box is empty
+PrintPCBox_NoPokemon:
 	ld hl, NoPokemonText
 	call PrintText
 	ret
@@ -357,7 +356,7 @@ PrintFanClubPortrait::
 	ldh [rIE], a
 	call StartTransmission_Send9Rows
 	ld a, $13
-	ld [wcae2], a
+	ld [wPrinterMargins], a
 	call Printer_CopyTileMapToPrinterTileBuffer
 	call Printer_ResetJoypadHRAM
 .print_loop
@@ -400,7 +399,7 @@ PrinterDebug:
 	ldh [rIE], a
 	call StartTransmission_Send9Rows
 	ld a, $13
-	ld [wcae2], a
+	ld [wPrinterMargins], a
 	ld a, $1
 	ldh [hAutoBGTransferEnabled], a
 	call Printer_CopyTileMapToPrinterTileBuffer

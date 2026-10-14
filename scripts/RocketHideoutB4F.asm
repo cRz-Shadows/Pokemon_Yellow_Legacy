@@ -75,14 +75,13 @@ IF DEF(_DEBUG)
 	ret nz
 ENDC
 	CheckEvent EVENT_BEAT_ROCKET_HIDEOUT_4_TRAINER_0
-	call z, RocketHideoutB4FScript_455a5
+	call z, RocketHideoutB4FScript_StartJessieJamesEncounter
 	CheckEvent EVENT_BEAT_ROCKET_HIDEOUT_4_TRAINER_2
 	call z, CheckFightingMapTrainers
 	ret
 
-; SUGGESTED NAME: RocketHideoutB4FScript_StartJessieJamesEncounter
-; At row 14 (X 24/25): plays Jessie & James music, intro text, shows them (confidence: high)
-RocketHideoutB4FScript_455a5:
+; At row 14 (X 24/25): plays Jessie & James music, intro text, shows them
+RocketHideoutB4FScript_StartJessieJamesEncounter:
 	ld a, [wYCoord]
 	cp $e
 	ret nz
@@ -124,23 +123,21 @@ RocketHideoutB4FScript_455a5:
 	call RocketHideoutB4FSetScript
 	ret
 
-; SUGGESTED NAME: RocketHideoutB4FJessieJamesRunDown4Movement
-; Jessie/James run down 4 tiles (code $4 = fast step down) (confidence: medium)
-RocketHideoutB4FJessieJamesMovementData_45605:
+; Jessie/James run down 4 tiles (code $4 = fast step down)
+RocketHideoutB4FJessieJamesRunDown4Movement:
 	db NPC_FAST_STEP_DOWN
-; SUGGESTED NAME: RocketHideoutB4FJessieJamesRunDown3Movement
-; Jessie/James run down 3 tiles (code $4 = fast step down) (confidence: medium)
-RocketHideoutB4FJessieJamesMovementData_45606:
+; Jessie/James run down 3 tiles (code $4 = fast step down)
+RocketHideoutB4FJessieJamesRunDown3Movement:
 	db NPC_FAST_STEP_DOWN
 	db NPC_FAST_STEP_DOWN
 	db NPC_FAST_STEP_DOWN
 	db $ff
 
 RocketHideoutB4FScript4:
-	ld de, RocketHideoutB4FJessieJamesMovementData_45605
+	ld de, RocketHideoutB4FJessieJamesRunDown4Movement
 	CheckEvent EVENT_BEAT_ROCKET_HIDEOUT_4_TRAINER_1
 	jr z, .asm_45617
-	ld de, RocketHideoutB4FJessieJamesMovementData_45606
+	ld de, RocketHideoutB4FJessieJamesRunDown3Movement
 .asm_45617
 	ld a, ROCKETHIDEOUTB4F_JAMES
 	ldh [hTextID], a
@@ -171,10 +168,10 @@ RocketHideoutB4FScript6:
 	ld a, SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
 	ld [wJoyIgnore], a
 RocketHideoutB4FScript7:
-	ld de, RocketHideoutB4FJessieJamesMovementData_45606
+	ld de, RocketHideoutB4FJessieJamesRunDown3Movement
 	CheckEvent EVENT_BEAT_ROCKET_HIDEOUT_4_TRAINER_1
 	jr z, .asm_4565f
-	ld de, RocketHideoutB4FJessieJamesMovementData_45605
+	ld de, RocketHideoutB4FJessieJamesRunDown4Movement
 .asm_4565f
 	ld a, ROCKETHIDEOUTB4F_JESSIE
 	ldh [hTextID], a

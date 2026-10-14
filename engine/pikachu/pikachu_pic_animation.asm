@@ -205,9 +205,9 @@ ExecutePikaPicAnimScript:
 	xor a
 	ldh [hAutoBGTransferEnabled], a
 	call RunPikaPicAnimSetupScript
-	call DummyFunction_fdad5
+	call PikaPicAnimDummyHook
 	call AnimateCurrentPikaPicAnimFrame
-	call DummyFunction_fdad5
+	call PikaPicAnimDummyHook
 	ld a, $1
 	ldh [hAutoBGTransferEnabled], a
 	call PikaPicAnimTimerAndJoypad
@@ -242,9 +242,8 @@ CheckPikaPicAnimTimer:
 	ld a, $1
 	ret
 
-; SUGGESTED NAME: PikaPicAnimDummyHook
-; Empty routine called around each pika pic animation frame update (confidence: high)
-DummyFunction_fdad5:
+; Empty routine called around each pika pic animation frame update
+PikaPicAnimDummyHook:
 	ret
 
 AnimateCurrentPikaPicAnimFrame:

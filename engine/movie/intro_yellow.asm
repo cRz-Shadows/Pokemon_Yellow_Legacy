@@ -17,15 +17,15 @@ PlayIntroScene:
 	ldh a, [hJoyPressed]
 	and A_BUTTON | B_BUTTON | START
 	jr nz, .go_to_title_screen
-	call Func_f98fc
+	call YellowIntro_RunCurrentScene
 	ld a, $0
 	ld [wCurrentAnimatedObjectOAMBufferOffset], a
 	call RunObjectAnimations
 	ld a, [wYellowIntroCurrentScene]
 	cp $7
-	call z, Func_f98a2
+	call z, YellowIntro_SetSurfingSceneOBJPals
 	cp $b
-	call z, Func_f98cb
+	call z, YellowIntro_SetFlyingSceneOBJPals
 	call DelayFrame
 	jr .loop
 
@@ -56,9 +56,8 @@ PlayIntroScene:
 	ldh [hAutoBGTransferEnabled], a
 	ret
 
-; SUGGESTED NAME: YellowIntro_SetSurfingSceneOBJPals
-; Sets CGB OBJ palette 1 on specific OAM entries during surfing scene 7 (confidence: medium)
-Func_f98a2:
+; Sets CGB OBJ palette 1 on specific OAM entries during surfing scene 7
+YellowIntro_SetSurfingSceneOBJPals:
 	ld a, [wShadowOAMSprite08Attributes]
 	or $1
 	ld [wShadowOAMSprite08Attributes], a
@@ -76,9 +75,8 @@ Func_f98a2:
 	ld [wShadowOAMSprite19Attributes], a
 	ret
 
-; SUGGESTED NAME: YellowIntro_SetFlyingSceneOBJPals
-; Sets CGB OBJ palette 1 on specific OAM entries during flying scene 11 (confidence: medium)
-Func_f98cb:
+; Sets CGB OBJ palette 1 on specific OAM entries during flying scene 11
+YellowIntro_SetFlyingSceneOBJPals:
 	ld a, [wShadowOAMSprite18Attributes]
 	or $1
 	ld [wShadowOAMSprite18Attributes], a
@@ -99,17 +97,15 @@ Func_f98cb:
 	ld [wShadowOAMSprite28Attributes], a
 	ret
 
-; SUGGESTED NAME: YellowIntro_RunCurrentScene
-; Jumps to the handler for wYellowIntroCurrentScene via the scene jumptable (confidence: high)
-Func_f98fc:
+; Jumps to the handler for wYellowIntroCurrentScene via the scene jumptable
+YellowIntro_RunCurrentScene:
 	ld a, [wYellowIntroCurrentScene]
-	ld hl, Jumptable_f9906
-	call Func_fa06e
+	ld hl, YellowIntroSceneJumptable
+	call YellowIntro_GetJumptableEntry
 	jp hl
 
-; SUGGESTED NAME: YellowIntroSceneJumptable
-; Handlers for each Yellow intro scene, indexed by wYellowIntroCurrentScene (confidence: high)
-Jumptable_f9906:
+; Handlers for each Yellow intro scene, indexed by wYellowIntroCurrentScene
+YellowIntroSceneJumptable:
 	dw YellowIntroScene0 ; running pika 1
 	dw YellowIntroScene1 ; wait last
 	dw YellowIntroScene2 ; pikachu kick
@@ -181,7 +177,7 @@ YellowIntroScene2:
 	ld a, $4 ; overloaded
 	call LoadYellowIntroFlyingSpeedBars
 	ld a, $1
-	call Func_f9e9a
+	call YellowIntro_LoadScenePalsAndEnableLCD
 	call YellowIntro_SetTimerFor128Frames
 	call YellowIntro_NextScene
 	ret
@@ -312,12 +308,12 @@ YellowIntroScene4:
 .dmg_sgb
 	xor a
 	ldh [hLCDCPointer], a
-	call Func_f9e5f
+	call YellowIntro_DrawLetterboxBGMap
 	lb de, $58, $58
 	ld a, $2
 	call YellowIntro_SpawnAnimatedObjectAndSavePointer
 	xor a
-	call Func_f9e9a
+	call YellowIntro_LoadScenePalsAndEnableLCD
 	call YellowIntro_SetTimerFor128Frames
 	call YellowIntro_NextScene
 	ret
@@ -358,7 +354,7 @@ YellowIntroScene6:
 	ld a, $5
 	call YellowIntro_SpawnAnimatedObjectAndSavePointer
 	ld a, $1
-	call Func_f9e9a
+	call YellowIntro_LoadScenePalsAndEnableLCD
 	call YellowIntro_SetTimerFor88Frames
 	call YellowIntro_NextScene
 	ret
@@ -396,12 +392,12 @@ YellowIntroScene8:
 	call UpdateMusicCTimes
 	xor a
 	ldh [hLCDCPointer], a
-	call Func_f9e5f
+	call YellowIntro_DrawLetterboxBGMap
 	lb de, $58, $58
 	ld a, $3
 	call YellowIntro_SpawnAnimatedObjectAndSavePointer
 	xor a
-	call Func_f9e9a
+	call YellowIntro_LoadScenePalsAndEnableLCD
 	call YellowIntro_SetTimerFor128Frames
 	call YellowIntro_NextScene
 	ret
@@ -428,22 +424,22 @@ YellowIntroScene10:
 	ld a, $2
 	call Bank3E_FillMemory
 	ld hl, $9900
-	ld de, Unkn_f9b6e
+	ld de, YellowIntroFlyingCloudBankTilemap
 	lb bc, 6, 20
 	call .FillBGMapBox
 	ld hl, $988c
-	ld de, Unkn_f9be6
+	ld de, YellowIntroFlyingLargeCloudTilemap
 	lb bc, 3, 4
 	call .FillBGMapBox
 	ld hl, $98e3
-	ld de, Unkn_f9bf2
+	ld de, YellowIntroFlyingSmallCloudTilemap
 	lb bc, 2, 2
 	call .FillBGMapBox
 	lb de, $98, $58
 	ld a, $6
 	call YellowIntro_SpawnAnimatedObjectAndSavePointer
 	ld a, $1
-	call Func_f9e9a
+	call YellowIntro_LoadScenePalsAndEnableLCD
 	call YellowIntro_SetTimerFor128Frames
 	call YellowIntro_NextScene
 	ret
@@ -466,15 +462,12 @@ YellowIntroScene10:
 	jr nz, .fill_row
 	ret
 
-; SUGGESTED NAME: YellowIntroFlyingCloudBankTilemap
-; 20x6 tilemap for the cloud bank along the bottom of the flying Pikachu scene (confidence: medium)
-Unkn_f9b6e: INCBIN "gfx/intro/unknown_f9b6e.map"
-; SUGGESTED NAME: YellowIntroFlyingLargeCloudTilemap
-; 4x3 tilemap for a large cloud in the flying Pikachu scene (confidence: medium)
-Unkn_f9be6: INCBIN "gfx/intro/unknown_f9be6.map"
-; SUGGESTED NAME: YellowIntroFlyingSmallCloudTilemap
-; 2x2 tilemap for a small cloud in the flying Pikachu scene (confidence: medium)
-Unkn_f9bf2: INCBIN "gfx/intro/unknown_f9bf2.map"
+; 20x6 tilemap for the cloud bank along the bottom of the flying Pikachu scene
+YellowIntroFlyingCloudBankTilemap: INCBIN "gfx/intro/unknown_f9b6e.map"
+; 4x3 tilemap for a large cloud in the flying Pikachu scene
+YellowIntroFlyingLargeCloudTilemap: INCBIN "gfx/intro/unknown_f9be6.map"
+; 2x2 tilemap for a small cloud in the flying Pikachu scene
+YellowIntroFlyingSmallCloudTilemap: INCBIN "gfx/intro/unknown_f9bf2.map"
 
 YellowIntroScene11:
 	call YellowIntro_CheckFrameTimerDecrement
@@ -558,7 +551,7 @@ YellowIntroScene12:
 	ld a, $9
 	call YellowIntro_SpawnAnimatedObjectAndSavePointer
 	xor a
-	call Func_f9e9a
+	call YellowIntro_LoadScenePalsAndEnableLCD
 	call YellowIntro_SetTimerFor128Frames
 	call YellowIntro_NextScene
 	ret
@@ -573,7 +566,7 @@ YellowIntroScene13:
 	ret
 
 YellowIntroScene14:
-	ld de, YellowIntroPalSequence_f9dd6
+	ld de, YellowIntroThunderboltFlashPals
 	call YellowIntro_LoadDMGPalAndIncrementCounter
 	jr c, .expired
 	ldh [rBGP], a
@@ -647,7 +640,7 @@ YellowIntroScene15:
 	call UpdateCGBPal_OBP0
 	call YellowIntro_NextScene
 YellowIntroScene16:
-	ld de, YellowIntroPalSequence_f9e0a
+	ld de, YellowIntroFadeToWhitePals
 	call YellowIntro_LoadDMGPalAndIncrementCounter
 	jr c, .expired
 	ldh [rOBP0], a
@@ -660,9 +653,8 @@ YellowIntroScene16:
 	call YellowIntro_NextScene
 	ret
 
-; SUGGESTED NAME: YellowIntroThunderboltFlashPals
-; DMG palette sequence that flashes the screen during the thunderbolt scene ($ff ends) (confidence: high)
-YellowIntroPalSequence_f9dd6:
+; DMG palette sequence that flashes the screen during the thunderbolt scene ($ff ends)
+YellowIntroThunderboltFlashPals:
 	db $e4, $c0, $c0, $e4
 	db $e4, $c0, $c0, $e4
 	db $e4, $c0, $c0, $e4
@@ -677,9 +669,8 @@ YellowIntroPalSequence_f9dd6:
 	db $e4, $c0, $c0, $e4
 	db $e4, $c0, $c0, $ff
 
-; SUGGESTED NAME: YellowIntroFadeToWhitePals
-; DMG palette sequence for the intro's final fade to white ($ff ends) (confidence: high)
-YellowIntroPalSequence_f9e0a:
+; DMG palette sequence for the intro's final fade to white ($ff ends)
+YellowIntroFadeToWhitePals:
 	db $e4, $90, $90, $40
 	db $40, $00, $00, $ff
 
@@ -748,9 +739,8 @@ YellowIntro_LoadDMGPalAndIncrementCounter:
 	scf
 	ret
 
-; SUGGESTED NAME: YellowIntro_DrawLetterboxBGMap
-; Fills BG map with letterbox bars (tile 1) on rows 0-3 and 14-17, blank (tile 0) between (confidence: high)
-Func_f9e5f:
+; Fills BG map with letterbox bars (tile 1) on rows 0-3 and 14-17, blank (tile 0) between
+YellowIntro_DrawLetterboxBGMap:
 	ld hl, vBGMap0
 	ld bc, $80
 	ld a, $1
@@ -778,9 +768,8 @@ YellowIntro_BlankPalsDelay2AndDisableLCD:
 	call DisableLCD
 	ret
 
-; SUGGESTED NAME: YellowIntro_LoadScenePalsAndEnableLCD
-; Applies scene palette (e: 0=generic, 1=beach), resets scroll, turns LCD on, sets DMG pals (confidence: high)
-Func_f9e9a:
+; Applies scene palette (e: 0=generic, 1=beach), resets scroll, turns LCD on, sets DMG pals
+YellowIntro_LoadScenePalsAndEnableLCD:
 	ld e, a
 	callfar YellowIntroPaletteAction
 	xor a
@@ -963,21 +952,19 @@ YellowIntro_AnimatedObjectSpawnStateData:
 	db $0a, $01, $00
 
 YellowIntro_AnimatedObjectJumptable:
-	dw Func_fa007
-	dw Func_fa007
-	dw Func_fa008
-	dw Func_fa014
-	dw Func_fa02b
-	dw Func_fa062
+	dw YellowIntroAnimSeq_Null
+	dw YellowIntroAnimSeq_Null
+	dw YellowIntroAnimSeq_SlideLeftToCenter
+	dw YellowIntroAnimSeq_SlideRightToCenter
+	dw YellowIntroAnimSeq_FlyingPikachu
+	dw YellowIntroAnimSeq_SpeedBar
 
-; SUGGESTED NAME: YellowIntroAnimSeq_Null
-; Animated object callback that does nothing (confidence: high)
-Func_fa007:
+; Animated object callback that does nothing
+YellowIntroAnimSeq_Null:
 	ret
 
-; SUGGESTED NAME: YellowIntroAnimSeq_SlideLeftToCenter
-; Object callback: moves X left 4px/frame until it reaches $58 (confidence: high)
-Func_fa008:
+; Object callback: moves X left 4px/frame until it reaches $58
+YellowIntroAnimSeq_SlideLeftToCenter:
 	ld hl, $4
 	add hl, bc
 	ld a, [hl]
@@ -987,13 +974,12 @@ Func_fa008:
 	ld [hl], a
 	ret
 
-; SUGGESTED NAME: YellowIntroAnimSeq_SlideRightToCenter
 ; Object callback (surfing Pikachu): moves X right 4px/frame until $58.
 ; Y is then set to the new X + 1 (a still holds X) until X reaches $58, so the
 ; object slides in diagonally from the top left. The spawn Y ($40) is never
 ; used. This is the original game's code (same in pret), left as-is so the
 ; intro looks the same as in Pokémon Yellow.
-Func_fa014:
+YellowIntroAnimSeq_SlideRightToCenter:
 	ld hl, $4
 	add hl, bc
 	ld a, [hl]
@@ -1010,14 +996,13 @@ Func_fa014:
 	ld [hl], a
 	ret
 
-; SUGGESTED NAME: YellowIntroAnimSeq_FlyingPikachu
-; Object callback for flying Pikachu: dispatches on substate in field B (confidence: high)
-Func_fa02b:
+; Object callback for flying Pikachu: dispatches on substate in field B
+YellowIntroAnimSeq_FlyingPikachu:
 	ld hl, $b
 	add hl, bc
 	ld e, [hl]
 	ld d, $0
-	ld hl, Jumptable_fa03b
+	ld hl, YellowIntroFlyingPikachuJumptable
 	add hl, de
 	add hl, de
 	ld a, [hli]
@@ -1025,15 +1010,13 @@ Func_fa02b:
 	ld l, a
 	jp hl
 
-; SUGGESTED NAME: YellowIntroFlyingPikachuJumptable
-; Substates of the flying Pikachu callback: fly up, then hover (confidence: high)
-Jumptable_fa03b:
-	dw Func_fa03f
-	dw Func_fa051
+; Substates of the flying Pikachu callback: fly up, then hover
+YellowIntroFlyingPikachuJumptable:
+	dw YellowIntroFlyingPikachu_FlyUp
+	dw YellowIntroFlyingPikachu_Hover
 
-; SUGGESTED NAME: YellowIntroFlyingPikachu_FlyUp
-; Moves flying Pikachu up 2px/frame until Y is $58, then switches to hovering (confidence: high)
-Func_fa03f:
+; Moves flying Pikachu up 2px/frame until Y is $58, then switches to hovering
+YellowIntroFlyingPikachu_FlyUp:
 	ld hl, $5
 	add hl, bc
 	ld a, [hl]
@@ -1047,23 +1030,21 @@ Func_fa03f:
 	ld hl, $b
 	add hl, bc
 	inc [hl]
-; SUGGESTED NAME: YellowIntroFlyingPikachu_Hover
-; Bobs flying Pikachu by setting its Y offset to a sine wave (amplitude 8) (confidence: high)
-Func_fa051:
+; Bobs flying Pikachu by setting its Y offset to a sine wave (amplitude 8)
+YellowIntroFlyingPikachu_Hover:
 	ld hl, $c
 	add hl, bc
 	ld a, [hl]
 	inc [hl]
 	ld d, $8
-	call Func_fa079
+	call YellowIntro_Sine
 	ld hl, $7
 	add hl, bc
 	ld [hl], a
 	ret
 
-; SUGGESTED NAME: YellowIntroAnimSeq_SpeedBar
-; Object callback for flying speed bars: adds speed (field B) to X each frame (confidence: high)
-Func_fa062:
+; Object callback for flying speed bars: adds speed (field B) to X each frame
+YellowIntroAnimSeq_SpeedBar:
 	ld hl, $b
 	add hl, bc
 	ld a, [hl]
@@ -1073,9 +1054,8 @@ Func_fa062:
 	ld [hl], a
 	ret
 
-; SUGGESTED NAME: YellowIntro_GetJumptableEntry
-; Returns hl = pointer at index a of the word table at hl (confidence: high)
-Func_fa06e:
+; Returns hl = pointer at index a of the word table at hl
+YellowIntro_GetJumptableEntry:
 	ld e, a
 	ld d, $0
 	add hl, de
@@ -1085,35 +1065,32 @@ Func_fa06e:
 	ld l, a
 	ret
 
-; SUGGESTED NAME: YellowIntro_Cosine
-; Returns a = cosine of a (64 steps per cycle) scaled by amplitude d (confidence: high)
-Func_fa077: ; cosine
+; Returns a = cosine of a (64 steps per cycle) scaled by amplitude d
+YellowIntro_Cosine: ; cosine
 	add $10
-; SUGGESTED NAME: YellowIntro_Sine
-; Returns a = sine of a (64 steps per cycle) scaled by amplitude d (confidence: high)
-Func_fa079:
+; Returns a = sine of a (64 steps per cycle) scaled by amplitude d
+YellowIntro_Sine:
 	and $3f
 	cp $20
 	jr nc, .asm_fa084
-	call Func_fa08e
+	call YellowIntro_SineTableMultiply
 	ld a, h
 	ret
 
 .asm_fa084
 	and $1f
-	call Func_fa08e
+	call YellowIntro_SineTableMultiply
 	ld a, h
 	xor $ff
 	inc a
 	ret
 
-; SUGGESTED NAME: YellowIntro_SineTableMultiply
-; Returns hl = YellowIntro sine table entry e times d (shift-and-add multiply) (confidence: high)
-Func_fa08e:
+; Returns hl = YellowIntro sine table entry e times d (shift-and-add multiply)
+YellowIntro_SineTableMultiply:
 	ld e, a
 	ld a, d
 	ld d, $0
-	ld hl, Unkn_fa0aa
+	ld hl, YellowIntroSineTable
 	add hl, de
 	add hl, de
 	ld e, [hl]
@@ -1131,9 +1108,8 @@ Func_fa08e:
 	jr nz, .asm_fa09d
 	ret
 
-; SUGGESTED NAME: YellowIntroSineTable
-; 32-entry half-cycle sine table used by the sine/cosine helpers (confidence: high)
-Unkn_fa0aa:
+; 32-entry half-cycle sine table used by the sine/cosine helpers
+YellowIntroSineTable:
 	sine_table 32
 
 INCLUDE "data/sprite_anims/intro_frames.asm"

@@ -19,16 +19,16 @@ PikachuEmotion10:
 PikachuEmotion7:
 	pikaemotion_dummy2
 	pikaemotion_subcmd PIKAEMOTION_SUBCMD_LOADEXTRAPIKASPRITES
-	pikaemotion_movement PikachuMovementData_fd224
+	pikaemotion_movement PikachuMovementData_TwoQuickHops
 	pikaemotion_pcm PikachuCry1
-	pikaemotion_movement PikachuMovementData_fd224
+	pikaemotion_movement PikachuMovementData_TwoQuickHops
 	pikaemotion_pikapic PikaPicAnimScript7
 	db $ff
 
 PikachuEmotion4:
 	pikaemotion_dummy2
 	pikaemotion_subcmd PIKAEMOTION_SUBCMD_LOADEXTRAPIKASPRITES
-	pikaemotion_movement PikachuMovementData_fd230
+	pikaemotion_movement PikachuMovementData_TwoSlowHops
 	pikaemotion_pcm PikachuCry29
 	pikaemotion_pikapic PikaPicAnimScript4
 	db $ff
@@ -55,7 +55,7 @@ PikachuEmotion6:
 	pikaemotion_dummy2
 	pikaemotion_subcmd PIKAEMOTION_SUBCMD_LOADEXTRAPIKASPRITES
 	pikaemotion_pcm
-	pikaemotion_movement PikachuMovementData_fd21e
+	pikaemotion_movement PikachuMovementData_LookAway
 	pikaemotion_emotebubble SKULL_BUBBLE
 	pikaemotion_pikapic PikaPicAnimScript6
 	db $ff
@@ -70,7 +70,7 @@ PikachuEmotion9:
 	pikaemotion_dummy2
 	pikaemotion_subcmd PIKAEMOTION_SUBCMD_LOADEXTRAPIKASPRITES
 	pikaemotion_pcm PikachuCry6
-	pikaemotion_movement PikachuMovementData_fd218
+	pikaemotion_movement PikachuMovementData_TurnAround
 	pikaemotion_emotebubble SKULL_BUBBLE
 	pikaemotion_pikapic PikaPicAnimScript9
 	db $ff
@@ -90,7 +90,7 @@ PikachuEmotion12:
 PikachuEmotion13:
 	pikaemotion_dummy2
 	pikaemotion_subcmd PIKAEMOTION_SUBCMD_LOADEXTRAPIKASPRITES
-	pikaemotion_movement PikachuMovementData_fd21e
+	pikaemotion_movement PikachuMovementData_LookAway
 	pikaemotion_pikapic PikaPicAnimScript13
 	db $ff
 
@@ -221,33 +221,29 @@ PikachuEmotion32:
 	pikaemotion_pikapic PikaPicAnimScript23
 	db $ff
 
-; SUGGESTED NAME: PikachuMovementData_TurnAround
-; Pikachu turns 180 degrees (two clockwise turns), then holds still ~31 frames (confidence: medium)
-PikachuMovementData_fd218:
+; Pikachu turns 180 degrees (two clockwise turns), then holds still ~31 frames
+PikachuMovementData_TurnAround:
 	db $00
 	db $39,  2 - 1
 	db $3e, 31 - 1
 	db $3f
 
-; SUGGESTED NAME: PikachuMovementData_LookAway
-; Pikachu makes one clockwise quarter turn, then holds still ~31 frames (confidence: medium)
-PikachuMovementData_fd21e:
+; Pikachu makes one clockwise quarter turn, then holds still ~31 frames
+PikachuMovementData_LookAway:
 	db $00
 	db $39,  1 - 1
 	db $3e, 31 - 1
 	db $3f
 
-; SUGGESTED NAME: PikachuMovementData_TwoQuickHops
-; Pikachu hops in place twice, quickly (8 frames per hop) (confidence: medium)
-PikachuMovementData_fd224:
+; Pikachu hops in place twice, quickly (8 frames per hop)
+PikachuMovementData_TwoQuickHops:
 	db $00
 	db $3c, 8 - 1, (2 << 4) | (16 - 1)
 	db $3c, 8 - 1, (2 << 4) | (16 - 1)
 	db $3f
 
-; SUGGESTED NAME: PikachuMovementData_TwoSlowHops
-; Pikachu hops in place twice, slowly (16 frames per hop) (confidence: medium)
-PikachuMovementData_fd230:
+; Pikachu hops in place twice, slowly (16 frames per hop)
+PikachuMovementData_TwoSlowHops:
 	db $00
 	db $3c, 16 - 1, (1 << 4) | (16 - 1)
 	db $3c, 16 - 1, (1 << 4) | (16 - 1)

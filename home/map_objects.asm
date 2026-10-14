@@ -71,11 +71,11 @@ IsItemInBag::
 	ret
 
 IsSurfingPikachuInParty::
-; set bit 6 of wd472 if true
-; also calls Func_3467, which is a bankswitch to IsStarterPikachuAliveInOurParty
-	ld a, [wd472]
+; set bit 6 of wPikachuPartyFlags if true
+; also calls SetStarterPikachuInPartyFlag, which is a bankswitch to IsStarterPikachuAliveInOurParty
+	ld a, [wPikachuPartyFlags]
 	and $3f
-	ld [wd472], a
+	ld [wPikachuPartyFlags], a
 	ld hl, wPartyMon1
 	ld c, PARTY_LENGTH
 	ld b, SURF
@@ -99,9 +99,9 @@ IsSurfingPikachuInParty::
 	cp b
 	jr nz, .noSurf
 .hasSurf
-	ld a, [wd472]
+	ld a, [wPikachuPartyFlags]
 	set 6, a
-	ld [wd472], a
+	ld [wPikachuPartyFlags], a
 .noSurf
 	pop hl
 .notPikachu
@@ -109,21 +109,20 @@ IsSurfingPikachuInParty::
 	add hl, de
 	dec c
 	jr nz, .loop
-	call Func_3467
+	call SetStarterPikachuInPartyFlag
 	ret
 
-; SUGGESTED NAME: SetStarterPikachuInPartyFlag
-; Sets wd472 bit 7 if starter Pikachu is alive in the party (pret: local .checkForStarter) (confidence: high)
-Func_3467::
+; Sets wPikachuPartyFlags bit 7 if starter Pikachu is alive in the party (pret: local .checkForStarter)
+SetStarterPikachuInPartyFlag::
 	push hl
 	push bc
 	callfar IsStarterPikachuAliveInOurParty
 	pop bc
 	pop hl
 	ret nc
-	ld a, [wd472]
+	ld a, [wPikachuPartyFlags]
 	set 7, a
-	ld [wd472], a
+	ld [wPikachuPartyFlags], a
 	ret
 
 DisplayPokedex::
@@ -149,9 +148,8 @@ SetSpriteImageIndexAfterSettingFacingDirection::
 	ld [hl], a
 	ret
 
-; SUGGESTED NAME: SetSpriteImageIndexFromPicID
-; Sets sprite hSpriteIndex's image index to (picture ID-1)*16 + hSpriteImageIndex (confidence: medium)
-SpriteFunc_34a1::
+; Sets sprite hSpriteIndex's image index to (picture ID-1)*16 + hSpriteImageIndex
+SetSpriteImageIndexFromPicID::
 	ldh a, [hSpriteIndex]
 	swap a
 	add $e

@@ -356,9 +356,8 @@ SFX_Run::
 	channel_count 1
 	channel 8, SFX_Run_Ch8
 
-; SUGGESTED NAME: SFX_Dex_Data_Added
-; SFX for "New DEX data will be added" after a catch (TX_SOUND_DEX_PAGE_ADDED) (confidence: medium)
-SFX_Dex_Page_Added::
+; SFX for "New DEX data will be added" after a catch (TX_SOUND_DEX_PAGE_ADDED)
+SFX_Dex_Data_Added::
 	channel_count 2
 	channel 5, SFX_Dex_Page_Added_Ch5
 	channel 6, SFX_Dex_Page_Added_Ch6
