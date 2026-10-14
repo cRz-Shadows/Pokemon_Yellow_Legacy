@@ -456,10 +456,64 @@ PickStarterConfirmCantAttackText:
 	text_far _PickStarterConfirmCantAttackText
 	text_end
 
+; Pick Starter mode: if the player picked a Bulbasaur/Charmander/Squirtle-line
+; mon, the rival takes the starter that beats it, as in Red/Blue, and keeps
+; its line all game (see RIVAL_STARTER_BULBASAUR).
+PickStarterSetRivalStarter::
+	ld a, [wPlayerStarter]
+	ld b, a
+	ld hl, PickStarterRivalCounters
+.loop
+	ld a, [hli]
+	cp -1
+	ret z
+	cp b
+	ld a, [hli]
+	jr nz, .loop
+	ld [wRivalStarter], a
+	ret
+
+PickStarterRivalCounters: ; player's pick, rival's starter
+	db BULBASAUR,  RIVAL_STARTER_CHARMANDER
+	db IVYSAUR,    RIVAL_STARTER_CHARMANDER
+	db VENUSAUR,   RIVAL_STARTER_CHARMANDER
+	db CHARMANDER, RIVAL_STARTER_SQUIRTLE
+	db CHARMELEON, RIVAL_STARTER_SQUIRTLE
+	db CHARIZARD,  RIVAL_STARTER_SQUIRTLE
+	db SQUIRTLE,   RIVAL_STARTER_BULBASAUR
+	db WARTORTLE,  RIVAL_STARTER_BULBASAUR
+	db BLASTOISE,  RIVAL_STARTER_BULBASAUR
+	db -1 ; end
+
 ; Pick Starter mode: the rival's comment on the player's starter (not PIKACHU)
-; before his first battle in Oak's lab: an EEVEE like his, a legendary, a mon
-; that can't attack yet, or else its type.
+; before his first battle in Oak's lab: swapping his EEVEE for a counter
+; starter (see PickStarterSetRivalStarter), an EEVEE like his, a legendary, a
+; mon that can't attack yet, or else its type.
 PickStarterRivalComment::
+	ld a, [wRivalStarter]
+	cp FIRST_RIVAL_COUNTER_STARTER
+	jr c, .comment
+	sub FIRST_RIVAL_COUNTER_STARTER
+	ld c, a
+	ld b, 0
+	ld hl, PickStarterRivalCounterSpecies
+	add hl, bc
+	ld a, [hl]
+	ld [wNamedObjectIndex], a
+	call GetMonName
+	ld hl, wNameBuffer
+	ld de, wStringBuffer
+	ld bc, NAME_LENGTH
+	call CopyData
+	ld a, [wPlayerStarter]
+	ld [wNamedObjectIndex], a
+	call GetMonName
+	ld hl, PickStarterRivalSwapText
+	call PrintText
+	ld hl, PickStarterRivalSwappedText
+	jp PrintText
+
+.comment
 	ld a, [wPlayerStarter]
 	ld [wCurPartySpecies], a
 	ld [wCurSpecies], a
@@ -500,6 +554,11 @@ PickStarterRivalComment::
 .print
 	jp PrintText
 
+PickStarterRivalCounterSpecies: ; indexed by wRivalStarter - FIRST_RIVAL_COUNTER_STARTER
+	db BULBASAUR  ; RIVAL_STARTER_BULBASAUR
+	db CHARMANDER ; RIVAL_STARTER_CHARMANDER
+	db SQUIRTLE   ; RIVAL_STARTER_SQUIRTLE
+
 PickStarterLegendaries:
 	db ARTICUNO
 	db ZAPDOS
@@ -522,4 +581,13 @@ PickStarterRivalCantAttackText:
 
 PickStarterRivalTypeText:
 	text_far _PickStarterRivalTypeText
+	text_end
+
+PickStarterRivalSwapText:
+	text_far _PickStarterRivalSwapText
+	text_end
+
+PickStarterRivalSwappedText:
+	text_far _PickStarterRivalSwappedText
+	sound_get_key_item
 	text_end

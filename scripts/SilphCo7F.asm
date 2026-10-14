@@ -184,8 +184,7 @@ SilphCo7FRivalStartBattleScript:
 	call SaveEndBattleTextPointers
 	ld a, OPP_RIVAL2
 	ld [wCurOpponent], a
-	ld a, [wRivalStarter]
-	add 4
+	rival_team_by_variant 4, 17
 	ld [wTrainerNo], a
 	ld a, SCRIPT_SILPHCO7F_RIVAL_AFTER_BATTLE
 	call SilphCo7FSetCurScript

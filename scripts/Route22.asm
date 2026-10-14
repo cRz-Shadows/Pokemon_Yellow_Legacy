@@ -22,20 +22,19 @@ Route22SetDefaultScript:
 Route22NoopScript:
 	ret
 
-; Sets the first Route 22 rival battle opponent (OPP_RIVAL1, trainer 2)
+; Sets the first Route 22 rival battle opponent (OPP_RIVAL1, trainer 2, or 7-9)
 Route22SetRival1OpponentScript:
 	ld a, OPP_RIVAL1
 	ld [wCurOpponent], a
-	ld a, $2
+	rival_team_fixed 2, 7
 	ld [wTrainerNo], a
 	ret
 
-; Sets the second rival battle opponent (OPP_RIVAL2, trainer wRivalStarter + 7)
+; Sets the second rival battle opponent (OPP_RIVAL2, trainer wRivalStarter + 7, or 20-22)
 Route22SetRival2OpponentScript:
 	ld a, OPP_RIVAL2
 	ld [wCurOpponent], a
-	ld a, [wRivalStarter]
-	add 7
+	rival_team_by_variant 7, 20
 	ld [wTrainerNo], a
 	ret
 

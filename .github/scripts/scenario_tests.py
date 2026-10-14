@@ -18,6 +18,9 @@ the result.
 - Oak's lab: the rival comments on a picked EEVEE ("Copycat") and on a pick
   that can't attack yet (MAGIKARP) before his first battle. The type and
   legendary comments are covered by the smoke test.
+- Cerulean City rival battle: with a CHARMANDER pick (Pick Starter mode) the
+  rival's ace is WARTORTLE, his counter starter's line (issue #106); in Normal
+  mode it's EEVEE. The lab battle's counter is covered by the smoke test.
 - Saving writes PIKACHU's happiness and mood to their own place in the save
   (issue #103: the party/Pokédex save used vanilla's offset, 78 bytes early,
   and overwrote other saved data), and the save checksum stays valid.
@@ -63,11 +66,12 @@ def load(prefix, state, label):
     return g
 
 
-def warp(g, map_name, came_from):
-    """Enter map_name at its first warp, as if walking in from came_from."""
+def warp(g, map_name, came_from, warp_id=0):
+    """Enter map_name at warp warp_id (its order in the map's warp_event list),
+    as if walking in from came_from."""
     mem = g.pb.memory
     mem[g.syms['hWarpDestinationMap']] = g.const(map_name)
-    mem[g.syms['wDestinationWarpID']] = 0
+    mem[g.syms['wDestinationWarpID']] = warp_id
     mem[g.syms['wLastMap']] = g.const(came_from)
     mem[g.syms['wStatusFlags3']] |= 1 << g.const('BIT_WARP_FROM_CUR_SCRIPT')
     g.run(300)
@@ -126,6 +130,8 @@ def rival_comment(prefix, state, label, species, expect):
     try:
         set_up_party(g, species=species)
         g.pb.memory[g.syms['wPlayerStarter']] = g.const(species)
+        # the CHARMANDER pick gave the rival a counter starter; these picks don't
+        g.pb.memory[g.syms['wRivalStarter']] = g.const('RIVAL_STARTER_JOLTEON')
         challenge = g.const('SCRIPT_OAKSLAB_RIVAL_CHALLENGES_PLAYER')
         for _ in range(60):
             if g.mem('wOaksLabCurScript') == challenge and g.mem('wJoyIgnore'):
@@ -140,6 +146,35 @@ def rival_comment(prefix, state, label, species, expect):
                 return f'rival: "{seen[-1]}"'
             g.press('a', 25)
         g.fail(f'expected the rival to say "{expect}", text was "{" | ".join(dict.fromkeys(seen))}"')
+    finally:
+        g.stop()
+
+
+# --- Rival's team ----------------------------------------------------------
+
+def cerulean_rival(prefix, state, label, expect_ace):
+    """Enter Cerulean City by the trashed house's back door, put the player on
+    the rival's trigger spot (21, 6) and check his last Pokémon in battle."""
+    g = load(prefix, state, label)
+    try:
+        warp(g, 'CERULEAN_CITY', 'CERULEAN_TRASHED_HOUSE', 7)  # back door (27, 9)
+        g.press('up', 12, hold=10)
+        g.press('up', 12, hold=10)
+        g.run(60)  # finish the step, then stand on the trigger
+        g.pb.memory[g.syms['wXCoord']] = 21
+        g.pb.memory[g.syms['wYCoord']] = 6
+        for _ in range(120):
+            if g.mem('wIsInBattle'):
+                break
+            g.press('a', 30)
+        else:
+            g.fail('the Cerulean City rival battle never started')
+        count = g.mem('wEnemyPartyCount')
+        party = [g.mem('wEnemyPartySpecies', i) for i in range(count)]
+        if not party or party[-1] != g.const(expect_ace):
+            g.fail(f'expected the rival\'s ace to be {expect_ace} ({g.const(expect_ace):#04x}), '
+                   f'party was {[hex(x) for x in party]} (team {g.mem("wTrainerNo")})')
+        return f'rival team {g.mem("wTrainerNo")}, ace {expect_ace}'
     finally:
         g.stop()
 
@@ -352,6 +387,9 @@ def main():
          lambda: rival_comment(p, pick, 'Rival eevee', 'EEVEE', 'Copycat')),
         ('Rival comment: Pick Starter, MAGIKARP',
          lambda: rival_comment(p, pick, 'Rival magikarp', 'MAGIKARP', 'even attack')),
+        ('Rival: Cerulean City, Pick Starter CHARMANDER',
+         lambda: cerulean_rival(p, pick, 'Rival Cerulean pick', 'WARTORTLE')),
+        ('Rival: Cerulean City, Normal', lambda: cerulean_rival(p, normal, 'Rival Cerulean normal', 'EEVEE')),
         ('Save: PIKACHU happiness offset', lambda: pikachu_happiness_save(p, normal)),
         ('Melanie: Pick Starter, CHARMANDER', lambda: melanie(p, pick, 'Melanie pick', None, True)),
         ('Melanie: Normal, unhappy PIKACHU', lambda: melanie(p, normal, 'Melanie unhappy', -47, False)),

@@ -11,7 +11,9 @@ first rival battle -> rival leaves -> talk to Oak.
 Two more Pick Starter cases cover the picker's list wrap (UP from the top
 gives MEW) and paging (RIGHT moves a page).
 Before the rival battle, the rival must comment on a picked starter (its type,
-or that it's legendary), and say nothing extra about a PIKACHU.
+or that it's legendary), and say nothing extra about a PIKACHU. A CHARMANDER
+pick makes him swap his EEVEE for SQUIRTLE, and a SQUIRTLE pick for BULBASAUR,
+which he then uses in the battle.
 SELECT in the picker must cycle the preview: types, base stats, level-5 moves.
 The debug ROM must reach its debug menu.
 
@@ -35,6 +37,7 @@ CASES = [
     ('Normal', 0, None, 'PIKACHU'),
     ('Hard', 1, None, 'PIKACHU'),
     ('Pick Starter: Charmander', 2, ['down'] * 3, 'CHARMANDER'),
+    ('Pick Starter: Squirtle', 2, ['down'] * 6, 'SQUIRTLE'),
     ('Pick Starter: Pikachu', 2, ['down'] * 24, 'PIKACHU'),
     ('Pick Starter: wrap to Mew', 2, ['up'], 'MEW'),
     ('Pick Starter: paging', 2, ['right', 'right', 'down'], 'PIDGEY'),  # #1 -> #8 -> #15 -> #16
@@ -42,8 +45,11 @@ CASES = [
 
 # The rival's comment on a picked starter (text() drops punctuation). The
 # EEVEE and "can't attack" comments are covered by the scenario tests.
-RIVAL_COMMENTS = {'CHARMANDER': 'FIRE type', 'MEW': 'legendary', 'PIDGEY': 'NORMAL type'}
-RIVAL_COMMENT_MARKERS = ('type  eh', 'legendary', 'Copycat', 'even attack')
+RIVAL_COMMENTS = {'CHARMANDER': 'Then I want a', 'SQUIRTLE': 'Then I want a',
+                  'MEW': 'legendary', 'PIDGEY': 'NORMAL type'}
+RIVAL_COMMENT_MARKERS = ('type  eh', 'legendary', 'Copycat', 'even attack', 'I want a')
+# The rival's Pokémon in the lab battle (issue #106: he counters a starter-line pick)
+RIVAL_LAB_MON = {'CHARMANDER': 'SQUIRTLE', 'SQUIRTLE': 'BULBASAUR'}
 
 
 class TestFailure(Exception):
@@ -262,9 +268,12 @@ def rival_battle_and_exit(g):
         read_box()
         g.press('b', 15)
     seen = set()
+    g.rival_mon = None
     for step in range(1500):
         if step < 100:
             read_box()
+        if g.mem('wIsInBattle') and g.rival_mon is None and g.mem('wEnemyPartyCount'):
+            g.rival_mon = g.mem('wEnemyPartySpecies')
         seen.add(g.mem('wOaksLabCurScript'))
         if (g.mem('wOaksLabCurScript') == noop and step > 50
                 and g.mem('wJoyIgnore') == 0 and not g.mem('wIsInBattle')):
@@ -314,6 +323,9 @@ def test_case(prefix, label, difficulty, pick_buttons, expected):
             g.fail(f'expected the rival to say "{comment}", he said "{challenge_text}"')
         if not comment and any(m in challenge_text for m in RIVAL_COMMENT_MARKERS):
             g.fail(f'the rival commented on {expected}: "{challenge_text}"')
+        rival_mon = RIVAL_LAB_MON.get(expected, 'EEVEE')
+        if g.rival_mon != g.const(rival_mon):
+            g.fail(f'expected the rival to use {rival_mon} in the lab, got species {g.rival_mon}')
         escape_scene = {g.const('SCRIPT_OAKSLAB_PIKACHU_ESCAPES_POKEBALL'),
                         g.const('SCRIPT_OAKSLAB_PIKACHU_DISLIKES_POKEBALLS')}
         if pikachu and not seen & escape_scene:
@@ -326,6 +338,7 @@ def test_case(prefix, label, difficulty, pick_buttons, expected):
             g.fail(f'expected Oak to say "{want}...", he said "{oak}"')
         scene = 'escape scene played' if pikachu else 'no escape scene'
         rival = f'rival said "{comment}"' if comment else 'no rival comment'
+        rival += f', used {rival_mon}'
         return f'received {expected}, level 5; {rival}; rival battle done; {scene}; Oak: "{want}..."'
     finally:
         g.stop()

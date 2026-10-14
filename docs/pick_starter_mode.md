@@ -24,7 +24,8 @@ Pick Starter is a third play mode alongside **Normal** and **Hard**. It plays li
 - **If you pick anything else:**
   - Nothing follows you.
   - The Pikachu-only scenes are skipped. They check for the starter Pikachu, as they do in Normal mode when Pikachu is in the PC.
-  - In Oak's lab, your rival comments on your pick before your first battle: an Eevee like his ("Copycat!"), a legendary or Mew, a Pokémon that can't attack yet, or otherwise its (first) type. He still takes Eevee.
+  - In Oak's lab, your rival comments on your pick before your first battle: an Eevee like his ("Copycat!"), a legendary or Mew, a Pokémon that can't attack yet, or otherwise its (first) type.
+  - **If you pick a Bulbasaur, Charmander or Squirtle-line Pokémon**, your rival counters it, as in Red/Blue. He swaps his Eevee for the starter that beats yours: Charmander against the Bulbasaur line, Squirtle against the Charmander line, Bulbasaur against the Squirtle line. He keeps that starter's line in every rival battle, evolving it by level. His other Pokémon come from his usual Legacy teams: the Jolteon team's with Bulbasaur, the Flareon team's with Charmander, the Vaporeon team's with Squirtle. His Champion rematch team is unchanged, and no Eeveelution stands in the Champion's room after the Hall of Fame.
   - In Oak's lab, the "Pikachu escapes its Poké Ball" scene is skipped. Oak then gives his usual battle advice instead of "talk to it and see how it feels".
   - **Melanie** (Cerulean City) gives you **Bulbasaur** without needing a happy Pikachu.
   - **Charmander** (Route 24) and **Squirtle** (Officer Jenny, Vermilion City) are available as usual, so all three classic starters can be obtained.
@@ -70,6 +71,7 @@ New games:
 Story with a non-Pikachu starter:
 - [ ] Picker: SELECT cycles types, base stats and level-5 moves; the prompt still names the right Pokémon
 - [ ] Oak's lab: the rival comments on the pick (try an Eevee, a legendary, a weak pick and a regular pick)
+- [ ] Bulbasaur/Charmander/Squirtle-line pick: the rival swaps for the counter starter, uses it in every rival battle (lab, Route 22, Cerulean, S.S. Anne, Pokémon Tower, Silph Co., Route 22, Champion) and evolves it
 - [ ] Oak's lab: first rival battle, rival leaves, no Pikachu scene, Oak's advice line
 - [ ] Viridian City parcel and Pokédex
 - [ ] Viridian Forest and Brock
@@ -117,6 +119,7 @@ Regression in Normal and Hard:
 
 - Pick Starter picker: SELECT shows the highlighted Pokémon's base stats or its level-5 moves instead of its types.
 - Pick Starter mode: your rival comments on your starter before your first battle.
+- Pick Starter mode: pick a Bulbasaur, Charmander or Squirtle-line Pokémon and your rival takes the starter that beats it, as in Red/Blue, and keeps its line all game.
 - Fixed (all modes): saving after a trade didn't store Pikachu's happiness and mood in the right place, and every save wrote them over 2 bytes of other saved data.
 
 Normal and Hard rules and existing saves are unchanged.
