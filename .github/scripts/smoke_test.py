@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
 """Headless smoke tests: play the start of the game in PyBoy.
 
-For each difficulty: new game -> Oak stops you in the grass -> starter in his
-lab. Normal and Hard must give PIKACHU; Pick Starter must open the picker and
-give the picked Pokémon. The debug ROM must reach its debug menu.
+For each case: new game -> Oak stops you in the grass -> starter in his lab ->
+first rival battle -> rival leaves -> talk to Oak.
+- Normal and Hard must give PIKACHU, and the "Pikachu escapes its Poké Ball"
+  scene must play; Oak then says to talk to it.
+- Pick Starter must open the picker and give the picked Pokémon. Picking
+  PIKACHU must behave like Normal; picking anything else must skip the escape
+  scene, and Oak gives his battle advice instead.
+The debug ROM must reach its debug menu.
 
 Usage: smoke_test.py ROM_PREFIX [DEBUG_ROM_PREFIX]
        (a prefix is the ROM path without .gbc; the .sym next to it is used)
@@ -11,18 +16,32 @@ On failure a screenshot is saved to smoke_test_failures/.
 """
 
 import os
+import re
 import sys
 
 from pyboy import PyBoy
 
 FAIL_DIR = 'smoke_test_failures'
-PICK_STARTER_DEX_NO = 4  # CHARMANDER
 
-MODES = [
-    ('Normal', 0),
-    ('Hard', 1),
-    ('Pick Starter', 2),
+# (label, difficulty, Pokédex number to pick or None, expected starter)
+CASES = [
+    ('Normal', 0, None, 'PIKACHU'),
+    ('Hard', 1, None, 'PIKACHU'),
+    ('Pick Starter: Charmander', 2, 4, 'CHARMANDER'),
+    ('Pick Starter: Pikachu', 2, 25, 'PIKACHU'),
 ]
+
+
+def oaks_lab_scripts():
+    """SCRIPT_OAKSLAB_* name -> value, from the order of the script pointers."""
+    names = re.findall(r'^\tdw_const \w+,\s+(SCRIPT_OAKSLAB_\w+)',
+                       open('scripts/OaksLab.asm').read(), re.MULTILINE)
+    return {name: i for i, name in enumerate(names)}
+
+
+LAB = oaks_lab_scripts()
+ESCAPE_SCENE = {LAB['SCRIPT_OAKSLAB_PIKACHU_ESCAPES_POKEBALL'],
+                LAB['SCRIPT_OAKSLAB_PIKACHU_DISLIKES_POKEBALLS']}
 
 
 class TestFailure(Exception):
@@ -74,7 +93,7 @@ class Game:
 
     def fail(self, message):
         os.makedirs(FAIL_DIR, exist_ok=True)
-        path = os.path.join(FAIL_DIR, self.name.replace(' ', '_') + '.png')
+        path = os.path.join(FAIL_DIR, re.sub(r'\W+', '_', self.name) + '.png')
         self.pb.screen.image.save(path)
         raise TestFailure(f'{message} (screenshot: {path})')
 
@@ -146,7 +165,7 @@ def walk_to_oaks_lab(g):
     g.fail(f'never reached Oak\'s lab (stuck at map {mp:#x} ({x}, {y}))')
 
 
-def get_starter(g, pick_starter):
+def get_starter(g, pick_dex_no):
     """In Oak's lab: check the Poké Ball and receive (or pick) the starter.
     Returns the "received" text."""
     for i in range(80):  # Oak's arrival scene
@@ -157,7 +176,7 @@ def get_starter(g, pick_starter):
         g.press(d, 30, hold=10)
     g.press('up', 20, hold=3)
     g.press('a', 60)
-    if pick_starter:
+    if pick_dex_no:
         for _ in range(400):
             if 'TYPE1' in g.text():
                 break
@@ -165,7 +184,7 @@ def get_starter(g, pick_starter):
         else:
             g.fail('the Pick Starter picker never opened')
         g.run(60)
-        for _ in range(PICK_STARTER_DEX_NO - 1):
+        for _ in range(pick_dex_no - 1):
             g.press('down', 16, hold=8)
         g.run(120)
         for _ in range(10):  # confirm, retrying while the sprite loads
@@ -187,23 +206,71 @@ def get_starter(g, pick_starter):
     g.fail('never received a starter')
 
 
-def test_mode(prefix, label, mode_index):
+def rival_battle_and_exit(g):
+    """Walk toward the exit to trigger the rival's challenge, play through the
+    battle (win or lose) until the rival has left and the player is free.
+    Returns the set of lab script states seen."""
+    for _ in range(40):  # let the gift text finish
+        g.press('b', 20)
+    for _ in range(60):
+        if g.mem('wIsInBattle') or g.mem('wOaksLabCurScript') != LAB['SCRIPT_OAKSLAB_RIVAL_CHALLENGES_PLAYER']:
+            break
+        g.press('down', 10, hold=12)
+        g.press('b', 15)
+    seen = set()
+    for step in range(1500):
+        seen.add(g.mem('wOaksLabCurScript'))
+        if (g.mem('wOaksLabCurScript') == LAB['SCRIPT_OAKSLAB_NOOP'] and step > 50
+                and g.mem('wJoyIgnore') == 0 and not g.mem('wIsInBattle')):
+            for _ in range(30):  # finish any open text box
+                g.press('b', 20)
+            return seen
+        g.press('a', 20)
+    g.fail(f'the rival battle and exit never finished (lab script {g.mem("wOaksLabCurScript")})')
+
+
+def talk_to_oak(g):
+    """Walk below Oak (5, 2), talk to him and return his text."""
+    for _ in range(40):
+        _, x, y = g.pos()
+        if (x, y) == (5, 3):
+            break
+        g.press('b', 15)
+        g.press('left' if x > 5 else 'right' if x < 5 else ('up' if y > 3 else 'down'), 15, hold=10)
+    else:
+        g.fail(f'could not walk to Oak (at {g.pos()[1:]})')
+    g.press('up', 20, hold=3)
+    g.press('a', 90)
+    t = g.text()
+    return ' '.join(t[i * 20:(i + 1) * 20].strip() for i in range(13, 17))
+
+
+def test_case(prefix, label, difficulty, pick_dex_no, expected):
     g = Game(prefix, label)
     try:
-        new_game(g, mode_index)
-        if g.mem('wDifficulty') != mode_index:
-            g.fail(f'difficulty byte is {g.mem("wDifficulty")}, expected {mode_index}')
+        new_game(g, difficulty)
+        if g.mem('wDifficulty') != difficulty:
+            g.fail(f'difficulty byte is {g.mem("wDifficulty")}, expected {difficulty}')
         walk_to_oaks_lab(g)
-        pick = mode_index == 2
-        received = get_starter(g, pick)
-        expected = 'CHARMANDER' if pick else 'PIKACHU'
+        received = get_starter(g, pick_dex_no)
         if expected not in received:
             g.fail(f'expected to receive {expected}, text was "{received}"')
         if g.mem('wPartyCount') != 1 or g.mem('wPartyMon1Level') != 5:
             g.fail(f'party count {g.mem("wPartyCount")}, level {g.mem("wPartyMon1Level")}')
         if g.mem('wPartySpecies') != g.mem('wPlayerStarter'):
             g.fail('party species does not match wPlayerStarter')
-        return f'received {expected}, level 5'
+        pikachu = expected == 'PIKACHU'
+        seen = rival_battle_and_exit(g)
+        if pikachu and not seen & ESCAPE_SCENE:
+            g.fail('the "Pikachu escapes its Poké Ball" scene did not play')
+        if not pikachu and seen & ESCAPE_SCENE:
+            g.fail('the "Pikachu escapes its Poké Ball" scene played without a starter Pikachu')
+        oak = talk_to_oak(g)
+        want = 'You should' if pikachu else 'If a wild'
+        if want not in oak:
+            g.fail(f'expected Oak to say "{want}...", he said "{oak}"')
+        scene = 'escape scene played' if pikachu else 'no escape scene'
+        return f'received {expected}, level 5; rival battle done; {scene}; Oak: "{want}..."'
     finally:
         g.stop()
 
@@ -226,8 +293,7 @@ def test_debug_menu(prefix):
 
 
 def main():
-    tests = [(label, lambda label=label, m=m: test_mode(sys.argv[1], label, m))
-             for label, m in MODES]
+    tests = [(case[0], lambda case=case: test_case(sys.argv[1], *case)) for case in CASES]
     if len(sys.argv) > 2:
         tests.append(('Debug menu', lambda: test_debug_menu(sys.argv[2])))
     failed = 0
