@@ -389,6 +389,7 @@ LearnMoveFromLevelUp:
 
 ; SUGGESTED NAME: CanMonOrPreEvosLearnMove
 ; Carry if wCurPartySpecies or up to 2 pre-evolutions can learn move wTempTMHM (confidence: high)
+; Unreferenced: its only caller was the debug box editor, which was never reachable.
 Func_3b079:
 	ld a, [wCurPartySpecies]
 	push af

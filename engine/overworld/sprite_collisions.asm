@@ -333,11 +333,6 @@ DetectCollisionBetweenSprites:
 	jp nz, .loop
 	ret
 
-; takes delta X or delta Y in a
-; b = delta X/Y
-; c = 0 if delta X/Y is 0
-; c = 7 if delta X/Y is 1
-; c = 9 if delta X/Y is -1
 ; SUGGESTED NAME: SetPlayerPikachuCollisionDirection
 ; On a player/Pikachu collision, stores the collision direction bits in wd434 (confidence: medium)
 Func_4d0a:

@@ -265,60 +265,60 @@ SilphCo11FScript_6229c:
 ; SUGGESTED NAME: SilphCo11FJamesMovement_PlayerX3
 ; James runs up 5 (player at X 3) (confidence: medium)
 SilphCo11FMovementData_622f5:
-	db $5
-	db $5
-	db $5
-	db $5
-	db $5
+	db NPC_FAST_STEP_UP
+	db NPC_FAST_STEP_UP
+	db NPC_FAST_STEP_UP
+	db NPC_FAST_STEP_UP
+	db NPC_FAST_STEP_UP
 	db $ff
 
 ; SUGGESTED NAME: SilphCo11FJessieMovement_PlayerX3
 ; Jessie runs up 4 (player at X 3) (confidence: medium)
 SilphCo11FMovementData_622fb:
-	db $5
-	db $5
-	db $5
-	db $5
+	db NPC_FAST_STEP_UP
+	db NPC_FAST_STEP_UP
+	db NPC_FAST_STEP_UP
+	db NPC_FAST_STEP_UP
 	db $ff
 
 ; SUGGESTED NAME: SilphCo11FJamesMovement_PlayerX2
 ; James runs up 4 (player at X 2, EVENT_780) (confidence: medium)
 SilphCo11FMovementData_62300:
-	db $5
-	db $5
-	db $5
-	db $5
+	db NPC_FAST_STEP_UP
+	db NPC_FAST_STEP_UP
+	db NPC_FAST_STEP_UP
+	db NPC_FAST_STEP_UP
 	db $ff
 
 ; SUGGESTED NAME: SilphCo11FJessieMovement_PlayerX2
 ; Jessie runs up 5 (player at X 2, EVENT_780) (confidence: medium)
 SilphCo11FMovementData_62305:
-	db $5
-	db $5
-	db $5
-	db $5
-	db $5
+	db NPC_FAST_STEP_UP
+	db NPC_FAST_STEP_UP
+	db NPC_FAST_STEP_UP
+	db NPC_FAST_STEP_UP
+	db NPC_FAST_STEP_UP
 	db $ff
 
 ; SUGGESTED NAME: SilphCo11FJamesMovement_PlayerX0To1
 ; James runs up 2, left 1, up 2 (player at X 0-1, EVENT_781) (confidence: medium)
 SilphCo11FMovementData_6230b:
-	db $5
-	db $5
-	db $6
-	db $5
-	db $5
+	db NPC_FAST_STEP_UP
+	db NPC_FAST_STEP_UP
+	db NPC_FAST_STEP_LEFT
+	db NPC_FAST_STEP_UP
+	db NPC_FAST_STEP_UP
 	db $ff
 
 ; SUGGESTED NAME: SilphCo11FJessieMovement_PlayerX0To1
 ; Jessie runs up 3, left 1, up 2 (player at X 0-1, EVENT_781) (confidence: medium)
 SilphCo11FMovementData_62311:
-	db $5
-	db $5
-	db $5
-	db $6
-	db $5
-	db $5
+	db NPC_FAST_STEP_UP
+	db NPC_FAST_STEP_UP
+	db NPC_FAST_STEP_UP
+	db NPC_FAST_STEP_LEFT
+	db NPC_FAST_STEP_UP
+	db NPC_FAST_STEP_UP
 	db $ff
 
 SilphCo11FScript5:

@@ -427,11 +427,6 @@ _ExpressionText::
 	text "."
 	prompt
 
-_NotEnoughMemoryText::
-	text "Not enough Yellow"
-	line "Version memory."
-	done
-
 _OakSpeechText1::
 	text "Hello there!"
 	line "Welcome to the"

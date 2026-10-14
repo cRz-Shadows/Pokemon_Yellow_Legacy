@@ -988,7 +988,11 @@ Func_fa008:
 	ret
 
 ; SUGGESTED NAME: YellowIntroAnimSeq_SlideRightToCenter
-; Object callback (surfing Pikachu): moves X right 4px/frame until $58, also writes Y (confidence: medium)
+; Object callback (surfing Pikachu): moves X right 4px/frame until $58.
+; Y is then set to the new X + 1 (a still holds X) until X reaches $58, so the
+; object slides in diagonally from the top left. The spawn Y ($40) is never
+; used. This is the original game's code (same in pret), left as-is so the
+; intro looks the same as in Pokémon Yellow.
 Func_fa014:
 	ld hl, $4
 	add hl, bc

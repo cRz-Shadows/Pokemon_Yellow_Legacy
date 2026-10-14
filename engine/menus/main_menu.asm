@@ -131,21 +131,6 @@ InitOptions:
 	ld [wPrinterSettings], a
 	ret
 
-; SUGGESTED NAME: CheckEnoughMemoryStub
-; Leftover "not enough memory" check; the compare always returns early (confidence: medium)
-Func_5cc1:
-; unused?
-	ld a, $6d
-	cp $80
-	ret c ; will always be executed
-	ld hl, NotEnoughMemoryText
-	call PrintText
-	ret
-
-NotEnoughMemoryText:
-	text_far _NotEnoughMemoryText
-	text_end
-
 StartNewGame:
 	ld hl, wStatusFlags6
 	; Ensure debug mode is not used when
@@ -174,7 +159,6 @@ SpecialEnterMap::
 	call ResetPlayerSpriteData
 	ld c, 20
 	call DelayFrames
-	call Func_5cc1
 	ld a, [wEnteringCableClub]
 	and a
 	ret nz

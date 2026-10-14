@@ -23,6 +23,20 @@ _JumpMoveEffect:
 
 INCLUDE "data/moves/effects_pointers.asm"
 
+; Returns nz if Colosseum cup rules apply: a cup was chosen in the link menu
+; and this is a link battle. The cup choice stays set (and is saved) after the
+; link battle, so the link state check keeps the rules out of normal battles.
+CheckLinkBattleCupRules:
+	ld a, [wLinkState]
+	cp LINK_STATE_BATTLING
+	jr nz, .no
+	ld a, [wLinkBattleCupRules]
+	and a
+	ret
+.no
+	xor a
+	ret
+
 SleepEffect:
 	ld de, wEnemyMonStatus
 	ld bc, wEnemyBattleStatus2
@@ -61,9 +75,8 @@ SleepEffect:
 	and $7
 	jr z, .setSleepCounter
 	ld b, a
-	ld a, [wUnknownSerialFlag_d499]
-	and a
-	jr z, .asm_3f1ba ; XXX stadium stuff?
+	call CheckLinkBattleCupRules
+	jr z, .asm_3f1ba ; cup rules shorten sleep to 1-3 turns
 	ld a, b
 	and $3
 	jr z, .setSleepCounter
@@ -223,8 +236,7 @@ FreezeBurnParalyzeEffect:
 	ld a, [wPlayerMoveEffect]
 	cp UNUSED_EFFECT_23 ; more stadium stuff
 	jr nz, .asm_3f2c7
-	ld a, [wUnknownSerialFlag_d499]
-	and a
+	call CheckLinkBattleCupRules
 	ld a, FREEZE_SIDE_EFFECT
 	ld b, 30 percent + 1
 	jr z, .regular_effectiveness
@@ -286,8 +298,7 @@ FreezeBurnParalyzeEffect:
 	ld a, [wEnemyMoveEffect]
 	cp UNUSED_EFFECT_23 ; more stadium stuff
 	jr nz, .asm_3f341
-	ld a, [wUnknownSerialFlag_d499]
-	and a
+	call CheckLinkBattleCupRules
 	ld a, FREEZE_SIDE_EFFECT
 	ld b, 30 percent + 1
 	jr z, .regular_effectiveness2

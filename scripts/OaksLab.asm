@@ -211,9 +211,9 @@ OaksLabChoseStarterScript:
 
 .RivalPushesPlayerAwayFromEeveeBall
 	db $00
-	db $07
-	db $07
-	db $07
+	db NPC_FAST_STEP_RIGHT
+	db NPC_FAST_STEP_RIGHT
+	db NPC_FAST_STEP_RIGHT
 	db $FF
 
 OaksLabRivalTakesPokeballScript:
@@ -429,11 +429,11 @@ OaksLabRivalStartsExitScript:
 .RivalExitMovement
 	db NPC_CHANGE_FACING
 	db NPC_MOVEMENT_DOWN
-	db $04
-	db $04
-	db $04
-	db $04
-	db $04
+	db NPC_FAST_STEP_DOWN
+	db NPC_FAST_STEP_DOWN
+	db NPC_FAST_STEP_DOWN
+	db NPC_FAST_STEP_DOWN
+	db NPC_FAST_STEP_DOWN
 	db -1 ; end
 
 OaksLabPlayerWatchRivalExitScript:

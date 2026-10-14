@@ -282,15 +282,15 @@ MtMoonB2FScript_49e15:
 ; SUGGESTED NAME: MtMoonB2FJessieRunLeftMovement
 ; Jessie runs left 6 tiles (code $06 = fast step left) (confidence: medium)
 MovementData_f9e65:
-	db $06
+	db NPC_FAST_STEP_LEFT
 ; SUGGESTED NAME: MtMoonB2FJamesRunLeftMovement
 ; James runs left 5 tiles (code $06 = fast step left) (confidence: medium)
 MovementData_f9e66:
-	db $06
-	db $06
-	db $06
-	db $06
-	db $06
+	db NPC_FAST_STEP_LEFT
+	db NPC_FAST_STEP_LEFT
+	db NPC_FAST_STEP_LEFT
+	db NPC_FAST_STEP_LEFT
+	db NPC_FAST_STEP_LEFT
 	db $FF
 
 MtMoonB2FScript6:

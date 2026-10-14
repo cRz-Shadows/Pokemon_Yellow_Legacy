@@ -127,13 +127,13 @@ RocketHideoutB4FScript_455a5:
 ; SUGGESTED NAME: RocketHideoutB4FJessieJamesRunDown4Movement
 ; Jessie/James run down 4 tiles (code $4 = fast step down) (confidence: medium)
 RocketHideoutB4FJessieJamesMovementData_45605:
-	db $4
+	db NPC_FAST_STEP_DOWN
 ; SUGGESTED NAME: RocketHideoutB4FJessieJamesRunDown3Movement
 ; Jessie/James run down 3 tiles (code $4 = fast step down) (confidence: medium)
 RocketHideoutB4FJessieJamesMovementData_45606:
-	db $4
-	db $4
-	db $4
+	db NPC_FAST_STEP_DOWN
+	db NPC_FAST_STEP_DOWN
+	db NPC_FAST_STEP_DOWN
 	db $ff
 
 RocketHideoutB4FScript4:

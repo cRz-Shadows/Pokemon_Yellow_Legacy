@@ -186,8 +186,16 @@ SafariZoneEntranceText_f20c9:
 SafariZoneEntranceGetLowCostAdmissionText:
 	ld hl, wSafariSteps
 	ld a, [hl]
-	push af
+	; stop counting at the last entry of Pointers_f2100
+	cp 4
+	jr c, .countRefusal
+	ld a, 4
+	ld [hl], a
+	jr .gotRefusalCount
+.countRefusal
 	inc [hl]
+.gotRefusalCount
+	push af
 	ld e, a
 	ld d, $0
 	ld hl, Pointers_f2100
