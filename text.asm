@@ -263,6 +263,11 @@ INCLUDE "text/Route9.asm"
 INCLUDE "data/text/text_9.asm"
 
 
+SECTION "Pick Starter Text", ROMX
+
+INCLUDE "text/pick_starter.asm"
+
+
 SECTION "Pokédex Text", ROMX
 
 INCLUDE "data/pokemon/dex_text.asm"

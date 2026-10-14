@@ -45,7 +45,8 @@ Pokémon Yellow ROM to get the game. The ROM itself isn't included.
 
 - Choose **PICK STARTER** in the game mode menu when starting a new game. In
   Oak's lab you then pick any of the 151 Pokémon: UP/DOWN to look,
-  LEFT/RIGHT to page, A to choose. You can't leave without choosing.
+  LEFT/RIGHT to page, SELECT to see its base stats or level-5 moves, A to
+  choose. You can't leave without choosing.
 - Everything else uses Normal rules.
 - Only a **PIKACHU** starter follows you around and gets the Pikachu scenes.
   With any other starter, Melanie in Cerulean City still gives you BULBASAUR,

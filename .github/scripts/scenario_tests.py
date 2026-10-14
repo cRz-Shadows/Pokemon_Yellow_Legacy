@@ -15,6 +15,9 @@ the result.
   starter PIKACHU (the Surfin' Dude names it); Normal mode still needs a
   PIKACHU that knows SURF. The posters and the printer follow the same rule
   and must print their own text (issue #53).
+- Oak's lab: the rival comments on a picked EEVEE ("Copycat") and on a pick
+  that can't attack yet (MAGIKARP) before his first battle. The type and
+  legendary comments are covered by the smoke test.
 - With the Virtual Console ROM (optional second argument), the VC patch lets
   the starter PIKACHU play without SURF.
 
@@ -109,6 +112,33 @@ def set_up_party(g, give_surf=False, species=None):
     if species is not None:
         g.pb.memory[g.syms['wPartySpecies']] = g.const(species)
         g.pb.memory[g.syms['wPartyMon1']] = g.const(species)
+
+
+# --- Oak's lab: the rival's comment ------------------------------------------
+
+def rival_comment(prefix, state, label, species, expect):
+    """Makes species the picked starter, walks toward the exit and returns once
+    the rival's challenge text before the battle contains expect."""
+    g = load(prefix, state, label)
+    try:
+        set_up_party(g, species=species)
+        g.pb.memory[g.syms['wPlayerStarter']] = g.const(species)
+        challenge = g.const('SCRIPT_OAKSLAB_RIVAL_CHALLENGES_PLAYER')
+        for _ in range(60):
+            if g.mem('wOaksLabCurScript') == challenge and g.mem('wJoyIgnore'):
+                break  # the rival has noticed the player
+            g.press('down', 10, hold=12)
+        seen = []
+        for _ in range(80):
+            if g.mem('wIsInBattle'):
+                break
+            seen.append(' '.join(dialog_rows(g)))
+            if expect in seen[-1]:
+                return f'rival: "{seen[-1]}"'
+            g.press('a', 25)
+        g.fail(f'expected the rival to say "{expect}", text was "{" | ".join(dict.fromkeys(seen))}"')
+    finally:
+        g.stop()
 
 
 # --- Melanie ---------------------------------------------------------------
@@ -256,6 +286,10 @@ def main():
         return 1
     p = prefix
     tests = [
+        ('Rival comment: Pick Starter, EEVEE',
+         lambda: rival_comment(p, pick, 'Rival eevee', 'EEVEE', 'Copycat')),
+        ('Rival comment: Pick Starter, MAGIKARP',
+         lambda: rival_comment(p, pick, 'Rival magikarp', 'MAGIKARP', 'even attack')),
         ('Melanie: Pick Starter, CHARMANDER', lambda: melanie(p, pick, 'Melanie pick', None, True)),
         ('Melanie: Normal, unhappy PIKACHU', lambda: melanie(p, normal, 'Melanie unhappy', -47, False)),
         ('Melanie: Normal, happy PIKACHU', lambda: melanie(p, normal, 'Melanie happy', 50, True)),

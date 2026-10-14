@@ -266,6 +266,7 @@ _OaksLabOakPickStarterText::
 
 	para "UP/DOWN: look"
 	line "LEFT/RIGHT: page"
+	cont "SELECT: more info"
 	cont "A: choose"
 	prompt
 
