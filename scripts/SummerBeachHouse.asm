@@ -33,7 +33,7 @@ ENDC
 	set 0, [hl]
 	jr nz, .next2
 	ld hl, .SurfinDudeText1
-	ld a, [wd472]
+	ld a, [wPikachuPartyFlags]
 	bit 6, a
 	jr nz, .next3
 	call SummerBeachHouseCheckPickStarterSurfer
