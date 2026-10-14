@@ -286,7 +286,7 @@ Route24CooltrainerM4Text:
 	text_asm
 	CheckEvent EVENT_54F
 	jr nz, .asm_515d5
-	ld hl, Route24Text_515de
+	ld hl, Route24CooltrainerM4OfferCharmanderText
 	call PrintText
 	call YesNoChoice
 	ld a, [wCurrentMenuItem]
@@ -306,42 +306,38 @@ Route24CooltrainerM4Text:
 	call z, WaitForTextScrollButtonPress
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
-	ld hl, Route24Text_515e3
+	ld hl, Route24CooltrainerM4GoodLuckText
 	call PrintText
 	SetEvent EVENT_54F
 	jp TextScriptEnd
 
 .asm_515d0
-	ld hl, Route24Text_515e9
+	ld hl, Route24CooltrainerM4DeclinedText
 	jr .asm_515d8
 
 .asm_515d5
-	ld hl, Route24Text_515ee
+	ld hl, Route24CooltrainerM4HowsCharmanderText
 .asm_515d8
 	call PrintText
 	jp TextScriptEnd
 
-; SUGGESTED NAME: Route24CooltrainerM4OfferCharmanderText
-; Damian offers his "weak" Charmander (confidence: high)
-Route24Text_515de:
+; Damian offers his "weak" Charmander
+Route24CooltrainerM4OfferCharmanderText:
 	text_far _Route24DamianText1
 	text_end
 
-; SUGGESTED NAME: Route24CooltrainerM4GoodLuckText
-; Damian after giving Charmander: "Good luck with that." (confidence: high)
-Route24Text_515e3:
+; Damian after giving Charmander: "Good luck with that."
+Route24CooltrainerM4GoodLuckText:
 	text_far _Route24DamianText2
 	text_waitbutton
 	text_end
 
-; SUGGESTED NAME: Route24CooltrainerM4DeclinedText
-; Damian when you decline: "I'd better release it then." (confidence: high)
-Route24Text_515e9:
+; Damian when you decline: "I'd better release it then."
+Route24CooltrainerM4DeclinedText:
 	text_far _Route24DamianText3
 	text_end
 
-; SUGGESTED NAME: Route24CooltrainerM4HowsCharmanderText
-; Damian later: "How's that weak old CHARMANDER doing?" (confidence: high)
-Route24Text_515ee:
+; Damian later: "How's that weak old CHARMANDER doing?"
+Route24CooltrainerM4HowsCharmanderText:
 	text_far _Route24DamianText4
 	text_end

@@ -387,25 +387,24 @@ LearnMoveFromLevelUp:
 	ld [wPokedexNum], a
 	ret
 
-; SUGGESTED NAME: CanMonOrPreEvosLearnMove
-; Carry if wCurPartySpecies or up to 2 pre-evolutions can learn move wTempTMHM (confidence: high)
+; Carry if wCurPartySpecies or up to 2 pre-evolutions can learn move wTempTMHM
 ; Unreferenced: its only caller was the debug box editor, which was never reachable.
-Func_3b079:
+CanMonOrPreEvosLearnMove:
 	ld a, [wCurPartySpecies]
 	push af
-	call Func_3b0a2
+	call CanSpeciesLearnMoveAtLevel
 	jr c, .asm_3b09c
 
-	call Func_3b10f
+	call GetPreEvolution
 	jr nc, .asm_3b096
 
-	call Func_3b0a2
+	call CanSpeciesLearnMoveAtLevel
 	jr c, .asm_3b09c
 
-	call Func_3b10f
+	call GetPreEvolution
 	jr nc, .asm_3b096
 
-	call Func_3b0a2
+	call CanSpeciesLearnMoveAtLevel
 	jr c, .asm_3b09c
 .asm_3b096
 	pop af
@@ -418,9 +417,8 @@ Func_3b079:
 	scf
 	ret
 
-; SUGGESTED NAME: CanSpeciesLearnMoveAtLevel
-; Carry if the species learns wTempTMHM by TM/HM, base moves, or level-up by wCurEnemyLevel (confidence: high)
-Func_3b0a2:
+; Carry if the species learns wTempTMHM by TM/HM, base moves, or level-up by wCurEnemyLevel
+CanSpeciesLearnMoveAtLevel:
 ; XXX what is wCurPartySpecies entering this function?
 	ld a, [wTempTMHM]
 	ld [wMoveNum], a
@@ -465,9 +463,8 @@ Func_3b0a2:
 
 INCLUDE "data/pokemon/unknown_list.asm"
 
-; SUGGESTED NAME: GetPreEvolution
-; Carry and wCurPartySpecies = pre-evolution if any mon evolves into wCurPartySpecies (confidence: high)
-Func_3b10f:
+; Carry and wCurPartySpecies = pre-evolution if any mon evolves into wCurPartySpecies
+GetPreEvolution:
 	ld c, $0
 .asm_3b111
 	ld hl, EvosMovesPointerTable

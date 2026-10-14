@@ -39,7 +39,7 @@ BillsHouse_CheckMetBill:
 	ret
 
 BillsHouseScript0:
-	ld a, [wd472]
+	ld a, [wPikachuPartyFlags]
 	bit 7, a
 	jr z, .done
 	callfar CheckPikachuStatusCondition
@@ -158,7 +158,7 @@ BillsHouseScript5:
 	predef ShowObject
 	ld c, 8
 	call DelayFrames
-	ld hl, wd472
+	ld hl, wPikachuPartyFlags
 	bit 7, [hl]
 	jr z, .pikachuNotFollowing
 	call CheckPikachuFollowingPlayer
@@ -179,15 +179,14 @@ BillsHouseScript5:
 .pikachuNotFollowing
 	ld a, BILLSHOUSE_BILL1
 	ldh [hSpriteIndex], a
-	ld de, MovementData_1e807
+	ld de, BillMovement_ExitCellSeparator
 	call MoveSprite
 	ld a, SCRIPT_BILLSHOUSE_SCRIPT6
 	ld [wBillsHouseCurScript], a
 	ret
 
-; SUGGESTED NAME: BillMovement_ExitCellSeparator
-; Bill walks out of the cell separator (pret: local .BillExitMachineMovement) (confidence: high)
-MovementData_1e807:
+; Bill walks out of the cell separator (pret: local .BillExitMachineMovement)
+BillMovement_ExitCellSeparator:
 	db NPC_MOVEMENT_DOWN
 	db NPC_MOVEMENT_RIGHT
 	db NPC_MOVEMENT_RIGHT
@@ -217,7 +216,7 @@ BillsHouseScript7:
 	ld [wSpritePlayerStateData1FacingDirection], a
 	ld a, ~(A_BUTTON | B_BUTTON)
 	ld [wJoyIgnore], a
-	ld de, RLE_1e219
+	ld de, BillsHouseRLE_PlayerWalksToBill
 	ld hl, wSimulatedJoypadStatesEnd
 	call DecodeRLEList
 	dec a
@@ -227,9 +226,8 @@ BillsHouseScript7:
 	ld [wBillsHouseCurScript], a
 	ret
 
-; SUGGESTED NAME: BillsHouseRLE_PlayerWalksToBill
-; Simulated joypad RLE list: player walks right 3 steps to stand in front of Bill (confidence: medium)
-RLE_1e219:
+; Simulated joypad RLE list: player walks right 3 steps to stand in front of Bill
+BillsHouseRLE_PlayerWalksToBill:
 	db D_RIGHT, $3
 	db $FF
 

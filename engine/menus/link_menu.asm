@@ -1,6 +1,5 @@
-; SUGGESTED NAME: ColosseumCupMenu
-; Colosseum cup menu (Poke/Pika/Petit Cup/Cancel) synced over link; checks rules (confidence: high)
-Func_f531b::
+; Colosseum cup menu (Poke/Pika/Petit Cup/Cancel) synced over link; checks rules
+ColosseumCupMenu::
 	ld c, $14
 	call DelayFrames
 	ld a, $1
@@ -10,14 +9,14 @@ Func_f531b::
 	coord hl, 0, 0
 	lb bc, 4, 5
 	call TextBoxBorder
-	ld de, Text_f5791
+	ld de, ColosseumViewRulesText
 	coord hl, 1, 2
 	call PlaceString
 	coord hl, 8, 0
 	lb bc, 8, 10
 	call TextBoxBorder
 	coord hl, 10, 2
-	ld de, Text_f579c
+	ld de, ColosseumCupNamesText
 	call PlaceString
 	coord hl, 0, 10
 	lb bc, 6, 18
@@ -42,7 +41,7 @@ Func_f531b::
 	xor a
 	ld [hl], a
 .asm_f5377
-	call Func_f56bd
+	call PrintColosseumCupRules
 	call HandleMenuInput
 	and $3
 	add a
@@ -142,14 +141,14 @@ Func_f531b::
 	call DelayFrames
 	ld a, [wLinkMenuSelectionSendBuffer]
 	bit 3, a
-	jr nz, asm_f547f
+	jr nz, ColosseumCupMenuCancel
 	ld a, [wCurrentMenuItem]
 	cp $3
-	jr z, asm_f547f
+	jr z, ColosseumCupMenuCancel
 	inc a
 	ld [wLinkBattleCupRules], a
 	ld a, [wCurrentMenuItem]
-	ld hl, PointerTable_f5488
+	ld hl, ColosseumCupEligibilityChecks
 	ld c, a
 	ld b, $0
 	add hl, bc
@@ -168,38 +167,34 @@ Func_f531b::
 	call Serial_SyncAndExchangeNybble
 	ld a, [wLinkMenuSelectionSendBuffer]
 	and a
-	jr nz, asm_f547c
+	jr nz, ColosseumCupMenuRestart
 	ld a, [wLinkMenuSelectionReceiveBuffer]
 	and a
-	jr nz, Func_f5476
+	jr nz, ColosseumCupMenuIneligible
 	xor a
 	ld [wUnknownSerialCounter], a
 	ld [wUnknownSerialCounter+1], a
 	and a
 	ret
 
-; SUGGESTED NAME: ColosseumCupMenuIneligible
-; Prints the ineligible-party text and restarts the cup menu (confidence: high)
-Func_f5476::
+; Prints the ineligible-party text and restarts the cup menu
+ColosseumCupMenuIneligible::
 	ld hl, ColosseumIneligibleText
 	call PrintText
-; SUGGESTED NAME: ColosseumCupMenuRestart
-; Restarts the colosseum cup menu (confidence: high)
-asm_f547c::
-	jp Func_f531b
+; Restarts the colosseum cup menu
+ColosseumCupMenuRestart::
+	jp ColosseumCupMenu
 
-; SUGGESTED NAME: ColosseumCupMenuCancel
-; Cancels the colosseum cup menu (returns carry) (confidence: high)
-asm_f547f::
+; Cancels the colosseum cup menu (returns carry)
+ColosseumCupMenuCancel::
 	xor a
 	ld [wUnknownSerialCounter], a
 	ld [wUnknownSerialCounter+1], a
 	scf
 	ret
 
-; SUGGESTED NAME: ColosseumCupEligibilityChecks
-; Party-eligibility check routines for Poke Cup, Pika Cup and Petit Cup (confidence: high)
-PointerTable_f5488::
+; Party-eligibility check routines for Poke Cup, Pika Cup and Petit Cup
+ColosseumCupEligibilityChecks::
 	dw PokeCup
 	dw PikaCup
 	dw PetitCup
@@ -322,23 +317,23 @@ PetitCup::
 	ld a, [hl]
 	ld [wCurPartySpecies], a
 	push hl
-	callfar Func_3b10f
+	callfar GetPreEvolution
 	pop hl
-	jp c, asm_f56ad
+	jp c, PetitCupMonNotBasic
 	inc hl
 	ld a, [hl]
 	ld [wCurPartySpecies], a
 	push hl
-	callfar Func_3b10f
+	callfar GetPreEvolution
 	pop hl
-	jp c, asm_f56ad
+	jp c, PetitCupMonNotBasic
 	inc hl
 	ld a, [hl]
 	ld [wCurPartySpecies], a
 	push hl
-	callfar Func_3b10f
+	callfar GetPreEvolution
 	pop hl
-	jp c, asm_f56ad
+	jp c, PetitCupMonNotBasic
 	dec hl
 	dec hl
 	ld b, $3
@@ -372,7 +367,7 @@ PetitCup::
 	jr nz, .loop2
 	ld a, [hli]
 	cp $7
-	jp nc, asm_f5689
+	jp nc, PetitCupMonTooTall
 	add a
 	add a
 	ld b, a
@@ -382,12 +377,12 @@ PetitCup::
 	ld a, [hli]
 	add b
 	cp $51
-	jp nc, asm_f5689
+	jp nc, PetitCupMonTooTall
 	ld a, [hli]
 	sub $b9
 	ld a, [hl]
 	sbc $1
-	jp nc, asm_f569b
+	jp nc, PetitCupMonTooHeavy
 	pop af
 	pop bc
 	pop hl
@@ -489,9 +484,8 @@ CombinedLevelsAbove50::
 	ld a, $c
 	ret
 
-; SUGGESTED NAME: PetitCupMonTooTall
-; Petit Cup: prints that a party mon is over 6'8" and returns error $d (confidence: high)
-asm_f5689::
+; Petit Cup: prints that a party mon is over 6'8" and returns error $d
+PetitCupMonTooTall::
 	pop af
 	pop bc
 	pop hl
@@ -502,9 +496,8 @@ asm_f5689::
 	ld a, $d
 	ret
 
-; SUGGESTED NAME: PetitCupMonTooHeavy
-; Petit Cup: prints that a party mon is over 44 lb and returns error $e (confidence: high)
-asm_f569b::
+; Petit Cup: prints that a party mon is over 44 lb and returns error $e
+PetitCupMonTooHeavy::
 	pop af
 	pop bc
 	pop hl
@@ -515,9 +508,8 @@ asm_f569b::
 	ld a, $e
 	ret
 
-; SUGGESTED NAME: PetitCupMonNotBasic
-; Petit Cup: prints that a party mon is evolved and returns error $f (confidence: high)
-asm_f56ad::
+; Petit Cup: prints that a party mon is evolved and returns error $f
+PetitCupMonNotBasic::
 	ld a, [hl]
 	ld [wNamedObjectIndex], a
 	call GetMonName
@@ -526,9 +518,8 @@ asm_f56ad::
 	ld a, $f
 	ret
 
-; SUGGESTED NAME: PrintColosseumCupRules
-; Prints the highlighted cup's rules in the bottom text box of the cup menu (confidence: high)
-Func_f56bd::
+; Prints the highlighted cup's rules in the bottom text box of the cup menu
+PrintColosseumCupRules::
 	xor a
 	ldh [hAutoBGTransferEnabled], a
 	coord hl, 1, 11
@@ -537,7 +528,7 @@ Func_f56bd::
 	ld a, [wCurrentMenuItem]
 	cp $3
 	jr nc, .asm_f56e6
-	ld hl, PointerTable_f56ee
+	ld hl, ColosseumCupRulesTexts
 	ld a, [wCurrentMenuItem]
 	ld c, a
 	ld b, $0
@@ -556,43 +547,37 @@ Func_f56bd::
 	ldh [hAutoBGTransferEnabled], a
 	ret
 
-; SUGGESTED NAME: ColosseumCupRulesTexts
-; Pointers to the rules strings for Poke Cup, Pika Cup and Petit Cup (confidence: high)
-PointerTable_f56ee::
-	dw Text_f56f4
-	dw Text_f5728
-	dw Text_f575b
+; Pointers to the rules strings for Poke Cup, Pika Cup and Petit Cup
+ColosseumCupRulesTexts::
+	dw PokeCupRulesText
+	dw PikaCupRulesText
+	dw PetitCupRulesText
 
-; SUGGESTED NAME: PokeCupRulesText
-; Poke Cup rules string (3 mons LV50-55, sum 155, no Mew) (confidence: high)
-Text_f56f4::
+; Poke Cup rules string (3 mons LV50-55, sum 155, no Mew)
+PokeCupRulesText::
 	db "LVs of 3<PKMN>:50-55"
 	next "Sum of LVs:155 MAX"
 	next "MEW can't attend.@"
 
-; SUGGESTED NAME: PikaCupRulesText
-; Pika Cup rules string (3 mons LV15-20, sum 50, no Mew) (confidence: high)
-Text_f5728::
+; Pika Cup rules string (3 mons LV15-20, sum 50, no Mew)
+PikaCupRulesText::
 	db "LVs of 3<PKMN>:15-20"
 	next "Sum of LVs:50 MAX"
 	next "MEW can't attend.@"
 
-; SUGGESTED NAME: PetitCupRulesText
-; Petit Cup rules string (3 basic mons LV25-30, sum 80, 6'8"/44lb max) (confidence: high)
-Text_f575b::
+; Petit Cup rules string (3 basic mons LV25-30, sum 80, 6'8"/44lb max)
+PetitCupRulesText::
 	db "3 Basic <PKMN>.LV25-30"
 	next "Sum of LVs:80 MAX"
 	next "6’8” and 44lb MAX@"
 
-; SUGGESTED NAME: ColosseumViewRulesText
-; "View Rules" label in the colosseum cup menu (confidence: high)
-Text_f5791::
+; "View Rules" label in the colosseum cup menu
+ColosseumViewRulesText::
 	db "View"
 	next "Rules@"
 
-; SUGGESTED NAME: ColosseumCupNamesText
-; Cup menu options: Poke Cup, Pika Cup, Petit Cup, CANCEL (confidence: high)
-Text_f579c::
+; Cup menu options: Poke Cup, Pika Cup, Petit Cup, CANCEL
+ColosseumCupNamesText::
 	db "# Cup"
 	next "Pika Cup"
 	next "Petit Cup"
@@ -667,7 +652,7 @@ LinkMenu:
 	ld [wLetterPrintingDelayFlags], a
 	ld hl, wStatusFlags4
 	set 6, [hl]
-	ld hl, TextTerminator_f5a16
+	ld hl, LinkMenuBlankText
 	call PrintText
 	call SaveScreenTilesToBuffer1
 	ld hl, ColosseumWhereToText
@@ -783,7 +768,7 @@ LinkMenu:
 	ld d, c
 	ld c, b
 .updateCursorPosition
-	call Func_f59ec
+	call LinkMenuPlaceSelectionArrows
 	call LoadScreenTilesFromBuffer1
 	ld a, [wLinkMenuSelectionSendBuffer]
 	and (B_BUTTON << 2) ; was B button pressed?
@@ -839,7 +824,7 @@ LinkMenu:
 	ld c, ' '
 	ld d, '▷'
 	ld e, ' '
-	call Func_f59ec
+	call LinkMenuPlaceSelectionArrows
 .asm_f5974
 	xor a
 	ld [wBuffer], a
@@ -884,7 +869,7 @@ LinkMenu:
 	ld c, ' '
 	ld d, ' '
 	ld e, '▷'
-	call Func_f59ec
+	call LinkMenuPlaceSelectionArrows
 	jp .choseCancel
 
 .asm_f59cd
@@ -897,15 +882,14 @@ LinkMenu:
 	ld c, ' '
 	ld d, '▷'
 	ld e, ' '
-	call Func_f59ec
-	call Func_f531b
+	call LinkMenuPlaceSelectionArrows
+	call ColosseumCupMenu
 	jp c, .choseCancel
 	ld a, $f0
 	jp .next
 
-; SUGGESTED NAME: LinkMenuPlaceSelectionArrows
-; Places chars b/c/d/e at the 4 link menu rows (shows chosen item), waits 40 frames (confidence: high)
-Func_f59ec::
+; Places chars b/c/d/e at the 4 link menu rows (shows chosen item), waits 40 frames
+LinkMenuPlaceSelectionArrows::
 	ld a, b
 	ldcoord_a 6, 5
 	ld a, c
@@ -934,9 +918,8 @@ ColosseumVersionText:
 	text_far _ColosseumVersionText
 	text_end
 
-; SUGGESTED NAME: LinkMenuBlankText
-; Empty text (text_end) printed when opening the link menu (confidence: high)
-TextTerminator_f5a16:
+; Empty text (text_end) printed when opening the link menu
+LinkMenuBlankText:
 	text_end
 
 TradeCenterText:

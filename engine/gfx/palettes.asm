@@ -274,7 +274,7 @@ SetPal_PikachusBeach::
 
 SetPal_PikachusBeachTitle::
 	ld hl, PalPacket_PikachusBeachTitle
-	ld de, UnknownPacket_72751
+	ld de, BlkPacket_PikachusBeachTitle
 	ret
 
 SetPalFunctions:
@@ -1087,7 +1087,7 @@ palPacketPointers:
 	dw wTrainerCardBlkPacket
 	dw BlkPacket_GameFreakIntro
 	dw wPalPacket
-	dw UnknownPacket_72751
+	dw BlkPacket_PikachusBeachTitle
 palPacketPointersEnd:
 
 CopySGBBorderTiles:

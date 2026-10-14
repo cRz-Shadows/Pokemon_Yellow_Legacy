@@ -1553,7 +1553,7 @@ PlayBattleAnimationGotID:
 	push de
 	push bc
 	predef MoveAnimation
-	callfar Func_78e98
+	callfar RefreshBGMapsAfterAnimation
 	pop bc
 	pop de
 	pop hl

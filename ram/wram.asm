@@ -210,9 +210,8 @@ wSurfingMinigamePikachuState:: db
 wSurfingMinigameWaveFunctionNumber:: dw
 wSurfingMinigameWaveRandomValue:: db
 wSurfingMinigamePikachuHP:: dw ; little-endian BCD
-; SUGGESTED NAME: wUnusedSurfingMinigameByte
-; Never referenced; padding inside the surfing minigame data (confidence: high)
-wc5d8:: db ; unused?
+; Never referenced; padding inside the surfing minigame data
+wUnusedSurfingMinigameByte:: db ; unused?
 ; number of consecutive tricks
 wSurfingMinigameRadnessMeter:: db
 wSurfingMinigameRadnessScore:: dw ; little-endian BCD
@@ -271,18 +270,14 @@ wPrinterRowIndex:: db
 
 ; Printer data header
 wPrinterDataHeader::
-; SUGGESTED NAME: wPrinterHeaderCommand
-; Printer packet header byte 0: command (1=init, 2=print, 4=data, $f=status) (confidence: high)
-wc6ea:: db
-; SUGGESTED NAME: wPrinterHeaderCompression
-; Printer packet header byte 1: compression flag (always 0) (confidence: high)
-wc6eb:: db
-; SUGGESTED NAME: wPrinterHeaderDataLengthLo
-; Printer packet header byte 2: data length low byte (e.g. $80 of $280) (confidence: high)
-wc6ec:: db
-; SUGGESTED NAME: wPrinterHeaderDataLengthHi
-; Printer packet header byte 3: data length high byte (confidence: high)
-wc6ed:: db
+; Printer packet header byte 0: command (1=init, 2=print, 4=data, $f=status)
+wPrinterHeaderCommand:: db
+; Printer packet header byte 1: compression flag (always 0)
+wPrinterHeaderCompression:: db
+; Printer packet header byte 2: data length low byte (e.g. $80 of $280)
+wPrinterHeaderDataLengthLo:: db
+; Printer packet header byte 3: data length high byte
+wPrinterHeaderDataLengthHi:: db
 wPrinterChecksum:: dw
 
 UNION
@@ -293,12 +288,10 @@ wPrinterSerialReceived:: db
 ; if this and the previous byte are both $ff: error 2 (connection error)
 wPrinterStatusReceived:: db
 
-; SUGGESTED NAME: wPrinterPrintCmdPalette
-; Alias of wPrinterSendDataSource1+2: print-cmd palette ($e4), set in printer2 (confidence: medium)
-wc6f2:: db
-; SUGGESTED NAME: wPrinterPrintCmdExposure
-; Alias of wPrinterSendDataSource1+3: print-cmd exposure (from settings) (confidence: medium)
-wc6f3:: db
+; Alias of wPrinterSendDataSource1+2: print-cmd palette ($e4), set in printer2
+wPrinterPrintCmdPalette:: db
+; Alias of wPrinterSendDataSource1+3: print-cmd exposure (from settings)
+wPrinterPrintCmdExposure:: db
 	ds 11
 wTempLevelStore:: db
 wLYOverrides:: ds $100
@@ -321,9 +314,8 @@ wPrinterSendByteOffset:: dw
 wPrinterDataSize:: dw
 wPrinterTileBuffer:: ds SCREEN_HEIGHT * SCREEN_WIDTH
 wPrinterStatusIndicator:: dw
-; SUGGESTED NAME: wPrinterMargins
-; Print command margins byte (hi nibble=lines before, lo=after; $00/$03/$10/$13) (confidence: high)
-wcae2:: db
+; Print command margins byte (hi nibble=lines before, lo=after; $00/$03/$10/$13)
+wPrinterMargins:: db
 wPrinterSettingsTempCopy:: db
 	ds 16
 wPrinterQueueLength:: db
@@ -334,18 +326,15 @@ wPrinterPokedexEntryTextPointer:: dw
 wPrinterPokedexMonIsOwned:: db
 	ds 226
 UNION
-; SUGGESTED NAME: wPrinterOAMTileBuffer
-; 16-byte copy of an OAM tile from VRAM, flipped per OAM flags, for printing (confidence: medium)
-wcbdc:: ds 1 tiles
+; 16-byte copy of an OAM tile from VRAM, flipped per OAM flags, for printing
+wPrinterOAMTileBuffer:: ds 1 tiles
 NEXTU
 	ds 14
-; SUGGESTED NAME: wPrinterOAMTileBufferLastRow
-; Last 2-byte row of wPrinterOAMTileBuffer; end pointer for the Y-flip swap (confidence: medium)
-wcbea:: dw
+; Last 2-byte row of wPrinterOAMTileBuffer; end pointer for the Y-flip swap
+wPrinterOAMTileBufferLastRow:: dw
 ENDU
-; SUGGESTED NAME: wPrinterOAMTileRemapBuffer
-; OAM tile after OBJ palette remap, ORed into the printer tile data (confidence: medium)
-wcbec:: ds 1 tiles
+; OAM tile after OBJ palette remap, ORed into the printer tile data
+wPrinterOAMTileRemapBuffer:: ds 1 tiles
 ENDU
 
 
@@ -2083,21 +2072,16 @@ wDestinationWarpID:: db
 
 wPikachuOverworldStateFlags:: db
 wPikachuSpawnState:: db
-; SUGGESTED NAME: wPikachuHopYOffset
-; Y pixel offset applied during Pikachu idle hop anim (Pointer_fc8d6), undone each step (confidence: medium)
-wd432:: db
-; SUGGESTED NAME: wPikachuHopXOffset
-; X pixel offset applied during Pikachu idle hop anim (Pointer_fc8d6), undone each step (confidence: medium)
-wd433:: db
-; SUGGESTED NAME: wUnusedPikachuCollisionDirection
-; Collision direction bits stored by sprite collision code; written, never read (confidence: medium)
-wd434:: db
-; SUGGESTED NAME: wPikachuCollisionCounter
-; Frames Pikachu blocks the player after a turn (set to 8); 0 lets player walk through (confidence: high)
-wd435:: db
-; SUGGESTED NAME: wPlayerTalkingToPikachu
-; $ff when the sprite in front of the player is Pikachu; triggers Pikachu text, then 0 (confidence: high)
-wd436:: db
+; Y pixel offset applied during Pikachu idle hop anim (PikachuIdleHopOffsets), undone each step
+wPikachuHopYOffset:: db
+; X pixel offset applied during Pikachu idle hop anim (PikachuIdleHopOffsets), undone each step
+wPikachuHopXOffset:: db
+; Collision direction bits stored by sprite collision code; written, never read
+wUnusedPikachuCollisionDirection:: db
+; Frames Pikachu blocks the player after a turn (set to 8); 0 lets player walk through
+wPikachuCollisionCounter:: db
+; $ff when the sprite in front of the player is Pikachu; triggers Pikachu text, then 0
+wPlayerTalkingToPikachu:: db
 wPikachuFollowCommandBufferSize:: db
 wPikachuFollowCommandBuffer:: ds 16
 
@@ -2116,9 +2100,8 @@ wCurPikaMovementParam1:: db
 wCurPikaMovementFunc1:: db
 wCurPikaMovementParam2:: db
 wCurPikaMovementFunc2:: db
-; SUGGESTED NAME: wUnusedCurPikaMovementByte
-; Cleared when a Pikachu movement command loads; never read (confidence: medium)
-wd451:: db
+; Cleared when a Pikachu movement command loads; never read
+wUnusedCurPikaMovementByte:: db
 wCurPikaMovementSpriteImageIdx:: db
 wPikaSpriteX:: db
 wPikaSpriteY:: db
@@ -2153,25 +2136,21 @@ ENDU
 
 wPikachuHappiness:: db
 wPikachuMood:: db
-; SUGGESTED NAME: wPikachuPartyFlags
-; Starter Pikachu party status flags (upstream: wPikachuSpawnStateFlags) (confidence: high)
+; Starter Pikachu party status flags (upstream: wPikachuSpawnStateFlags)
 ; bit 5: set when Pikachu is placed next to the player by movement data (never read)
 ; bit 6: starter Pikachu with Surf in party (surfing Pikachu sprite, beach house)
 ; bit 7: starter Pikachu alive in party (follows player, map scripts)
-wd472:: db
-; SUGGESTED NAME: wSurfingSpriteOverride
-; Surf sprite choice: 0=auto (wd472 bit 6), 1=Seel, 2=surfing Pikachu (confidence: high)
-wd473:: db
+wPikachuPartyFlags:: db
+; Surf sprite choice: 0=auto (wPikachuPartyFlags bit 6), 1=Seel, 2=surfing Pikachu
+wSurfingSpriteOverride:: db
 	ds 1
-; SUGGESTED NAME: wCinnabarGymQuizFlags
-; Cinnabar Gym quiz state flags (confidence: high)
+; Cinnabar Gym quiz state flags
 ; bit 7: wrong answer started a gate-trainer battle; gate opens after it
-wd474:: db
+wCinnabarGymQuizFlags:: db
 	ds 4
-; SUGGESTED NAME: wPlayTimeOverflowFlags
-; Play time flags; bit 0 set once hours hit 255 (play time frozen at max) (confidence: high)
+; Play time flags; bit 0 set once hours hit 255 (play time frozen at max)
 ; bit 0: play time maxed out
-wd479:: db
+wPlayTimeOverflowFlags:: db
 	ds 24
 wPikachuMapScriptFlags:: db
 	ds 1
@@ -2705,9 +2684,8 @@ wCGBPal:: ds PALETTE_SIZE
 wLastBGP:: db
 wLastOBP0:: db
 wLastOBP1:: db
-; SUGGESTED NAME: wTempObjectPalette
-; OAM attribute/CGB OBJ palette being written for anim and HUD pokeball objects (confidence: high)
-wdef4:: db
+; OAM attribute/CGB OBJ palette being written for anim and HUD pokeball objects
+wTempObjectPalette:: db
 wBGPPalsBuffer:: ds NUM_ACTIVE_PALS * PALETTE_SIZE
 
 

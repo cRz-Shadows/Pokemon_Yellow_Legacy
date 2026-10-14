@@ -242,7 +242,7 @@ PewterGymGuideText:
 	ld a, [wCurrentMenuItem]
 	and a
 	jr nz, .PewterGymGuideBeginAdviceText
-	ld a, [wd472]
+	ld a, [wPikachuPartyFlags]
 	bit 7, a
 	jp nz, .asm_5c3fa
 	ld hl, PewterGymGuideBeginAdviceText
@@ -261,7 +261,7 @@ PewterGymGuideText:
 .done
 	jp TextScriptEnd
 .asm_5c3fa
-	ld hl, PewterGymText_5c41c
+	ld hl, PewterGymGuidePikachuAdviceText
 	call PrintText
 	jp TextScriptEnd
 
@@ -285,8 +285,7 @@ PewterGymGuidePostBattleText:
 	text_far _PewterGymGuidePostBattleText
 	text_end
 
-; SUGGESTED NAME: PewterGymGuidePikachuAdviceText
-; Gym guide's Brock advice with a warning that Pikachu is weak here (confidence: high)
-PewterGymText_5c41c:
+; Gym guide's Brock advice with a warning that Pikachu is weak here
+PewterGymGuidePikachuAdviceText:
 	text_far _PewterGymGuyText
 	text_end

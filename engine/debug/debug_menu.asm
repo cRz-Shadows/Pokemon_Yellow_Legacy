@@ -82,7 +82,7 @@ TestBattle: ; unreferenced except in _DEBUG
 	set BIT_TEST_BATTLE, [hl]
 
 	ld hl, wNumBagItems
-	ld de, Data_feded
+	ld de, TestBattleItems
 .loop
 	ld a, [de]
 	cp -1
@@ -104,13 +104,13 @@ TestBattle: ; unreferenced except in _DEBUG
 	lb bc, 1, 18
 	call TextBoxBorder
 	hlcoord 6, 1
-	ld de, Text_fed18
+	ld de, TestBattleTitleText
 	call PlaceString
 	hlcoord 4, 4
-	ld de, Text_fed21
+	ld de, TestBattlePartyHeaderText
 	call PlaceString
 	hlcoord 1, 6
-	ld de, Text_fed30
+	ld de, TestBattlePartyListText
 	call PlaceString
 	xor a
 	ld [wWhichPokemon], a
@@ -121,15 +121,14 @@ TestBattle: ; unreferenced except in _DEBUG
 	ld b, a
 	ld c, a
 	ld hl, wEnemyPartySpecies
-	call Func_fe809
+	call TestBattle_ClearSpeciesList
 	ld hl, wPartyCount
-	call Func_fe809
+	call TestBattle_ClearSpeciesList
 	ld de, wPartySpecies
 	hlcoord 4, 6
 	; fallthrough
-; SUGGESTED NAME: TestBattle_SelectPartySpecies
-; Moves the cursor to the party species column, then enters its input loop (confidence: high)
-Func_fe7ca:
+; Moves the cursor to the party species column, then enters its input loop
+TestBattle_SelectPartySpecies:
 	push hl
 	push bc
 	dec hl
@@ -144,9 +143,8 @@ Func_fe7ca:
 	pop bc
 	pop hl
 	; fallthrough
-; SUGGESTED NAME: TestBattle_PartySpeciesInputLoop
-; Input loop for the party species column (A/B species, Up/Down slot, Start confirms) (confidence: high)
-Func_fe7db:
+; Input loop for the party species column (A/B species, Up/Down slot, Start confirms)
+TestBattle_PartySpeciesInputLoop:
 	push bc
 	push de
 	call JoypadLowSensitivity
@@ -154,24 +152,23 @@ Func_fe7db:
 	pop bc
 	ldh a, [hJoy5]
 	bit BIT_A_BUTTON, a
-	jp nz, Func_fe812
+	jp nz, TestBattle_NextPartySpecies
 	bit BIT_B_BUTTON, a
-	jp nz, Func_fe850
+	jp nz, TestBattle_PrevPartySpecies
 	bit BIT_SELECT, a
 	jp nz, DebugMenu
 	bit BIT_START, a
-	jp nz, Func_fe97f
+	jp nz, TestBattle_BuildPartyAndSelectOpponent
 	bit BIT_D_RIGHT, a
-	jp nz, Func_fe8a1
+	jp nz, TestBattle_SelectPartyLevel
 	bit BIT_D_UP, a
-	jp nz, Func_fe85d
+	jp nz, TestBattle_SpeciesCursorUp
 	bit BIT_D_DOWN, a
-	jp nz, Func_fe880
-	jr Func_fe7db
+	jp nz, TestBattle_SpeciesCursorDown
+	jr TestBattle_PartySpeciesInputLoop
 
-; SUGGESTED NAME: TestBattle_ClearSpeciesList
-; Zeroes a 7-byte count+species list at hl (the party and the level buffer) (confidence: high)
-Func_fe809:
+; Zeroes a 7-byte count+species list at hl (the party and the level buffer)
+TestBattle_ClearSpeciesList:
 	xor a
 	ld [hli], a
 	ld [hli], a
@@ -182,19 +179,17 @@ Func_fe809:
 	ld [hl], a
 	ret
 
-; SUGGESTED NAME: TestBattle_NextPartySpecies
-; Moves the current slot's species index up by one, wrapping to 0 (empty) (confidence: high)
-Func_fe812:
+; Moves the current slot's species index up by one, wrapping to 0 (empty)
+TestBattle_NextPartySpecies:
 	inc b
 	ld a, b
 	cp NUM_POKEMON_INDEXES + 1
-	jr c, Func_fe81a
+	jr c, TestBattle_SetPartySpecies
 	xor a
 	ld b, a
 	; fallthrough
-; SUGGESTED NAME: TestBattle_SetPartySpecies
-; Stores species a in the current slot and prints its number and name (or dashes if 0) (confidence: high)
-Func_fe81a:
+; Stores species a in the current slot and prints its number and name (or dashes if 0)
+TestBattle_SetPartySpecies:
 	ld [de], a
 	ld [wTempByteValue], a
 	push bc
@@ -204,17 +199,17 @@ Func_fe81a:
 	call PrintNumber
 	inc hl
 	push hl
-	ld de, Text_fed9c
+	ld de, TestBattleBlankNameText
 	call PlaceString
 	ld bc, -SCREEN_WIDTH
 	add hl, bc
-	ld de, Text_fed9c
+	ld de, TestBattleBlankNameText
 	call PlaceString
 	pop hl
 	ld a, [wTempByteValue]
 	and a
 	jr nz, .asm_fe845
-	ld de, Text_feda2
+	ld de, TestBattleNoMonText
 	jr .asm_fe848
 .asm_fe845
 	call GetMonName
@@ -223,26 +218,24 @@ Func_fe81a:
 	pop de
 	pop hl
 	pop bc
-	jr Func_fe7db
+	jr TestBattle_PartySpeciesInputLoop
 
-; SUGGESTED NAME: TestBattle_PrevPartySpecies
-; Moves the current slot's species index down by one, wrapping to NUM_POKEMON_INDEXES (confidence: high)
-Func_fe850:
+; Moves the current slot's species index down by one, wrapping to NUM_POKEMON_INDEXES
+TestBattle_PrevPartySpecies:
 	dec b
 	ld a, b
 	cp OPP_ID_OFFSET + 1
-	jp c, Func_fe81a
+	jp c, TestBattle_SetPartySpecies
 	ld a, NUM_POKEMON_INDEXES
 	ld b, a
-	jp Func_fe81a
+	jp TestBattle_SetPartySpecies
 
-; SUGGESTED NAME: TestBattle_SpeciesCursorUp
-; Moves the species column cursor up one party slot (confidence: high)
-Func_fe85d:
+; Moves the species column cursor up one party slot
+TestBattle_SpeciesCursorUp:
 	ld a, [wWhichPokemon]
 	dec a
 	cp -1
-	jp z, Func_fe7db
+	jp z, TestBattle_PartySpeciesInputLoop
 	ld [wWhichPokemon], a
 	dec de
 	dec hl
@@ -256,17 +249,16 @@ Func_fe85d:
 	ld [hl], a
 	inc hl
 	push hl
-	call Func_fe964
+	call TestBattle_LoadSlotSpeciesAndLevel
 	pop hl
-	jp Func_fe7db
+	jp TestBattle_PartySpeciesInputLoop
 
-; SUGGESTED NAME: TestBattle_SpeciesCursorDown
-; Moves the species column cursor down one party slot (confidence: high)
-Func_fe880:
+; Moves the species column cursor down one party slot
+TestBattle_SpeciesCursorDown:
 	ld a, [wWhichPokemon]
 	inc a
 	cp 6
-	jp nc, Func_fe7db
+	jp nc, TestBattle_PartySpeciesInputLoop
 	ld [wWhichPokemon], a
 	inc de
 	dec hl
@@ -278,13 +270,12 @@ Func_fe880:
 	ld [hl], a
 	inc hl
 	push hl
-	call Func_fe964
+	call TestBattle_LoadSlotSpeciesAndLevel
 	pop hl
-	jp Func_fe7db
+	jp TestBattle_PartySpeciesInputLoop
 
-; SUGGESTED NAME: TestBattle_SelectPartyLevel
-; Moves the cursor to the party level column, then enters its input loop (confidence: high)
-Func_fe8a1:
+; Moves the cursor to the party level column, then enters its input loop
+TestBattle_SelectPartyLevel:
 	push hl
 	push bc
 	dec hl
@@ -297,9 +288,8 @@ Func_fe8a1:
 	pop bc
 	pop hl
 	; fallthrough
-; SUGGESTED NAME: TestBattle_PartyLevelInputLoop
-; Input loop for the party level column (A/B change level, Up/Down slot, Left/Start) (confidence: high)
-Func_fe8b0:
+; Input loop for the party level column (A/B change level, Up/Down slot, Left/Start)
+TestBattle_PartyLevelInputLoop:
 	push bc
 	push de
 	call JoypadLowSensitivity
@@ -307,32 +297,30 @@ Func_fe8b0:
 	pop bc
 	ldh a, [hJoy5]
 	bit BIT_A_BUTTON, a
-	jp nz, Func_fe8d9
+	jp nz, TestBattle_IncPartyLevel
 	bit BIT_B_BUTTON, a
-	jp nz, Func_fe902
+	jp nz, TestBattle_DecPartyLevel
 	bit BIT_START, a
-	jp nz, Func_fe97f
+	jp nz, TestBattle_BuildPartyAndSelectOpponent
 	bit BIT_D_LEFT, a
-	jp nz, Func_fe7ca
+	jp nz, TestBattle_SelectPartySpecies
 	bit BIT_D_UP, a
-	jp nz, Func_fe912
+	jp nz, TestBattle_LevelCursorUp
 	bit BIT_D_DOWN, a
-	jp nz, Func_fe93b
-	jr Func_fe8b0
+	jp nz, TestBattle_LevelCursorDown
+	jr TestBattle_PartyLevelInputLoop
 
-; SUGGESTED NAME: TestBattle_IncPartyLevel
-; Raises the current slot's level by one, wrapping to 1 after MAX_LEVEL (confidence: high)
-Func_fe8d9:
+; Raises the current slot's level by one, wrapping to 1 after MAX_LEVEL
+TestBattle_IncPartyLevel:
 	inc c
 	ld a, c
 	cp MAX_LEVEL + 1
-	jr c, Func_fe8e2
+	jr c, TestBattle_SetPartyLevel
 	ld a, 1
 	ld c, a
 	; fallthrough
-; SUGGESTED NAME: TestBattle_SetPartyLevel
-; Stores level c in the level buffer (wEnemyPartySpecies) for the slot and prints it (confidence: high)
-Func_fe8e2:
+; Stores level c in the level buffer (wEnemyPartySpecies) for the slot and prints it
+TestBattle_SetPartyLevel:
 	ld a, [wWhichPokemon]
 	push de
 	ld de, wEnemyPartySpecies
@@ -352,29 +340,27 @@ Func_fe8e2:
 	pop hl
 	pop bc
 	pop de
-	jp Func_fe8b0
+	jp TestBattle_PartyLevelInputLoop
 
-; SUGGESTED NAME: TestBattle_DecPartyLevel
-; Lowers the current slot's level by one, wrapping to MAX_LEVEL (confidence: high)
-Func_fe902:
+; Lowers the current slot's level by one, wrapping to MAX_LEVEL
+TestBattle_DecPartyLevel:
 	dec c
 	ld a, c
 	cp MAX_LEVEL + 1
 	jr nc, .asm_fe90c
 	and a
-	jp nz, Func_fe8e2
+	jp nz, TestBattle_SetPartyLevel
 .asm_fe90c
 	ld a, MAX_LEVEL
 	ld c, a
-	jp Func_fe8e2
+	jp TestBattle_SetPartyLevel
 
-; SUGGESTED NAME: TestBattle_LevelCursorUp
-; Moves the level column cursor up one party slot (confidence: high)
-Func_fe912:
+; Moves the level column cursor up one party slot
+TestBattle_LevelCursorUp:
 	ld a, [wWhichPokemon]
 	dec a
 	cp -1
-	jp z, Func_fe8b0
+	jp z, TestBattle_PartyLevelInputLoop
 	ld [wWhichPokemon], a
 	dec de
 	push hl
@@ -390,17 +376,16 @@ Func_fe912:
 	add hl, bc
 	ld a, '▶'
 	ld [hl], a
-	call Func_fe964
+	call TestBattle_LoadSlotSpeciesAndLevel
 	pop hl
-	jp Func_fe8b0
+	jp TestBattle_PartyLevelInputLoop
 
-; SUGGESTED NAME: TestBattle_LevelCursorDown
-; Moves the level column cursor down one party slot (confidence: high)
-Func_fe93b:
+; Moves the level column cursor down one party slot
+TestBattle_LevelCursorDown:
 	ld a, [wWhichPokemon]
 	inc a
 	cp 6
-	jp nc, Func_fe8b0
+	jp nc, TestBattle_PartyLevelInputLoop
 	ld [wWhichPokemon], a
 	inc de
 	push hl
@@ -416,13 +401,12 @@ Func_fe93b:
 	add hl, bc
 	ld a, '▶'
 	ld [hl], a
-	call Func_fe964
+	call TestBattle_LoadSlotSpeciesAndLevel
 	pop hl
-	jp Func_fe8b0
+	jp TestBattle_PartyLevelInputLoop
 
-; SUGGESTED NAME: TestBattle_LoadSlotSpeciesAndLevel
-; Loads b = species and c = level of party slot [wWhichPokemon] from the edit buffers (confidence: high)
-Func_fe964:
+; Loads b = species and c = level of party slot [wWhichPokemon] from the edit buffers
+TestBattle_LoadSlotSpeciesAndLevel:
 	ld hl, wPartySpecies
 	ld a, [wWhichPokemon]
 	add l
@@ -443,9 +427,8 @@ Func_fe964:
 	ld c, a
 	ret
 
-; SUGGESTED NAME: TestBattle_BuildPartyAndSelectOpponent
-; Adds the chosen mons to the party, then draws the wild/trainer opponent select screen (confidence: high)
-Func_fe97f:
+; Adds the chosen mons to the party, then draws the wild/trainer opponent select screen
+TestBattle_BuildPartyAndSelectOpponent:
 	ld hl, wPartyCount
 	ld de, wEnemyPartyCount
 	xor a
@@ -496,18 +479,18 @@ Func_fe97f:
 	call DelayFrames
 	ld a, 1
 	ld [wIsInBattle], a
-	ld de, Text_feda8
+	ld de, TestBattleWildText
 	ld a, [wGrassMons + 1]
 	cp MAX_LEVEL + 1
 	jr c, .asm_fe9fb
 	ld a, 2
 	ld [wIsInBattle], a
-	ld de, Text_fedb2
+	ld de, TestBattleTrainerText
 .asm_fe9fb
 	hlcoord 1, 4
 	call PlaceString
 	hlcoord 1, 6
-	ld de, Text_fedbc
+	ld de, TestBattleOpponentHeaderText
 	call PlaceString
 	ld a, [wEnemyMon]
 	ld b, a
@@ -523,7 +506,7 @@ Func_fe97f:
 	lb bc, LEADING_ZEROES | 1, 3
 	call PrintNumber
 	hlcoord 5, 8
-	ld de, Text_fede2
+	ld de, TestBattleClearNameText
 	call PlaceString
 	call GetTrainerName
 	hlcoord 5, 8
@@ -542,7 +525,7 @@ Func_fe97f:
 	lb bc, LEADING_ZEROES | 1, 3
 	call PrintNumber
 	hlcoord 5, 8
-	ld de, Text_fede2
+	ld de, TestBattleClearNameText
 	call PlaceString
 	call GetMonName
 	hlcoord 5, 8
@@ -559,38 +542,35 @@ Func_fe97f:
 	call PrintNumber
 	pop bc
 	; fallthrough
-; SUGGESTED NAME: TestBattle_SelectBattleType
-; Moves the cursor to the wild/trainer battle type row, then enters its input loop (confidence: high)
-Func_fea78:
+; Moves the cursor to the wild/trainer battle type row, then enters its input loop
+TestBattle_SelectBattleType:
 	ld a, ' '
 	ldcoord_a 0, 8
 	ldcoord_a 15, 8
 	ld a, '▶'
 	ldcoord_a 0, 4
 	; fallthrough
-; SUGGESTED NAME: TestBattle_BattleTypeInputLoop
-; Input loop for the battle type row (A toggles, Down goes to opponent, Start fights) (confidence: high)
-Func_fea85:
+; Input loop for the battle type row (A toggles, Down goes to opponent, Start fights)
+TestBattle_BattleTypeInputLoop:
 	push bc
 	call JoypadLowSensitivity
 	pop bc
 	ldh a, [hJoy5]
 	bit BIT_A_BUTTON, a
-	jp nz, Func_fea9d
+	jp nz, TestBattle_ToggleBattleType
 	bit BIT_START, a
-	jp nz, Func_fec10
+	jp nz, TestBattle_StartBattle
 	bit BIT_D_DOWN, a
-	jp nz, Func_feae4
-	jr Func_fea85
+	jp nz, TestBattle_SelectOpponentID
+	jr TestBattle_BattleTypeInputLoop
 
-; SUGGESTED NAME: TestBattle_ToggleBattleType
-; Switches wIsInBattle between wild (1) and trainer (2) and resets the opponent fields (confidence: high)
-Func_fea9d:
+; Switches wIsInBattle between wild (1) and trainer (2) and resets the opponent fields
+TestBattle_ToggleBattleType:
 	hlcoord 1, 8
-	ld de, Text_fedcf
+	ld de, TestBattleBlankOpponentText
 	call PlaceString
 	hlcoord 5, 7
-	ld de, Text_fede2
+	ld de, TestBattleClearNameText
 	call PlaceString
 	xor a
 	ld b, a
@@ -603,70 +583,66 @@ Func_fea9d:
 	ld a, ' '
 	ldcoord_a 4, 3
 	hlcoord 1, 4
-	ld de, Text_fedb2
+	ld de, TestBattleTrainerText
 	call PlaceString
-	jp Func_fea85
+	jp TestBattle_BattleTypeInputLoop
 .asm_feace
 	ld a, 1
 	ld [wIsInBattle], a
 	ld a, ' '
 	ldcoord_a 1, 3
 	hlcoord 1, 4
-	ld de, Text_feda8
+	ld de, TestBattleWildText
 	call PlaceString
-	jp Func_fea85
+	jp TestBattle_BattleTypeInputLoop
 
-; SUGGESTED NAME: TestBattle_SelectOpponentID
-; Moves the cursor to the opponent species/trainer class field, then enters its loop (confidence: high)
-Func_feae4:
+; Moves the cursor to the opponent species/trainer class field, then enters its loop
+TestBattle_SelectOpponentID:
 	ld a, '▶'
 	ldcoord_a 0, 8
 	ld a, ' '
 	ldcoord_a 15, 8
 	ldcoord_a 0, 4
 	; fallthrough
-; SUGGESTED NAME: TestBattle_OpponentIDInputLoop
-; Input loop for the opponent species/class field (A/B change, Right level, Up type) (confidence: high)
-Func_feaf1:
+; Input loop for the opponent species/class field (A/B change, Right level, Up type)
+TestBattle_OpponentIDInputLoop:
 	push bc
 	call JoypadLowSensitivity
 	pop bc
 	ldh a, [hJoy5]
 	bit BIT_A_BUTTON, a
-	jp nz, Func_feb13
+	jp nz, TestBattle_NextOpponentID
 	bit BIT_B_BUTTON, a
-	jp nz, Func_feb82
+	jp nz, TestBattle_PrevOpponentID
 	bit BIT_START, a
-	jp nz, Func_fec10
+	jp nz, TestBattle_StartBattle
 	bit BIT_D_RIGHT, a
-	jp nz, Func_febba
+	jp nz, TestBattle_SelectOpponentLevel
 	bit BIT_D_UP, a
-	jp nz, Func_fea78
-	jr Func_feaf1
+	jp nz, TestBattle_SelectBattleType
+	jr TestBattle_OpponentIDInputLoop
 
-; SUGGESTED NAME: TestBattle_NextOpponentID
-; Moves the opponent species (wild) or trainer class (trainer) up by one, with wrapping (confidence: high)
-Func_feb13:
+; Moves the opponent species (wild) or trainer class (trainer) up by one, with wrapping
+TestBattle_NextOpponentID:
 	push bc
 	hlcoord 5, 7
-	ld de, Text_fede2
+	ld de, TestBattleClearNameText
 	call PlaceString
 	hlcoord 5, 8
-	ld de, Text_fede2
+	ld de, TestBattleClearNameText
 	call PlaceString
 	pop bc
 	ld a, [wIsInBattle]
 	dec a
-	jr z, Func_feb35.asm_feb5c
+	jr z, TestBattle_SetTrainerClass.asm_feb5c
 	inc b
 	ld a, b
 	cp NUM_TRAINERS + 1
-	jr c, Func_feb35
+	jr c, TestBattle_SetTrainerClass
 	ld b, 1
 	; fallthrough
-; SUGGESTED NAME: TestBattle_SetTrainerClass
-; Prints trainer class b's number and name as the opponent (confidence: high)
-Func_feb35:
+; Prints trainer class b's number and name as the opponent
+TestBattle_SetTrainerClass:
 	ld a, b
 	ld [wTempByteValue], a
 	ld de, wTempByteValue
@@ -681,17 +657,16 @@ Func_feb35:
 	ld de, wTrainerName
 	call PlaceString
 	pop bc
-	jp Func_feaf1
+	jp TestBattle_OpponentIDInputLoop
 .asm_feb5c
 	inc b
 	ld a, b
 	cp NUM_POKEMON_INDEXES + 1
-	jr c, Func_feb64
+	jr c, TestBattle_SetWildSpecies
 	ld b, 1
 	; fallthrough
-; SUGGESTED NAME: TestBattle_SetWildSpecies
-; Prints species b's number and name as the wild opponent (confidence: high)
-Func_feb64:
+; Prints species b's number and name as the wild opponent
+TestBattle_SetWildSpecies:
 	ld a, b
 	ld [wTempByteValue], a
 	ld de, wTempByteValue
@@ -703,17 +678,16 @@ Func_feb64:
 	hlcoord 5, 8
 	call PlaceString
 	pop bc
-	jp Func_feaf1
+	jp TestBattle_OpponentIDInputLoop
 
-; SUGGESTED NAME: TestBattle_PrevOpponentID
-; Moves the opponent species (wild) or trainer class (trainer) down by one, with wrapping (confidence: high)
-Func_feb82:
+; Moves the opponent species (wild) or trainer class (trainer) down by one, with wrapping
+TestBattle_PrevOpponentID:
 	push bc
 	hlcoord 5, 7
-	ld de, Text_fede2
+	ld de, TestBattleClearNameText
 	call PlaceString
 	hlcoord 5, 8
-	ld de, Text_fede2
+	ld de, TestBattleClearNameText
 	call PlaceString
 	pop bc
 	ld a, [wIsInBattle]
@@ -724,59 +698,55 @@ Func_feb82:
 	cp NUM_TRAINERS + 1
 	jr nc, .asm_feba6
 	and a
-	jp nz, Func_feb35
+	jp nz, TestBattle_SetTrainerClass
 .asm_feba6
 	ld b, NUM_TRAINERS
-	jp Func_feb35
+	jp TestBattle_SetTrainerClass
 .asm_febab
 	dec b
 	ld a, b
 	cp NUM_POKEMON_INDEXES + 1
 	jr nc, .asm_febb5
 	and a
-	jp nz, Func_feb64
+	jp nz, TestBattle_SetWildSpecies
 .asm_febb5
 	ld b, NUM_POKEMON_INDEXES
-	jp Func_feb64
+	jp TestBattle_SetWildSpecies
 
-; SUGGESTED NAME: TestBattle_SelectOpponentLevel
-; Moves the cursor to the opponent level (trainer number) field, then enters its loop (confidence: high)
-Func_febba:
+; Moves the cursor to the opponent level (trainer number) field, then enters its loop
+TestBattle_SelectOpponentLevel:
 	ld a, ' '
 	ldcoord_a 0, 8
 	ld a, '▶'
 	ldcoord_a 15, 8
 	; fallthrough
-; SUGGESTED NAME: TestBattle_OpponentLevelInputLoop
-; Input loop for the opponent level field (A/B change, Left/Up move, Start fights) (confidence: high)
-Func_febc4:
+; Input loop for the opponent level field (A/B change, Left/Up move, Start fights)
+TestBattle_OpponentLevelInputLoop:
 	push bc
 	call JoypadLowSensitivity
 	pop bc
 	ldh a, [hJoy5]
 	bit BIT_A_BUTTON, a
-	jp nz, Func_febe6
+	jp nz, TestBattle_IncOpponentLevel
 	bit BIT_B_BUTTON, a
-	jp nz, Func_fec01
+	jp nz, TestBattle_DecOpponentLevel
 	bit BIT_START, a
-	jp nz, Func_fec10
+	jp nz, TestBattle_StartBattle
 	bit BIT_D_LEFT, a
-	jp nz, Func_feae4
+	jp nz, TestBattle_SelectOpponentID
 	bit BIT_D_UP, a
-	jp nz, Func_fea78
-	jr Func_febc4
+	jp nz, TestBattle_SelectBattleType
+	jr TestBattle_OpponentLevelInputLoop
 
-; SUGGESTED NAME: TestBattle_IncOpponentLevel
-; Raises the opponent level by one, wrapping to 1 after MAX_LEVEL (confidence: high)
-Func_febe6:
+; Raises the opponent level by one, wrapping to 1 after MAX_LEVEL
+TestBattle_IncOpponentLevel:
 	inc c
 	ld a, c
 	cp MAX_LEVEL + 1
-	jr c, Func_febee
+	jr c, TestBattle_SetOpponentLevel
 	ld c, 1
-; SUGGESTED NAME: TestBattle_SetOpponentLevel
-; Stores c in wCurEnemyLevel and prints it in the opponent level field (confidence: high)
-Func_febee:
+; Stores c in wCurEnemyLevel and prints it in the opponent level field
+TestBattle_SetOpponentLevel:
 	hlcoord 16, 8
 	ld a, c
 	ld de, wCurEnemyLevel
@@ -785,30 +755,28 @@ Func_febee:
 	lb bc, LEADING_ZEROES | 1, 3
 	call PrintNumber
 	pop bc
-	jp Func_febc4
+	jp TestBattle_OpponentLevelInputLoop
 
-; SUGGESTED NAME: TestBattle_DecOpponentLevel
-; Lowers the opponent level by one, wrapping to MAX_LEVEL (confidence: high)
-Func_fec01:
+; Lowers the opponent level by one, wrapping to MAX_LEVEL
+TestBattle_DecOpponentLevel:
 	dec c
 	ld a, c
 	cp MAX_LEVEL + 1
 	jr nc, .asm_fec0b
 	and a
-	jp nz, Func_febee
+	jp nz, TestBattle_SetOpponentLevel
 .asm_fec0b
 	ld c, MAX_LEVEL
-	jp Func_febee
+	jp TestBattle_SetOpponentLevel
 
-; SUGGESTED NAME: TestBattle_StartBattle
-; Sets up the chosen wild/trainer opponent, runs the battle, then redraws the party screen (confidence: high)
-Func_fec10:
+; Sets up the chosen wild/trainer opponent, runs the battle, then redraws the party screen
+TestBattle_StartBattle:
 	ld a, b
 	and a
-	jp z, Func_fea78
+	jp z, TestBattle_SelectBattleType
 	ld a, c
 	and a
-	jp z, Func_fea78
+	jp z, TestBattle_SelectBattleType
 	ld a, [wIsInBattle]
 	dec a
 	jr z, .asm_fec28
@@ -848,13 +816,13 @@ Func_fec10:
 	lb bc, 1, 18
 	call TextBoxBorder
 	hlcoord 6, 1
-	ld de, Text_fed18
+	ld de, TestBattleTitleText
 	call PlaceString
 	hlcoord 4, 4
-	ld de, Text_fed21
+	ld de, TestBattlePartyHeaderText
 	call PlaceString
 	hlcoord 1, 6
-	ld de, Text_fed30
+	ld de, TestBattlePartyListText
 	call PlaceString
 	ld de, wPartyCount
 	xor a
@@ -865,9 +833,8 @@ Func_fec10:
 	push de
 	push hl
 	; fallthrough
-; SUGGESTED NAME: TestBattle_RedrawPartyList
-; After the battle, prints each party mon's species and level and refills the level buffer (confidence: high)
-Func_fec9b:
+; After the battle, prints each party mon's species and level and refills the level buffer
+TestBattle_RedrawPartyList:
 	ld a, [wWhichPokemon]
 	ld de, wPartySpecies
 	add e
@@ -877,13 +844,13 @@ Func_fec9b:
 .asm_feca6
 	ld a, [de]
 	cp -1
-	jp z, Func_fed01
+	jp z, TestBattle_ReturnToPartyEditor
 	ld [wTempByteValue], a
 	push hl
 	lb bc, LEADING_ZEROES | 1, 3
 	call PrintNumber
 	inc hl
-	ld de, Text_fed9c
+	ld de, TestBattleBlankNameText
 	call PlaceString
 	call GetMonName
 	call PlaceString
@@ -918,11 +885,10 @@ Func_fec9b:
 	ld [wWhichPokemon], a
 	ld bc, SCREEN_WIDTH * 2
 	add hl, bc
-	jp Func_fec9b
+	jp TestBattle_RedrawPartyList
 
-; SUGGESTED NAME: TestBattle_ReturnToPartyEditor
-; Ends the post-battle redraw and goes back to the party species column for slot 1 (confidence: high)
-Func_fed01:
+; Ends the post-battle redraw and goes back to the party species column for slot 1
+TestBattle_ReturnToPartyEditor:
 	pop hl
 	pop de
 	ld a, [wPartyMon1]
@@ -931,21 +897,18 @@ Func_fed01:
 	ld c, a
 	xor a
 	ld [wWhichPokemon], a
-	jp Func_fe7ca
+	jp TestBattle_SelectPartySpecies
 
-; SUGGESTED NAME: TestBattleTitleText
-; "FIGHT TEST" title shown at the top of the test battle screens (confidence: high)
-Text_fed18:
+; "FIGHT TEST" title shown at the top of the test battle screens
+TestBattleTitleText:
 	db   "テスト ファイト@" ; "FIGHT TEST@"
 
-; SUGGESTED NAME: TestBattlePartyHeaderText
-; "No. NAME LEVEL" column header for the party editor (confidence: high)
-Text_fed21:
+; "No. NAME LEVEL" column header for the party editor
+TestBattlePartyHeaderText:
 	db   "№．  なまえ    レべル@" ; "№．  NAME  LEVEL@"
 
-; SUGGESTED NAME: TestBattlePartyListText
-; Blank six-slot party list template (number, name and level placeholders) (confidence: high)
-Text_fed30:
+; Blank six-slot party list template (number, name and level placeholders)
+TestBattlePartyListText:
 	db   "１．▶０００ ーーーーー  ０００"
 	next "２． ０００ ーーーーー  ０００"
 	next "３． ０００ ーーーーー  ０００"
@@ -953,44 +916,36 @@ Text_fed30:
 	next "５． ０００ ーーーーー  ０００"
 	next "６． ０００ ーーーーー  ０００@"
 
-; SUGGESTED NAME: TestBattleBlankNameText
-; Five spaces used to clear a mon name field (confidence: high)
-Text_fed9c:
+; Five spaces used to clear a mon name field
+TestBattleBlankNameText:
 	db   "     @"
 
-; SUGGESTED NAME: TestBattleNoMonText
-; Dashes shown in place of a name for an empty party slot (confidence: high)
-Text_feda2:
+; Dashes shown in place of a name for an empty party slot
+TestBattleNoMonText:
 	db   "ーーーーー@"
 
-; SUGGESTED NAME: TestBattleWildText
-; "WILD #MON" battle type label (confidence: high)
-Text_feda8:
+; "WILD #MON" battle type label
+TestBattleWildText:
 	db   "ワイルドモンスター@" ; "WILD #MON@"
 
-; SUGGESTED NAME: TestBattleTrainerText
-; "TRAINER" battle type label (padded to clear the wild label) (confidence: high)
-Text_fedb2:
+; "TRAINER" battle type label (padded to clear the wild label)
+TestBattleTrainerText:
 	db   "ディーラー    @" ; "TRAINER      @"
 
-; SUGGESTED NAME: TestBattleOpponentHeaderText
-; "No. NAME LEVEL" header for the opponent row, followed by its blank entry row (confidence: high)
-Text_fedbc:
+; "No. NAME LEVEL" header for the opponent row, followed by its blank entry row
+TestBattleOpponentHeaderText:
 	db   "№．  なまえ        レべル" ; "№．  NAME     LABEL"
 	next ""
-; SUGGESTED NAME: TestBattleBlankOpponentText
-; Blank opponent row template ("000 ---------- 000") (confidence: high)
-Text_fedcf:
+; Blank opponent row template ("000 ---------- 000")
+TestBattleBlankOpponentText:
 	db   "０００ ーーーーーーーーーー ０００@"
 
-; SUGGESTED NAME: TestBattleClearNameText
-; Ten spaces used to clear the opponent/trainer name field (confidence: high)
-Text_fede2:
+; Ten spaces used to clear the opponent/trainer name field
+TestBattleClearNameText:
 	db   "          @"
 
-; SUGGESTED NAME: TestBattleItems
-; Item and quantity list added to the bag when the test battle starts (confidence: high)
-Data_feded:
+; Item and quantity list added to the bag when the test battle starts
+TestBattleItems:
 	db GREAT_BALL, 99
 	db POKE_BALL, 99
 	db ANTIDOTE, 99

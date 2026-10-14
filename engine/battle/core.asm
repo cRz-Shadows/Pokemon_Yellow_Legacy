@@ -2793,11 +2793,11 @@ SelectMenuItem:
 	jp nz, SwapMovesInMenu
 IF DEF(_DEBUG)
 	bit BIT_START, a
-	jp nz, Func_3d4f5
+	jp nz, TestBattlePlayMoveAnimation
 	bit BIT_D_RIGHT, a
-	jp nz, Func_3d529
+	jp nz, TestBattleIncrementMoveID
 	bit BIT_D_LEFT, a
-	jp nz, Func_3d523
+	jp nz, TestBattleDecrementMoveID
 ENDC
 	bit BIT_B_BUTTON, a
 	push af
@@ -2894,9 +2894,8 @@ SelectMenuItem_CursorDown:
 	ld [wCurrentMenuItem], a
 	jp SelectMenuItem
 
-; SUGGESTED NAME: TestBattlePlayMoveAnimation
-; Debug test battle (START/SELECT): plays wTestBattlePlayerSelectedMove's animation (confidence: high)
-Func_3d4f5:
+; Debug test battle (START/SELECT): plays wTestBattlePlayerSelectedMove's animation
+TestBattlePlayMoveAnimation:
 	bit 3, a
 	ld a, $0
 	jr nz, .asm_3d4fd
@@ -2904,7 +2903,7 @@ Func_3d4f5:
 .asm_3d4fd
 	ldh [hWhoseTurn], a
 	call LoadScreenTilesFromBuffer1
-	call Func_3d536
+	call TestBattlePrintMoveID
 	ld a, [wTestBattlePlayerSelectedMove]
 	and a
 	jp z, MoveSelectionMenu
@@ -2912,30 +2911,26 @@ Func_3d4f5:
 	xor a
 	ld [wAnimationType], a
 	predef MoveAnimation
-	callfar Func_78e98
+	callfar RefreshBGMapsAfterAnimation
 	jp MoveSelectionMenu
 
-; SUGGESTED NAME: TestBattleDecrementMoveID
-; Debug test battle (D-Left): decrements the selected test move ID (confidence: high)
-Func_3d523:
+; Debug test battle (D-Left): decrements the selected test move ID
+TestBattleDecrementMoveID:
 	ld a, [wTestBattlePlayerSelectedMove]
 	dec a
-	jr asm_3d52d
-; SUGGESTED NAME: TestBattleIncrementMoveID
-; Debug test battle (D-Right): increments the selected test move ID (confidence: high)
-Func_3d529:
+	jr TestBattleSetMoveID
+; Debug test battle (D-Right): increments the selected test move ID
+TestBattleIncrementMoveID:
 	ld a, [wTestBattlePlayerSelectedMove]
 	inc a
-; SUGGESTED NAME: TestBattleSetMoveID
-; Stores the new test move ID, reprints it and returns to the move menu (confidence: high)
-asm_3d52d:
+; Stores the new test move ID, reprints it and returns to the move menu
+TestBattleSetMoveID:
 	ld [wTestBattlePlayerSelectedMove], a
-	call Func_3d536
+	call TestBattlePrintMoveID
 	jp MoveSelectionMenu
 
-; SUGGESTED NAME: TestBattlePrintMoveID
-; Prints the test move's number and name at the bottom of the move menu (confidence: high)
-Func_3d536:
+; Prints the test move's number and name at the bottom of the move menu
+TestBattlePrintMoveID:
 	hlcoord 10, 16
 	lb bc, 2, 10
 	call ClearScreenArea
@@ -3007,7 +3002,7 @@ SwapMovesInMenu:
 IF DEF(_DEBUG)
 	ld a, [wStatusFlags7]
 	bit BIT_TEST_BATTLE, a
-	jp nz, Func_3d4f5
+	jp nz, TestBattlePlayMoveAnimation
 ENDC
 	ld a, [wPlayerBattleStatus3]
 	bit TRANSFORMED, a
@@ -5238,7 +5233,7 @@ AttackSubstitute:
 	ldh a, [hWhoseTurn]
 	xor $01
 	ldh [hWhoseTurn], a
-	callfar Func_79929 ; animate the substitute breaking
+	callfar AnimationShowMonAfterSubstitute ; animate the substitute breaking
 ; flip the turn back to the way it was
 	ldh a, [hWhoseTurn]
 	xor $01
@@ -7046,7 +7041,7 @@ PlayMoveAnimation:
 	ld [wAnimationID], a
 	call Delay3
 	predef MoveAnimation
-	callfar Func_78e98
+	callfar RefreshBGMapsAfterAnimation
 	ret
 
 PrintEXPBar:

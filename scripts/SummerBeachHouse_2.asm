@@ -1,6 +1,5 @@
-; SUGGESTED NAME: SummerBeachHousePrintHighScoreScript
-; Prints the surfing minigame high score, then says done or error (confidence: high)
-Func_f23d0:
+; Prints the surfing minigame high score, then says done or error
+SummerBeachHousePrintHighScoreScript:
 	call SaveScreenTilesToBuffer2
 	xor a
 	ld [wUpdateSpritesEnabled], a
@@ -15,25 +14,23 @@ Func_f23d0:
 	call LoadScreenTilesFromBuffer2
 	call Delay3
 	call GBPalNormal
-	ld hl, Text_f2412
+	ld hl, SummerBeachHousePrintErrorText
 	ldh a, [hOaksAideResult]
 	and a
 	jr nz, .asm_f2406
-	ld hl, Text_f240c
+	ld hl, SummerBeachHousePrintCompletedText
 .asm_f2406
 	call PrintText
 	jp TextScriptEnd
 
-; SUGGESTED NAME: SummerBeachHousePrintCompletedText
-; "PRINT completed." (confidence: high)
-Text_f240c:
+; "PRINT completed."
+SummerBeachHousePrintCompletedText:
 	text_far _SummerBeachHousePrinterText5
 	text_waitbutton
 	text_end
 
-; SUGGESTED NAME: SummerBeachHousePrintErrorText
-; "PRINT error!" (confidence: high)
-Text_f2412:
+; "PRINT error!"
+SummerBeachHousePrintErrorText:
 	text_far _SummerBeachHousePrinterText6
 	text_waitbutton
 	text_end

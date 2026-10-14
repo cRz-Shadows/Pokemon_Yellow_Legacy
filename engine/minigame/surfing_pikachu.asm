@@ -666,7 +666,7 @@ SurfingMinigameAnimatedObjectFn_Pikachu:
 	ld a, [wSurfingMinigamePikachuState]
 	ld e, a
 	ld d, $0
-	ld hl, Jumptable_f847f
+	ld hl, SurfingMinigamePikachuStateFunctions
 	add hl, de
 	add hl, de
 	ld a, [hli]
@@ -674,9 +674,8 @@ SurfingMinigameAnimatedObjectFn_Pikachu:
 	ld l, a
 	jp hl
 
-; SUGGESTED NAME: SurfingMinigamePikachuStateFunctions
-; Jump table of Pikachu state handlers by wSurfingMinigamePikachuState (pret: local .StateFunctions) (confidence: high)
-Jumptable_f847f:
+; Jump table of Pikachu state handlers by wSurfingMinigamePikachuState (pret: local .StateFunctions)
+SurfingMinigamePikachuStateFunctions:
 	dw SurfingMinigame_UpdateRidingPikachu
 	dw SurfingMinigame_UpdateJumpingPikachu
 	dw SurfingMinigame_UpdateLandingPikachu
@@ -1972,7 +1971,7 @@ SurfingMinigame_GetWaveDataPointers:
 	ld a, [wSurfingMinigameWaveFunctionNumber]
 	ld e, a
 	ld d, $0
-	ld hl, Jumptable_f8d53
+	ld hl, SurfingMinigameWaveFunctions
 	add hl, de
 	add hl, de
 	ld a, [hli]
@@ -1980,9 +1979,8 @@ SurfingMinigame_GetWaveDataPointers:
 	ld l, a
 	jp hl
 
-; SUGGESTED NAME: SurfingMinigameWaveFunctions
-; Jump table of wave-pattern loaders by wave function number (pret: local .WaveFunctions) (confidence: high)
-Jumptable_f8d53:
+; Jump table of wave-pattern loaders by wave function number (pret: local .WaveFunctions)
+SurfingMinigameWaveFunctions:
 	dw SurfingMinigame_ChooseNextWaveSequence ; 00
 
 	dw SurfingMinigame_LoadWavePattern13AndAdvance ; 01

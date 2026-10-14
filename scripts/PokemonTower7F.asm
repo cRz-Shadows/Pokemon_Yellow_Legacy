@@ -33,12 +33,11 @@ IF DEF(_DEBUG)
 	ret nz
 ENDC
 	CheckEvent EVENT_BEAT_POKEMONTOWER_7_TRAINER_0
-	call z, PokemonTower7FScript_60d2a
+	call z, PokemonTower7FScript_StartJessieJamesEncounter
 	ret
 
-; SUGGESTED NAME: PokemonTower7FScript_StartJessieJamesEncounter
-; At row 12 (X 10/11): plays Jessie & James music, shows them and starts intro (confidence: high)
-PokemonTower7FScript_60d2a:
+; At row 12 (X 10/11): plays Jessie & James music, shows them and starts intro
+PokemonTower7FScript_StartJessieJamesEncounter:
 	ld a, [wYCoord]
 	cp $c
 	ret nz
@@ -74,23 +73,21 @@ PokemonTower7FScript_60d2a:
 	call PokemonTower7FSetScript
 	ret
 
-; SUGGESTED NAME: PokemonTower7FJessieJamesRunDown4Movement
-; Jessie/James run down 4 tiles (code $4 = fast step down) (confidence: medium)
-PokemonTower7FMovementData_60d7a:
+; Jessie/James run down 4 tiles (code $4 = fast step down)
+PokemonTower7FJessieJamesRunDown4Movement:
 	db NPC_FAST_STEP_DOWN
-; SUGGESTED NAME: PokemonTower7FJessieJamesRunDown3Movement
-; Jessie/James run down 3 tiles (code $4 = fast step down) (confidence: medium)
-PokemonTower7FMovementData_60d7b:
+; Jessie/James run down 3 tiles (code $4 = fast step down)
+PokemonTower7FJessieJamesRunDown3Movement:
 	db NPC_FAST_STEP_DOWN
 	db NPC_FAST_STEP_DOWN
 	db NPC_FAST_STEP_DOWN
 	db $FF
 
 PokemonTower7FScript1:
-	ld de, PokemonTower7FMovementData_60d7b
+	ld de, PokemonTower7FJessieJamesRunDown3Movement
 	CheckEvent EVENT_BEAT_POKEMONTOWER_7_TRAINER_1
 	jr z, .asm_60d8c
-	ld de, PokemonTower7FMovementData_60d7a
+	ld de, PokemonTower7FJessieJamesRunDown4Movement
 .asm_60d8c
 	ld a, POKEMONTOWER7F_JESSIE
 	ldh [hTextID], a
@@ -118,10 +115,10 @@ PokemonTower7FScript3:
 	ld a, $2
 	ld [wSprite01StateData1MovementStatus], a
 PokemonTower7FScript4:
-	ld de, PokemonTower7FMovementData_60d7a
+	ld de, PokemonTower7FJessieJamesRunDown4Movement
 	CheckEvent EVENT_BEAT_POKEMONTOWER_7_TRAINER_1
 	jr z, .asm_60dcc
-	ld de, PokemonTower7FMovementData_60d7b
+	ld de, PokemonTower7FJessieJamesRunDown3Movement
 .asm_60dcc
 	ld a, POKEMONTOWER7F_JAMES
 	ldh [hTextID], a

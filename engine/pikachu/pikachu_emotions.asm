@@ -1,5 +1,5 @@
 IsPlayerTalkingToPikachu::
-	ld a, [wd436]
+	ld a, [wPlayerTalkingToPikachu]
 	and a
 	ret z
 	ldh a, [hTextID]
@@ -8,7 +8,7 @@ IsPlayerTalkingToPikachu::
 	call InitializePikachuTextID
 	xor a
 	ldh [hTextID], a
-	ld [wd436], a
+	ld [wPlayerTalkingToPikachu], a
 	ret
 
 InitializePikachuTextID::
@@ -206,9 +206,8 @@ StarterPikachuEmotionCommand_turnawayfromplayer:
 	ld [wSpritePikachuStateData1FacingDirection], a
 	ret
 
-; SUGGESTED NAME: DebugCyclePikachuEmotion
-; Debug only: in Red's room with debug flag set, steps wExpressionNumber through emotions (confidence: high)
-DeletedFunction_fcffb:
+; Debug only: in Red's room with debug flag set, steps wExpressionNumber through emotions
+DebugCyclePikachuEmotion:
 ; Inexplicably empty.
 REPT 5
 	nop
@@ -251,7 +250,7 @@ TalkToPikachu::
 	call MapSpecificPikachuExpression
 	jr c, load_expression
 	call GetPikaPicAnimationScriptIndex
-	call DeletedFunction_fcffb
+	call DebugCyclePikachuEmotion
 load_expression:
 	ld [wExpressionNumber], a
 	ld hl, PikachuEmotionTable

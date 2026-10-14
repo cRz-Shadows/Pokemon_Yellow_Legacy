@@ -277,11 +277,11 @@ DetectCollisionBetweenSprites:
 	and $f0 ; collision with pikachu?
 	jr nz, .asm_4cd9
 	xor a
-	ld [wd434], a
+	ld [wUnusedPikachuCollisionDirection], a
 	ldh a, [hCollidingSpriteOffset]
 	cp $f
 	jr nz, .asm_4cd9
-	call Func_4d0a
+	call SetPlayerPikachuCollisionDirection
 	jr .asm_4cef
 .asm_4cd9
 	ldh a, [hCollidingSpriteTempXValue] ; a = 7 or 9 depending on sprite i's delta X
@@ -333,9 +333,8 @@ DetectCollisionBetweenSprites:
 	jp nz, .loop
 	ret
 
-; SUGGESTED NAME: SetPlayerPikachuCollisionDirection
-; On a player/Pikachu collision, stores the collision direction bits in wd434 (confidence: medium)
-Func_4d0a:
+; On a player/Pikachu collision, stores the collision direction bits in wUnusedPikachuCollisionDirection
+SetPlayerPikachuCollisionDirection:
 	ldh a, [hCollidingSpriteTempXValue]
 	ld b, a
 	ldh a, [hCollidingSpriteTempYValue]
@@ -349,7 +348,7 @@ Func_4d0a:
 .asm_4d19
 	ld a, c
 	and b
-	ld [wd434], a
+	ld [wUnusedPikachuCollisionDirection], a
 	ld a, c
 	inc l
 	inc l

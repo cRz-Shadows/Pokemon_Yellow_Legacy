@@ -14,7 +14,7 @@
 DEF NPC_CHANGE_FACING EQU $E0
 
 ; NPC movement bytes that move a sprite one tile at double speed
-; (used by the Jessie & James scenes, handled by Func_5288)
+; (used by the Jessie & James scenes, handled by TryDoSpecialNPCMovement)
 	const_def $04
 	const NPC_FAST_STEP_DOWN  ; $04
 	const NPC_FAST_STEP_UP    ; $05

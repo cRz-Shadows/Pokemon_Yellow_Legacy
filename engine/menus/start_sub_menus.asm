@@ -150,7 +150,7 @@ StartMenu_Pokemon::
 	set 1, [hl]
 	jp StartMenu_Pokemon
 .asm_5d4c
-	call Func_1510
+	call HidePikachuDuringWarp
 	jp .goBackToMap
 .cut
 	bit BIT_CASCADEBADGE, a
@@ -176,7 +176,7 @@ StartMenu_Pokemon::
 .surfingPikachu
 	ld a, $2
 .continue
-	ld [wd473], a
+	ld [wSurfingSpriteOverride], a
 	ld a, SURFBOARD
 	ld [wCurItem], a
 	ld [wPseudoItemID], a
@@ -188,7 +188,7 @@ StartMenu_Pokemon::
 	jp .goBackToMap
 .reloadNormalSprite
 	xor a
-	ld [wd473], a
+	ld [wSurfingSpriteOverride], a
 	jp .loop
 .strength
 	bit BIT_RAINBOWBADGE, a
@@ -233,7 +233,7 @@ StartMenu_Pokemon::
 	ld hl, wStatusFlags6
 	set 3, [hl]
 	set 6, [hl]
-	call Func_1510
+	call HidePikachuDuringWarp
 	ld hl, wStatusFlags4
 	set 1, [hl]
 	res 4, [hl]

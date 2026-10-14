@@ -15,7 +15,7 @@ CeruleanMelanieHouseMelanieText:
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	CheckEvent EVENT_GOT_BULBASAUR_IN_CERULEAN
 	jr nz, .asm_1cfbf
-	ld hl, CeruleanHouse1Text_1cfc8
+	ld hl, CeruleanMelanieHouseMelanieIntroText
 	call PrintText
 	; Pick Starter mode without a starter Pikachu: there's no Pikachu
 	; happiness to earn (it never changes), so Melanie trusts the player
@@ -26,7 +26,7 @@ CeruleanMelanieHouseMelanieText:
 	cp 147
 	jr c, .asm_1cfb3
 .trustsPlayer
-	ld hl, CeruleanHouse1Text_1cfce
+	ld hl, CeruleanMelanieHouseOfferBulbasaurText
 	call PrintText
 	call YesNoChoice
 	ld a, [wCurrentMenuItem]
@@ -48,7 +48,7 @@ CeruleanMelanieHouseMelanieText:
 	call z, WaitForTextScrollButtonPress
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
-	ld hl, CeruleanHouse1Text_1cfd3
+	ld hl, CeruleanMelanieHouseTakeCareText
 	call PrintText
 	ld a, HS_CERULEAN_BULBASAUR
 	ld [wToggleableObjectIndex], a
@@ -58,45 +58,40 @@ CeruleanMelanieHouseMelanieText:
 	jp TextScriptEnd
 
 .asm_1cfb6
-	ld hl, CeruleanHouse1Text_1cfdf
+	ld hl, CeruleanMelanieHouseTooBadText
 	call PrintText
 	jp TextScriptEnd
 
 .asm_1cfbf
-	ld hl, CeruleanHouse1Text_1cfd9
+	ld hl, CeruleanMelanieHouseBulbasaurWellText
 	call PrintText
 	jp TextScriptEnd
 
-; SUGGESTED NAME: CeruleanMelanieHouseMelanieIntroText
-; Melanie: she nursed Bulbasaur and it needs a good trainer (confidence: high)
-CeruleanHouse1Text_1cfc8:
+; Melanie: she nursed Bulbasaur and it needs a good trainer
+CeruleanMelanieHouseMelanieIntroText:
 	text_far MelanieText1
 	text_waitbutton
 	text_end
 
-; SUGGESTED NAME: CeruleanMelanieHouseOfferBulbasaurText
-; Melanie asks if you'll take Bulbasaur (only if Pikachu happiness >= 147) (confidence: high)
-CeruleanHouse1Text_1cfce:
+; Melanie asks if you'll take Bulbasaur (only if Pikachu happiness >= 147)
+CeruleanMelanieHouseOfferBulbasaurText:
 	text_far MelanieText2
 	text_end
 
-; SUGGESTED NAME: CeruleanMelanieHouseTakeCareText
-; Melanie: "Please take care of BULBASAUR!" after giving it (confidence: high)
-CeruleanHouse1Text_1cfd3:
+; Melanie: "Please take care of BULBASAUR!" after giving it
+CeruleanMelanieHouseTakeCareText:
 	text_far MelanieText3
 	text_waitbutton
 	text_end
 
-; SUGGESTED NAME: CeruleanMelanieHouseBulbasaurWellText
-; Melanie after giving Bulbasaur: "Is BULBASAUR doing well?" (confidence: high)
-CeruleanHouse1Text_1cfd9:
+; Melanie after giving Bulbasaur: "Is BULBASAUR doing well?"
+CeruleanMelanieHouseBulbasaurWellText:
 	text_far MelanieText4
 	text_waitbutton
 	text_end
 
-; SUGGESTED NAME: CeruleanMelanieHouseTooBadText
-; Melanie when you decline Bulbasaur: "Oh... That's too bad..." (confidence: high)
-CeruleanHouse1Text_1cfdf:
+; Melanie when you decline Bulbasaur: "Oh... That's too bad..."
+CeruleanMelanieHouseTooBadText:
 	text_far MelanieText5
 	text_waitbutton
 	text_end

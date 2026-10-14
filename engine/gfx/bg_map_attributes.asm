@@ -48,7 +48,7 @@ LoadBGMapAttributes::
 .lcdOff
 	ld a, c ; number of BG attributes to transfer, plus 1 times 16
 	ldh [rHDMA5], a ; initiate transfer
-	call Func_3082 ; update audio so it doesn't "lag"
+	call UpdateMusicManually ; update audio so it doesn't "lag"
 	pop hl
 	ld a, [hli]
 	ld c, a     ; number of BG attributes to transfer, plus 1 times 16
@@ -94,7 +94,7 @@ LoadBGMapAttributes::
 	dec a
 	call z, HandlePartyHPBarAttributes
 .done
-	call Func_3082
+	call UpdateMusicManually
 	ldh a, [rIF]
 	res VBLANK, a
 	ldh [rIF], a

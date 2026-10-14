@@ -22,18 +22,16 @@ Route22SetDefaultScript:
 Route22NoopScript:
 	ret
 
-; SUGGESTED NAME: Route22SetRival1OpponentScript
-; Sets the first Route 22 rival battle opponent (OPP_RIVAL1, trainer 2) (confidence: high)
-Route22Script_50ed6:
+; Sets the first Route 22 rival battle opponent (OPP_RIVAL1, trainer 2)
+Route22SetRival1OpponentScript:
 	ld a, OPP_RIVAL1
 	ld [wCurOpponent], a
 	ld a, $2
 	ld [wTrainerNo], a
 	ret
 
-; SUGGESTED NAME: Route22SetRival2OpponentScript
-; Sets the second rival battle opponent (OPP_RIVAL2, trainer wRivalStarter + 7) (confidence: high)
-Route22Script_50ee1:
+; Sets the second rival battle opponent (OPP_RIVAL2, trainer wRivalStarter + 7)
+Route22SetRival2OpponentScript:
 	ld a, OPP_RIVAL2
 	ld [wCurOpponent], a
 	ld a, [wRivalStarter]
@@ -135,7 +133,7 @@ Route22Rival1StartBattleScript:
 	ld hl, Route22Rival1DefeatedText
 	ld de, Route22Rival1VictoryText
 	call SaveEndBattleTextPointers
-	call Route22Script_50ed6
+	call Route22SetRival1OpponentScript
 	ld a, SCRIPT_ROUTE22_RIVAL1_AFTER_BATTLE
 	ld [wRoute22CurScript], a
 	ret
@@ -290,7 +288,7 @@ Route22Rival2StartBattleScript:
 	ld hl, Route22Rival2DefeatedText
 	ld de, Route22Rival2VictoryText
 	call SaveEndBattleTextPointers
-	call Route22Script_50ee1
+	call Route22SetRival2OpponentScript
 	ld a, SCRIPT_ROUTE22_RIVAL2_AFTER_BATTLE
 	ld [wRoute22CurScript], a
 	ret

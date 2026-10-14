@@ -82,7 +82,7 @@ LoadPikachuMovementCommandData:
 .no_param2
 	ld [wCurPikaMovementParam2], a
 	xor a
-	ld [wd451], a
+	ld [wUnusedCurPikaMovementByte], a
 	scf
 	ret
 
@@ -673,7 +673,7 @@ PikaMovementFunc2_TurnClockwise:
 	ld d, a
 	call CheckPikachuStepTimer2
 	jr nz, .skip
-	ld hl, Data_fd731
+	ld hl, PikaMovementFacingCycle
 .loop
 	ld a, [hli]
 	cp d
@@ -690,7 +690,7 @@ PikaMovementFunc2_TurnCounterClockwise:
 	ld d, a
 	call CheckPikachuStepTimer2
 	jr nz, .skip
-	ld hl, Data_fd731End
+	ld hl, PikaMovementFacingCycleEnd
 .loop
 	ld a, [hld]
 	cp d
@@ -702,17 +702,15 @@ PikaMovementFunc2_TurnCounterClockwise:
 	ld [wCurPikaMovementSpriteImageIdx], a
 	ret
 
-; SUGGESTED NAME: PikaMovementFacingCycle
-; Facing directions in clockwise order, used by the movement-script turn functions (confidence: high)
-Data_fd731:
+; Facing directions in clockwise order, used by the movement-script turn functions
+PikaMovementFacingCycle:
 	db SPRITE_FACING_DOWN
 	db SPRITE_FACING_LEFT
 	db SPRITE_FACING_UP
 	db SPRITE_FACING_RIGHT
 	db SPRITE_FACING_DOWN
-; SUGGESTED NAME: PikaMovementFacingCycleEnd
-; End of PikaMovementFacingCycle (counterclockwise turns scan backwards from here) (confidence: high)
-Data_fd731End:
+; End of PikaMovementFacingCycle (counterclockwise turns scan backwards from here)
+PikaMovementFacingCycleEnd:
 
 PikaMovementFunc2_Timer:
 	push hl
@@ -989,13 +987,12 @@ Pikachu_LoadCurrentMapViewUpdateSpritesAndDelay3:
 Cosine_e: ; cosine?
 	ld a, e
 	add $10
-	jr asm_fd908
+	jr Sine_a
 
 Sine_e: ; sine?
 	ld a, e
-; SUGGESTED NAME: Sine_a
-; Shared body of Sine_e/Cosine_e: signed sine of angle a (0-63) times amplitude d (confidence: high)
-asm_fd908:
+; Shared body of Sine_e/Cosine_e: signed sine of angle a (0-63) times amplitude d
+Sine_a:
 	and $3f
 	cp $20
 	jr nc, .asm_fd913

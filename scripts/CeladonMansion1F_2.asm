@@ -1,36 +1,33 @@
 CeladonMansion1FPrintGrannyText::
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
-	ld hl, CeladonMansion1Text_f1e96
+	ld hl, CeladonMansion1FGrannyKeepMeCompanyText
 	call PrintText
 	callfar IsStarterPikachuAliveInOurParty
 	ret nc
-	ld hl, CeladonMansionText_f1e9c
+	ld hl, CeladonMansion1FGrannyAdorablePikachuText
 	call PrintText
 	ld a, $0
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
-	call Func_f1ea2
+	call CeladonMansion1FGetPikachuHappinessText
 	call PrintText
 	ret
 
-; SUGGESTED NAME: CeladonMansion1FGrannyKeepMeCompanyText
-; Granny: "My dear #MON keep me company." (confidence: high)
-CeladonMansion1Text_f1e96:
+; Granny: "My dear #MON keep me company."
+CeladonMansion1FGrannyKeepMeCompanyText:
 	text_far _CeladonMansion1Text2
 	text_waitbutton
 	text_end
 
-; SUGGESTED NAME: CeladonMansion1FGrannyAdorablePikachuText
-; Granny: "Oh, you have an adorable PIKACHU with you." (confidence: high)
-CeladonMansionText_f1e9c:
+; Granny: "Oh, you have an adorable PIKACHU with you."
+CeladonMansion1FGrannyAdorablePikachuText:
 	text_far _CeladonMansion1Text6
 	text_promptbutton
 	text_end
 
-; SUGGESTED NAME: CeladonMansion1FGetPikachuHappinessText
-; Returns in hl the granny's text for the current wPikachuHappiness bracket (confidence: high)
-Func_f1ea2:
-	ld hl, PikachuHappinessThresholds_f1eb9
+; Returns in hl the granny's text for the current wPikachuHappiness bracket
+CeladonMansion1FGetPikachuHappinessText:
+	ld hl, CeladonMansion1FPikachuHappinessTexts
 .asm_f1ea5
 	ld a, [hli]
 	inc hl
@@ -50,49 +47,42 @@ Func_f1ea2:
 	ld l, a
 	ret
 
-; SUGGESTED NAME: CeladonMansion1FPikachuHappinessTexts
-; Table of (happiness threshold, text) pairs used by the granny (confidence: high)
-PikachuHappinessThresholds_f1eb9:
-	dw   51, CeladonMansion1Text_f1ed5
-	dw  101, CeladonMansion1Text_f1eda
-	dw  131, CeladonMansion1Text_f1edf
-	dw  161, CeladonMansion1Text_f1ee4
-	dw  201, CeladonMansion1Text_f1ee9
-	dw  255, CeladonMansion1Text_f1eee
-	dw -256, CeladonMansion1Text_f1eee
+; Table of (happiness threshold, text) pairs used by the granny
+CeladonMansion1FPikachuHappinessTexts:
+	dw   51, CeladonMansion1FPikachuUntamedText
+	dw  101, CeladonMansion1FPikachuTakeMoreCareText
+	dw  131, CeladonMansion1FPikachuCuteText
+	dw  161, CeladonMansion1FPikachuTamedText
+	dw  201, CeladonMansion1FPikachuLooksHappyText
+	dw  255, CeladonMansion1FPikachuFantasticDuoText
+	dw -256, CeladonMansion1FPikachuFantasticDuoText
 
-; SUGGESTED NAME: CeladonMansion1FPikachuUntamedText
-; Happiness < 51: "It seems like it hasn't been tamed at all." (confidence: high)
-CeladonMansion1Text_f1ed5:
+; Happiness < 51: "It seems like it hasn't been tamed at all."
+CeladonMansion1FPikachuUntamedText:
 	text_far _CeladonMansion1Text7
 	text_end
 
-; SUGGESTED NAME: CeladonMansion1FPikachuTakeMoreCareText
-; Happiness < 101: "Why don't you take more care with PIKACHU?" (confidence: high)
-CeladonMansion1Text_f1eda:
+; Happiness < 101: "Why don't you take more care with PIKACHU?"
+CeladonMansion1FPikachuTakeMoreCareText:
 	text_far _CeladonMansion1Text8
 	text_end
 
-; SUGGESTED NAME: CeladonMansion1FPikachuCuteText
-; Happiness < 131: "You must be happy to have a #MON that cute." (confidence: high)
-CeladonMansion1Text_f1edf:
+; Happiness < 131: "You must be happy to have a #MON that cute."
+CeladonMansion1FPikachuCuteText:
 	text_far _CeladonMansion1Text9
 	text_end
 
-; SUGGESTED NAME: CeladonMansion1FPikachuTamedText
-; Happiness < 161: "Your PIKACHU seems tamed." (confidence: high)
-CeladonMansion1Text_f1ee4:
+; Happiness < 161: "Your PIKACHU seems tamed."
+CeladonMansion1FPikachuTamedText:
 	text_far _CeladonMansion1Text10
 	text_end
 
-; SUGGESTED NAME: CeladonMansion1FPikachuLooksHappyText
-; Happiness < 201: "Your PIKACHU looks happy with you." (confidence: high)
-CeladonMansion1Text_f1ee9:
+; Happiness < 201: "Your PIKACHU looks happy with you."
+CeladonMansion1FPikachuLooksHappyText:
 	text_far _CeladonMansion1Text11
 	text_end
 
-; SUGGESTED NAME: CeladonMansion1FPikachuFantasticDuoText
-; Happiness >= 201: "You look like a fantastic duo." (confidence: high)
-CeladonMansion1Text_f1eee:
+; Happiness >= 201: "You look like a fantastic duo."
+CeladonMansion1FPikachuFantasticDuoText:
 	text_far _CeladonMansion1Text12
 	text_end

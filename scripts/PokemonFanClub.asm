@@ -13,7 +13,7 @@ PokemonFanClub_ScriptPointers:
 PokemonFanClubScript0:
 	ld hl, wPikachuMapScriptFlags
 	bit 7, [hl]
-	call z, PokemonFanClubScript_59a44
+	call z, PokemonFanClubScript_PikachuReactsToSeel
 	ld hl, wPikachuMapScriptFlags
 	set 7, [hl]
 	ret
@@ -21,24 +21,22 @@ PokemonFanClubScript0:
 PokemonFanClubScript1:
 	ld hl, wPikachuMapScriptFlags
 	bit 7, [hl]
-	call z, PokemonFanClubScript_59a39
+	call z, PokemonFanClubScript_MaybePikachuReactsToSeel
 	ld hl, wPikachuMapScriptFlags
 	set 7, [hl]
 	ret
 
-; SUGGESTED NAME: PokemonFanClubScript_MaybePikachuReactsToSeel
-; 25/256 chance on entry to run PokemonFanClubScript_PikachuReactsToSeel (confidence: high)
-PokemonFanClubScript_59a39:
+; 25/256 chance on entry to run PokemonFanClubScript_PikachuReactsToSeel
+PokemonFanClubScript_MaybePikachuReactsToSeel:
 	call Random
 	ldh a, [hRandomAdd]
 	cp 25
-	call c, PokemonFanClubScript_59a44
+	call c, PokemonFanClubScript_PikachuReactsToSeel
 	ret
 
-; SUGGESTED NAME: PokemonFanClubScript_PikachuReactsToSeel
-; If Pikachu is out and healthy: exclamation, Pikachu walks over and Seel faces it (confidence: medium)
-PokemonFanClubScript_59a44:
-	ld a, [wd472]
+; If Pikachu is out and healthy: exclamation, Pikachu walks over and Seel faces it
+PokemonFanClubScript_PikachuReactsToSeel:
+	ld a, [wPikachuPartyFlags]
 	bit 7, a
 	ret z
 	callfar CheckPikachuStatusCondition
@@ -180,13 +178,13 @@ PokemonFanClubChairmanText:
 	text_asm
 	CheckEventHL EVENT_LEFT_FANCLUB_AFTER_BIKE_VOUCHER
 	jr z, .check_bike_voucher
-	ld hl, Text_59c1f
+	ld hl, PokemonFanClubChairmanOfferPrintText
 	call PrintText
 	call YesNoChoice
 	ld a, [wCurrentMenuItem]
 	and a
 	jr z, .select_mon_to_print
-	ld hl, Text_59c24
+	ld hl, PokemonFanClubChairmanPrintDeclinedText
 	jr .gbpals_print_text
 
 .check_bike_voucher
@@ -236,7 +234,7 @@ PokemonFanClubChairmanText:
 	jp nc, .print
 	call GBPalWhiteOutWithDelay3
 	call RestoreScreenTilesAndReloadTilePatterns
-	ld hl, Text_59c24
+	ld hl, PokemonFanClubChairmanPrintDeclinedText
 	jr .gbpals_print_text
 
 .print
@@ -253,11 +251,11 @@ PokemonFanClubChairmanText:
 	call LoadScreenTilesFromBuffer2
 	call Delay3
 	call GBPalNormal
-	ld hl, Text_59c2e
+	ld hl, PokemonFanClubChairmanPrintCanceledText
 	ldh a, [hOaksAideResult]
 	and a
 	jr nz, .gbpals_print_text
-	ld hl, Text_59c29
+	ld hl, PokemonFanClubChairmanPrintDoneText
 	jr .gbpals_print_text
 
 .IntroText:
@@ -286,27 +284,23 @@ PokemonFanClubChairmanText:
 	text_far _PokemonFanClubBagFullText
 	text_end
 
-; SUGGESTED NAME: PokemonFanClubChairmanOfferPrintText
-; Chairman offers to PRINT one of your #MON (confidence: high)
-Text_59c1f:
+; Chairman offers to PRINT one of your #MON
+PokemonFanClubChairmanOfferPrintText:
 	text_far FanClubChairPrintText1
 	text_end
 
-; SUGGESTED NAME: PokemonFanClubChairmanPrintDeclinedText
-; Chairman: "No? That's really disappointing." (confidence: high)
-Text_59c24:
+; Chairman: "No? That's really disappointing."
+PokemonFanClubChairmanPrintDeclinedText:
 	text_far FanClubChairPrintText2
 	text_end
 
-; SUGGESTED NAME: PokemonFanClubChairmanPrintDoneText
-; Chairman after printing: "OK, I'm done." (confidence: high)
-Text_59c29:
+; Chairman after printing: "OK, I'm done."
+PokemonFanClubChairmanPrintDoneText:
 	text_far FanClubChairPrintText3
 	text_end
 
-; SUGGESTED NAME: PokemonFanClubChairmanPrintCanceledText
-; Chairman on print error/cancel: "Maybe we won't PRINT this now." (confidence: high)
-Text_59c2e:
+; Chairman on print error/cancel: "Maybe we won't PRINT this now."
+PokemonFanClubChairmanPrintCanceledText:
 	text_far FanClubChairPrintText4
 	text_end
 

@@ -104,16 +104,15 @@ IF DEF(_DEBUG)
 	ret nz
 ENDC
 	CheckEvent EVENT_BEAT_SILPH_CO_11F_TRAINER_0
-	call z, SilphCo11FScript_6229c
+	call z, SilphCo11FScript_StartJessieJamesEncounter
 	CheckEvent EVENT_782
 	ret nz
 	CheckEvent EVENT_BEAT_SILPH_CO_GIOVANNI
-	call z, SilphCo11FScript_621c5
+	call z, SilphCo11FScript_CheckGiovanniEncounter
 	ret
 
-; SUGGESTED NAME: SilphCo11FScript_CheckGiovanniEncounter
-; At Giovanni's trigger tiles: shows his text, walks him down and starts the battle script (confidence: high)
-SilphCo11FScript_621c5:
+; At Giovanni's trigger tiles: shows his text, walks him down and starts the battle script
+SilphCo11FScript_CheckGiovanniEncounter:
 	ld hl, .PlayerCoordsArray
 	call ArePlayerCoordsInArray
 	jp nc, CheckFightingMapTrainers
@@ -146,9 +145,8 @@ SilphCo11FScript_621c5:
 	db NPC_MOVEMENT_DOWN
 	db -1 ; end
 
-; SUGGESTED NAME: SilphCo11FSetPlayerAndGiovanniFacing
-; Sets the player's direction from a and Giovanni's facing from b (confidence: high)
-SilphCo11FScript_621ff:
+; Sets the player's direction from a and Giovanni's facing from b
+SilphCo11FSetPlayerAndGiovanniFacing:
 	ld [wPlayerMovingDirection], a
 	ld a, b
 	ld [wSprite03StateData1FacingDirection], a
@@ -170,7 +168,7 @@ SilphCo11FGiovanniAfterBattleScript:
 	ld a, PLAYER_DIR_UP
 	ld b, SPRITE_FACING_DOWN
 .continue
-	call SilphCo11FScript_621ff
+	call SilphCo11FSetPlayerAndGiovanniFacing
 	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
 	ld [wJoyIgnore], a
 	ld a, TEXT_SILPHCO11F_GIOVANNI_YOU_RUINED_OUR_PLANS
@@ -203,7 +201,7 @@ SilphCo11FGiovanniStartBattleScript:
 	ld a, PLAYER_DIR_UP
 	ld b, SPRITE_FACING_DOWN
 .continue
-	call SilphCo11FScript_621ff
+	call SilphCo11FSetPlayerAndGiovanniFacing
 	call Delay3
 	xor a
 	ld [wJoyIgnore], a
@@ -220,9 +218,8 @@ SilphCo11FGiovanniStartBattleScript:
 	ld a, SCRIPT_SILPHCO11F_GIOVANNI_AFTER_BATTLE
 	jp SilphCo11FSetCurScript
 
-; SUGGESTED NAME: SilphCo11FScript_StartJessieJamesEncounter
-; At row 3 (X 0-3): plays Jessie & James music, intro text, picks approach path (confidence: high)
-SilphCo11FScript_6229c:
+; At row 3 (X 0-3): plays Jessie & James music, intro text, picks approach path
+SilphCo11FScript_StartJessieJamesEncounter:
 	ld a, [wYCoord]
 	cp $3
 	ret nz
@@ -262,9 +259,8 @@ SilphCo11FScript_6229c:
 	call SilphCo11FSetCurScript
 	ret
 
-; SUGGESTED NAME: SilphCo11FJamesMovement_PlayerX3
-; James runs up 5 (player at X 3) (confidence: medium)
-SilphCo11FMovementData_622f5:
+; James runs up 5 (player at X 3)
+SilphCo11FJamesMovement_PlayerX3:
 	db NPC_FAST_STEP_UP
 	db NPC_FAST_STEP_UP
 	db NPC_FAST_STEP_UP
@@ -272,27 +268,24 @@ SilphCo11FMovementData_622f5:
 	db NPC_FAST_STEP_UP
 	db $ff
 
-; SUGGESTED NAME: SilphCo11FJessieMovement_PlayerX3
-; Jessie runs up 4 (player at X 3) (confidence: medium)
-SilphCo11FMovementData_622fb:
+; Jessie runs up 4 (player at X 3)
+SilphCo11FJessieMovement_PlayerX3:
 	db NPC_FAST_STEP_UP
 	db NPC_FAST_STEP_UP
 	db NPC_FAST_STEP_UP
 	db NPC_FAST_STEP_UP
 	db $ff
 
-; SUGGESTED NAME: SilphCo11FJamesMovement_PlayerX2
-; James runs up 4 (player at X 2, EVENT_780) (confidence: medium)
-SilphCo11FMovementData_62300:
+; James runs up 4 (player at X 2, EVENT_780)
+SilphCo11FJamesMovement_PlayerX2:
 	db NPC_FAST_STEP_UP
 	db NPC_FAST_STEP_UP
 	db NPC_FAST_STEP_UP
 	db NPC_FAST_STEP_UP
 	db $ff
 
-; SUGGESTED NAME: SilphCo11FJessieMovement_PlayerX2
-; Jessie runs up 5 (player at X 2, EVENT_780) (confidence: medium)
-SilphCo11FMovementData_62305:
+; Jessie runs up 5 (player at X 2, EVENT_780)
+SilphCo11FJessieMovement_PlayerX2:
 	db NPC_FAST_STEP_UP
 	db NPC_FAST_STEP_UP
 	db NPC_FAST_STEP_UP
@@ -300,9 +293,8 @@ SilphCo11FMovementData_62305:
 	db NPC_FAST_STEP_UP
 	db $ff
 
-; SUGGESTED NAME: SilphCo11FJamesMovement_PlayerX0To1
-; James runs up 2, left 1, up 2 (player at X 0-1, EVENT_781) (confidence: medium)
-SilphCo11FMovementData_6230b:
+; James runs up 2, left 1, up 2 (player at X 0-1, EVENT_781)
+SilphCo11FJamesMovement_PlayerX0To1:
 	db NPC_FAST_STEP_UP
 	db NPC_FAST_STEP_UP
 	db NPC_FAST_STEP_LEFT
@@ -310,9 +302,8 @@ SilphCo11FMovementData_6230b:
 	db NPC_FAST_STEP_UP
 	db $ff
 
-; SUGGESTED NAME: SilphCo11FJessieMovement_PlayerX0To1
-; Jessie runs up 3, left 1, up 2 (player at X 0-1, EVENT_781) (confidence: medium)
-SilphCo11FMovementData_62311:
+; Jessie runs up 3, left 1, up 2 (player at X 0-1, EVENT_781)
+SilphCo11FJessieMovement_PlayerX0To1:
 	db NPC_FAST_STEP_UP
 	db NPC_FAST_STEP_UP
 	db NPC_FAST_STEP_UP
@@ -322,14 +313,14 @@ SilphCo11FMovementData_62311:
 	db $ff
 
 SilphCo11FScript5:
-	ld de, SilphCo11FMovementData_622f5
+	ld de, SilphCo11FJamesMovement_PlayerX3
 	CheckEitherEventSet EVENT_780, EVENT_781
 	and a
 	jr z, .asm_6232d
-	ld de, SilphCo11FMovementData_62300
+	ld de, SilphCo11FJamesMovement_PlayerX2
 	cp $1
 	jr z, .asm_6232d
-	ld de, SilphCo11FMovementData_6230b
+	ld de, SilphCo11FJamesMovement_PlayerX0To1
 .asm_6232d
 	ld a, SILPHCO11F_JAMES
 	ldh [hTextID], a
@@ -360,14 +351,14 @@ SilphCo11FScript7:
 	ld a, SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
 	ld [wJoyIgnore], a
 SilphCo11FScript8:
-	ld de, SilphCo11FMovementData_622fb
+	ld de, SilphCo11FJessieMovement_PlayerX3
 	CheckEitherEventSet EVENT_780, EVENT_781
 	and a
 	jr z, .asm_6237b
-	ld de, SilphCo11FMovementData_62305
+	ld de, SilphCo11FJessieMovement_PlayerX2
 	cp $1
 	jr z, .asm_6237b
-	ld de, SilphCo11FMovementData_62311
+	ld de, SilphCo11FJessieMovement_PlayerX0To1
 .asm_6237b
 	ld a, SILPHCO11F_JESSIE
 	ldh [hTextID], a
@@ -404,8 +395,8 @@ SilphCo11FScript11:
 	ld hl, wStatusFlags3
 	set 6, [hl]
 	set 7, [hl]
-	ld hl, SilphCo11FText_624c2
-	ld de, SilphCo11FText_624c2
+	ld hl, SilphCo11FJessieJamesEndBattleText
+	ld de, SilphCo11FJessieJamesEndBattleText
 	call SaveEndBattleTextPointers
 	ld a, OPP_ROCKET
 	ld [wCurOpponent], a
@@ -526,9 +517,8 @@ SilphCo11FText9:
 	text_far _SilphCoJessieJamesText2
 	text_end
 
-; SUGGESTED NAME: SilphCo11FJessieJamesEndBattleText
-; Jessie & James end-of-battle text (saved as both win/loss text) (confidence: high)
-SilphCo11FText_624c2:
+; Jessie & James end-of-battle text (saved as both win/loss text)
+SilphCo11FJessieJamesEndBattleText:
 	text_far _SilphCoJessieJamesText3
 	text_end
 

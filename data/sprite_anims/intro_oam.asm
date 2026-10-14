@@ -1,42 +1,39 @@
 YellowIntro_AnimatedObjectOAMData:
-	dbw $00, Unkn_fa179
-	dbw $96, Unkn_fa17e
-	dbw $98, Unkn_fa17e
-	dbw $9a, Unkn_fa17e
-	dbw $0c, Unkn_fa18f
-	dbw $0e, Unkn_fa18f
-	dbw $3c, Unkn_fa18f
-	dbw $60, Unkn_fa1b0
-	dbw $70, Unkn_fa1b0
-	dbw $80, Unkn_fa1b0
-	dbw $90, Unkn_fa201
-	dbw $00, Unkn_fa201
-	dbw $06, Unkn_fa201
-	dbw $c6, Unkn_fa292
-	dbw $6d, Unkn_fa2f7
-	dbw $f0, Unkn_fa308
-	dbw $f4, Unkn_fa308
-	dbw $f8, Unkn_fa308
-	dbw $9c, Unkn_fa329
-	dbw $ec, Unkn_fa329
+	dbw $00, YellowIntroOAM_SingleTile
+	dbw $96, YellowIntroOAM_PikachuWalkSmall
+	dbw $98, YellowIntroOAM_PikachuWalkSmall
+	dbw $9a, YellowIntroOAM_PikachuWalkSmall
+	dbw $0c, YellowIntroOAM_PikachuWalkMedium
+	dbw $0e, YellowIntroOAM_PikachuWalkMedium
+	dbw $3c, YellowIntroOAM_PikachuWalkMedium
+	dbw $60, YellowIntroOAM_PikachuWalkLarge
+	dbw $70, YellowIntroOAM_PikachuWalkLarge
+	dbw $80, YellowIntroOAM_PikachuWalkLarge
+	dbw $90, YellowIntroOAM_Pikachu48x48
+	dbw $00, YellowIntroOAM_Pikachu48x48
+	dbw $06, YellowIntroOAM_Pikachu48x48
+	dbw $c6, YellowIntroOAM_PikachuFinalPose
+	dbw $6d, YellowIntroOAM_SpeedLine
+	dbw $f0, YellowIntroOAM_PikachuEyes
+	dbw $f4, YellowIntroOAM_PikachuEyes
+	dbw $f8, YellowIntroOAM_PikachuEyes
+	dbw $9c, YellowIntroOAM_CheekSparks
+	dbw $ec, YellowIntroOAM_CheekSparks
 
-; SUGGESTED NAME: YellowIntroOAM_SingleTile
-; Intro OAM: a single 8x8 tile (confidence: high)
-Unkn_fa179:
+; Intro OAM: a single 8x8 tile
+YellowIntroOAM_SingleTile:
 	db 1
 	db $fc, $fc, $00, $00
-; SUGGESTED NAME: YellowIntroOAM_PikachuWalkSmall
-; Intro OAM: 16x16 tiny walking Pikachu silhouette (confidence: high)
-Unkn_fa17e:
+; Intro OAM: 16x16 tiny walking Pikachu silhouette
+YellowIntroOAM_PikachuWalkSmall:
 	db 4
 	db $f8, $f8, $00, $00
 	db $f8, $00, $01, $00
 	db $00, $f8, $10, $00
 	db $00, $00, $11, $00
 
-; SUGGESTED NAME: YellowIntroOAM_PikachuWalkMedium
-; Intro OAM: 16x32 medium walking Pikachu, lower half mirrored (confidence: high)
-Unkn_fa18f:
+; Intro OAM: 16x32 medium walking Pikachu, lower half mirrored
+YellowIntroOAM_PikachuWalkMedium:
 	db 8
 	db $f0, $f8, $00, $00
 	db $f0, $00, $01, $00
@@ -47,9 +44,8 @@ Unkn_fa18f:
 	db $08, $f8, $21, $00
 	db $08, $00, $21, $20
 
-; SUGGESTED NAME: YellowIntroOAM_PikachuWalkLarge
-; Intro OAM: 32x48 large walking Pikachu, mostly mirrored (confidence: high)
-Unkn_fa1b0:
+; Intro OAM: 32x48 large walking Pikachu, mostly mirrored
+YellowIntroOAM_PikachuWalkLarge:
 	db 20
 	db $e8, $f8, $00, $00
 	db $e8, $00, $01, $00
@@ -72,9 +68,8 @@ Unkn_fa1b0:
 	db $10, $00, $0c, $20
 	db $10, $08, $0b, $20
 
-; SUGGESTED NAME: YellowIntroOAM_Pikachu48x48
-; Intro OAM: 6x6-tile (48x48) sprite used for dashing, surfing and flying Pikachu (confidence: high)
-Unkn_fa201:
+; Intro OAM: 6x6-tile (48x48) sprite used for dashing, surfing and flying Pikachu
+YellowIntroOAM_Pikachu48x48:
 	db 36
 	db $e8, $e8, $00, $00
 	db $e8, $f0, $01, $00
@@ -113,9 +108,8 @@ Unkn_fa201:
 	db $10, $08, $54, $00
 	db $10, $10, $55, $00
 
-; SUGGESTED NAME: YellowIntroOAM_PikachuFinalPose
-; Intro OAM: 5x5-tile (40x40) final angry Pikachu pose (confidence: high)
-Unkn_fa292:
+; Intro OAM: 5x5-tile (40x40) final angry Pikachu pose
+YellowIntroOAM_PikachuFinalPose:
 	db 25
 	db $ec, $f0, $00, $00
 	db $ec, $f8, $01, $00
@@ -143,18 +137,16 @@ Unkn_fa292:
 	db $0c, $08, $23, $00
 	db $0c, $10, $24, $00
 
-; SUGGESTED NAME: YellowIntroOAM_SpeedLine
-; Intro OAM: 32x8 mirrored horizontal speed line (confidence: high)
-Unkn_fa2f7:
+; Intro OAM: 32x8 mirrored horizontal speed line
+YellowIntroOAM_SpeedLine:
 	db 4
 	db $fc, $f0, $00, $00
 	db $fc, $f8, $01, $00
 	db $fc, $00, $01, $20
 	db $fc, $08, $00, $20
 
-; SUGGESTED NAME: YellowIntroOAM_PikachuEyes
-; Intro OAM: pair of mirrored 16x16 eyes (OBP1) placed over the big Pikachu face (confidence: high)
-Unkn_fa308:
+; Intro OAM: pair of mirrored 16x16 eyes (OBP1) placed over the big Pikachu face
+YellowIntroOAM_PikachuEyes:
 	db 8
 	db $f8, $e8, $00, $10
 	db $f8, $f0, $01, $10
@@ -165,9 +157,8 @@ Unkn_fa308:
 	db $00, $08, $03, $30
 	db $00, $10, $02, $30
 
-; SUGGESTED NAME: YellowIntroOAM_CheekSparks
-; Intro OAM: pair of mirrored 24x16 electric sparks either side of Pikachu's face (confidence: high)
-Unkn_fa329:
+; Intro OAM: pair of mirrored 24x16 electric sparks either side of Pikachu's face
+YellowIntroOAM_CheekSparks:
 	db 12
 	db $f8, $d8, $00, $10
 	db $f8, $e0, $01, $10

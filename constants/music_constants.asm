@@ -179,7 +179,7 @@ DEF MAX_SFX_ID_1 EQUS "SFX_SAFARI_ZONE_PA"
 	music_const SFX_BALL_POOF,          SFX_Ball_Poof
 	music_const SFX_FAINT_THUD,         SFX_Faint_Thud
 	music_const SFX_RUN,                SFX_Run
-	music_const SFX_DEX_PAGE_ADDED,     SFX_Dex_Page_Added
+	music_const SFX_DEX_PAGE_ADDED,     SFX_Dex_Data_Added
 	music_const SFX_CAUGHT_MON,         SFX_Caught_Mon
 
 DEF BATTLE_SFX_START EQUS "SFX_PECK"
