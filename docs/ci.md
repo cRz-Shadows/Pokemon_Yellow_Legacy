@@ -56,7 +56,7 @@ To check for new warnings: `make yellow yellow_debug yellow_vc 2>&1 | tee build.
 
 - The ROMs are passed between jobs through the Actions cache instead of being uploaded as artifacts. A PR runs its own copy of the workflow, so a malicious PR could still try to publish a ROM. The real controls are:
   - Workflows from outside contributors' PRs only run after a maintainer approves them (repository setting: *Require approval for all external contributors*).
-  - `.github/CODEOWNERS` makes the maintainer the reviewer for `.github/`, `tools/` and the `Makefile`; review changes to the checks before approving a run or merging.
+  - Review changes to `.github/`, `tools/` and the `Makefile` before approving a run or merging: a PR can change what the checks do.
 - A PR could fill the Actions cache quota and evict another run's build. That can only make checks fail (`fail-on-cache-miss`), never pass falsely.
 
 ## Upstream watch

@@ -19,7 +19,7 @@ concurrency:
 # Each job is its own check on the PR. The ROMs are passed between jobs through
 # the Actions cache instead of being uploaded as artifacts. A PR runs its own
 # copy of this file, so the real safeguards are maintainer approval of
-# outside contributors' runs and code-owner review of .github/ (see docs/ci.md).
+# outside contributors' runs and reviewing changes to .github/ (see docs/ci.md).
 
 jobs:
   build:
