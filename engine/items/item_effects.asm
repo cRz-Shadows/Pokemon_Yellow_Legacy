@@ -262,7 +262,7 @@ ItemUseBall:
 	ldh [hMultiplier], a
 	call Multiply
 
-; Determine BallFactor. It's 12 for Poké Balls, 8 for Great Balls and 6 for
+; Determine BallFactor. It's 12 for Poké Balls, 8 for Great Balls and 5 for
 ; Ultra and Safari Balls (vanilla gives Ultra Balls 12, worse than Great Balls).
 	ld a, [wCurItem]
 	ld b, 12
@@ -271,7 +271,7 @@ ItemUseBall:
 	ld b, 8
 	cp GREAT_BALL
 	jr z, .gotBallFactor
-	ld b, 6
+	ld b, 5
 .gotBallFactor
 	ld a, b
 ; Note that the results of all division operations are floored.
