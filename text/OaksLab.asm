@@ -256,11 +256,17 @@ _OaksLabOakGivesText::
 
 _OaksLabOakPickStarterText::
 	text "OAK: <PLAYER>, I"
-	line "keep every kind"
-	cont "of #MON here!"
+	line "caught a PIKACHU"
+	cont "earlier, but my"
+	cont "research covers"
+	cont "every #MON!"
 
 	para "Go on, pick any"
 	line "one you like!"
+
+	para "UP/DOWN: look"
+	line "LEFT/RIGHT: page"
+	cont "A: choose"
 	prompt
 
 _PickStarterConfirmText::
@@ -268,6 +274,16 @@ _PickStarterConfirmText::
 	line "@"
 	text_ram wNameBuffer
 	text "?"
+	done
+
+_PickStarterConfirmCantAttackText::
+	text "So, you want"
+	line "@"
+	text_ram wNameBuffer
+	text "?"
+
+	para "It can't attack"
+	line "yet. Are you sure?"
 	done
 
 _OaksLabReceivedText::

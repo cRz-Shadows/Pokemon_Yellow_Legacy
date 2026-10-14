@@ -4,63 +4,42 @@
 Each scenario starts from a game that has just received its starter (Normal
 mode with PIKACHU, or Pick Starter mode with CHARMANDER), adjusts a few RAM
 values (money, happiness, moves) and uses the game's own scripted-warp
-mechanism to enter the map, then talks to the NPC and checks the result.
+mechanism to enter the map, then talks to the NPC or reads the sign and checks
+the result.
 
 - Melanie (Cerulean City) gives BULBASAUR without a starter PIKACHU, and in
   Normal mode only if PIKACHU is happy enough.
 - The Safari Zone gate with no money survives 6+ refusals (issue #14) and the
   4th refusal still gets in free.
 - Pikachu's Beach: any Surf user can play in Pick Starter mode without a
-  starter PIKACHU; Normal mode still needs a PIKACHU that knows SURF.
+  starter PIKACHU (the Surfin' Dude names it); Normal mode still needs a
+  PIKACHU that knows SURF. The posters and the printer follow the same rule
+  and must print their own text (issue #53).
+- With the Virtual Console ROM (optional second argument), the VC patch lets
+  the starter PIKACHU play without SURF.
 
-Usage: scenario_tests.py ROM_PREFIX
-Must run from the repository root (map and move IDs are read from the source).
-On failure a screenshot is saved to smoke_test_failures/.
+Usage: scenario_tests.py ROM_PREFIX [VC_ROM_PREFIX]
+IDs come from the .sym (constants/ci_exports.asm), so the script can run from
+any directory. On failure a screenshot is saved to smoke_test_failures/.
 """
 
 import io
 import os
-import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from smoke_test import Game, TestFailure, get_starter, new_game, walk_to_oaks_lab  # noqa: E402
 
 
-def read_map_ids():
-    """Map name -> ID: the order of map_const in constants/map_constants.asm."""
-    names = []
-    started = False
-    for line in open('constants/map_constants.asm'):
-        if line.strip() == 'const_def':
-            started = True
-        elif started:
-            m = re.match(r'\s*map_const (\w+),', line)
-            if m:
-                names.append(m[1])
-    return {name: i for i, name in enumerate(names)}
-
-
-def read_move_id(name):
-    """Move ID: the order of const in constants/move_constants.asm (from 1)."""
-    names = re.findall(r'^\s*const (\w+)', open('constants/move_constants.asm').read(), re.MULTILINE)
-    return names.index(name)  # the first const is NO_MOVE (0)
-
-
-MAPS = read_map_ids()
-SURF = read_move_id('SURF')
-HAPPY_ENOUGH_FOR_MELANIE = 147
-
-
 # --- starting points -------------------------------------------------------
 
-def starter_state(prefix, difficulty, pick_dex_no, expected):
+def starter_state(prefix, difficulty, pick_buttons, expected):
     """Plays a new game up to receiving the starter; returns a saved state."""
     g = Game(prefix, f'setup {expected}')
     try:
         new_game(g, difficulty)
         walk_to_oaks_lab(g)
-        received = get_starter(g, pick_dex_no)
+        received = get_starter(g, pick_buttons)
         if expected not in received:
             g.fail(f'setup: expected {expected}, got "{received}"')
         for _ in range(15):  # let the remaining lab text finish
@@ -81,12 +60,12 @@ def load(prefix, state, label):
 def warp(g, map_name, came_from):
     """Enter map_name at its first warp, as if walking in from came_from."""
     mem = g.pb.memory
-    mem[g.syms['hWarpDestinationMap']] = MAPS[map_name]
+    mem[g.syms['hWarpDestinationMap']] = g.const(map_name)
     mem[g.syms['wDestinationWarpID']] = 0
-    mem[g.syms['wLastMap']] = MAPS[came_from]
-    mem[g.syms['wStatusFlags3']] |= 1 << 3  # scripted warp
+    mem[g.syms['wLastMap']] = g.const(came_from)
+    mem[g.syms['wStatusFlags3']] |= 1 << g.const('BIT_WARP_FROM_CUR_SCRIPT')
     g.run(300)
-    if g.mem('wCurMap') != MAPS[map_name]:
+    if g.mem('wCurMap') != g.const(map_name):
         g.fail(f'warp to {map_name} failed (on map {g.mem("wCurMap"):#x})')
 
 
@@ -124,13 +103,23 @@ def yes_no_shown(g):
     return 'YES' in g.text()
 
 
+def set_up_party(g, give_surf=False, species=None):
+    if give_surf:
+        g.pb.memory[g.syms['wPartyMon1Moves'] + 3] = g.const('SURF')
+    if species is not None:
+        g.pb.memory[g.syms['wPartySpecies']] = g.const(species)
+        g.pb.memory[g.syms['wPartyMon1']] = g.const(species)
+
+
 # --- Melanie ---------------------------------------------------------------
 
-def melanie(prefix, state, label, happiness, expect_offer):
+def melanie(prefix, state, label, happiness_offset, expect_offer):
+    """happiness_offset: None to leave happiness alone, else set it to the
+    threshold plus this offset."""
     g = load(prefix, state, label)
     try:
-        if happiness is not None:
-            g.pb.memory[g.syms['wPikachuHappiness']] = happiness
+        if happiness_offset is not None:
+            g.pb.memory[g.syms['wPikachuHappiness']] = g.const('MELANIE_HAPPINESS_THRESHOLD') + happiness_offset
         warp(g, 'CERULEAN_MELANIES_HOUSE', 'CERULEAN_CITY')
         walk_to(g, 3, 2)
         g.press('up', 20, hold=3)
@@ -175,13 +164,13 @@ def safari_gate(prefix, state, label, refusals_so_far):
                 presses_after_answer = 0  # the A below answers YES to "join the hunt?"
             elif presses_after_answer is not None:
                 presses_after_answer += 1
-                if presses_after_answer > 15 or g.mem('wCurMap') != MAPS['SAFARI_ZONE_GATE']:
+                if presses_after_answer > 15 or g.mem('wCurMap') != g.const('SAFARI_ZONE_GATE'):
                     break
             g.press('a', 40)
         else:
             g.fail('the guard never asked to join the hunt')
         g.run(120)
-        if g.mem('wCurMap') == MAPS['SAFARI_ZONE_GATE'] and g.mem('wJoyIgnore'):
+        if g.mem('wCurMap') == g.const('SAFARI_ZONE_GATE') and g.mem('wJoyIgnore'):
             g.fail('the game did not return control to the player (hang?)')
         said = ' / '.join(lines)
         return g, said
@@ -214,16 +203,12 @@ def safari_free_entry(prefix, state):
 
 # --- Pikachu's Beach -------------------------------------------------------
 
-def beach(prefix, state, label, give_surf, species=None, expect=None):
-    """expect: None (refused) or the word the Surfin' Dude uses ("PIKACHU",
-    "POK" for POKéMON)."""
+def beach(prefix, state, label, give_surf=False, species=None, expect=None):
+    """Talks to the Surfin' Dude. expect: None (refused) or the name he must
+    say in "Your <name> knows how to SURF"."""
     g = load(prefix, state, label)
     try:
-        if give_surf:
-            g.pb.memory[g.syms['wPartyMon1Moves'] + 3] = SURF
-        if species is not None:
-            g.pb.memory[g.syms['wPartySpecies']] = species
-            g.pb.memory[g.syms['wPartyMon1']] = species
+        set_up_party(g, give_surf, species)
         warp(g, 'SUMMER_BEACH_HOUSE', 'ROUTE_19')
         walk_to(g, 2, 4)
         g.press('up', 20, hold=3)
@@ -234,38 +219,83 @@ def beach(prefix, state, label, give_surf, species=None, expect=None):
                 g.fail(f'expected the Surfin\' Dude to refuse; he said "{said}"')
             return 'refused, as expected'
         if not offered or f'Your {expect}' not in said:
-            g.fail(f'expected "Your {expect}… knows how to SURF" and the minigame offer; he said "{said}"')
-        return f'offered: "Your {expect}{"MON" if expect == "POK" else ""} knows how to SURF!"'
+            g.fail(f'expected "Your {expect} knows how to SURF" and the minigame offer; he said "{said}"')
+        return f'offered: "Your {expect} knows how to SURF!"'
+    finally:
+        g.stop()
+
+
+def beach_sign(prefix, state, label, x, give_surf, expect):
+    """Reads the beach-house sign above (x, 1) (a poster, or the printer at
+    x = 13) and checks its text contains expect."""
+    g = load(prefix, state, label)
+    try:
+        set_up_party(g, give_surf)
+        warp(g, 'SUMMER_BEACH_HOUSE', 'ROUTE_19')
+        walk_to(g, 3, 6)
+        walk_to(g, x, 6)
+        walk_to(g, x, 2 if x == 13 else 1)
+        g.press('up', 20, hold=3)
+        said = talk(g, lambda g: expect in ' '.join(dialog_rows(g)))
+        if expect not in said:
+            g.fail(f'expected "{expect}", the sign says "{said}"')
+        return f'"{expect}…"'
     finally:
         g.stop()
 
 
 def main():
     prefix = sys.argv[1]
+    vc_prefix = sys.argv[2] if len(sys.argv) > 2 else None
     print('Setting up: Normal (PIKACHU) and Pick Starter (CHARMANDER)…', flush=True)
     try:
         normal = starter_state(prefix, 0, None, 'PIKACHU')
-        pick = starter_state(prefix, 2, 4, 'CHARMANDER')
+        pick = starter_state(prefix, 2, ['down'] * 3, 'CHARMANDER')
     except TestFailure as e:
         print(f'FAIL  setup: {e}')
         return 1
-    charmander = read_species_id('CHARMANDER')
+    p = prefix
     tests = [
-        ('Melanie: Pick Starter, CHARMANDER', lambda: melanie(prefix, pick, 'Melanie pick', None, True)),
-        ('Melanie: Normal, unhappy PIKACHU', lambda: melanie(prefix, normal, 'Melanie unhappy', 100, False)),
-        ('Melanie: Normal, happy PIKACHU', lambda: melanie(prefix, normal, 'Melanie happy',
-                                                           HAPPY_ENOUGH_FOR_MELANIE + 50, True)),
-        ('Safari gate: 6th refusal with no money', lambda: safari_overflow(prefix, normal)),
-        ('Safari gate: 4th refusal with no money', lambda: safari_free_entry(prefix, normal)),
-        ('Beach: Pick Starter, CHARMANDER with SURF', lambda: beach(prefix, pick, 'Beach pick surf', True,
-                                                                    expect='POK')),
-        ('Beach: Pick Starter, CHARMANDER without SURF', lambda: beach(prefix, pick, 'Beach pick', False)),
-        ('Beach: Normal, PIKACHU with SURF', lambda: beach(prefix, normal, 'Beach normal surf', True,
-                                                           expect='PIKACHU')),
-        ('Beach: Normal, PIKACHU without SURF', lambda: beach(prefix, normal, 'Beach normal', False)),
-        ('Beach: Normal, non-PIKACHU with SURF', lambda: beach(prefix, normal, 'Beach normal other', True,
-                                                               species=charmander)),
+        ('Melanie: Pick Starter, CHARMANDER', lambda: melanie(p, pick, 'Melanie pick', None, True)),
+        ('Melanie: Normal, unhappy PIKACHU', lambda: melanie(p, normal, 'Melanie unhappy', -47, False)),
+        ('Melanie: Normal, happy PIKACHU', lambda: melanie(p, normal, 'Melanie happy', 50, True)),
+        ('Safari gate: 6th refusal with no money', lambda: safari_overflow(p, normal)),
+        ('Safari gate: 4th refusal with no money', lambda: safari_free_entry(p, normal)),
+        ('Beach: Pick Starter, CHARMANDER with SURF',
+         lambda: beach(p, pick, 'Beach pick surf', give_surf=True, expect='CHARMANDER')),
+        ('Beach: Pick Starter, CHARMANDER without SURF', lambda: beach(p, pick, 'Beach pick')),
+        ('Beach: Normal, PIKACHU with SURF',
+         lambda: beach(p, normal, 'Beach normal surf', give_surf=True, expect='PIKACHU')),
+        ('Beach: Normal, PIKACHU without SURF', lambda: beach(p, normal, 'Beach normal')),
+        ('Beach: Normal, non-PIKACHU with SURF',
+         lambda: beach(p, normal, 'Beach normal other', give_surf=True, species='CHARMANDER')),
+        ('Beach poster: Pick Starter, no SURF',
+         lambda: beach_sign(p, pick, 'Poster pick', 3, False, '30 years of waves')),
+        ('Beach poster: Pick Starter, CHARMANDER with SURF',
+         lambda: beach_sign(p, pick, 'Poster pick surf', 3, True, 'scribbles')),
+        ('Beach poster: Normal, no SURF',
+         lambda: beach_sign(p, normal, 'Poster normal', 3, False, '30 years of waves')),
+        ('Beach printer: Pick Starter, no SURF',
+         lambda: beach_sign(p, pick, 'Printer pick', 13, False, 'sort of')),
+        ('Beach printer: Pick Starter, CHARMANDER with SURF',
+         lambda: beach_sign(p, pick, 'Printer pick surf', 13, True, 'PRINTER')),
     ]
+    if vc_prefix:
+        print('Setting up the Virtual Console ROM…', flush=True)
+        try:
+            vc_normal = starter_state(vc_prefix, 0, None, 'PIKACHU')
+            vc_pick = starter_state(vc_prefix, 2, ['down'] * 3, 'CHARMANDER')
+        except TestFailure as e:
+            print(f'FAIL  VC setup: {e}')
+            return 1
+        tests += [
+            ('VC beach: Normal, PIKACHU without SURF',
+             lambda: beach(vc_prefix, vc_normal, 'VC beach normal', expect='PIKACHU')),
+            ('VC beach: Pick Starter, CHARMANDER without SURF',
+             lambda: beach(vc_prefix, vc_pick, 'VC beach pick')),
+            ('VC beach poster: Pick Starter, no SURF',
+             lambda: beach_sign(vc_prefix, vc_pick, 'VC poster pick', 3, False, '30 years of waves')),
+        ]
     failed = 0
     for label, test in tests:
         try:
@@ -275,12 +305,6 @@ def main():
             print(f'FAIL  {label}: {e}', flush=True)
     print(f'{len(tests) - failed}/{len(tests)} passed')
     return 1 if failed else 0
-
-
-def read_species_id(name):
-    """Internal species ID: the order of const in constants/pokemon_constants.asm."""
-    names = re.findall(r'^\s*const (\w+)', open('constants/pokemon_constants.asm').read(), re.MULTILINE)
-    return names.index(name)
 
 
 if __name__ == '__main__':

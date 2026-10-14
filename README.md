@@ -11,19 +11,29 @@ While Yellow Legacy is not designed as a “Kaizo” project, Pokémon trainer f
 
 ## Download and Play
 
-* To play, download the `.bps` patch from the [**Releases**](../../releases) page and apply it to a clean English Pokémon Yellow ROM. See [**docs/patching_instructions.md**](docs/patching_instructions.md).
-* Maintainers make the patch with `tools/make_release_patches.py` (it needs a clean Yellow ROM and the built ROM).
+* To play, download the patch zip from the [**Releases**](../../releases) page and apply the `.bps` to a clean English Pokémon Yellow ROM. See [**docs/patching_instructions.md**](docs/patching_instructions.md).
 * ### **You should use RGBDS version 1.0.4.** The build requires 1.0.0 or newer.
 * To set up the repository, see [**INSTALL.md**](INSTALL.md).
+
+
+## Pick Starter Mode
+
+Besides Normal and Hard, a new game can be started in **Pick Starter** mode. It uses Normal rules, but Professor Oak lets you choose your starter from all 151 Pokémon. See [**docs/pick_starter_mode.md**](docs/pick_starter_mode.md) for details, a playtest checklist and release notes.
+
+
+## Contributing
+
+* Build with RGBDS 1.0.4 ([INSTALL.md](INSTALL.md)). Work on a branch and open a pull request against `main`; branches are deleted when merged.
+* Every PR runs the checks described in [**docs/ci.md**](docs/ci.md): builds, warnings, emulator smoke and scenario tests, ROM and save-layout comparison with `main`, and linting. `main` only accepts PRs that pass them and are up to date.
+* Run the tests locally with `pip install -r .github/requirements.txt` and `make test`.
+* Labels: **`expect-identical-rom`** for refactors (the ROM must not change), **`save-layout-change`** when a PR intentionally changes saved data. After changing a label, use "Re-run jobs".
+* Releases: build the tagged commit, then `python3 tools/make_release_patches.py <clean Yellow ROM> pokemon_yellow_legacy.gbc "Pokemon Yellow Legacy VX.Y.Z Patch"` makes the `.bps` and the zip (use the normal ROM, not `_vc`).
 
 
 ## A complete list of features can be found here:
 - Full doc: 
     - [Make a Copy (Recommended)](https://docs.google.com/document/d/1JlZRhW2fcBUd7y23DB7MGfJCU95FK_yJI-QdRFdMawI/copy)
     - [Download as PDF](https://docs.google.com/document/d/1JlZRhW2fcBUd7y23DB7MGfJCU95FK_yJI-QdRFdMawI/export?format=pdf)
-
-### Pick Starter Mode
-Besides Normal and Hard, a new game can be started in **Pick Starter** mode. It uses Normal rules, but Professor Oak lets you choose your starter from all 151 Pokémon. See [**docs/pick_starter_mode.md**](docs/pick_starter_mode.md) for details, a playtest checklist and release notes.
 
 These videos also provide an overview of the hack and the ideology behind it:
 - Release 1.0: https://youtu.be/jTH2fVqHPwc

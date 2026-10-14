@@ -185,9 +185,9 @@ SafariZoneEntranceGetLowCostAdmissionText:
 	ld hl, wSafariSteps
 	ld a, [hl]
 	; stop counting at the last entry of SafariZoneEntranceNoMoneyTexts
-	cp 4
+	cp (SafariZoneEntranceNoMoneyTexts.end - SafariZoneEntranceNoMoneyTexts) / 2 - 1
 	jr c, .countRefusal
-	ld a, 4
+	ld a, (SafariZoneEntranceNoMoneyTexts.end - SafariZoneEntranceNoMoneyTexts) / 2 - 1
 	ld [hl], a
 	jr .gotRefusalCount
 .countRefusal
@@ -231,6 +231,7 @@ SafariZoneEntranceNoMoneyTexts:
 	dw SafariZoneEntranceNoMoneyNoEntryText
 	dw SafariZoneEntranceReadMyLipsText
 	dw SafariZoneEntranceReadMyLipsText
+.end
 
 ; 1st refusal: "I'm sorry, but you have to pay to enter."
 SafariZoneEntranceMustPayText:

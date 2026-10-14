@@ -8,7 +8,7 @@ DEF PICK_STARTER_MAX_TOP   EQU NUM_POKEMON - PICK_STARTER_LIST_ROWS
 ; Decompressing a front pic takes 40+ frames and input is ignored meanwhile,
 ; so it's only loaded once the d-pad has been released for this many frames.
 ; Until then the list stays responsive.
-DEF PICK_STARTER_PIC_DELAY EQU 24
+DEF PICK_STARTER_PIC_DELAY EQU 12
 
 ; The list's state lives in the usual menu variables:
 ; [wListScrollOffset] = Pokédex index (0-based) of the top row
@@ -144,10 +144,18 @@ PickStarterMenu::
 	jp .loop
 
 .confirm
+	; show the highlighted mon's picture if it hasn't loaded yet
+	ld a, [wPickStarterPicDelay]
+	and a
+	call nz, PickStarter_DrawPic
 	; YesNoChoice uses wCurrentMenuItem, so save the list position
 	ld a, [wCurrentMenuItem]
 	push af
+	call PickStarter_CanAttack
 	ld hl, PickStarterConfirmText ; wNameBuffer still holds the highlighted mon's name
+	jr nz, .printConfirm
+	ld hl, PickStarterConfirmCantAttackText
+.printConfirm
 	call PrintText
 	call YesNoChoice
 	ld a, [wCurrentMenuItem]
@@ -195,6 +203,46 @@ PickStarter_Redraw:
 	res 6, [hl]
 	ld a, PICK_STARTER_PIC_DELAY
 	ld [wPickStarterPicDelay], a
+	ret
+
+; Returns nz if the highlighted mon ([wCurSpecies]/[wCurPartySpecies]) would
+; know a damaging move at STARTER_LEVEL, i.e. among the moves AddPartyMon gives it.
+; wEnemyMonMoves is free here (battle data, reloaded when a battle starts);
+; wBuffer can't be used because it shares space with wLearningMovesFromDayCare.
+PickStarter_CanAttack:
+	call GetMonHeader ; level 1 moves in wMonHMoves
+	ld hl, wMonHMoves
+	ld de, wEnemyMonMoves
+	ld bc, NUM_MOVES
+	call CopyData
+	ld a, STARTER_LEVEL
+	ld [wCurEnemyLevel], a
+	xor a
+	ld [wLearningMovesFromDayCare], a
+	ld de, wEnemyMonMoves
+	predef WriteMonMoves ; adds the moves learned up to STARTER_LEVEL
+	ld hl, wEnemyMonMoves
+	ld c, NUM_MOVES
+.loop
+	ld a, [hli]
+	and a
+	jr z, .next
+	push hl
+	push bc
+	dec a
+	ld hl, Moves + MOVE_POWER
+	ld bc, MOVE_LENGTH
+	call AddNTimes
+	ld a, BANK(Moves)
+	call GetFarByte
+	pop bc
+	pop hl
+	and a
+	ret nz ; power > 0 (fixed-damage moves have power 1)
+.next
+	dec c
+	jr nz, .loop
+	xor a
 	ret
 
 PickStarter_DrawPic:
@@ -285,4 +333,8 @@ PickStarterTypesText:
 
 PickStarterConfirmText:
 	text_far _PickStarterConfirmText
+	text_end
+
+PickStarterConfirmCantAttackText:
+	text_far _PickStarterConfirmCantAttackText
 	text_end

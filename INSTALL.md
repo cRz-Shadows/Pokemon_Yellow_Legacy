@@ -141,9 +141,11 @@ Now you're ready to [build **pokemon_yellow_legacy**](#build-pokemon_yellow_lega
 To download the **pokemon_yellow_legacy** source files:
 
 ```bash
-git clone https://github.com/cRz-Shadows/Pokemon_Yellow_Legacy.git
+git clone https://github.com/technicks89/Pokemon_Yellow_Legacy.git
 cd Pokemon_Yellow_Legacy
 ```
+
+This is the fork with Pick Starter mode, its CI and release tooling. The original Yellow Legacy is [cRz-Shadows/Pokemon_Yellow_Legacy](https://github.com/cRz-Shadows/Pokemon_Yellow_Legacy).
 
 To build **pokemon_yellow_legacy.gbc**:
 

@@ -3,10 +3,10 @@ name: CI
 on:
   push:
     branches: [ main ]
+  # The save-layout-change and expect-identical-rom labels are read from the
+  # API when the comparison jobs run, so after changing a label, use
+  # "Re-run jobs" on the PR (label events don't trigger a run).
   pull_request:
-    # labeled/unlabeled so the save-layout-change and expect-identical-rom
-    # labels take effect without a new push
-    types: [ opened, synchronize, reopened, labeled, unlabeled ]
 
 permissions:
   contents: read
@@ -17,14 +17,18 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 # Each job is its own check on the PR. The ROMs are passed between jobs through
-# the Actions cache (readable only by workflows), never uploaded as artifacts.
+# the Actions cache instead of being uploaded as artifacts. A PR runs its own
+# copy of this file, so the real safeguards are maintainer approval of
+# outside contributors' runs and reviewing changes to .github/ (see docs/ci.md).
 
 jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - uses: ./.github/actions/install-rgbds
 
@@ -37,7 +41,7 @@ jobs:
         run: git diff > tracked-changes.diff
 
       - name: Save build for the other jobs
-        uses: actions/cache/save@v6
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           key: build-head-${{ github.run_id }}
           path: |
@@ -62,9 +66,11 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
-      - uses: actions/cache/restore@v6
+      - uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           key: build-head-${{ github.run_id }}
           path: |
@@ -84,9 +90,11 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
-      - uses: actions/cache/restore@v6
+      - uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           key: build-head-${{ github.run_id }}
           path: |
@@ -113,9 +121,11 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
-      - uses: actions/cache/restore@v6
+      - uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           key: build-head-${{ github.run_id }}
           path: |
@@ -127,14 +137,14 @@ jobs:
             tracked-changes.diff
           fail-on-cache-miss: true
 
-      - uses: actions/setup-python@v7
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: '3.12'
           cache: pip
           cache-dependency-path: .github/requirements.txt
 
       - name: Install PyBoy
-        run: pip install -r .github/requirements.txt
+        run: pip install --require-hashes -r .github/requirements.txt
 
       # Plays the start of the game in each mode; see the script for details
       - name: Smoke test
@@ -145,7 +155,7 @@ jobs:
 
       - name: Upload screenshots of failures
         if: failure()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: smoke-test-failures
           path: smoke_test_failures/
@@ -166,9 +176,11 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
-      - uses: actions/cache/restore@v6
+      - uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           key: build-head-${{ github.run_id }}
           path: |
@@ -180,24 +192,25 @@ jobs:
             tracked-changes.diff
           fail-on-cache-miss: true
 
-      - uses: actions/setup-python@v7
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: '3.12'
           cache: pip
           cache-dependency-path: .github/requirements.txt
 
       - name: Install PyBoy
-        run: pip install -r .github/requirements.txt
+        run: pip install --require-hashes -r .github/requirements.txt
 
       # Melanie, the Safari Zone gate and Pikachu's Beach; see the script
       - name: Scenario tests
         run: |
           set -o pipefail
-          python .github/scripts/scenario_tests.py pokemon_yellow_legacy | tee scenarios.log
+          python .github/scripts/scenario_tests.py pokemon_yellow_legacy pokemon_yellow_legacy_vc \
+            | tee scenarios.log
 
       - name: Upload screenshots of failures
         if: failure()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: scenario-test-failures
           path: smoke_test_failures/
@@ -217,9 +230,10 @@ jobs:
     name: Build base
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
+          persist-credentials: false
 
       - uses: ./.github/actions/install-rgbds
 
@@ -246,7 +260,7 @@ jobs:
           fi
 
       - name: Save base build for the comparison jobs
-        uses: actions/cache/save@v6
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           key: build-base-${{ github.run_id }}
           path: base-out
@@ -255,10 +269,16 @@ jobs:
     name: ROM changes
     needs: [ build, build-base ]
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+      issues: read
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
-      - uses: actions/cache/restore@v6
+      - uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           key: build-head-${{ github.run_id }}
           path: |
@@ -270,7 +290,7 @@ jobs:
             tracked-changes.diff
           fail-on-cache-miss: true
 
-      - uses: actions/cache/restore@v6
+      - uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           key: build-base-${{ github.run_id }}
           path: base-out
@@ -279,19 +299,30 @@ jobs:
       # Informational, unless the PR has the expect-identical-rom label
       - name: Compare ROMs with the base build
         env:
-          EXPECT_IDENTICAL_ROM: ${{ contains(github.event.pull_request.labels.*.name, 'expect-identical-rom') && '1' || '0' }}
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
           set -o pipefail
+          if [ -n "$PR_NUMBER" ] && gh api "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/labels" --jq '.[].name' \
+              | grep -qx expect-identical-rom; then
+            export EXPECT_IDENTICAL_ROM=1
+          fi
           python3 .github/scripts/compare_builds.py roms base-out . | tee -a "$GITHUB_STEP_SUMMARY"
 
   save-layout:
     name: Save layout
     needs: [ build, build-base ]
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+      issues: read
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
-      - uses: actions/cache/restore@v6
+      - uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           key: build-head-${{ github.run_id }}
           path: |
@@ -303,7 +334,7 @@ jobs:
             tracked-changes.diff
           fail-on-cache-miss: true
 
-      - uses: actions/cache/restore@v6
+      - uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           key: build-base-${{ github.run_id }}
           path: base-out
@@ -311,9 +342,14 @@ jobs:
 
       - name: Compare the save layout with the base build
         env:
-          ALLOW_SAVE_LAYOUT_CHANGE: ${{ contains(github.event.pull_request.labels.*.name, 'save-layout-change') && '1' || '0' }}
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
           set -o pipefail
+          if [ -n "$PR_NUMBER" ] && gh api "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/labels" --jq '.[].name' \
+              | grep -qx save-layout-change; then
+            export ALLOW_SAVE_LAYOUT_CHANGE=1
+          fi
           python3 .github/scripts/compare_builds.py save base-out . | tee -a "$GITHUB_STEP_SUMMARY"
 
   bank-space:
@@ -321,9 +357,11 @@ jobs:
     needs: [ build, build-base ]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
-      - uses: actions/cache/restore@v6
+      - uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           key: build-head-${{ github.run_id }}
           path: |
@@ -335,7 +373,7 @@ jobs:
             tracked-changes.diff
           fail-on-cache-miss: true
 
-      - uses: actions/cache/restore@v6
+      - uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           key: build-base-${{ github.run_id }}
           path: base-out
@@ -354,7 +392,9 @@ jobs:
       ACTIONLINT_VERSION: 1.7.12
       ACTIONLINT_SHA256: 8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - name: Install actionlint
         run: |
@@ -372,14 +412,19 @@ jobs:
     name: Lint Python
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
-      - uses: actions/setup-python@v7
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: '3.12'
 
       - name: Install ruff
-        run: pip install "$(grep '^ruff==' .github/requirements.txt)"
+        run: pip install --require-hashes -r .github/requirements.txt
 
       - name: Lint the CI and release scripts
-        run: ruff check --config .github/ruff.toml .github/scripts tools/make_release_patches.py
+        run: ruff check --config .github/ruff.toml .github/scripts tools/make_release_patches.py tools/upstream_rename.py
+
+      - name: Unit tests for the CI and release scripts
+        run: python -m unittest discover -s .github/scripts -p 'test_*.py'

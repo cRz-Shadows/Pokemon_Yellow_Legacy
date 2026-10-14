@@ -1444,8 +1444,7 @@ EnemySendOutFirstMon:
 	ld a, [wLinkState]
 	cp LINK_STATE_BATTLING
 	jr z, .next4
-	ld a, [wDifficulty] ; Check if player is on hard mode
-	cp DIFFICULTY_HARD
+	check_hard_rules ; Check if player is on hard mode
 	jr nz, .DontForceSetMode
 	jr .next4 ; skip switch request on hard mode
 .DontForceSetMode
@@ -2365,8 +2364,7 @@ BagWasSelected:
 	cp BATTLE_TYPE_PIKACHU ; is it the prof oak battle with pikachu?
 	jr z, .simulatedInputBattle
 
-	ld a, [wDifficulty] ; Check if player is on hard mode
-	cp DIFFICULTY_HARD
+	check_hard_rules ; Check if player is on hard mode
 	jr nz, .NormalMode
 
 	ld a, [wIsInBattle] ; Check if this is a wild battle or trainer battle
@@ -4139,8 +4137,7 @@ CheckForDisobedience:
 	cp [hl]
 	jr nz, .monIsTraded
 
-	ld a, [wDifficulty] ; Check if player is on hard mode
-	cp DIFFICULTY_HARD
+	check_hard_rules ; Check if player is on hard mode
 	jr nz, .NormalMode2
 ; what level might disobey?
 	ld a, [wGameStage] ; Check if player has beat the game
@@ -4861,8 +4858,7 @@ CriticalHitTest:
 	jr nc, .noFocusEnergyUsed
 	ld b, $ff                    ; cap at 255/256
 .noFocusEnergyUsed
-	ld a, [wDifficulty] ; Check if player is on hard mode
-	cp DIFFICULTY_HARD
+	check_hard_rules ; Check if player is on hard mode
 	jr z, .NotGuarenteedCrit ; keep 1/256 chance to not crit if on hard mode
 	ld a, b
 	inc a ; optimization of "cp $ff"
@@ -5691,8 +5687,7 @@ MoveHitTest:
 	ld a, [wEnemyMoveAccuracy]
 	ld b, a
 .doAccuracyCheck
-	ld a, [wDifficulty] ; Check if player is on hard mode
-	cp DIFFICULTY_HARD
+	check_hard_rules ; Check if player is on hard mode
 	jr z, .DontRemoveMiss ; Keep 1/256 chance to miss on hard mode
 	; The following snippet fixes 1/256 chance to miss on 100% accurate moves bug on normal mode
 	ld a, b

@@ -23,7 +23,21 @@ import subprocess
 import sys
 
 LABEL = 'upstream-sync'
-MARKER = re.compile(r'<!-- upstream-head: ([0-9a-f]{40}) -->')
+# Only the body's last line counts, so commit text can't supply a marker
+MARKER = re.compile(r'^<!-- upstream-head: ([0-9a-f]{40}) -->$')
+
+
+def find_marker(body):
+    lines = (body or '').rstrip().splitlines()
+    m = MARKER.match(lines[-1]) if lines else None
+    return m[1] if m else None
+
+
+def code_span(text):
+    """Upstream text as inline code: no @mentions, links, images or HTML.
+    Backticks are replaced so the span can't be closed early."""
+    text = text.replace('`', "'").replace('|', '\\|').strip() or ' '
+    return f'`{text}`'
 
 
 def gh(*args, data=None):
@@ -55,8 +69,7 @@ def main():
     latest = max(issues, key=lambda i: i['number']) if issues else None
     latest_head = None
     if latest:
-        m = MARKER.search(latest['body'] or '')
-        latest_head = m[1] if m else None
+        latest_head = find_marker(latest['body'])
 
     if not missing:
         print('Up to date with upstream.')
@@ -77,8 +90,8 @@ def main():
         '|---|---|---|---|',
     ]
     for c in missing[-50:]:
-        message = c['commit']['message'].split('\n')[0].replace('|', '\\|')
-        author = (c.get('author') or {}).get('login') or c['commit']['author']['name']
+        message = code_span(c['commit']['message'].split('\n')[0][:100])
+        author = code_span((c.get('author') or {}).get('login') or c['commit']['author']['name'])
         url = f'https://github.com/{upstream}/commit/{c["sha"]}'
         lines.append(f'| [`{c["sha"][:7]}`]({url}) | {c["commit"]["author"]["date"][:10]} '
                      f'| {author} | {message} |')

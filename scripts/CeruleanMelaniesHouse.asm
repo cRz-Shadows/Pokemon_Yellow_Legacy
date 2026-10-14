@@ -19,11 +19,10 @@ CeruleanMelanieHouseMelanieText:
 	call PrintText
 	; Pick Starter mode without a starter Pikachu: there's no Pikachu
 	; happiness to earn (it never changes), so Melanie trusts the player
-	ld a, [wPlayerStarter]
-	cp STARTER_PIKACHU
+	check_starter_pikachu
 	jr nz, .trustsPlayer
 	ld a, [wPikachuHappiness]
-	cp 147
+	cp MELANIE_HAPPINESS_THRESHOLD
 	jr c, .asm_1cfb3
 .trustsPlayer
 	ld hl, CeruleanMelanieHouseOfferBulbasaurText
@@ -73,7 +72,8 @@ CeruleanMelanieHouseMelanieIntroText:
 	text_waitbutton
 	text_end
 
-; Melanie asks if you'll take Bulbasaur (only if Pikachu happiness >= 147)
+; Melanie asks if you'll take Bulbasaur (Pikachu happiness >= MELANIE_HAPPINESS_THRESHOLD,
+; or no starter Pikachu)
 CeruleanMelanieHouseOfferBulbasaurText:
 	text_far MelanieText2
 	text_end

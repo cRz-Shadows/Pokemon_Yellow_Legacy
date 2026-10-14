@@ -15,7 +15,8 @@ ALLOWED = [
 
 
 def main():
-    lines = open(sys.argv[1], errors='replace').read().split('\n')
+    with open(sys.argv[1], errors='replace') as f:
+        lines = f.read().split('\n')
     unexpected = []
     for i, line in enumerate(lines):
         if not re.search(r'\bwarning\b', line, re.IGNORECASE):

@@ -458,6 +458,10 @@ _PickStarterModeText::
 	para "Classic rules,"
 	line "but pick any"
 	cont "#MON to start!"
+
+	para "Only a PIKACHU"
+	line "starter follows"
+	cont "you around."
 	done
 
 _OakSpeechText2A::

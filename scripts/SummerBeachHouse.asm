@@ -22,7 +22,7 @@ ELSE
 ENDC
 	vc_patch_end
 	jr nz, .next
-	call SummerBeachHouseCheckPickStarterSurfer
+	call SummerBeachHouseGetPickStarterSurfer
 	jr nz, .next
 	ld hl, .SurfinDudeText4
 	call PrintText
@@ -36,9 +36,11 @@ ENDC
 	ld a, [wPikachuPartyFlags]
 	bit 6, a
 	jr nz, .next3
-	call SummerBeachHouseCheckPickStarterSurfer
+	call SummerBeachHouseGetPickStarterSurfer
 	jr z, .next3
-	ld hl, .SurfinDudePickStarterText1 ; it isn't a PIKACHU that surfs
+	ld [wNamedObjectIndex], a ; it isn't a PIKACHU that surfs: name the surfer
+	call GetMonName
+	ld hl, .SurfinDudePickStarterText1
 	jr .next3
 .next2
 	ld hl, .SurfinDudeText3
@@ -96,7 +98,7 @@ SummerBeachHousePoster1Text:
 	ld a, [wPikachuPartyFlags]
 	bit 6, a
 	jr nz, .surfer
-	call SummerBeachHouseCheckPickStarterSurfer
+	call SummerBeachHouseGetPickStarterSurfer
 	jr z, .next
 .surfer
 	ld hl, .SummerBeachHousePoster1Text1
@@ -117,7 +119,7 @@ SummerBeachHousePoster2Text:
 	ld a, [wPikachuPartyFlags]
 	bit 6, a
 	jr nz, .surfer
-	call SummerBeachHouseCheckPickStarterSurfer
+	call SummerBeachHouseGetPickStarterSurfer
 	jr z, .next
 .surfer
 	ld hl, .SummerBeachHousePoster2Text1
@@ -138,7 +140,7 @@ SummerBeachHousePoster3Text:
 	ld a, [wPikachuPartyFlags]
 	bit 6, a
 	jr nz, .surfer
-	call SummerBeachHouseCheckPickStarterSurfer
+	call SummerBeachHouseGetPickStarterSurfer
 	jr z, .next
 .surfer
 	ld hl, .SummerBeachHousePoster3Text1
@@ -166,7 +168,7 @@ ELSE
 ENDC
 	vc_patch_end
 	jr nz, .canSurf
-	call SummerBeachHouseCheckPickStarterSurfer
+	call SummerBeachHouseGetPickStarterSurfer
 	jr z, .asm_f2369
 .canSurf
 	ld hl, wPikachuMapScriptFlags
@@ -233,37 +235,48 @@ ENDC
 
 ; In Pick Starter mode without a starter Pikachu, any party Pokémon that knows
 ; SURF can play the surfing minigame (normally only a PIKACHU with SURF can).
-; Returns nz if that applies and such a Pokémon is in the party.
-SummerBeachHouseCheckPickStarterSurfer:
-	ld a, [wDifficulty]
-	cp DIFFICULTY_PICK_STARTER
-	jr nz, .no
-	ld a, [wPlayerStarter]
-	cp STARTER_PIKACHU
+; Returns a = species of the first party Pokémon that knows SURF and nz, or
+; a = 0 and z if there is none or the starter is PIKACHU.
+; Preserves bc, de and hl (callers keep a text pointer in hl).
+SummerBeachHouseGetPickStarterSurfer:
+	push hl
+	push de
+	push bc
+	check_starter_pikachu
 	jr z, .no
-	ld a, [wPartyCount]
-	and a
+	ld hl, wPartySpecies
+	ld de, wPartyMon1Moves
+.monLoop
+	ld a, [hli]
+	cp -1 ; end of party
 	jr z, .no
 	ld c, a
-	ld hl, wPartyMon1Moves
-.monLoop
-	push hl
+	push de
 	ld b, NUM_MOVES
 .moveLoop
-	ld a, [hli]
+	ld a, [de]
+	inc de
 	cp SURF
 	jr z, .found
 	dec b
 	jr nz, .moveLoop
-	pop hl
-	ld de, PARTYMON_STRUCT_LENGTH
+	pop de
+	push hl
+	ld hl, PARTYMON_STRUCT_LENGTH
 	add hl, de
-	dec c
-	jr nz, .monLoop
+	ld d, h
+	ld e, l
+	pop hl
+	jr .monLoop
+.found
+	pop de
+	ld a, c
+	and a
+	jr .done
 .no
 	xor a
-	ret
-.found
+.done
+	pop bc
+	pop de
 	pop hl
-	or 1
 	ret

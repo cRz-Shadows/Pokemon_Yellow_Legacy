@@ -39,42 +39,72 @@ def sha1(path):
 
 
 def read_syms(path):
-    """name -> (bank, address)"""
+    """label -> (bank, address); exported constants ("value name") are skipped"""
     syms = {}
-    for line in open(path):
-        parts = line.split(';')[0].split()
-        if len(parts) == 2 and ':' in parts[0]:
-            bank, addr = parts[0].split(':')
-            syms[parts[1]] = (int(bank, 16), int(addr, 16))
+    with open(path) as f:
+        for line in f:
+            parts = line.split(';')[0].split()
+            if len(parts) == 2 and ':' in parts[0]:
+                bank, addr = parts[0].split(':')
+                syms[parts[1]] = (int(bank, 16), int(addr, 16))
     return syms
 
 
 def save_layout(syms):
-    """Returns (ranges, addresses): the saved ranges' bounds, and every
-    (bank, address) that has a symbol inside a saved range or in SRAM."""
+    """Returns (ranges, saved): the saved ranges' bounds, and name -> (bank,
+    address) for every symbol inside a saved range or in SRAM."""
     ranges = {}
     for start, end in SAVED_RANGES:
         lo = syms[start][1]
         hi = syms[end][1] if end else lo + NAME_LENGTH
         ranges[start] = (lo, hi)
-    addrs = set()
-    for bank, addr in syms.values():
-        if 0xa000 <= addr < 0xc000:  # SRAM
-            addrs.add((bank, addr))
-        elif any(lo <= addr < hi for lo, hi in ranges.values()):
-            addrs.add((bank, addr))
-    return ranges, addrs
+    saved = {}
+    for name, (bank, addr) in syms.items():
+        if 0xa000 <= addr < 0xc000 or any(lo <= addr < hi for lo, hi in ranges.values()):
+            saved[name] = (bank, addr)
+    return ranges, saved
 
 
-def names_at(syms, key):
-    return ', '.join(sorted(n for n, v in syms.items() if v == key)) or '?'
+def save_layout_changes(base_syms, head_syms):
+    """Compares the save layout by name. Returns (problems, notes).
+
+    Every saved symbol of the base build must keep its address. A name that is
+    gone counts as a rename (a note, not a problem) only if a name that is new
+    in this build now sits at its old address."""
+    base_ranges, base_saved = save_layout(base_syms)
+    head_ranges, head_saved = save_layout(head_syms)
+    problems, notes = [], []
+    for name in base_ranges:
+        if base_ranges[name] != head_ranges[name]:
+            (blo, bhi), (hlo, hhi) = base_ranges[name], head_ranges[name]
+            problems.append(f'range `{name}` moved: ${blo:04x}-${bhi:04x} → ${hlo:04x}-${hhi:04x}')
+    new_names = {n: v for n, v in head_saved.items() if n not in base_saved}
+    for name, (bank, addr) in sorted(base_saved.items(), key=lambda item: item[1]):
+        where = f'{bank:02x}:${addr:04x}'
+        if name in head_saved:
+            if head_saved[name] != (bank, addr):
+                hb, ha = head_saved[name]
+                problems.append(f'`{name}` moved from {where} to {hb:02x}:${ha:04x}')
+        else:
+            renamed = sorted(n for n, v in new_names.items() if v == (bank, addr))
+            if renamed:
+                notes.append(f'`{name}` at {where} is now `{", ".join(renamed)}` (renamed)')
+            else:
+                problems.append(f'`{name}` at {where} is gone')
+    base_addrs = set(base_saved.values())
+    for name, (bank, addr) in sorted(new_names.items(), key=lambda item: item[1]):
+        if (bank, addr) not in base_addrs:
+            notes.append(f'new `{name}` at {bank:02x}:${addr:04x} (fine if it uses previously unused space)')
+    return problems, notes
 
 
 def read_bank_space(path):
     """'ROMX bank #1' -> free bytes, from an rgblink .map file"""
     space = {}
     bank = None
-    for line in open(path):
+    with open(path) as f:
+        lines = f.readlines()
+    for line in lines:
         m = re.match(r'(ROM0|ROMX) bank #(\d+):', line)
         if m:
             bank = f'{m[1]} {int(m[2])}'
@@ -107,35 +137,30 @@ def compare_roms(base, head):
 
 def compare_save_layout(base, head):
     out = ['### Save layout']
-    base_syms = read_syms(f'{base}/{ROMS[0]}.sym')
-    head_syms = read_syms(f'{head}/{ROMS[0]}.sym')
-    base_ranges, base_addrs = save_layout(base_syms)
-    head_ranges, head_addrs = save_layout(head_syms)
-    problems = []
-    for name in base_ranges:
-        if base_ranges[name] != head_ranges[name]:
-            (blo, bhi), (hlo, hhi) = base_ranges[name], head_ranges[name]
-            problems.append(f'range `{name}` moved: ${blo:04x}-${bhi:04x} → ${hlo:04x}-${hhi:04x}')
-    for key in sorted(base_addrs - head_addrs):
-        problems.append(f'nothing at {key[0]:02x}:${key[1]:04x} any more (was `{names_at(base_syms, key)}`)')
-    added = sorted(head_addrs - base_addrs)
+    problems, notes = save_layout_changes(read_syms(f'{base}/{ROMS[0]}.sym'), read_syms(f'{head}/{ROMS[0]}.sym'))
     failed = False
     if problems:
         allowed = os.environ.get('ALLOW_SAVE_LAYOUT_CHANGE') == '1'
         failed = not allowed
         out.append('**The save layout changed**, so saves from the base build may not load correctly.'
                    + (' Allowed by the `save-layout-change` label.' if allowed else
-                      ' If this is intended, add the `save-layout-change` label to the PR.'))
+                      ' If this is intended, add the `save-layout-change` label to the PR and re-run the jobs.'))
         out.extend(f'- {p}' for p in problems[:50])
         if len(problems) > 50:
             out.append(f'- …and {len(problems) - 50} more')
     else:
-        out.append('Unchanged: saved WRAM ranges and SRAM symbols are at the same addresses.')
-    if added:
+        out.append('Unchanged: every saved WRAM and SRAM variable is at the same address.')
+    if notes:
         out.append('')
-        out.append('New symbols inside saved memory (fine if they use previously unused space):')
-        out.extend(f'- {k[0]:02x}:${k[1]:04x} `{names_at(head_syms, k)}`' for k in added[:20])
+        out.extend(f'- {n}' for n in notes[:30])
     return out, failed
+
+
+def unlisted_bank_space(rom_path, listed):
+    """rgblink's map lists only the banks it placed sections in; the ROM's
+    other banks are empty padding. Returns their free bytes."""
+    banks = os.path.getsize(rom_path) // 0x4000
+    return max(banks - len(listed), 0) * 0x4000
 
 
 def compare_bank_space(base, head):
@@ -143,11 +168,13 @@ def compare_bank_space(base, head):
     base_space = read_bank_space(f'{base}/{ROMS[0]}.map')
     head_space = read_bank_space(f'{head}/{ROMS[0]}.map')
     changed = [b for b in head_space if head_space[b] != base_space.get(b)]
-    total_base, total_head = sum(base_space.values()), sum(head_space.values())
-    out.append(f'Total free: {total_head:,} bytes ({total_head - total_base:+,} vs base). '
-               f'Tightest bank: {min(head_space, key=head_space.get)} '
-               f'({min(head_space.values())} bytes free).')
+    total_base = sum(base_space.values()) + unlisted_bank_space(f'{base}/{ROMS[0]}.gbc', base_space)
+    total_head = sum(head_space.values()) + unlisted_bank_space(f'{head}/{ROMS[0]}.gbc', head_space)
+    out.append(f'Total free: {total_head:,} bytes ({total_head - total_base:+,} vs base), '
+               'including banks with nothing placed in them.')
     if changed:
+        tightest = min(changed, key=lambda b: head_space[b])
+        out.append(f'Tightest bank this PR changed: {tightest} ({head_space[tightest]} bytes free).')
         out.append('')
         out.append('| Bank | Free (base) | Free (this PR) | Change |')
         out.append('|---|---:|---:|---:|')

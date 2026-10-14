@@ -79,8 +79,7 @@ DaycareGentlemanText:
 	callfar CalcLevelFromExperience
 
 	push bc
-	ld a, [wDifficulty] ; Check if player is on hard mode
-	cp DIFFICULTY_HARD
+	check_hard_rules ; Check if player is on hard mode
 	ld b, MAX_LEVEL
 	jr nz, .next1 ; no level caps if not on hard mode
 

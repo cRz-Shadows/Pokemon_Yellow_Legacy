@@ -248,8 +248,7 @@ HoFDisplayPlayerStats:
 	lb bc, 2, 7
 	call TextBoxBorder
 
-	ld a, [wDifficulty] ; Check if player is on hard mode
-	cp DIFFICULTY_HARD
+	check_hard_rules ; Check if player is on hard mode
 	jr nz, .NormalModeText
 
 	hlcoord 12, 1
