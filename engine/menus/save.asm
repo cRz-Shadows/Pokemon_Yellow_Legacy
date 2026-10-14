@@ -244,9 +244,9 @@ SavePartyAndDexData:
 	ld bc, wPokedexSeenEnd - wPokedexOwned
 	call CopyData
 	ld hl, wPikachuHappiness
-	; BUG: vanilla's offset of wPikachuHappiness (#103); this fork's main data is laid out
-	; differently, so this should be (wPikachuHappiness - wMainDataStart)
-	ld de, sMainData + $179
+	; where wPikachuHappiness is saved in sMainData (vanilla hard-codes $179,
+	; which is wrong for this fork's main data layout)
+	ld de, sMainData + (wPikachuHappiness - wMainDataStart)
 	ld a, [hli]
 	ld [de], a
 	inc de
