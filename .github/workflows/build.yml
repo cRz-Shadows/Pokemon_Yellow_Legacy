@@ -1,0 +1,50 @@
+name: Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+env:
+  rgbds_version: v1.0.4
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Checkout rgbds
+        uses: actions/checkout@v7
+        with:
+          path: rgbds
+          ref: ${{ env.rgbds_version }}
+          repository: gbdev/rgbds
+
+      - name: Install rgbds
+        working-directory: rgbds
+        run: |
+          sudo apt-get update
+          sudo apt-get install -yq bison libpng-dev pkg-config
+          sudo make -j$(nproc) install
+
+      - name: Remove rgbds
+        run: rm -rf rgbds
+
+      - name: Build
+        run: make -j$(nproc) yellow yellow_debug
+
+      # The build must not modify tracked files (e.g. regenerated sources)
+      - name: Check for changes
+        run: git diff --exit-code
+
+      # ROMs aren't uploaded as artifacts; the checksums identify the build
+      - name: Summary
+        run: |
+          {
+            echo '### ROM checksums'
+            echo '```'
+            sha1sum pokemon_yellow_legacy.gbc pokemon_yellow_legacy_debug.gbc
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
