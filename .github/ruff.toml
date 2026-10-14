@@ -1,0 +1,7 @@
+# ruff settings for the CI and release scripts (the "Lint Python" check)
+line-length = 120
+target-version = "py312"
+
+[lint]
+# pycodestyle errors and warnings, pyflakes, bugbear
+select = ["E", "W", "F", "B"]

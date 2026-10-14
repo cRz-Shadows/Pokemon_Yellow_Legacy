@@ -1,14 +1,18 @@
 #!/usr/bin/env python3
-"""Compare a build against the base branch's build.
+"""Compare a build against the base branch's build, one section at a time.
 
-Reports (as Markdown on stdout):
-- whether each ROM changed (byte-identical refactors show "identical")
-- whether the save layout changed: the saved WRAM ranges and SRAM symbols
-  must keep their addresses, or old save files would load incorrectly
-- free space per ROM bank, and how it changed
+Sections (each prints Markdown on stdout):
+  roms   whether each ROM changed. Fails if EXPECT_IDENTICAL_ROM=1 (set by the
+         expect-identical-rom label) and a ROM changed.
+  save   whether the save layout changed: the saved WRAM ranges and SRAM
+         symbols must keep their addresses, or old save files would load
+         incorrectly. Fails if it changed, unless ALLOW_SAVE_LAYOUT_CHANGE=1
+         (set by the save-layout-change label).
+  banks  free space per ROM bank and how it changed. Never fails.
 
-Usage: compare_builds.py BASE_DIR HEAD_DIR
-Exit status is 1 if the save layout changed, unless ALLOW_SAVE_LAYOUT_CHANGE=1.
+Usage: compare_builds.py roms|save|banks BASE_DIR HEAD_DIR
+If BASE_DIR has no build (no base commit, or it doesn't build), the section
+is skipped with a note.
 """
 
 import hashlib
@@ -54,7 +58,7 @@ def save_layout(syms):
         hi = syms[end][1] if end else lo + NAME_LENGTH
         ranges[start] = (lo, hi)
     addrs = set()
-    for name, (bank, addr) in syms.items():
+    for bank, addr in syms.values():
         if 0xa000 <= addr < 0xc000:  # SRAM
             addrs.add((bank, addr))
         elif any(lo <= addr < hi for lo, hi in ranges.values()):
@@ -82,20 +86,27 @@ def read_bank_space(path):
     return space
 
 
-def main():
-    base, head = sys.argv[1], sys.argv[2]
-    out = []
-    failed = False
-
-    out.append('### ROM changes')
-    out.append('| ROM | Result |')
-    out.append('|---|---|')
+def compare_roms(base, head):
+    out = ['### ROM changes', '| ROM | Result |', '|---|---|']
+    changed = False
     for rom in ROMS:
         same = sha1(f'{base}/{rom}.gbc') == sha1(f'{head}/{rom}.gbc')
+        changed |= not same
         out.append(f'| `{rom}.gbc` | {"identical to base" if same else "**changed**"} |')
+    failed = False
+    if os.environ.get('EXPECT_IDENTICAL_ROM') == '1':
+        out.append('')
+        if changed:
+            failed = True
+            out.append('**The `expect-identical-rom` label is set, but a ROM changed.** '
+                       'Remove the label if this PR is meant to change the game.')
+        else:
+            out.append('The `expect-identical-rom` label is set and the ROMs are identical.')
+    return out, failed
 
-    out.append('')
-    out.append('### Save layout')
+
+def compare_save_layout(base, head):
+    out = ['### Save layout']
     base_syms = read_syms(f'{base}/{ROMS[0]}.sym')
     head_syms = read_syms(f'{head}/{ROMS[0]}.sym')
     base_ranges, base_addrs = save_layout(base_syms)
@@ -108,6 +119,7 @@ def main():
     for key in sorted(base_addrs - head_addrs):
         problems.append(f'nothing at {key[0]:02x}:${key[1]:04x} any more (was `{names_at(base_syms, key)}`)')
     added = sorted(head_addrs - base_addrs)
+    failed = False
     if problems:
         allowed = os.environ.get('ALLOW_SAVE_LAYOUT_CHANGE') == '1'
         failed = not allowed
@@ -123,9 +135,11 @@ def main():
         out.append('')
         out.append('New symbols inside saved memory (fine if they use previously unused space):')
         out.extend(f'- {k[0]:02x}:${k[1]:04x} `{names_at(head_syms, k)}`' for k in added[:20])
+    return out, failed
 
-    out.append('')
-    out.append('### Free ROM space')
+
+def compare_bank_space(base, head):
+    out = ['### Free ROM space']
     base_space = read_bank_space(f'{base}/{ROMS[0]}.map')
     head_space = read_bank_space(f'{head}/{ROMS[0]}.map')
     changed = [b for b in head_space if head_space[b] != base_space.get(b)]
@@ -142,7 +156,27 @@ def main():
             out.append(f'| {b} | {old} | {head_space[b]} | {head_space[b] - old:+} |')
     else:
         out.append('No bank changed size.')
+    return out, False
 
+
+SECTIONS = {
+    'roms': ('ROM changes', compare_roms),
+    'save': ('Save layout', compare_save_layout),
+    'banks': ('Free ROM space', compare_bank_space),
+}
+
+
+def main():
+    if len(sys.argv) != 4 or sys.argv[1] not in SECTIONS:
+        sys.exit(__doc__)
+    title, compare = SECTIONS[sys.argv[1]]
+    base, head = sys.argv[2], sys.argv[3]
+    if not os.path.exists(f'{base}/{ROMS[0]}.gbc'):
+        print(f'### {title}')
+        print('Skipped: there is no base build to compare with '
+              '(no base commit, or the base commit does not build).')
+        return 0
+    out, failed = compare(base, head)
     print('\n'.join(out))
     return 1 if failed else 0
 
