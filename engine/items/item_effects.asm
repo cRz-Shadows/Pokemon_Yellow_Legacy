@@ -262,8 +262,8 @@ ItemUseBall:
 	ldh [hMultiplier], a
 	call Multiply
 
-; Determine BallFactor. It's 12 for Poké Balls, 8 for Great Balls and 4 for
-; Ultra and Safari Balls.
+; Determine BallFactor. It's 12 for Poké Balls, 8 for Great Balls and 6 for
+; Ultra and Safari Balls (vanilla gives Ultra Balls 12, worse than Great Balls).
 	ld a, [wCurItem]
 	ld b, 12
 	cp POKE_BALL
@@ -271,7 +271,7 @@ ItemUseBall:
 	ld b, 8
 	cp GREAT_BALL
 	jr z, .gotBallFactor
-	ld b, 4
+	ld b, 6
 .gotBallFactor
 	ld a, b
 ; Note that the results of all division operations are floored.
@@ -1516,7 +1516,7 @@ ItemUseMedicine:
 	pop hl
 	ld a, [hl] ; a = level
 	cp b ; MAX_LEVEL on normal mode, level cap on hard mode
-	jr z, .vitaminNoEffect ; can't raise level above 100
+	jr nc, .vitaminNoEffect ; can't raise level to or above the cap (a mon over the cap stays put)
 	inc a
 	ld [hl], a ; store incremented level
 	ld [wCurEnemyLevel], a

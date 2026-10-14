@@ -4858,8 +4858,12 @@ CriticalHitTest:
 	jr nc, .noFocusEnergyUsed
 	ld b, $ff                    ; cap at 255/256
 .noFocusEnergyUsed
+	ld a, [wLinkState]
+	cp LINK_STATE_BATTLING
+	jr z, .normalCritRules ; link battles always use the Normal rules, so both sides draw the same random numbers
 	check_hard_rules ; Check if player is on hard mode
 	jr z, .NotGuarenteedCrit ; keep 1/256 chance to not crit if on hard mode
+.normalCritRules
 	ld a, b
 	inc a ; optimization of "cp $ff"
 	jr z, .guaranteedCriticalHit
@@ -5687,8 +5691,12 @@ MoveHitTest:
 	ld a, [wEnemyMoveAccuracy]
 	ld b, a
 .doAccuracyCheck
+	ld a, [wLinkState]
+	cp LINK_STATE_BATTLING
+	jr z, .normalAccuracyRules ; link battles always use the Normal rules, so both sides draw the same random numbers
 	check_hard_rules ; Check if player is on hard mode
 	jr z, .DontRemoveMiss ; Keep 1/256 chance to miss on hard mode
+.normalAccuracyRules
 	; The following snippet fixes 1/256 chance to miss on 100% accurate moves bug on normal mode
 	ld a, b
 	cp $FF ; Is the value $FF?

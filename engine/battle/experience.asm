@@ -159,6 +159,38 @@ GainExperience:
 	jr nc, .next1
 	ld d, 12 ; Onix's level
 .next1
+; a mon already above the level cap (traded, gifted or caught over the cap) gains
+; no exp, so the clamp below doesn't pull its exp and level down
+	pop hl ; hl = LSB of exp
+	push hl
+	ld bc, MON_LEVEL - (MON_EXP + 2)
+	add hl, bc
+	ld a, [hl] ; current level
+	cp d
+	pop hl
+	jr c, .belowLevelCap
+	jr z, .belowLevelCap
+	push de
+	ld a, [wExpAmountGained + 1]
+	ld b, a
+	ld a, [hl]
+	sub b
+	ld [hld], a
+	ld a, [wExpAmountGained]
+	ld b, a
+	ld a, [hl]
+	sbc b
+	ld [hld], a
+	ld a, [hl]
+	sbc 0
+	ld [hl], a ; undo the exp that was just added; hl = MSB of exp
+	xor a
+	ld [wExpAmountGained], a
+	ld [wExpAmountGained + 1], a
+	pop de
+	jr .next2
+.belowLevelCap
+	push hl
 	callfar CalcExperience ; get max exp
 ; compare max exp with current exp
 	ldh a, [hExperience]
