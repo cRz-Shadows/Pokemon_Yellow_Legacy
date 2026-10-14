@@ -39,3 +39,12 @@ ruff check --config .github/ruff.toml .github/scripts tools/make_release_patches
 ```
 
 The ROMs are passed between jobs through the Actions cache, which only workflows can read; they are never uploaded as artifacts. Dependabot (`.github/dependabot.yml`) opens weekly PRs to update the actions and the Python packages in `.github/requirements.txt`.
+
+## Upstream watch
+
+`.github/workflows/upstream-watch.yml` runs every Monday (and on demand from the Actions tab, with an optional dry run). It compares this fork's `main` with [cRz-Shadows/Pokemon_Yellow_Legacy](https://github.com/cRz-Shadows/Pokemon_Yellow_Legacy) and keeps one **`upstream-sync`** issue listing the upstream commits the fork doesn't have (`.github/scripts/upstream_watch.py`).
+
+- New upstream commits: the open issue is updated (with a comment), or a new one is opened.
+- Closing the issue means "seen, not merging these"; it isn't reopened until upstream has new commits.
+- Once the fork contains everything, the open issue is closed automatically.
+
