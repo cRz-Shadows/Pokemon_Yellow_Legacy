@@ -15,6 +15,7 @@ sys.path.insert(0, HERE)
 sys.path.insert(0, os.path.join(HERE, '..', '..', 'tools'))
 
 import check_warnings  # noqa: E402
+import label_check  # noqa: E402
 import compare_builds  # noqa: E402
 import make_release_patches  # noqa: E402
 import upstream_watch  # noqa: E402
@@ -119,6 +120,43 @@ class CheckWarningsTest(unittest.TestCase):
 
     def test_new_warning_fails(self):
         self.assertEqual(self.check('warning: scripts/Foo.asm(12): [-Wobsolete]\n    deprecated\n'), 1)
+
+
+class LabelCheckTest(unittest.TestCase):
+    LABEL = 'save-layout-change'
+
+    def ev(self, event, login, name=None):
+        return {'event': event, 'actor': {'login': login}, 'label': {'name': name or self.LABEL}}
+
+    def run_check(self, events, perms):
+        return label_check.check(self.LABEL, events, lambda login: perms.get(login, 'none'))
+
+    def test_maintainer_label_counts(self):
+        ok, reason = self.run_check([self.ev('labeled', 'owner')], {'owner': 'admin'})
+        self.assertTrue(ok)
+        self.assertIn('@owner', reason)
+
+    def test_triage_label_is_ignored(self):
+        ok, reason = self.run_check([self.ev('labeled', 'helper')], {'helper': 'triage'})
+        self.assertFalse(ok)
+        self.assertIn('triage', reason)
+
+    def test_last_labeler_decides(self):
+        events = [self.ev('labeled', 'owner'), self.ev('unlabeled', 'owner'), self.ev('labeled', 'helper')]
+        self.assertFalse(self.run_check(events, {'owner': 'admin', 'helper': 'read'})[0])
+        events = [self.ev('labeled', 'helper'), self.ev('unlabeled', 'owner'), self.ev('labeled', 'owner')]
+        self.assertTrue(self.run_check(events, {'owner': 'write', 'helper': 'read'})[0])
+
+    def test_removed_label_does_not_count(self):
+        events = [self.ev('labeled', 'owner'), self.ev('unlabeled', 'owner')]
+        ok, reason = self.run_check(events, {'owner': 'admin'})
+        self.assertFalse(ok)
+        self.assertIn('not on this PR', reason)
+
+    def test_other_labels_are_ignored(self):
+        events = [self.ev('labeled', 'helper', 'bug'), self.ev('labeled', 'owner')]
+        self.assertTrue(self.run_check(events, {'owner': 'maintain'})[0])
+        self.assertFalse(self.run_check([self.ev('labeled', 'owner', 'bug')], {'owner': 'admin'})[0])
 
 
 if __name__ == '__main__':
