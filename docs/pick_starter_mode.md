@@ -122,7 +122,7 @@ Regression in Normal and Hard:
 - Pick Starter mode: pick a Bulbasaur, Charmander or Squirtle-line Pokémon and your rival takes the starter that beats it, as in Red/Blue, and keeps its line all game.
 - Fixed (all modes): saving after a trade didn't store Pikachu's happiness and mood in the right place, and every save wrote them over 2 bytes of other saved data.
 
-**Unreleased**
+**1.3.0**
 
 - **Catching:** the catch chance depends on the wild Pokémon's HP again (weaken it first). Ball factors are now Poké 12, Great 8, Ultra and Safari 5. In 1.2.0 a bug made every ball use 4, so Poké Balls and Great Balls are harder to use at full HP (they match the old chance at low HP), and Ultra and Safari Balls are somewhat harder than before but still better than Great Balls.
 - Fixed: the Indigo Plateau lobby's Gym Guide blocked the only way to the Elite Four and the shops; he is back where he was before 1.1.0.
@@ -135,3 +135,7 @@ Regression in Normal and Hard:
 - The ROM is 1 MiB, like the original, instead of 2 MiB. The ROM hash changes, so emulator save states from older builds no longer load (in-game saves are unaffected).
 
 Pick Starter and the Normal and Hard rules, and existing saves, are otherwise unchanged.
+
+**Unreleased**
+
+- New types for nine Pokémon: Charizard Fire/Dragon, Blastoise Water/Steel, Gyarados Water/Dragon, Poliwhirl Water/Fighting, Growlithe Fire/Dark, Psyduck and Golduck Water/Psychic, and Jigglypuff and Wigglytuff Fairy/Normal (Fairy is now their first type).
