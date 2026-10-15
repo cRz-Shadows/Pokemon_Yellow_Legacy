@@ -14,6 +14,10 @@
 *.gb
 *.patch
 
+# release patches written by tools/make_release_patches.py (they derive from a Nintendo ROM)
+*.bps
+*.zip
+
 # rgbds extras
 # *.map
 pokemon_yellow_legacy.map

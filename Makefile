@@ -23,12 +23,6 @@ pokemon_yellow_legacy_vc_obj    := $(rom_obj:.o=_vc.o)
 
 ### Build tools
 
-ifeq (,$(shell which sha1sum))
-SHA1 := shasum
-else
-SHA1 := sha1sum
-endif
-
 RGBDS ?=
 RGBASM  ?= $(RGBDS)rgbasm
 RGBFIX  ?= $(RGBDS)rgbfix
@@ -42,7 +36,7 @@ RGBLINK ?= $(RGBDS)rgblink
 .SECONDEXPANSION:
 .PRECIOUS:
 .SECONDARY:
-.PHONY: all yellow yellow_debug yellow_vc clean tidy compare tools test
+.PHONY: all yellow yellow_debug yellow_vc clean tidy tools test
 
 all: $(roms)
 yellow:       pokemon_yellow_legacy.gbc
@@ -72,9 +66,6 @@ tidy:
 	      $(pokemon_yellow_legacy_debug_obj) \
 	      rgbdscheck.o
 	$(MAKE) clean -C tools/
-
-compare: $(roms) $(patches)
-	@$(SHA1) -c roms.sha1
 
 tools:
 	$(MAKE) -C tools/

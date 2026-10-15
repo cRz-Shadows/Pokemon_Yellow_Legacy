@@ -1,5 +1,7 @@
 # Repository review findings (2026-10-14)
 
+> **Historical.** This is a snapshot of `main` at `0491ed8`. Its findings have since been fixed or filed as GitHub issues, and its file and line references have moved. Current work is tracked in the GitHub issues, not here.
+
 Six review agents examined the repository at `main` (`0491ed8`): architecture, documentation, efficiency, engineering, security and user experience. They focused on this fork's work on top of upstream: Pick Starter mode, bug fixes, label renames, CI, release tooling and docs. Each finding is tagged with its severity and the reviewer that raised it. Findings raised by more than one reviewer are merged.
 
 Each agent verified its findings by reading the code, and some also ran builds, PyBoy or Python checks. Two notes from the maintainer session that compiled this report:

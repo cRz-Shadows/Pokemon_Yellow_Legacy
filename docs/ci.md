@@ -37,7 +37,7 @@ make test    # builds, then unit tests, smoke test, scenario tests and ruff
 The comparison checks need a build of the base commit:
 
 ```sh
-git worktree add ../base main
+git worktree add --detach ../base main    # or a commit, e.g. the merge base: $(git merge-base HEAD main)
 make -C ../base yellow yellow_debug
 mkdir -p base-out && cp ../base/pokemon_yellow_legacy*.{gbc,sym,map} base-out/
 python3 .github/scripts/compare_builds.py roms base-out .    # also: save, banks
