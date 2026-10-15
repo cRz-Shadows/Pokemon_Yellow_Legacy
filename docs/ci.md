@@ -11,7 +11,7 @@ Every pull request and every push to `main` runs `.github/workflows/ci.yml`. Eac
 | **Scenario tests** | Warps to specific events and checks them: the rival's comment on a picked Eevee and Magikarp, the rival's ace in the Cerulean City battle (Wartortle against a Charmander pick, Eevee in Normal mode), Melanie's Bulbasaur (Pick Starter with Charmander; Normal with an unhappy and a happy Pikachu), the Safari Zone gate with no money (6th refusal, 4th refusal is free), Pikachu's Beach (the Surfin' Dude, posters and printer) in Pick Starter and Normal mode, saving (Pikachu's happiness lands at its own offset and the checksum is valid), and the beach on the VC ROM (`.github/scripts/scenario_tests.py`). | yes |
 | **Build base** | Builds the base commit (the PR's base, or the previous `main` commit) for the comparison checks. | no |
 | **ROM changes** | Reports whether the normal and debug ROMs are identical to the base build. | only with the `expect-identical-rom` label |
-| **Save layout** | Fails if any saved WRAM or SRAM variable (compared by name) or saved range moved, which would break old saves. Renames are listed but allowed. | yes, unless the `save-layout-change` label is set |
+| **Save layout** | Fails if any saved WRAM or SRAM variable (compared by name) or saved range moved, which would break old saves. Renames are listed but allowed. | yes, unless the `save-layout-change` label was added by someone with push access |
 | **Bank space** | Free ROM space (including empty banks), the tightest bank the PR changed, and a table of changed banks. | no |
 | **Lint workflows** | actionlint (plus shellcheck) on the workflow files. | yes |
 | **Lint Python** | ruff on the CI and release scripts (rules in `.github/ruff.toml`), and their unit tests (`.github/scripts/test_ci_scripts.py`, plus `test_data_tables.py`, which checks the type chart and the learnset order). | yes |
@@ -23,7 +23,7 @@ The emulator tests read every map, script, species and move ID they need from th
 ## Labels
 
 - **`expect-identical-rom`**: for refactors and renames. The ROM changes check fails if either ROM differs from the base build.
-- **`save-layout-change`**: when a PR is meant to change the save layout. The Save layout check then passes and says so.
+- **`save-layout-change`**: when a PR is meant to change the save layout. The Save layout check then passes and says so. It only counts if the person who last added it has write, maintain or admin access (`.github/scripts/label_check.py`); a label added by someone with only triage access is ignored, and the summary says who added it. Evidence: [evidence/128_label_check.md](evidence/128_label_check.md).
 
 The comparison jobs read the PR's labels when they run. After adding or removing a label, use **Re-run jobs** on the PR (label changes don't start a run).
 

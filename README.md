@@ -26,7 +26,7 @@ Besides Normal and Hard, a new game can be started in **Pick Starter** mode. It 
 * Build with RGBDS 1.0.4 ([INSTALL.md](INSTALL.md)). Work on a branch and open a pull request against `main`; branches are deleted when merged.
 * Every PR runs the checks described in [**docs/ci.md**](docs/ci.md): builds, warnings, emulator smoke and scenario tests, ROM and save-layout comparison with `main`, and linting. `main` only accepts PRs that pass them and are up to date.
 * Run the tests locally with `pip install -r .github/requirements.txt` and `make test`. `make test` builds all three ROMs (normal, debug and VC) first, then runs the unit tests, the PyBoy smoke and scenario tests and ruff, so it needs RGBDS and a C compiler as well as the Python packages.
-* Labels: **`expect-identical-rom`** for refactors (the ROM must not change), **`save-layout-change`** when a PR intentionally changes saved data. After changing a label, use "Re-run jobs".
+* Labels: **`expect-identical-rom`** for refactors (the ROM must not change), **`save-layout-change`** when a PR intentionally changes saved data (only honoured when added by someone with push access). After changing a label, use "Re-run jobs".
 * Releases: build the tagged commit, then `python3 tools/make_release_patches.py <clean Yellow ROM> pokemon_yellow_legacy.gbc "Pokemon Yellow Legacy VX.Y.Z Patch"` makes the `.bps` and the zip (use the normal ROM, not `_vc`).
 
 

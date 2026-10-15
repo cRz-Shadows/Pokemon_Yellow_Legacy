@@ -346,9 +346,12 @@ jobs:
           PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
           set -o pipefail
-          if [ -n "$PR_NUMBER" ] && gh api "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/labels" --jq '.[].name' \
-              | grep -qx save-layout-change; then
-            export ALLOW_SAVE_LAYOUT_CHANGE=1
+          # the label only counts if someone with push access added it (#128)
+          if [ -n "$PR_NUMBER" ]; then
+            if python3 .github/scripts/label_check.py save-layout-change > label-check.txt; then
+              export ALLOW_SAVE_LAYOUT_CHANGE=1
+            fi
+            grep -v 'is not on this PR' label-check.txt | tee -a "$GITHUB_STEP_SUMMARY" || true
           fi
           python3 .github/scripts/compare_builds.py save base-out . | tee -a "$GITHUB_STEP_SUMMARY"
 
