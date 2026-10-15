@@ -115,11 +115,23 @@ Regression in Normal and Hard:
 - The picker shows the controls (in Oak's lead-in), warns before taking a Pokémon that can't attack at level 5, loads the sprite sooner, and shows the right sprite at the "So, you want …?" prompt.
 - The Surfin' Dude names the Pokémon that knows Surf. The mode menu is titled "Select game mode", and the Pick Starter description says only a Pikachu starter follows you.
 
-**Unreleased**
+**1.2.0**
 
 - Pick Starter picker: SELECT shows the highlighted Pokémon's base stats or its level-5 moves instead of its types.
 - Pick Starter mode: your rival comments on your starter before your first battle.
 - Pick Starter mode: pick a Bulbasaur, Charmander or Squirtle-line Pokémon and your rival takes the starter that beats it, as in Red/Blue, and keeps its line all game.
 - Fixed (all modes): saving after a trade didn't store Pikachu's happiness and mood in the right place, and every save wrote them over 2 bytes of other saved data.
 
-Normal and Hard rules and existing saves are unchanged.
+**Unreleased**
+
+- **Catching:** the catch chance depends on the wild Pokémon's HP again (weaken it first). Ball factors are now Poké 12, Great 8, Ultra and Safari 5. In 1.2.0 a bug made every ball use 4, so Poké Balls and Great Balls are harder to use at full HP (they match the old chance at low HP), and Ultra and Safari Balls are somewhat harder than before but still better than Great Balls.
+- Fixed: the Indigo Plateau lobby's Gym Guide blocked the only way to the Elite Four and the shops; he is back where he was before 1.1.0.
+- Fixed: Fighting is no longer neutral against Fairy (it is resisted), is super effective against Steel, and Flying is resisted by Steel.
+- Fixed: Golduck below Lv28 now learns Disable, Confusion, Bubblebeam and Screech.
+- Fixed (Hard mode): a Pokémon above the level cap no longer drops levels when it gains exp (it gains none), Rare Candy refuses it, and your own Pokémon above the cap now disobey as intended (before, the effective limit was Lv55 below 8 badges).
+- Fixed (Hard mode): a Hard-mode console and a Normal-mode console no longer desync in link battles; link battles use the Normal rules.
+- Hard mode: the Options menu shows SET, the confirmation text says "trainer fights", and Rare Candy tells you when you're at the badge cap. The rules are listed in [hard_mode.md](hard_mode.md).
+- A damaged save can no longer give the mode and starter bytes an out-of-range value.
+- The ROM is 1 MiB, like the original, instead of 2 MiB. The ROM hash changes, so emulator save states from older builds no longer load (in-game saves are unaffected).
+
+Pick Starter and the Normal and Hard rules, and existing saves, are otherwise unchanged.

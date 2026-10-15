@@ -104,6 +104,8 @@ To install the software required for **pokemon_yellow_legacy**:
 sudo pacman -S make gcc git rgbds
 ```
 
+Check the version with `rgbasm --version`: CI uses **rgbds 1.0.4**, and the build needs 1.0.0 or newer.
+
 If you want to compile and install **rgbds** yourself instead, then follow the [**rgbds** instructions](https://rgbds.gbdev.io/install#building-from-source) to build **rgbds 1.0.4** from source.
 
 ### Termux
@@ -119,6 +121,8 @@ To install **rgbds**:
 ```bash
 sudo apt install rgbds
 ```
+
+Check the version with `rgbasm --version`: CI uses **rgbds 1.0.4**, and the build needs 1.0.0 or newer.
 
 If you want to compile and install **rgbds** yourself instead, then follow the [**rgbds** instructions](https://rgbds.gbdev.io/install#building-from-source) to build **rgbds 1.0.4** from source.
 
