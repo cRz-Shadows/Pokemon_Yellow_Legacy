@@ -79,41 +79,10 @@ DaycareGentlemanText:
 	callfar CalcLevelFromExperience
 
 	push bc
-	check_hard_rules ; Check if player is on hard mode
-	ld b, MAX_LEVEL
-	jr nz, .next1 ; no level caps if not on hard mode
-
-	ld a, [wGameStage] ; Check if player has beat the game
-	and a
-	jr nz, .next1
-	farcall GetBadgesObtained
-	ld a, [wNumSetBits]
-	cp 8
-	ld b, 65 ; Jolteon/Flareon/Vaporeon's level
-	jr nc, .next1
-	cp 7
-	ld b, 55 ; Rhydon's level
-	jr nc, .next1
-	cp 6
-	ld b, 53 ; Magmar's level
-	jr nc, .next1
-	cp 5
-	ld b, 50 ; Alakazam's level
-	jr nc, .next1
-	cp 4
-	ld b, 43 ; Venomoth's level
-	jr nc, .next1
-	cp 3
-	ld b, 35 ; Vileplume's level
-	jr nc, .next1
-	cp 2
-	ld b, 24 ; Bit below Raichu's level
-	jr nc, .next1
-	cp 1
-	ld b, 21 ; Starmie's level
-	jr nc, .next1
-	ld b, 12 ; Onix's level
-.next1
+	push de
+	farcall GetHardLevelCap ; e = the level cap (MAX_LEVEL unless Hard rules)
+	ld b, e
+	pop de
 	ld a, b
 	ld [wMaxDaycareLevel], a
 	ld a, d

@@ -122,43 +122,8 @@ GainExperience:
 	ld a, [hl] ; species
 	ld [wCurSpecies], a
 	call GetMonHeader
-	ld d, MAX_LEVEL
-
-	check_hard_rules ; Check if player is on hard mode
-	jr nz, .next1 ; no level caps if not on hard mode
-
-	ld a, [wGameStage] ; Check if player has beat the game
-	and a
-	ld d, 100
-	jr nz, .next1
-	call GetBadgesObtained
-	ld a, [wNumSetBits]
-	cp 8
-	ld d, 65 ; Jolteon/Flareon/Vaporeon's level
-	jr nc, .next1
-	cp 7
-	ld d, 55 ; Rhydon's level
-	jr nc, .next1
-	cp 6
-	ld d, 53 ; Magmar's level
-	jr nc, .next1
-	cp 5
-	ld d, 50 ; Alakazam's level
-	jr nc, .next1
-	cp 4
-	ld d, 43 ; Venomoth's level
-	jr nc, .next1
-	cp 3
-	ld d, 35 ; Vileplume's level
-	jr nc, .next1
-	cp 2
-	ld d, 24 ; Bit below Raichu's level
-	jr nc, .next1
-	cp 1
-	ld d, 21 ; Starmie's level
-	jr nc, .next1
-	ld d, 12 ; Onix's level
-.next1
+	call GetHardLevelCap ; e = the level cap (MAX_LEVEL unless Hard rules)
+	ld d, e
 ; a mon already above the level cap (traded, gifted or caught over the cap) gains
 ; no exp, so the clamp below doesn't pull its exp and level down
 	pop hl ; hl = LSB of exp
@@ -562,3 +527,38 @@ GetBadgesObtained::
 	pop hl
 	ld a, [wNumSetBits]
 	ret
+
+; Returns in e the highest level a Pokémon can reach right now: MAX_LEVEL, or
+; on Hard mode the cap for the number of badges until the Hall of Fame.
+; Clobbers a; preserves bc, de (apart from e), hl.
+; Use farcall from other banks; farcall clobbers a, b, c and hl, so read e afterwards.
+GetHardLevelCap::
+	ld e, MAX_LEVEL
+	test_hard_rules
+	ret z ; no level caps if not on hard mode
+	ld a, [wGameStage] ; Check if player has beat the game
+	and a
+	ret nz
+	push hl
+	push bc
+	call GetBadgesObtained ; a = number of badges, preserves bc, de, hl
+	ld c, a
+	ld b, 0
+	ld hl, HardLevelCaps
+	add hl, bc
+	ld e, [hl]
+	pop bc
+	pop hl
+	ret
+
+HardLevelCaps: ; indexed by number of badges
+	db 12 ; Onix's level
+	db 21 ; Starmie's level
+	db 24 ; a bit below Raichu's level
+	db 35 ; Vileplume's level
+	db 43 ; Venomoth's level
+	db 50 ; Alakazam's level
+	db 53 ; Magmar's level
+	db 55 ; Rhydon's level
+	db 65 ; Jolteon/Flareon/Vaporeon's level
+ASSERT @ - HardLevelCaps == NUM_BADGES + 1

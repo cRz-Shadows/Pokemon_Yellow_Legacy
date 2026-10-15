@@ -5,6 +5,7 @@
   multiplies every matching entry, and has the Steel matchups (issue #112).
 - Every Pokémon's level-up learnset is sorted by level, because the code that gives a new Pokémon
   its moves stops at the first entry above its level (issue #113).
+- The Hard mode level caps (HardLevelCaps) have one entry per badge count and match docs/hard_mode.md.
 
 Run: python3 -m unittest discover -s .github/scripts -p 'test_*.py'
 """
@@ -68,6 +69,21 @@ class LearnsetTest(unittest.TestCase):
     def test_golduck_learns_disable_before_tail_whip(self):
         moves = learnsets()['GolduckEvosMoves']
         self.assertLess(moves.index((10, 'DISABLE')), moves.index((28, 'TAIL_WHIP')))
+
+
+class HardLevelCapTest(unittest.TestCase):
+    def caps(self):
+        block = read('engine/battle/experience.asm').split('HardLevelCaps:')[1]
+        return [int(m.group(1)) for m in re.finditer(r'^\tdb (\d+)', block, re.MULTILINE)][:9]
+
+    def test_nine_increasing_caps(self):
+        caps = self.caps()
+        self.assertEqual(len(caps), 9)
+        self.assertEqual(caps, sorted(caps))
+
+    def test_matches_docs(self):
+        row = [line for line in read('docs/hard_mode.md').splitlines() if line.startswith('| Cap |')][0]
+        self.assertEqual([int(x) for x in re.findall(r'\d+', row)], self.caps())
 
 
 if __name__ == '__main__':

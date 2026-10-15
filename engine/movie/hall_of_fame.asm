@@ -248,8 +248,8 @@ HoFDisplayPlayerStats:
 	lb bc, 2, 7
 	call TextBoxBorder
 
-	check_hard_rules ; Check if player is on hard mode
-	jr nz, .NormalModeText
+	test_hard_rules ; Check if player is on hard mode
+	jr z, .NormalModeText
 
 	hlcoord 12, 1
 	ld de, LegacyText

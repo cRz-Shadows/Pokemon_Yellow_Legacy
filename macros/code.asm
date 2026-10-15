@@ -10,22 +10,36 @@ ENDM
 
 ; Game mode checks (see the wDifficulty flags in constants/misc_constants.asm)
 
-; z if Hard rules apply (DIFFICULTY_HARD_FLAG); clobbers a
-MACRO check_hard_rules
+; nz if Hard rules apply (BIT_DIFFICULTY_HARD); clobbers a
+MACRO test_hard_rules
 	ld a, [wDifficulty]
-	and DIFFICULTY_HARD_FLAG
-	cp DIFFICULTY_HARD_FLAG
+	bit BIT_DIFFICULTY_HARD, a
 ENDM
 
-; z if the player picks their starter (DIFFICULTY_PICK_FLAG); clobbers a
-MACRO check_pick_starter
+; nz if Hard rules apply to this battle: like test_hard_rules, except in link
+; battles, which always use the Normal rules so both consoles draw the same
+; random numbers; clobbers a
+MACRO test_hard_battle_rules
+	ld a, [wLinkState]
+	cp LINK_STATE_BATTLING
+	jr z, :+ ; z: not Hard
+	test_hard_rules
+:
+ENDM
+
+; nz if the player picks their starter (BIT_DIFFICULTY_PICK); clobbers a
+MACRO test_pick_starter
 	ld a, [wDifficulty]
-	and DIFFICULTY_PICK_FLAG
-	cp DIFFICULTY_PICK_FLAG
+	bit BIT_DIFFICULTY_PICK, a
 ENDM
 
 ; z if the player's starter is PIKACHU (always true unless picked otherwise in
-; Pick Starter mode); clobbers a. Pikachu-only story scenes check this.
+; Pick Starter mode); clobbers a.
+; Two checks decide Pikachu-only content; use the one that fits:
+; - check_starter_pikachu asks "was PIKACHU the starter the player chose?" (story
+;   scenes tied to that choice: Oak's lab, Melanie, the Summer Beach House).
+; - BIT_STARTER_PIKACHU_IN_PARTY (wPikachuPartyFlags) asks "is the starter PIKACHU
+;   alive in the party right now?" (the follower, Bill's House, gyms, the Fan Club).
 MACRO check_starter_pikachu
 	ld a, [wPlayerStarter]
 	cp STARTER_PIKACHU

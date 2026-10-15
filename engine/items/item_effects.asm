@@ -1456,6 +1456,15 @@ ItemUseMedicine:
 	call PrintText
 	jp RemoveUsedItem
 
+.atLevelCap
+	ld a, b
+	cp MAX_LEVEL
+	jr nc, .vitaminNoEffect ; the normal maximum level
+	pop hl
+	ld hl, LevelCapReachedText ; the Hard mode cap for the player's badges
+	call PrintText
+	jp GBPalWhiteOut
+
 .vitaminNoEffect
 	pop hl
 	ld hl, VitaminNoEffectText
@@ -1476,47 +1485,15 @@ ItemUseMedicine:
 	ld bc, MON_LEVEL
 	add hl, bc ; hl now points to level
 	push hl
-	ld b, MAX_LEVEL
-
-	check_hard_rules ; Check if player is on hard mode
-	jr nz, .next1 ; no level caps if not on hard mode
-
-	ld a, [wGameStage] ; Check if player has beat the game
-	and a
-	jr nz, .next1
-	farcall GetBadgesObtained
-	ld a, [wNumSetBits]
-	cp 8
-	ld b, 65 ; Jolteon/Flareon/Vaporeon's level
-	jr nc, .next1
-	cp 7
-	ld b, 55 ; Rhydon's level
-	jr nc, .next1
-	cp 6
-	ld b, 53 ; Magmar's level
-	jr nc, .next1
-	cp 5
-	ld b, 50 ; Alakazam's level
-	jr nc, .next1
-	cp 4
-	ld b, 43 ; Venomoth's level
-	jr nc, .next1
-	cp 3
-	ld b, 35 ; Vileplume's level
-	jr nc, .next1
-	cp 2
-	ld b, 24 ; Bit below Raichu's level
-	jr nc, .next1
-	cp 1
-	ld b, 21 ; Starmie's level
-	jr nc, .next1
-	ld b, 12 ; Onix's level
-.next1
+	push de
+	farcall GetHardLevelCap ; e = the level cap (MAX_LEVEL unless Hard rules)
+	ld b, e
+	pop de
 
 	pop hl
 	ld a, [hl] ; a = level
 	cp b ; MAX_LEVEL on normal mode, level cap on hard mode
-	jr nc, .vitaminNoEffect ; can't raise level to or above the cap (a mon over the cap stays put)
+	jr nc, .atLevelCap ; can't raise level to or above the cap (a mon over the cap stays put)
 	inc a
 	ld [hl], a ; store incremented level
 	ld [wCurEnemyLevel], a
@@ -1614,6 +1591,10 @@ VitaminStatRoseText:
 
 VitaminNoEffectText:
 	text_far _VitaminNoEffectText
+	text_end
+
+LevelCapReachedText:
+	text_far _LevelCapReachedText
 	text_end
 
 INCLUDE "data/battle/stat_names.asm"

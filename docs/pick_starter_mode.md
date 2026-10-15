@@ -55,7 +55,7 @@ Pick Starter is a third play mode alongside **Normal** and **Hard**. It plays li
 
 ## Save compatibility
 
-- The mode is stored in the existing difficulty byte: 0 = Normal, 1 = Hard, 2 = Pick Starter. The byte is a set of flags (bit 0 = Hard rules, bit 1 = pick the starter), so these values keep their meaning; the code checks it with the `check_hard_rules` and `check_pick_starter` macros. Normal and Hard saves from earlier versions load and play unchanged.
+- The mode is stored in the existing difficulty byte: 0 = Normal, 1 = Hard, 2 = Pick Starter. The byte is a set of flags (bit 0 = Hard rules, bit 1 = pick the starter), so these values keep their meaning; the code checks it with the `test_hard_rules` and `test_pick_starter` macros. Normal and Hard saves from earlier versions load and play unchanged.
 - The save layout is unchanged. No RAM or SRAM addresses moved.
 - Don't load a Pick Starter save into a build from before this mode existed. Those builds treat any non-zero difficulty as Hard, so the game would play with Hard rules.
 

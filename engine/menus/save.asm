@@ -64,6 +64,7 @@ LoadMainData:
 	ld de, wMainDataStart
 	ld bc, wMainDataEnd - wMainDataStart
 	call CopyData
+	call SanitizeModeBytes
 	ld hl, wCurMapTileset
 	set BIT_NO_PREVIOUS_MAP, [hl]
 	ld hl, sSpriteData
@@ -78,6 +79,25 @@ LoadMainData:
 	call CopyData
 	and a
 	jp GoodCheckSum
+
+; The mode bytes are only protected by the 8-bit save checksum, and the code uses
+; them as table indexes and team numbers: put damaged values back in range.
+SanitizeModeBytes:
+	ld a, [wDifficulty]
+	and DIFFICULTY_FLAGS_MASK
+	ld [wDifficulty], a
+	ld a, [wRivalStarter]
+	cp RIVAL_STARTER_SQUIRTLE + 1
+	jr c, .rivalStarterOK
+	xor a
+	ld [wRivalStarter], a
+.rivalStarterOK
+	ld a, [wPlayerStarter]
+	cp NUM_POKEMON_INDEXES + 1
+	ret c
+	ld a, STARTER_PIKACHU
+	ld [wPlayerStarter], a
+	ret
 
 LoadCurrentBoxData:
 	call EnableSRAM
