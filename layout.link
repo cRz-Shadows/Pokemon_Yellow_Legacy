@@ -191,7 +191,6 @@ ROMX $2f
 	org $5000
 	"BG Map Attributes"
 ROMX $30
-	"bank30"
 ROMX $31
 	"Pikachu Cries 6"
 ROMX $32
