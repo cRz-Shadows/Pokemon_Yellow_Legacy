@@ -12,15 +12,18 @@ DEF TRUE  EQU 1
 
 ; wDifficulty values, as chosen in the new-game menu. The byte is a set of flags
 ; (rules and how the starter is chosen are independent), so check it with the
-; check_hard_rules / check_pick_starter macros rather than comparing values.
+; test_hard_rules / test_pick_starter macros rather than comparing values.
 	const_def
 	const DIFFICULTY_NORMAL ; 0
 	const DIFFICULTY_HARD   ; 1
 	const DIFFICULTY_PICK_STARTER ; 2: Normal rules, but the player picks any starter
 DEF NUM_DIFFICULTIES EQU const_value
 
-DEF DIFFICULTY_HARD_FLAG EQU 1 << 0 ; Hard rules: level caps, Set mode, no items in battle
-DEF DIFFICULTY_PICK_FLAG EQU 1 << 1 ; pick any starter in Oak's lab
+DEF BIT_DIFFICULTY_HARD EQU 0 ; Hard rules: level caps, Set mode, no items in trainer battles
+DEF BIT_DIFFICULTY_PICK EQU 1 ; pick any starter in Oak's lab
+DEF DIFFICULTY_HARD_FLAG EQU 1 << BIT_DIFFICULTY_HARD
+DEF DIFFICULTY_PICK_FLAG EQU 1 << BIT_DIFFICULTY_PICK
+DEF DIFFICULTY_FLAGS_MASK EQU DIFFICULTY_HARD_FLAG | DIFFICULTY_PICK_FLAG
 ASSERT DIFFICULTY_HARD == DIFFICULTY_HARD_FLAG
 ASSERT DIFFICULTY_PICK_STARTER == DIFFICULTY_PICK_FLAG
 

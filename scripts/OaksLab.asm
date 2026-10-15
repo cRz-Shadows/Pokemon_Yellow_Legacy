@@ -231,6 +231,10 @@ OaksLabRivalTakesPokeballScript:
 	ld a, SPRITE_FACING_UP
 	ldh [hSpriteFacingDirection], a
 	call SetSpriteFacingDirectionAndDelay
+	; The rival takes EEVEE (JOLTEON line) here, in his scene. In Pick Starter mode
+	; PickStarterSetRivalStarter later overwrites this with the counter starter, so
+	; this scene must keep running before the player's own text script (it does: the
+	; player only gets to pick after the rival has taken his ball).
 	ld a, RIVAL_STARTER_JOLTEON
 	ld [wRivalStarter], a
 	ld a, EEVEE
@@ -1064,12 +1068,12 @@ OaksLabRivalTakesText5:
 
 OaksLabPlayerReceivedMonText:
 	text_asm
-	check_pick_starter
-	jr nz, .giveStarterPikachu
+	test_pick_starter
+	jr z, .giveStarterPikachu
 	ld hl, OaksLabOakPickStarterText
 	call PrintText
 	callfar PickStarterMenu ; sets [wPlayerStarter]
-	callfar PickStarterSetRivalStarter
+	callfar PickStarterSetRivalStarter ; overwrites wRivalStarter set when the rival took his ball
 	ld a, [wPlayerStarter]
 	ld [wNamedObjectIndex], a
 	call GetMonName
@@ -1151,8 +1155,8 @@ OaksLabOakDontGoAwayYetText:
 
 OaksLabRivalIllTakeYouOnText:
 	text_asm
-	check_pick_starter
-	jr nz, .noComment
+	test_pick_starter
+	jr z, .noComment
 	check_starter_pikachu
 	jr z, .noComment
 ; Pick Starter mode: the rival comments on the player's starter

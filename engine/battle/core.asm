@@ -1444,10 +1444,8 @@ EnemySendOutFirstMon:
 	ld a, [wLinkState]
 	cp LINK_STATE_BATTLING
 	jr z, .next4
-	check_hard_rules ; Check if player is on hard mode
-	jr nz, .DontForceSetMode
-	jr .next4 ; skip switch request on hard mode
-.DontForceSetMode
+	test_hard_rules ; Check if player is on hard mode
+	jr nz, .next4 ; skip switch request on hard mode
 	ld a, [wOptions]
 	bit BIT_BATTLE_SHIFT, a
 	jr nz, .next4
@@ -2364,8 +2362,8 @@ BagWasSelected:
 	cp BATTLE_TYPE_PIKACHU ; is it the prof oak battle with pikachu?
 	jr z, .simulatedInputBattle
 
-	check_hard_rules ; Check if player is on hard mode
-	jr nz, .NormalMode
+	test_hard_rules ; Check if player is on hard mode
+	jr z, .NormalMode
 
 	ld a, [wIsInBattle] ; Check if this is a wild battle or trainer battle
 	dec a
@@ -4137,40 +4135,14 @@ CheckForDisobedience:
 	cp [hl]
 	jr nz, .monIsTraded
 
-	check_hard_rules ; Check if player is on hard mode
-	jr nz, .NormalMode2
+	test_hard_rules ; Check if player is on hard mode
+	jr z, .NormalMode2
 ; what level might disobey?
-	ld a, [wGameStage] ; Check if player has beat the game
-	and a
-	ld a, 101
-	jr nz, .next
-	farcall GetBadgesObtained
-	ld a, [wNumSetBits]
-	cp 8
-	ld a, 65 ; Jolteon/Flareon/Vaporeon's level
-	jr nc, .next
-	cp 7
-	ld a, 55 ; Rhydon's level
-	jr nc, .next
-	cp 6
-	ld a, 53 ; Magmar's level
-	jr nc, .next
-	cp 5
-	ld a, 50 ; Alakazam's level
-	jr nc, .next
-	cp 4
-	ld a, 43 ; Venomoth's level
-	jr nc, .next
-	cp 3
-	ld a, 35 ; Vileplume's level
-	jr nc, .next
-	cp 2
-	ld a, 24 ; Bit below Raichu's level
-	jr nc, .next
-	cp 1
-	ld a, 21 ; Starmie's level
-	jr nc, .next
-	ld a, 12 ; Onix's level
+	farcall GetHardLevelCap
+	ld a, e
+	cp MAX_LEVEL
+	jp nz, .next
+	ld a, 101 ; after the Hall of Fame nothing disobeys
 	jp .next
 .NormalMode2
 	inc hl
@@ -4858,12 +4830,8 @@ CriticalHitTest:
 	jr nc, .noFocusEnergyUsed
 	ld b, $ff                    ; cap at 255/256
 .noFocusEnergyUsed
-	ld a, [wLinkState]
-	cp LINK_STATE_BATTLING
-	jr z, .normalCritRules ; link battles always use the Normal rules, so both sides draw the same random numbers
-	check_hard_rules ; Check if player is on hard mode
-	jr z, .NotGuarenteedCrit ; keep 1/256 chance to not crit if on hard mode
-.normalCritRules
+	test_hard_battle_rules ; Check if the battle uses the hard mode rules (not link battles)
+	jr nz, .NotGuarenteedCrit ; keep 1/256 chance to not crit if on hard mode
 	ld a, b
 	inc a ; optimization of "cp $ff"
 	jr z, .guaranteedCriticalHit
@@ -5691,12 +5659,8 @@ MoveHitTest:
 	ld a, [wEnemyMoveAccuracy]
 	ld b, a
 .doAccuracyCheck
-	ld a, [wLinkState]
-	cp LINK_STATE_BATTLING
-	jr z, .normalAccuracyRules ; link battles always use the Normal rules, so both sides draw the same random numbers
-	check_hard_rules ; Check if player is on hard mode
-	jr z, .DontRemoveMiss ; Keep 1/256 chance to miss on hard mode
-.normalAccuracyRules
+	test_hard_battle_rules ; Check if the battle uses the hard mode rules (not link battles)
+	jr nz, .DontRemoveMiss ; Keep 1/256 chance to miss on hard mode
 	; The following snippet fixes 1/256 chance to miss on 100% accurate moves bug on normal mode
 	ld a, b
 	cp $FF ; Is the value $FF?

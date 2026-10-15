@@ -87,6 +87,12 @@ _VitaminNoEffectText::
 	line "effect."
 	prompt
 
+_LevelCapReachedText::
+	text "Can't go beyond"
+	line "the level cap for"
+	cont "your BADGES."
+	prompt
+
 _ThrewBaitText::
 	text "<PLAYER> threw"
 	line "some BAIT."

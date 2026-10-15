@@ -152,6 +152,15 @@ AnimationOffText:
 	db "OFF@"
 
 OptionsMenu_BattleStyle:
+	test_hard_rules
+	jr z, .notHardMode
+; Hard mode always plays Set style: show SET and ignore the buttons
+	ld a, [wOptions]
+	set BIT_BATTLE_SHIFT, a
+	ld [wOptions], a
+	and 1 << BIT_BATTLE_SHIFT
+	jr .nothingPressed
+.notHardMode
 	ldh a, [hJoy5]
 	and PAD_LEFT | PAD_RIGHT
 	jr nz, .buttonPressed
