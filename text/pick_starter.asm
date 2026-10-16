@@ -16,28 +16,17 @@ _PickStarterIntroText::
 	cont "A: choose"
 	prompt
 
-; Oak's lab: Oak gives the player the Pokémon they picked (not PIKACHU, which
-; gets the usual _OaksLabOakGivesText)
-_OaksLabOakGivesPickedText::
-	text "OAK: <PLAYER>, the"
-	line "PIKACHU I just"
-	cont "caught stays with"
-	cont "me."
-
-	para "But I caught this"
-	line "@"
-	text_ram wNameBuffer
-	text " just"
-	cont "for you. Here!"
-	prompt
-
 ; Oak's lab, for a save made before the picker moved to the intro: there's
-; no starter yet, so the picker opens there
+; no starter yet and Oak caught a PIKACHU, so the picker opens there
 _OaksLabOakPickStarterText::
 	text "OAK: <PLAYER>, I"
-	line "caught a #MON"
-	cont "for you. Which"
-	cont "one was it again?"
+	line "caught a PIKACHU"
+	cont "earlier, but my"
+	cont "research covers"
+	cont "every #MON!"
+
+	para "Go on, pick any"
+	line "one you like!"
 
 	para "UP/DOWN: look"
 	line "LEFT/RIGHT: page"

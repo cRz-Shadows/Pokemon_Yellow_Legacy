@@ -7,7 +7,8 @@ first rival battle -> rival leaves -> talk to Oak.
   scene must play; Oak then says to talk to it.
 - Pick Starter must open the picker in the intro, right after the mode is
   confirmed and before the name screens (issue #135), and Oak must give the
-  picked Pokémon in the lab, saying he caught it (#136). Picking PIKACHU must
+  picked Pokémon in the lab, saying he caught it (#136). In the tall grass,
+  Oak must catch the picked Pokémon instead of PIKACHU. Picking PIKACHU must
   behave like Normal; picking anything else must skip the escape scene, and
   Oak gives his battle advice instead.
 Two more Pick Starter cases cover the picker's list wrap (UP from the top
@@ -67,6 +68,7 @@ class TestFailure(Exception):
 class Game:
     def __init__(self, prefix, name):
         self.name = name
+        self.oak_caught = None  # species Oak catches in the grass (walk_to_oaks_lab)
         self.syms = {}    # label -> address ("bank:address name" lines)
         self.consts = {}  # exported constant -> value ("value name" lines)
         with open(prefix + '.sym') as f:
@@ -214,6 +216,8 @@ def walk_to_oaks_lab(g):
         mp, x, y = g.pos()
         if mp == oaks_lab:
             return
+        if g.mem('wIsInBattle'):  # Oak's catch in the grass
+            g.oak_caught = g.mem('wEnemyMonSpecies2')
         targets = waypoints.get(mp)
         if not targets or reached.get(mp, 0) >= len(targets):
             g.press('b', 25)  # scripted scene: let it play
@@ -359,11 +363,14 @@ def test_case(prefix, label, difficulty, pick_buttons, expected, old_save=False)
         if pick_buttons and not old_save and g.mem('wPlayerStarter') != g.const(expected):
             g.fail(f'wPlayerStarter is {g.mem("wPlayerStarter")} after the intro, expected {expected}')
         walk_to_oaks_lab(g)
+        caught = 'PIKACHU' if old_save else expected  # an old save picks in the lab
+        if g.oak_caught != g.const(caught):
+            g.fail(f'expected Oak to catch {caught} in the grass, got species {g.oak_caught}')
         oak, received = get_starter(g, pick_buttons if old_save else None)
         if expected not in received:
             g.fail(f'expected to receive {expected}, text was "{received}"')
         pikachu = expected == 'PIKACHU'
-        oak_gives = ['caught earlier'] if pikachu else [f'I caught this {expected}', 'just for you']
+        oak_gives = ['caught a PIKACHU', 'every POK'] if old_save else ['caught earlier']
         oak = ' '.join(oak.replace(' |', ' ').split())
         if not all(words in oak for words in oak_gives):
             g.fail(f'expected Oak to say {oak_gives}, he said "...{oak[-300:]}"')
@@ -396,7 +403,8 @@ def test_case(prefix, label, difficulty, pick_buttons, expected, old_save=False)
         scene = 'escape scene played' if pikachu else 'no escape scene'
         rival = f'rival said {comment}' if comment else 'no rival comment'
         rival += f', used {rival_mon}'
-        return f'received {expected}, level 5; {rival}; rival battle done; {scene}; Oak: "{want}..."'
+        return (f'Oak caught {caught}; received {expected}, level 5; {rival}; rival battle done; {scene}; '
+                f'Oak: "{want}..."')
     finally:
         g.stop()
 

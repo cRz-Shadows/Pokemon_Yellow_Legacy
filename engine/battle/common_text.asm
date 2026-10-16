@@ -11,6 +11,9 @@ PrintBeginningBattleText:
 	ld a, [wBattleType]
 	cp BATTLE_TYPE_PIKACHU
 	jr nz, .notPikachuBattle
+	ld a, [wEnemyMonSpecies2]
+	cp STARTER_PIKACHU ; Pick Starter: Oak may be catching another Pokémon
+	jr nz, .notPikachuBattle
 	callfar IsPlayerPikachuAsleepInParty
 	ld e, $24
 	jr c, .asm_f4026

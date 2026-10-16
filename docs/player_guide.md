@@ -43,7 +43,8 @@ Your own Pokémon above the cap may disobey, gain no experience and can't use Ra
 2. Straight away, the game tells you that Professor Oak will catch a Pokémon for you and opens a list of all 151 Pokémon.
 3. Choose one (the controls are below). The game asks "So, you want …?"; answer **YES** to take it or **NO** to keep looking. You can't leave without choosing.
 4. The intro goes on as usual: boy or girl, Oak's speech, your name and your rival's name.
-5. In Oak's lab, take the Poké Ball on his table. Oak keeps the Pikachu he caught on Route 1 and gives you the Pokémon he caught for you.
+5. When you head for Route 1, Oak stops you in the tall grass and catches the Pokémon you picked.
+6. In Oak's lab, take the Poké Ball on his table. Oak gives you the Pokémon he caught earlier.
 
 ![The list of all 151 Pokémon](guide/picker.png)
 
