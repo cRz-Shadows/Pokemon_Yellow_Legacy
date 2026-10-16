@@ -1075,30 +1075,26 @@ OaksLabPlayerReceivedMonText:
 	ld a, [wPlayerStarter]
 	and a
 	jr nz, .pickedStarter
-	; a save from before the picker moved to the intro
+	; a save from before the picker moved to the intro: Oak caught a PIKACHU
+	; in Pallet Town, so the player picks here (as in earlier versions)
 	ld hl, OaksLabOakPickStarterText
 	call PrintText
 	callfar PickStarterMenu ; sets [wPlayerStarter]
+	callfar PickStarterSetRivalStarter ; overwrites wRivalStarter set when the rival took his ball
+	call .getStarterName
+	jr .receivedStarter
 .pickedStarter
 	callfar PickStarterSetRivalStarter ; overwrites wRivalStarter set when the rival took his ball
-	ld hl, OaksLabOakGivesText
-	check_starter_pikachu
-	jr z, .oakGivesStarter
-	ld hl, OaksLabOakGivesPickedText
+	; Oak caught the picked Pokémon in Pallet Town (PalletTownPikachuBattleScript)
 	jr .oakGivesStarter
 .giveStarterPikachu
 	ld a, STARTER_PIKACHU
 	ld [wPlayerStarter], a
-	ld hl, OaksLabOakGivesText
 .oakGivesStarter
-	ld a, [wPlayerStarter]
-	ld [wNamedObjectIndex], a
-	push hl
-	call GetMonName
-	pop hl
-	ld a, $1
-	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
+	call .getStarterName
+	ld hl, OaksLabOakGivesText
 	call PrintText
+.receivedStarter
 	ld hl, OaksLabReceivedText
 	ld a, [wNameBuffer]
 	cp 'A'
@@ -1134,12 +1130,16 @@ OaksLabPlayerReceivedMonText:
 	set BIT_GOT_STARTER, [hl]
 	jp TextScriptEnd
 
+.getStarterName
+	ld a, [wPlayerStarter]
+	ld [wNamedObjectIndex], a
+	call GetMonName
+	ld a, $1
+	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
+	ret
+
 OaksLabOakGivesText:
 	text_far _OaksLabOakGivesText
-	text_end
-
-OaksLabOakGivesPickedText:
-	text_far _OaksLabOakGivesPickedText
 	text_end
 
 OaksLabOakPickStarterText:

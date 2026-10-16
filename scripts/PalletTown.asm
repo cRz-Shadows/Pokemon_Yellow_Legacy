@@ -142,7 +142,16 @@ PalletTownPikachuBattleScript:
 	ld [wListScrollOffset], a
 	ld a, BATTLE_TYPE_PIKACHU
 	ld [wBattleType], a
-	ld a, STARTER_PIKACHU
+	; Pick Starter mode: Oak catches the Pokémon the player picked in the intro
+	ld b, STARTER_PIKACHU
+	test_pick_starter
+	jr z, .gotOpponent
+	ld a, [wPlayerStarter]
+	and a ; 0: a save from before the picker moved to the intro (picked in the lab)
+	jr z, .gotOpponent
+	ld b, a
+.gotOpponent
+	ld a, b
 	ld [wCurOpponent], a
 	ld a, 5
 	ld [wCurEnemyLevel], a

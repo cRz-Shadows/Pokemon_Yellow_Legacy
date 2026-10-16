@@ -202,7 +202,7 @@ def screenshots(prefix):
         st.walk_to_oaks_lab(g)
         st.check_ball(g)
         for _ in range(400):
-            if 'just for you' in ' '.join(g.text().split()):
+            if 'caught earlier' in ' '.join(g.text().split()):
                 save(g, 'oak.png')
                 break
             g.press('a', 25)
