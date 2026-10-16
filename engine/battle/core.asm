@@ -5563,6 +5563,31 @@ AIGetTypeEffectiveness:
 	ld [wTypeEffectiveness], a ; store damage multiplier
 	ret
 
+; Pick Starter mode (PickStarterSetRivalStarter): returns in e the effectiveness
+; (NO_EFFECT to SUPER_EFFECTIVE) of attacking type d against defending type e.
+; Preserves bc and d.
+GetTypeMatchup::
+	ld hl, TypeEffects
+.loop
+	ld a, [hli]
+	cp -1
+	jr z, .neutral
+	cp d
+	jr nz, .nextPair1
+	ld a, [hli]
+	cp e
+	jr nz, .nextPair2
+	ld e, [hl]
+	ret
+.nextPair1
+	inc hl
+.nextPair2
+	inc hl
+	jr .loop
+.neutral
+	ld e, EFFECTIVE
+	ret
+
 INCLUDE "data/types/type_matchups.asm"
 
 ; some tests that need to pass for a move to hit

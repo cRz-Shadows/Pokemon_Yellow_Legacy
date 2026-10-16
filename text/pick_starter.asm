@@ -1,6 +1,53 @@
-; Pick Starter mode: the rival's comment on the player's starter in Oak's lab
+; Pick Starter mode texts. A section of its own: the text banks are full.
+
+; In the intro, before the picker (PickStarterIntroMenu)
+_PickStarterIntroText::
+	text "PROF.OAK will"
+	line "catch a #MON"
+	cont "for you to start"
+	cont "your journey."
+
+	para "Which one should"
+	line "he catch?"
+
+	para "UP/DOWN: look"
+	line "LEFT/RIGHT: page"
+	cont "SELECT: more info"
+	cont "A: choose"
+	prompt
+
+; Oak's lab: Oak gives the player the Pokémon they picked (not PIKACHU, which
+; gets the usual _OaksLabOakGivesText)
+_OaksLabOakGivesPickedText::
+	text "OAK: <PLAYER>, the"
+	line "PIKACHU I just"
+	cont "caught stays with"
+	cont "me."
+
+	para "But I caught this"
+	line "@"
+	text_ram wNameBuffer
+	text " just"
+	cont "for you. Here!"
+	prompt
+
+; Oak's lab, for a save made before the picker moved to the intro: there's
+; no starter yet, so the picker opens there
+_OaksLabOakPickStarterText::
+	text "OAK: <PLAYER>, I"
+	line "caught a #MON"
+	cont "for you. Which"
+	cont "one was it again?"
+
+	para "UP/DOWN: look"
+	line "LEFT/RIGHT: page"
+	cont "SELECT: more info"
+	cont "A: choose"
+	prompt
+
+; The rival's comment on the player's starter in Oak's lab
 ; (PickStarterRivalComment), between the two halves of
-; _OaksLabRivalIllTakeYouOnText. A section of its own: the text banks are full.
+; _OaksLabRivalIllTakeYouOnText.
 
 _OaksLabRivalWaitText::
 	text "<RIVAL>: Wait"
@@ -16,7 +63,7 @@ _OaksLabRivalComeOnText::
 
 _PickStarterRivalCopycatText::
 	text "<RIVAL>: Hey!"
-	line "You took an EEVEE"
+	line "You got an EEVEE"
 	cont "too? Copycat!"
 	prompt
 
@@ -62,8 +109,20 @@ _PickStarterRivalSwapText::
 	text_ram wStringBuffer
 	text "!"
 
-	para "Gramps! I'm"
-	line "swapping my EEVEE!"
+	para "Gramps! I'm going"
+	line "to swap my EEVEE!"
+	prompt
+
+; after one of the comments above
+_PickStarterRivalAlsoSwapText::
+	text "<RIVAL>: But I"
+	line "know what beats"
+	cont "it: a @"
+	text_ram wStringBuffer
+	text "!"
+
+	para "Gramps! I'm going"
+	line "to swap my EEVEE!"
 	prompt
 
 _PickStarterRivalSwappedText::

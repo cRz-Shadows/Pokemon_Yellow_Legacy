@@ -1070,26 +1070,35 @@ OaksLabPlayerReceivedMonText:
 	text_asm
 	test_pick_starter
 	jr z, .giveStarterPikachu
+	; Pick Starter mode: the player picked the Pokémon for Oak to catch in
+	; the intro (PickStarterIntroMenu)
+	ld a, [wPlayerStarter]
+	and a
+	jr nz, .pickedStarter
+	; a save from before the picker moved to the intro
 	ld hl, OaksLabOakPickStarterText
 	call PrintText
 	callfar PickStarterMenu ; sets [wPlayerStarter]
+.pickedStarter
 	callfar PickStarterSetRivalStarter ; overwrites wRivalStarter set when the rival took his ball
-	ld a, [wPlayerStarter]
-	ld [wNamedObjectIndex], a
-	call GetMonName
-	ld a, $1
-	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
-	jr .receivedStarter
+	ld hl, OaksLabOakGivesText
+	check_starter_pikachu
+	jr z, .oakGivesStarter
+	ld hl, OaksLabOakGivesPickedText
+	jr .oakGivesStarter
 .giveStarterPikachu
 	ld a, STARTER_PIKACHU
 	ld [wPlayerStarter], a
+	ld hl, OaksLabOakGivesText
+.oakGivesStarter
+	ld a, [wPlayerStarter]
 	ld [wNamedObjectIndex], a
+	push hl
 	call GetMonName
+	pop hl
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
-	ld hl, OaksLabOakGivesText
 	call PrintText
-.receivedStarter
 	ld hl, OaksLabReceivedText
 	ld a, [wNameBuffer]
 	cp 'A'
@@ -1127,6 +1136,10 @@ OaksLabPlayerReceivedMonText:
 
 OaksLabOakGivesText:
 	text_far _OaksLabOakGivesText
+	text_end
+
+OaksLabOakGivesPickedText:
+	text_far _OaksLabOakGivesPickedText
 	text_end
 
 OaksLabOakPickStarterText:

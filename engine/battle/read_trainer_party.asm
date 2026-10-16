@@ -55,11 +55,7 @@ ReadTrainer:
 	and a ; have we reached the end of the trainer data?
 	jp z, .AddAdditionalMoveData
 	ld [wCurPartySpecies], a ; write species somewhere (XXX why?)
-	ld a, ENEMY_PARTY_DATA
-	ld [wMonDataLocation], a
-	push hl
-	call AddPartyMon
-	pop hl
+	call .AddPartyMon
 	jr .LoopTrainerData
 .SpecialTrainer
 ; if this code is being run:
@@ -72,12 +68,20 @@ ReadTrainer:
 	ld [wCurEnemyLevel], a
 	ld a, [hli]
 	ld [wCurPartySpecies], a
+	call .AddPartyMon
+	jr .SpecialTrainer
+
+; adds [wCurPartySpecies] at [wCurEnemyLevel] to the enemy party; preserves hl
+.AddPartyMon
+	push hl
+	; Pick Starter mode: the rival's counter may replace his starter
+	callfar PickStarterRivalCounterMon
 	ld a, ENEMY_PARTY_DATA
 	ld [wMonDataLocation], a
-	push hl
 	call AddPartyMon
 	pop hl
-	jr .SpecialTrainer
+	ret
+
 .AddAdditionalMoveData
 ; does the trainer have additional move data?
 	ld a, [wTrainerClass]
