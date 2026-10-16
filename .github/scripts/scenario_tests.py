@@ -2,7 +2,7 @@
 """Headless scenario tests: check specific events later in the game in PyBoy.
 
 Each scenario starts from a game that has just received its starter (Normal
-mode with PIKACHU, or Pick Starter mode with CHARMANDER), adjusts a few RAM
+mode with PIKACHU, or Pick Starter mode with a picked Pokémon), adjusts a few RAM
 values (money, happiness, moves) and uses the game's own scripted-warp
 mechanism to enter the map, then talks to the NPC or reads the sign and checks
 the result.
@@ -16,11 +16,15 @@ the result.
   PIKACHU that knows SURF. The posters and the printer follow the same rule
   and must print their own text (issue #53).
 - Oak's lab: the rival comments on a picked EEVEE ("Copycat") and on a pick
-  that can't attack yet (MAGIKARP) before his first battle. The type and
+  that can't attack yet (MAGIKARP) before his first battle, then swaps his
+  EEVEE for his counter (MACHOP, BULBASAUR; issue #137). The type and
   legendary comments are covered by the smoke test.
-- Cerulean City rival battle: with a CHARMANDER pick (Pick Starter mode) the
-  rival's ace is WARTORTLE, his counter starter's line (issue #106); in Normal
-  mode it's EEVEE. The lab battle's counter is covered by the smoke test.
+- Rival battles: with a CHARMANDER pick (Pick Starter mode) the rival's ace in
+  Cerulean City is WARTORTLE, his counter starter's line (issue #106); in
+  Normal mode it's EEVEE. With a type counter (#137) it replaces the starter
+  and evolves by level: MACHOP in Cerulean City (Lv19), MACHOKE in Pokémon
+  Tower (Lv35) against a RATTATA; GASTLY then HAUNTER against an ABRA. The lab
+  battle's counter is covered by the smoke test.
 - Saving writes PIKACHU's happiness and mood to their own place in the save
   (issue #103: the party/Pokédex save used vanilla's offset, 78 bytes early,
   and overwrote other saved data), and the save checksum stays valid.
@@ -42,13 +46,20 @@ from smoke_test import Game, TestFailure, get_starter, new_game, walk_to_oaks_la
 
 # --- starting points -------------------------------------------------------
 
+def dex_buttons(number):
+    """Picker buttons that highlight Pokédex number (pages of 7 rows, the last
+    page starts at #145)."""
+    top = min((number - 1) // 7 * 7, 151 - 7)
+    return ['right'] * ((number - 1) // 7) + ['down'] * (number - 1 - top)
+
+
 def starter_state(prefix, difficulty, pick_buttons, expected):
     """Plays a new game up to receiving the starter; returns a saved state."""
     g = Game(prefix, f'setup {expected}')
     try:
-        new_game(g, difficulty)
+        new_game(g, difficulty, pick_buttons)
         walk_to_oaks_lab(g)
-        received = get_starter(g, pick_buttons)
+        _, received = get_starter(g)
         if expected not in received:
             g.fail(f'setup: expected {expected}, got "{received}"')
         for _ in range(15):  # let the remaining lab text finish
@@ -123,52 +134,58 @@ def set_up_party(g, give_surf=False, species=None):
 
 # --- Oak's lab: the rival's comment ------------------------------------------
 
-def rival_comment(prefix, state, label, species, expect):
-    """Makes species the picked starter, walks toward the exit and returns once
-    the rival's challenge text before the battle contains expect."""
+def rival_comment(prefix, state, label, expect):
+    """Walks toward the exit and returns once the rival's challenge text
+    before the battle has shown all of expect, in order."""
     g = load(prefix, state, label)
     try:
-        set_up_party(g, species=species)
-        g.pb.memory[g.syms['wPlayerStarter']] = g.const(species)
-        # the CHARMANDER pick gave the rival a counter starter; these picks don't
-        g.pb.memory[g.syms['wRivalStarter']] = g.const('RIVAL_STARTER_JOLTEON')
         challenge = g.const('SCRIPT_OAKSLAB_RIVAL_CHALLENGES_PLAYER')
         for _ in range(60):
             if g.mem('wOaksLabCurScript') == challenge and g.mem('wJoyIgnore'):
                 break  # the rival has noticed the player
             g.press('down', 10, hold=12)
-        seen = []
+        seen, found = [], []
         for _ in range(80):
             if g.mem('wIsInBattle'):
                 break
-            seen.append(' '.join(dialog_rows(g)))
-            if expect in seen[-1]:
-                return f'rival: "{seen[-1]}"'
+            seen.append(' '.join(' '.join(dialog_rows(g)).split()))
+            if len(found) < len(expect) and expect[len(found)] in seen[-1]:
+                found.append(seen[-1])
+                if len(found) == len(expect):
+                    return f'rival: "{" | ".join(found)}"'
             g.press('a', 25)
-        g.fail(f'expected the rival to say "{expect}", text was "{" | ".join(dict.fromkeys(seen))}"')
+        g.fail(f'expected the rival to say {expect}, text was "{" | ".join(dict.fromkeys(seen))}"')
     finally:
         g.stop()
 
 
 # --- Rival's team ----------------------------------------------------------
 
-def cerulean_rival(prefix, state, label, expect_ace):
-    """Enter Cerulean City by the trashed house's back door, put the player on
-    the rival's trigger spot (21, 6) and check his last Pokémon in battle."""
+# map, warp to enter it by (map it leads from, warp ID), the rival's trigger spot
+RIVAL_BATTLES = {
+    'Cerulean City': ('CERULEAN_CITY', 'CERULEAN_TRASHED_HOUSE', 7, (21, 6)),  # back door (27, 9)
+    'Pokémon Tower': ('POKEMON_TOWER_2F', 'POKEMON_TOWER_1F', 1, (15, 5)),  # stairs (18, 9)
+}
+
+
+def rival_battle(prefix, state, label, where, expect_ace):
+    """Enter the map of a rival battle (RIVAL_BATTLES), put the player on the
+    rival's trigger spot and check his last Pokémon in battle."""
+    map_name, came_from, warp_id, (x, y) = RIVAL_BATTLES[where]
     g = load(prefix, state, label)
     try:
-        warp(g, 'CERULEAN_CITY', 'CERULEAN_TRASHED_HOUSE', 7)  # back door (27, 9)
+        warp(g, map_name, came_from, warp_id)
         g.press('up', 12, hold=10)
         g.press('up', 12, hold=10)
         g.run(60)  # finish the step, then stand on the trigger
-        g.pb.memory[g.syms['wXCoord']] = 21
-        g.pb.memory[g.syms['wYCoord']] = 6
+        g.pb.memory[g.syms['wXCoord']] = x
+        g.pb.memory[g.syms['wYCoord']] = y
         for _ in range(120):
             if g.mem('wIsInBattle'):
                 break
             g.press('a', 30)
         else:
-            g.fail('the Cerulean City rival battle never started')
+            g.fail(f'the {where} rival battle never started')
         count = g.mem('wEnemyPartyCount')
         party = [g.mem('wEnemyPartySpecies', i) for i in range(count)]
         if not party or party[-1] != g.const(expect_ace):
@@ -374,22 +391,35 @@ def beach_sign(prefix, state, label, x, give_surf, expect):
 def main():
     prefix = sys.argv[1]
     vc_prefix = sys.argv[2] if len(sys.argv) > 2 else None
-    print('Setting up: Normal (PIKACHU) and Pick Starter (CHARMANDER)…', flush=True)
+    print('Setting up: Normal (PIKACHU) and Pick Starter (CHARMANDER, EEVEE, MAGIKARP, RATTATA, ABRA)…', flush=True)
     try:
         normal = starter_state(prefix, 0, None, 'PIKACHU')
-        pick = starter_state(prefix, 2, ['down'] * 3, 'CHARMANDER')
+        pick = starter_state(prefix, 2, dex_buttons(4), 'CHARMANDER')
+        eevee = starter_state(prefix, 2, dex_buttons(133), 'EEVEE')
+        magikarp = starter_state(prefix, 2, dex_buttons(129), 'MAGIKARP')
+        rattata = starter_state(prefix, 2, dex_buttons(19), 'RATTATA')
+        abra = starter_state(prefix, 2, dex_buttons(63), 'ABRA')
     except TestFailure as e:
         print(f'FAIL  setup: {e}')
         return 1
     p = prefix
     tests = [
         ('Rival comment: Pick Starter, EEVEE',
-         lambda: rival_comment(p, pick, 'Rival eevee', 'EEVEE', 'Copycat')),
+         lambda: rival_comment(p, eevee, 'Rival eevee', ['Copycat', 'what beats it a MACHOP'])),
         ('Rival comment: Pick Starter, MAGIKARP',
-         lambda: rival_comment(p, pick, 'Rival magikarp', 'MAGIKARP', 'even attack')),
+         lambda: rival_comment(p, magikarp, 'Rival magikarp', ['even attack', 'what beats it a BULBASAUR'])),
         ('Rival: Cerulean City, Pick Starter CHARMANDER',
-         lambda: cerulean_rival(p, pick, 'Rival Cerulean pick', 'WARTORTLE')),
-        ('Rival: Cerulean City, Normal', lambda: cerulean_rival(p, normal, 'Rival Cerulean normal', 'EEVEE')),
+         lambda: rival_battle(p, pick, 'Rival Cerulean pick', 'Cerulean City', 'WARTORTLE')),
+        ('Rival: Cerulean City, Normal',
+         lambda: rival_battle(p, normal, 'Rival Cerulean normal', 'Cerulean City', 'EEVEE')),
+        ('Rival: Cerulean City, Pick Starter RATTATA',
+         lambda: rival_battle(p, rattata, 'Rival Cerulean rattata', 'Cerulean City', 'MACHOP')),
+        ('Rival: Pokémon Tower, Pick Starter RATTATA',
+         lambda: rival_battle(p, rattata, 'Rival Tower rattata', 'Pokémon Tower', 'MACHOKE')),
+        ('Rival: Cerulean City, Pick Starter ABRA',
+         lambda: rival_battle(p, abra, 'Rival Cerulean abra', 'Cerulean City', 'GASTLY')),
+        ('Rival: Pokémon Tower, Pick Starter ABRA',
+         lambda: rival_battle(p, abra, 'Rival Tower abra', 'Pokémon Tower', 'HAUNTER')),
         ('Save: PIKACHU happiness offset', lambda: pikachu_happiness_save(p, normal)),
         ('Melanie: Pick Starter, CHARMANDER', lambda: melanie(p, pick, 'Melanie pick', None, True)),
         ('Melanie: Normal, unhappy PIKACHU', lambda: melanie(p, normal, 'Melanie unhappy', -47, False)),
@@ -419,7 +449,7 @@ def main():
         print('Setting up the Virtual Console ROM…', flush=True)
         try:
             vc_normal = starter_state(vc_prefix, 0, None, 'PIKACHU')
-            vc_pick = starter_state(vc_prefix, 2, ['down'] * 3, 'CHARMANDER')
+            vc_pick = starter_state(vc_prefix, 2, dex_buttons(4), 'CHARMANDER')
         except TestFailure as e:
             print(f'FAIL  VC setup: {e}')
             return 1

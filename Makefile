@@ -77,7 +77,7 @@ test: $(roms) $(patches)
 	$(PYTHON) -m unittest discover -s .github/scripts -p 'test_*.py'
 	$(PYTHON) .github/scripts/smoke_test.py pokemon_yellow_legacy pokemon_yellow_legacy_debug
 	$(PYTHON) .github/scripts/scenario_tests.py pokemon_yellow_legacy pokemon_yellow_legacy_vc
-	ruff check --config .github/ruff.toml .github/scripts tools/make_release_patches.py tools/upstream_rename.py
+	ruff check --config .github/ruff.toml .github/scripts tools/make_release_patches.py tools/upstream_rename.py tools/rival_counters.py
 
 
 RGBASMFLAGS = -Q8 -P includes.asm -Weverything -Wnumeric-string=2 -Wtruncation=1

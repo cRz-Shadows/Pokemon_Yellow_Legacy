@@ -429,7 +429,7 @@ jobs:
         run: pip install --require-hashes -r .github/requirements.txt
 
       - name: Lint the CI and release scripts
-        run: ruff check --config .github/ruff.toml .github/scripts tools/make_release_patches.py tools/upstream_rename.py
+        run: ruff check --config .github/ruff.toml .github/scripts tools/make_release_patches.py tools/upstream_rename.py tools/rival_counters.py
 
       - name: Unit tests for the CI and release scripts
         run: python -m unittest discover -s .github/scripts -p 'test_*.py'

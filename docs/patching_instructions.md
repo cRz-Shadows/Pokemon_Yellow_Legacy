@@ -43,10 +43,13 @@ Pokémon Yellow ROM to get the game. The ROM itself isn't included.
 
 ## Pick Starter mode: things to know
 
-- Choose **PICK STARTER** in the game mode menu when starting a new game. In
-  Oak's lab you then pick any of the 151 Pokémon: UP/DOWN to look,
-  LEFT/RIGHT to page, SELECT to see its base stats or level-5 moves, A to
-  choose. You can't leave without choosing.
+- Choose **PICK STARTER** in the game mode menu when starting a new game. Right
+  after that, you pick any of the 151 Pokémon for Professor Oak to catch:
+  UP/DOWN to look, LEFT/RIGHT to page, SELECT to see its base stats or
+  level-5 moves, A to choose. You can't leave without choosing. Oak gives it
+  to you in his lab.
+- Your rival swaps his EEVEE for a Pokémon that beats yours by type (except
+  against a PIKACHU) and keeps it all game.
 - Everything else uses Normal rules.
 - Only a **PIKACHU** starter follows you around and gets the Pikachu scenes.
   With any other starter, Melanie in Cerulean City still gives you BULBASAUR,

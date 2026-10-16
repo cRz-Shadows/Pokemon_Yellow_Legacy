@@ -87,8 +87,14 @@ SanitizeModeBytes:
 	and DIFFICULTY_FLAGS_MASK
 	ld [wDifficulty], a
 	ld a, [wRivalStarter]
-	cp RIVAL_STARTER_SQUIRTLE + 1
+	cp LAST_RIVAL_STARTER + 1
+	jr nc, .badRivalStarter
+	cp FIRST_RIVAL_COUNTER_STARTER
 	jr c, .rivalStarterOK
+	and RIVAL_COUNTER_TEAM_MASK
+	cp RIVAL_COUNTER_TEAM_MASK ; not one of the three starters' teams
+	jr nz, .rivalStarterOK
+.badRivalStarter
 	xor a
 	ld [wRivalStarter], a
 .rivalStarterOK

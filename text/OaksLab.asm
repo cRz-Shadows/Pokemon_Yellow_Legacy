@@ -254,22 +254,6 @@ _OaksLabOakGivesText::
 	cont "not tame yet."
 	prompt
 
-_OaksLabOakPickStarterText::
-	text "OAK: <PLAYER>, I"
-	line "caught a PIKACHU"
-	cont "earlier, but my"
-	cont "research covers"
-	cont "every #MON!"
-
-	para "Go on, pick any"
-	line "one you like!"
-
-	para "UP/DOWN: look"
-	line "LEFT/RIGHT: page"
-	cont "SELECT: more info"
-	cont "A: choose"
-	prompt
-
 _PickStarterConfirmText::
 	text "So, you want"
 	line "@"

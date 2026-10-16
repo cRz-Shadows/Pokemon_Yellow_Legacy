@@ -47,15 +47,16 @@ ENDM
 
 ; Rival team selection (data/trainers/parties.asm): a = the rival's team
 ; number in his trainer class, for wTrainerNo; clobbers a.
-; A counter starter (RIVAL_STARTER_BULBASAUR-SQUIRTLE, Pick Starter mode) uses
-; team \2 + 0-2 instead.
+; A counter (Pick Starter mode) uses team \2 + 0-2 instead: the team of the
+; starter in RIVAL_STARTER_BULBASAUR-SQUIRTLE order (RIVAL_COUNTER_TEAM_MASK).
 
 ; \1: the EEVEE rival's team
 MACRO rival_team_fixed
 	ld a, [wRivalStarter]
 	cp FIRST_RIVAL_COUNTER_STARTER
 	jr c, :+
-	add \2 - FIRST_RIVAL_COUNTER_STARTER
+	and RIVAL_COUNTER_TEAM_MASK
+	add \2
 	jr :++
 :	ld a, \1
 :
@@ -66,8 +67,17 @@ MACRO rival_team_by_variant
 	ld a, [wRivalStarter]
 	cp FIRST_RIVAL_COUNTER_STARTER
 	jr c, :+
-	add \2 - FIRST_RIVAL_COUNTER_STARTER - (\1)
+	and RIVAL_COUNTER_TEAM_MASK
+	add \2 - (\1)
 :	add \1
+ENDM
+
+; Pick Starter mode: an entry of PickStarterRivalCounterPicks for a Pokémon
+; that replaces the starter in that starter's rival teams.
+; \1: species, \2: the starter's RIVAL_STARTER_* constant (whose teams he uses)
+MACRO rival_counter_line
+	DEF RIVAL_COUNTER_LINES += 1
+	db \1, \2 + RIVAL_COUNTER_LINES * RIVAL_COUNTER_LINE_STEP
 ENDM
 
 ; Design patterns

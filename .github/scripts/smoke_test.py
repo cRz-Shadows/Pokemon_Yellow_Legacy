@@ -5,16 +5,21 @@ For each case: new game -> Oak stops you in the grass -> starter in his lab ->
 first rival battle -> rival leaves -> talk to Oak.
 - Normal and Hard must give PIKACHU, and the "Pikachu escapes its Poké Ball"
   scene must play; Oak then says to talk to it.
-- Pick Starter must open the picker and give the picked Pokémon. Picking
-  PIKACHU must behave like Normal; picking anything else must skip the escape
-  scene, and Oak gives his battle advice instead.
+- Pick Starter must open the picker in the intro, right after the mode is
+  confirmed and before the name screens (issue #135), and Oak must give the
+  picked Pokémon in the lab, saying he caught it (#136). Picking PIKACHU must
+  behave like Normal; picking anything else must skip the escape scene, and
+  Oak gives his battle advice instead.
 Two more Pick Starter cases cover the picker's list wrap (UP from the top
 gives MEW) and paging (RIGHT moves a page).
-Before the rival battle, the rival must comment on a picked starter (its type,
-or that it's legendary), and say nothing extra about a PIKACHU. A CHARMANDER
-pick makes him swap his EEVEE for SQUIRTLE, and a SQUIRTLE pick for BULBASAUR,
-which he then uses in the battle.
+Before the rival battle, the rival must comment on a picked starter and say
+nothing extra about a PIKACHU. He swaps his EEVEE for the Pokémon that counters
+the pick (tools/rival_counters.py): SQUIRTLE against CHARMANDER and BULBASAUR
+against SQUIRTLE, as in Red/Blue (#106), and type counters for other picks
+(#137), which he then uses in the battle.
 SELECT in the picker must cycle the preview: types, base stats, level-5 moves.
+A save made before the picker moved to the intro (no starter yet) must open
+the picker in Oak's lab instead.
 The debug ROM must reach its debug menu.
 
 Usage: smoke_test.py ROM_PREFIX [DEBUG_ROM_PREFIX]
@@ -42,14 +47,17 @@ CASES = [
     ('Pick Starter: wrap to Mew', 2, ['up'], 'MEW'),
     ('Pick Starter: paging', 2, ['right', 'right', 'down'], 'PIDGEY'),  # #1 -> #8 -> #15 -> #16
 ]
+# A save made in Pick Starter mode before the picker moved to the intro: the
+# picker opens in Oak's lab.
+OLD_SAVE_CASE = ('Pick Starter: old save, picker in the lab', 2, ['down'] * 3, 'CHARMANDER')
 
-# The rival's comment on a picked starter (text() drops punctuation). The
+# The rival's comments on a picked starter (text() drops punctuation). The
 # EEVEE and "can't attack" comments are covered by the scenario tests.
-RIVAL_COMMENTS = {'CHARMANDER': 'Then I want a', 'SQUIRTLE': 'Then I want a',
-                  'MEW': 'legendary', 'PIDGEY': 'NORMAL type'}
-RIVAL_COMMENT_MARKERS = ('type  eh', 'legendary', 'Copycat', 'even attack', 'I want a')
-# The rival's Pokémon in the lab battle (issue #106: he counters a starter-line pick)
-RIVAL_LAB_MON = {'CHARMANDER': 'SQUIRTLE', 'SQUIRTLE': 'BULBASAUR'}
+RIVAL_COMMENTS = {'CHARMANDER': ['Then I want a SQUIRTLE'], 'SQUIRTLE': ['Then I want a BULBASAUR'],
+                  'MEW': ['legendary', 'what beats', 'GASTLY'], 'PIDGEY': ['Then I want a GEODUDE']}
+RIVAL_COMMENT_MARKERS = ('type  eh', 'legendary', 'Copycat', 'even attack', 'I want a', 'what beats')
+# The rival's Pokémon in the lab battle (#106, #137: he counters the pick)
+RIVAL_LAB_MON = {'CHARMANDER': 'SQUIRTLE', 'SQUIRTLE': 'BULBASAUR', 'MEW': 'GASTLY', 'PIDGEY': 'GEODUDE'}
 
 
 class TestFailure(Exception):
@@ -123,18 +131,58 @@ class Game:
         self.pb.stop(save=False)
 
 
-def new_game(g, mode_index):
-    """From power-on to the player's room, choosing the given difficulty."""
+def choose_mode(g, mode_index):
+    """From power-on to the confirmed difficulty."""
     for _ in range(3000):
         t = g.text()
         if 'NORMAL' in t and 'HARD' in t and 'STARTER' in t:
             for _ in range(mode_index):
                 g.press('down', 20)
             g.press('a', 60)
-            break
+            return
         g.press('a', 25)
-    else:
-        g.fail('difficulty menu never appeared')
+    g.fail('difficulty menu never appeared')
+
+
+def open_intro_picker(g):
+    """After choosing Pick Starter: confirm it and wait for the picker, which
+    must open before the boy/girl and name screens (#135)."""
+    for _ in range(100):
+        t = g.text()
+        if 'TYPE1' in t:
+            return
+        if 'NEW NAME' in t or 'GIRL' in t:
+            g.fail('the intro went on without opening the Pick Starter picker')
+        g.press('a', 25)
+    g.fail('the Pick Starter picker never opened in the intro')
+
+
+def pick(g, pick_buttons):
+    """In the picker: highlight and take a Pokémon (YES at the prompt).
+    Sets g.saw_attack_warning."""
+    highlight_and_confirm(g, pick_buttons)
+    g.saw_attack_warning = False
+    for _ in range(10):
+        g.saw_attack_warning |= 'attack' in g.text()
+        if 'you want' not in g.text():
+            return
+        g.press('a', 60)
+    g.fail('the picker never closed')
+
+
+def new_game(g, mode_index, pick_buttons=None):
+    """From power-on to the player's room, choosing the given difficulty and,
+    in Pick Starter mode, the starter."""
+    choose_mode(g, mode_index)
+    g.saw_attack_warning = False
+    if pick_buttons is not None:
+        open_intro_picker(g)
+        pick(g, pick_buttons)
+    finish_intro(g)
+
+
+def finish_intro(g):
+    """From the end of the mode menu (or the picker) to the player's room."""
     for _ in range(3000):
         t = g.text()
         if 'NEW NAME' in t:  # take the first preset name
@@ -188,8 +236,8 @@ def walk_to_oaks_lab(g):
     g.fail(f'never reached Oak\'s lab (stuck at map {mp:#x} ({x}, {y}))')
 
 
-def open_picker(g):
-    """In Oak's lab: check the Poké Ball and press A until the picker opens."""
+def check_ball(g):
+    """In Oak's lab: walk up to the Poké Ball and check it."""
     for i in range(80):  # Oak's arrival scene
         g.press('a', 30)
         if g.mem('wJoyIgnore') == 0 and i > 20:
@@ -202,12 +250,8 @@ def open_picker(g):
 
 def highlight_and_confirm(g, pick_buttons):
     """In the picker: press pick_buttons, then A. Returns the confirm text."""
-    for _ in range(400):
-        if 'TYPE1' in g.text():
-            break
-        g.press('a', 25)
-    else:
-        g.fail('the Pick Starter picker never opened')
+    if 'TYPE1' not in g.text():
+        g.fail('the Pick Starter picker is not open')
     g.run(60)
     for button in pick_buttons:
         g.press(button, 16, hold=8)
@@ -222,25 +266,29 @@ def highlight_and_confirm(g, pick_buttons):
     return ' '.join(t[i * 20:(i + 1) * 20].strip() for i in range(12, 17))
 
 
-def get_starter(g, pick_buttons):
-    """In Oak's lab: check the Poké Ball and receive the starter, or pick it by
-    pressing pick_buttons in the picker. Returns the "received" text."""
-    open_picker(g)
-    g.saw_attack_warning = False
-    if pick_buttons:
-        highlight_and_confirm(g, pick_buttons)
-        for _ in range(10):
-            g.saw_attack_warning |= 'attack' in g.text()
-            if 'you want' not in g.text():
-                break
-            g.press('a', 60)
+def get_starter(g, lab_pick_buttons=None):
+    """In Oak's lab: check the Poké Ball and receive the starter. If the picker
+    opens there (a save without a starter), pick with lab_pick_buttons.
+    Returns Oak's text and the "received" text."""
+    check_ball(g)
     received = ''
+    oak = []
     for _ in range(3000):
         t = g.text()
+        if 'TYPE1' in t:
+            if lab_pick_buttons is None:
+                g.fail('the picker opened in Oak\'s lab')
+            pick(g, lab_pick_buttons)
+            lab_pick_buttons = None
+            continue
+        if 'OAK' in t or oak:
+            box = ' '.join(t[i * 20:(i + 1) * 20].strip() for i in range(13, 17))
+            if box not in oak and 'received' not in box:
+                oak.append(box)
         if 'received' in t:
             received = ' '.join(t[i * 20:(i + 1) * 20].strip() for i in range(13, 17))
         if g.mem('wPartyCount') and g.mem('wPartyMon1Level'):
-            return received
+            return ' | '.join(oak), received
         g.press('b' if 'nickname' in t else 'a', 25)
     g.fail('never received a starter')
 
@@ -300,27 +348,36 @@ def talk_to_oak(g):
     return ' '.join(t[i * 20:(i + 1) * 20].strip() for i in range(13, 17))
 
 
-def test_case(prefix, label, difficulty, pick_buttons, expected):
+def test_case(prefix, label, difficulty, pick_buttons, expected, old_save=False):
     g = Game(prefix, label)
     try:
-        new_game(g, difficulty)
+        new_game(g, difficulty, ['up'] if old_save else pick_buttons)
+        if old_save:  # a save from before the picker moved to the intro: no starter yet
+            g.pb.memory[g.syms['wPlayerStarter']] = 0
         if g.mem('wDifficulty') != difficulty:
             g.fail(f'difficulty byte is {g.mem("wDifficulty")}, expected {difficulty}')
+        if pick_buttons and not old_save and g.mem('wPlayerStarter') != g.const(expected):
+            g.fail(f'wPlayerStarter is {g.mem("wPlayerStarter")} after the intro, expected {expected}')
         walk_to_oaks_lab(g)
-        received = get_starter(g, pick_buttons)
+        oak, received = get_starter(g, pick_buttons if old_save else None)
         if expected not in received:
             g.fail(f'expected to receive {expected}, text was "{received}"')
+        pikachu = expected == 'PIKACHU'
+        oak_gives = ['caught earlier'] if pikachu else [f'I caught this {expected}', 'just for you']
+        oak = ' '.join(oak.replace(' |', ' ').split())
+        if not all(words in oak for words in oak_gives):
+            g.fail(f'expected Oak to say {oak_gives}, he said "...{oak[-300:]}"')
         if g.mem('wPartyCount') != 1 or g.mem('wPartyMon1Level') != g.const('STARTER_LEVEL'):
             g.fail(f'party count {g.mem("wPartyCount")}, level {g.mem("wPartyMon1Level")}')
         if g.mem('wPartySpecies') != g.mem('wPlayerStarter'):
             g.fail('party species does not match wPlayerStarter')
         if g.saw_attack_warning:
             g.fail(f'the "can\'t attack yet" warning appeared for {expected}')
-        pikachu = expected == 'PIKACHU'
         seen, challenge_text = rival_battle_and_exit(g)
         comment = RIVAL_COMMENTS.get(expected)
-        if difficulty == 2 and comment and comment not in challenge_text:
-            g.fail(f'expected the rival to say "{comment}", he said "{challenge_text}"')
+        said = ' '.join(challenge_text.replace(' |', ' ').split())
+        if difficulty == 2 and comment and not all(c in said for c in comment):
+            g.fail(f'expected the rival to say {comment}, he said "{challenge_text}"')
         if not comment and any(m in challenge_text for m in RIVAL_COMMENT_MARKERS):
             g.fail(f'the rival commented on {expected}: "{challenge_text}"')
         rival_mon = RIVAL_LAB_MON.get(expected, 'EEVEE')
@@ -337,7 +394,7 @@ def test_case(prefix, label, difficulty, pick_buttons, expected):
         if want not in oak:
             g.fail(f'expected Oak to say "{want}...", he said "{oak}"')
         scene = 'escape scene played' if pikachu else 'no escape scene'
-        rival = f'rival said "{comment}"' if comment else 'no rival comment'
+        rival = f'rival said {comment}' if comment else 'no rival comment'
         rival += f', used {rival_mon}'
         return f'received {expected}, level 5; {rival}; rival battle done; {scene}; Oak: "{want}..."'
     finally:
@@ -349,9 +406,8 @@ def test_weak_starter_warning(prefix):
     CHARMANDER must not."""
     g = Game(prefix, 'Weak starter warning')
     try:
-        new_game(g, 2)
-        walk_to_oaks_lab(g)
-        open_picker(g)
+        choose_mode(g, 2)
+        open_intro_picker(g)
         # #129: 18 pages down puts #127 on top, then 2 rows down
         prompt = highlight_and_confirm(g, ['right'] * 18 + ['down'] * 2)
         if 'MAGIKARP' not in prompt:
@@ -373,15 +429,8 @@ def test_picker_info(prefix):
     CHARMANDER after the moves page."""
     g = Game(prefix, 'Picker info pages')
     try:
-        new_game(g, 2)
-        walk_to_oaks_lab(g)
-        open_picker(g)
-        for _ in range(400):
-            if 'TYPE1' in g.text():
-                break
-            g.press('a', 25)
-        else:
-            g.fail('the Pick Starter picker never opened')
+        choose_mode(g, 2)
+        open_intro_picker(g)
         g.run(60)
         for _ in range(3):
             g.press('down', 16, hold=8)
@@ -429,6 +478,7 @@ def test_debug_menu(prefix):
 
 def main():
     tests = [(case[0], lambda case=case: test_case(sys.argv[1], *case)) for case in CASES]
+    tests.append((OLD_SAVE_CASE[0], lambda: test_case(sys.argv[1], *OLD_SAVE_CASE, old_save=True)))
     tests.append(('Pick Starter: weak starter warning', lambda: test_weak_starter_warning(sys.argv[1])))
     tests.append(('Pick Starter: picker info pages', lambda: test_picker_info(sys.argv[1])))
     if len(sys.argv) > 2:

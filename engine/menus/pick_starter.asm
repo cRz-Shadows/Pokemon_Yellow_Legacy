@@ -1,6 +1,8 @@
 ; Pick Starter mode: a scrollable list of all 151 Pokémon (in Pokédex order)
 ; with a preview of the highlighted one. The player can't back out; they
-; must choose a starter.
+; must choose a starter. It opens in the intro, right after the mode is
+; chosen (PickStarterIntroMenu), or in Oak's lab if the save has no starter
+; yet (PickStarterMenu; saves from before the picker moved to the intro).
 ; Output: a = [wPlayerStarter] = chosen species (internal index)
 
 DEF PICK_STARTER_LIST_ROWS EQU 7
@@ -9,6 +11,8 @@ DEF PICK_STARTER_MAX_TOP   EQU NUM_POKEMON - PICK_STARTER_LIST_ROWS
 ; so it's only loaded once the d-pad has been released for this many frames.
 ; Until then the list stays responsive.
 DEF PICK_STARTER_PIC_DELAY EQU 12
+; PickStarter_TypeScore of a neutral matchup
+DEF NEUTRAL_TYPE_SCORE EQU 4
 
 ; what the preview shows next to the picture; SELECT cycles through them
 	const_def
@@ -21,6 +25,7 @@ DEF NUM_PICK_STARTER_PAGES EQU const_value
 ; [wListScrollOffset] = Pokédex index (0-based) of the top row
 ; [wCurrentMenuItem]  = highlighted row, 0 to PICK_STARTER_LIST_ROWS - 1
 
+; In Oak's lab: returns to the map.
 PickStarterMenu::
 	ld a, [wUpdateSpritesEnabled]
 	push af
@@ -28,10 +33,44 @@ PickStarterMenu::
 	push af
 	ld a, [wListScrollOffset]
 	push af
+	call SaveScreenTilesToBuffer2
+	call PickStarter_Choose
+	call RunDefaultPaletteCommand
+	call ReloadMapData
+	call LoadScreenTilesFromBuffer2
+	call Delay3
+	call LoadGBPal
+	pop af
+	ld [wListScrollOffset], a
+	pop af
+	ldh [hTileAnimations], a
+	pop af
+	ld [wUpdateSpritesEnabled], a
+	call UpdateSprites
+	ld a, [wPlayerStarter]
+	ret
+
+; In the intro (OakSpeech): returns with the screen cleared.
+PickStarterIntroMenu::
+	ld a, [wUpdateSpritesEnabled]
+	push af
+	call PickStarter_Choose
+	call ClearScreen
+	call LoadTextBoxTilePatterns ; LoadPokedexTilePatterns overwrote them
+	call RunDefaultPaletteCommand
+	call GBPalNormal
+	pop af
+	ld [wUpdateSpritesEnabled], a
+	ld a, [wPlayerStarter]
+	ret
+
+; Runs the list until a Pokémon is chosen and stores it in [wPlayerStarter].
+; Returns with the palettes white; clears wUpdateSpritesEnabled and
+; hTileAnimations.
+PickStarter_Choose:
 	xor a
 	ld [wUpdateSpritesEnabled], a
 	ldh [hTileAnimations], a ; tile animations would overwrite the front pic in VRAM
-	call SaveScreenTilesToBuffer2
 	call GBPalWhiteOut
 	call ClearSprites
 	callfar LoadPokedexTilePatterns
@@ -197,21 +236,7 @@ PickStarterMenu::
 	ld [wPlayerStarter], a
 	xor a
 	ldh [hJoy7], a
-	call GBPalWhiteOutWithDelay3
-	call RunDefaultPaletteCommand
-	call ReloadMapData
-	call LoadScreenTilesFromBuffer2
-	call Delay3
-	call LoadGBPal
-	pop af
-	ld [wListScrollOffset], a
-	pop af
-	ldh [hTileAnimations], a
-	pop af
-	ld [wUpdateSpritesEnabled], a
-	call UpdateSprites
-	ld a, [wPlayerStarter]
-	ret
+	jp GBPalWhiteOutWithDelay3
 
 ; Draws the list and the highlighted mon's info (see PickStarter_DrawInfo),
 ; hides the old picture and schedules the new one (see PICK_STARTER_PIC_DELAY).
@@ -456,9 +481,17 @@ PickStarterConfirmCantAttackText:
 	text_far _PickStarterConfirmCantAttackText
 	text_end
 
-; Pick Starter mode: if the player picked a Bulbasaur/Charmander/Squirtle-line
-; mon, the rival takes the starter that beats it, as in Red/Blue, and keeps
-; its line all game (see RIVAL_STARTER_BULBASAUR).
+; Pick Starter mode, once the rival has taken his EEVEE in Oak's lab: sets
+; wRivalStarter to the Pokémon he counters the player's starter with.
+; - A Bulbasaur/Charmander/Squirtle-line pick: the starter that beats it, as in
+;   Red/Blue (PickStarterRivalCounters).
+; - PIKACHU: none, he keeps his EEVEE as in Normal mode.
+; - Anything else: the PickStarterRivalCounterPicks entry whose types hit the
+;   player's starter hardest (PickStarter_TypeScore). On a tie, the one the
+;   starter's types hit least; on another tie, the first in the list. He keeps
+;   his EEVEE if none of them is super effective.
+; He keeps the counter's line all game (see RIVAL_STARTER_BULBASAUR and
+; PickStarterRivalCounterMon).
 PickStarterSetRivalStarter::
 	ld a, [wPlayerStarter]
 	ld b, a
@@ -466,12 +499,238 @@ PickStarterSetRivalStarter::
 .loop
 	ld a, [hli]
 	cp -1
-	ret z
+	jr z, .notStarterLine
 	cp b
 	ld a, [hli]
 	jr nz, .loop
 	ld [wRivalStarter], a
 	ret
+
+.notStarterLine
+	ld a, b
+	cp STARTER_PIKACHU
+	ret z
+	; the player's types go to wBattleMonType and each candidate's to
+	; wEnemyMonType (battle data, free outside battle)
+	ld de, wBattleMonType
+	call PickStarter_GetTypes
+	lb bc, NEUTRAL_TYPE_SCORE, 0 ; the best attack and defense scores so far
+	ld hl, PickStarterRivalCounterPicks
+.candidate
+	ld a, [hl]
+	cp -1
+	ret z
+	push hl
+	ld de, wEnemyMonType
+	call PickStarter_GetTypes
+	ld hl, wEnemyMonType
+	ld de, wBattleMonType
+	call PickStarter_BestTypeScore ; how hard it hits the player's starter
+	cp b
+	jr c, .next
+	push af
+	ld hl, wBattleMonType
+	ld de, wEnemyMonType
+	call PickStarter_BestTypeScore ; how hard the player's starter hits it
+	ld e, a
+	pop af
+	jr nz, .better
+	ld a, e
+	cp c
+	jr nc, .next ; a tie, and it isn't hit less
+	ld a, b
+.better
+	ld b, a
+	ld c, e
+	pop hl
+	push hl
+	inc hl
+	ld a, [hl]
+	ld [wRivalStarter], a
+.next
+	pop hl
+	inc hl
+	inc hl
+	jr .candidate
+
+; Copies the types of species a to de. Preserves bc and hl.
+PickStarter_GetTypes:
+	push hl
+	push bc
+	push de
+	ld [wCurSpecies], a
+	call GetMonHeader
+	pop de
+	ld hl, wMonHTypes
+	ld bc, 2 ; wMonHType1, wMonHType2
+	call CopyData
+	pop bc
+	pop hl
+	ret
+
+; Returns in a how hard the types at hl hit the types at de: the better
+; PickStarter_TypeScore of the two. Preserves bc, de and hl.
+PickStarter_BestTypeScore:
+	push bc
+	ld a, [hli]
+	call PickStarter_TypeScore
+	ld b, a
+	ld a, [hld]
+	cp [hl]
+	jr z, .done ; a single type
+	call PickStarter_TypeScore
+	cp b
+	jr c, .done
+	ld b, a
+.done
+	ld a, b
+	pop bc
+	ret
+
+; Returns in a how hard attacking type a hits the defending types at de, on the
+; type chart (TypeEffects): NEUTRAL_TYPE_SCORE, plus 1 for each type it's super
+; effective against and minus 1 for each it's not very effective against, or 0
+; if it has no effect. Preserves bc, de and hl.
+PickStarter_TypeScore:
+	push hl
+	push bc
+	ld b, a
+	ld c, NEUTRAL_TYPE_SCORE
+	ld a, [de]
+	call .matchup
+	jr c, .noEffect
+	ld a, [de]
+	ld h, a
+	inc de
+	ld a, [de]
+	dec de
+	cp h
+	jr z, .done ; a single type
+	call .matchup
+	jr c, .noEffect
+.done
+	ld a, c
+	jr .return
+.noEffect
+	xor a
+.return
+	pop bc
+	pop hl
+	ret
+
+; b = attacking type, a = defending type: c + 1 if it's super effective,
+; c - 1 if it's not very effective, carry if it has no effect
+.matchup
+	push bc
+	push de
+	ld d, b
+	ld e, a
+	callfar GetTypeMatchup
+	ld a, e
+	pop de
+	pop bc
+	cp EFFECTIVE
+	ret z
+	jr nc, .superEffective
+	and a
+	scf
+	ret z ; NO_EFFECT
+	dec c
+	and a
+	ret
+.superEffective
+	inc c
+	ret
+
+; Returns in a the Pokémon the rival counters the player's starter with
+; ([wRivalStarter] >= FIRST_RIVAL_COUNTER_STARTER); carry if there's none.
+PickStarter_GetRivalCounter:
+	ld a, [wRivalStarter]
+	ld b, a
+	ld hl, PickStarterRivalCounterPicks
+.loop
+	ld a, [hli]
+	cp -1
+	jr z, .none
+	ld c, a
+	ld a, [hli]
+	cp b
+	jr nz, .loop
+	ld a, c
+	and a
+	ret
+.none
+	scf
+	ret
+
+; Pick Starter mode: in the rival's battles, a counter that isn't one of the
+; starters (rival_counter_line) replaces the starter in the teams he uses,
+; evolved as far as the team's level allows. An evolution by item or trade
+; counts from RIVAL_COUNTER_ITEM_EVO_LEVEL.
+; Called by ReadTrainer for every enemy Pokémon: may change [wCurPartySpecies]
+; (to be added at [wCurEnemyLevel]).
+PickStarterRivalCounterMon::
+	ld a, [wRivalStarter]
+	cp FIRST_RIVAL_COUNTER_LINE
+	ret c
+	ld a, [wTrainerClass]
+	cp RIVAL1
+	jr z, .rival
+	cp RIVAL2
+	jr z, .rival
+	cp RIVAL3
+	ret nz
+.rival
+	ld a, [wCurPartySpecies]
+	ld hl, PickStarterRivalCounters ; the starters' lines
+	ld de, 2
+	call IsInArray
+	ret nc
+	call PickStarter_GetRivalCounter
+	ret c
+.evolve
+	ld [wCurPartySpecies], a
+	dec a
+	ld c, a
+	ld b, 0
+	ld hl, EvosMovesPointerTable
+	add hl, bc
+	add hl, bc
+	ld a, BANK(EvosMovesPointerTable)
+	call GetFarByte
+	ld e, a
+	inc hl
+	ld a, BANK(EvosMovesPointerTable)
+	call GetFarByte
+	ld h, a
+	ld l, e
+	; its first evolution (none of the counters has more than one)
+	ld a, BANK(EvosMovesPointerTable)
+	call GetFarByte
+	and a
+	ret z ; it doesn't evolve
+	ld e, a
+	inc hl
+	ld d, RIVAL_COUNTER_ITEM_EVO_LEVEL
+	cp EVOLVE_LEVEL
+	jr nz, .gotLevel
+	ld a, BANK(EvosMovesPointerTable)
+	call GetFarByte
+	ld d, a
+.gotLevel
+	; the species follows the level, or the item and level
+	ld a, e
+	cp EVOLVE_ITEM
+	jr nz, .gotSpecies
+	inc hl
+.gotSpecies
+	inc hl
+	ld a, [wCurEnemyLevel]
+	cp d
+	ret c
+	ld a, BANK(EvosMovesPointerTable)
+	call GetFarByte
+	jr .evolve
 
 PickStarterRivalCounters: ; player's pick, rival's starter
 	db BULBASAUR,  RIVAL_STARTER_CHARMANDER
@@ -485,20 +744,69 @@ PickStarterRivalCounters: ; player's pick, rival's starter
 	db BLASTOISE,  RIVAL_STARTER_BULBASAUR
 	db -1 ; end
 
+; What the rival can counter any other pick with (PickStarterSetRivalStarter),
+; in tie-break order: species, wRivalStarter. Only the first stage's types
+; count: that's the one he picks. Each entry wins for some pick (see the table
+; in docs/pick_starter_mode.md, from tools/rival_counters.py). A
+; rival_counter_line uses that starter's teams (rival_team_fixed), chosen to
+; avoid duplicates: no MACHOP with the Vaporeon team's MACHAMP, no MAGNEMITE
+; with the Flareon team's MAGNETON, no GEODUDE with the Jolteon team's RHYDON.
+; The names must start with a consonant ("I want a ...").
+PickStarterRivalCounterPicks:
+	db SQUIRTLE,   RIVAL_STARTER_SQUIRTLE   ; WATER
+	db CHARMANDER, RIVAL_STARTER_CHARMANDER ; FIRE
+	db BULBASAUR,  RIVAL_STARTER_BULBASAUR  ; GRASS/POISON
+	DEF RIVAL_COUNTER_LINES = 0
+	rival_counter_line MACHOP,    RIVAL_STARTER_BULBASAUR  ; FIGHTING
+	rival_counter_line GEODUDE,   RIVAL_STARTER_SQUIRTLE   ; ROCK/GROUND
+	rival_counter_line MAGNEMITE, RIVAL_STARTER_BULBASAUR  ; ELECTRIC/STEEL
+	rival_counter_line DROWZEE,   RIVAL_STARTER_CHARMANDER ; PSYCHIC
+	rival_counter_line GASTLY,    RIVAL_STARTER_CHARMANDER ; GHOST/DARK
+	rival_counter_line JYNX,      RIVAL_STARTER_SQUIRTLE   ; ICE/PSYCHIC
+	rival_counter_line CLEFAIRY,  RIVAL_STARTER_BULBASAUR  ; FAIRY
+	db -1 ; end
+	ASSERT RIVAL_COUNTER_LINES == NUM_RIVAL_COUNTER_LINES
+
 ; Pick Starter mode: the rival's comment on the player's starter (not PIKACHU)
-; before his first battle in Oak's lab: swapping his EEVEE for a counter
-; starter (see PickStarterSetRivalStarter), an EEVEE like his, a legendary, a
-; mon that can't attack yet, or else its type.
+; before his first battle in Oak's lab. An EEVEE like his, a legendary or a
+; mon that can't attack yet gets its own comment. Then, if he counters it
+; (PickStarterSetRivalStarter), he swaps his EEVEE; if not, and there was no
+; comment, he talks about its (first) type.
 PickStarterRivalComment::
+	ld a, [wPlayerStarter]
+	ld [wCurPartySpecies], a
+	ld [wCurSpecies], a
+	ld [wNamedObjectIndex], a
+	call GetMonName
+	ld a, [wPlayerStarter]
+	ld hl, PickStarterRivalCopycatText
+	cp EEVEE
+	jr z, .comment
+	ld hl, PickStarterLegendaries
+	ld de, 1
+	call IsInArray
+	ld hl, PickStarterRivalLegendaryText
+	jr c, .comment
+	call PickStarter_CanAttack ; also loads the mon header
+	ld hl, PickStarterRivalCantAttackText
+	jr z, .comment
 	ld a, [wRivalStarter]
 	cp FIRST_RIVAL_COUNTER_STARTER
-	jr c, .comment
-	sub FIRST_RIVAL_COUNTER_STARTER
-	ld c, a
-	ld b, 0
-	ld hl, PickStarterRivalCounterSpecies
-	add hl, bc
-	ld a, [hl]
+	jr c, .type
+	ld hl, PickStarterRivalSwapText
+	jr .swap
+
+.comment
+	call PrintText
+	ld a, [wRivalStarter]
+	cp FIRST_RIVAL_COUNTER_STARTER
+	ret c
+	ld hl, PickStarterRivalAlsoSwapText
+.swap
+	; the counter's name goes to wStringBuffer, the starter's stays in wNameBuffer
+	push hl
+	call PickStarter_GetRivalCounter
+	jr c, .noCounter ; only from a damaged save (SanitizeModeBytes allows unused values)
 	ld [wNamedObjectIndex], a
 	call GetMonName
 	ld hl, wNameBuffer
@@ -508,29 +816,15 @@ PickStarterRivalComment::
 	ld a, [wPlayerStarter]
 	ld [wNamedObjectIndex], a
 	call GetMonName
-	ld hl, PickStarterRivalSwapText
+	pop hl
 	call PrintText
 	ld hl, PickStarterRivalSwappedText
 	jp PrintText
+.noCounter
+	pop hl
+	ret
 
-.comment
-	ld a, [wPlayerStarter]
-	ld [wCurPartySpecies], a
-	ld [wCurSpecies], a
-	ld [wNamedObjectIndex], a
-	call GetMonName
-	ld a, [wPlayerStarter]
-	ld hl, PickStarterRivalCopycatText
-	cp EEVEE
-	jr z, .print
-	ld hl, PickStarterLegendaries
-	ld de, 1
-	call IsInArray
-	ld hl, PickStarterRivalLegendaryText
-	jr c, .print
-	call PickStarter_CanAttack ; also loads the mon header
-	ld hl, PickStarterRivalCantAttackText
-	jr z, .print
+.type
 	; copy the name of its first type to wStringBuffer
 	ld a, [wMonHType1]
 	add a
@@ -551,13 +845,7 @@ PickStarterRivalComment::
 	ld a, BANK(TypeNames)
 	call FarCopyData
 	ld hl, PickStarterRivalTypeText
-.print
 	jp PrintText
-
-PickStarterRivalCounterSpecies: ; indexed by wRivalStarter - FIRST_RIVAL_COUNTER_STARTER
-	db BULBASAUR  ; RIVAL_STARTER_BULBASAUR
-	db CHARMANDER ; RIVAL_STARTER_CHARMANDER
-	db SQUIRTLE   ; RIVAL_STARTER_SQUIRTLE
 
 PickStarterLegendaries:
 	db ARTICUNO
@@ -585,6 +873,10 @@ PickStarterRivalTypeText:
 
 PickStarterRivalSwapText:
 	text_far _PickStarterRivalSwapText
+	text_end
+
+PickStarterRivalAlsoSwapText:
+	text_far _PickStarterRivalAlsoSwapText
 	text_end
 
 PickStarterRivalSwappedText:

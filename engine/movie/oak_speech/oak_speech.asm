@@ -102,6 +102,14 @@ OakSpeech:
 .doneLoop
 	call ClearScreen ; clear the screen before resuming normal intro
 
+	; Pick Starter mode: pick the Pokémon Oak catches for the player
+	test_pick_starter
+	jr z, .noStarterToPick
+	ld hl, PickStarterIntroText
+	call PrintText
+	callfar PickStarterIntroMenu ; sets [wPlayerStarter]
+.noStarterToPick
+
 	; Gender Menu
 	ld hl, BoyGirlText  ; added to the same file as the other oak text
 	call PrintText     ; show this text
@@ -248,6 +256,9 @@ HardModeText:
 	text_end
 PickStarterModeText:
 	text_far _PickStarterModeText
+	text_end
+PickStarterIntroText:
+	text_far _PickStarterIntroText
 	text_end
 DifficultyText:
 	text_far _DifficultyText

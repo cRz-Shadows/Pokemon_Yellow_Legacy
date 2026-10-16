@@ -18,7 +18,9 @@ While Yellow Legacy is not designed as a “Kaizo” project, Pokémon trainer f
 
 ## Pick Starter Mode
 
-Besides Normal and Hard, a new game can be started in **Pick Starter** mode. It uses Normal rules, but Professor Oak lets you choose your starter from all 151 Pokémon. See [**docs/pick_starter_mode.md**](docs/pick_starter_mode.md) for details, a playtest checklist and release notes.
+Besides Normal and Hard, a new game can be started in **Pick Starter** mode. It uses Normal rules, but right after choosing the mode you pick any of the 151 Pokémon, and Professor Oak catches it for you and gives it to you in his lab. Your rival counters your pick: he swaps his Eevee for a Pokémon that beats yours by type and keeps its line all game (as in Red/Blue against the Bulbasaur, Charmander and Squirtle lines). Pick Pikachu for the classic Yellow experience. See [**docs/pick_starter_mode.md**](docs/pick_starter_mode.md) for details, the rival's counter for every pick, a playtest checklist and release notes.
+
+**Player guide (PDF):** [**docs/player_guide.pdf**](docs/player_guide.pdf) covers patching, the three modes, the Pick Starter flow and the rival's counters.
 
 
 ## Contributing

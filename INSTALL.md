@@ -157,6 +157,22 @@ To build **pokemon_yellow_legacy.gbc**:
 make
 ```
 
+### Pick Starter tools
+
+The rival's counter table in [docs/pick_starter_mode.md](docs/pick_starter_mode.md) is generated from the game's data. After changing the type chart, a Pokémon's types or the rival's counter list (`PickStarterRivalCounterPicks` in `engine/menus/pick_starter.asm`), regenerate it and paste it in:
+
+```bash
+python3 tools/rival_counters.py           # prints the table
+python3 tools/rival_counters.py --check   # fails if the docs are out of date (also a unit test)
+```
+
+The player guide [docs/player_guide.pdf](docs/player_guide.pdf) is built from [docs/player_guide.md](docs/player_guide.md), the same counter data and the screenshots in `docs/guide/`. After changing either, rebuild it (needs the `reportlab` Python package):
+
+```bash
+pip install reportlab
+python3 tools/make_guide.py
+```
+
 ### Build with a local rgbds version
 
 If you have different projects that require different versions of `rgbds`, it might not be convenient to install rgbds 1.0.4 globally. Instead, you can put its files in a directory within pokemon_yellow_legacy, such as `pokemon_yellow_legacy/rgbds-1.0.4/`. Then specify it when you run `make`:
