@@ -88,35 +88,14 @@ _PickStarterRivalTypeText::
 	line "handle that!"
 	prompt
 
-_PickStarterRivalSwapText::
-	text "<RIVAL>: Your"
-	line "@"
+; he took a counter (PickStarterSetRivalStarter) when he took his ball
+_PickStarterRivalCounterText::
+	text "<RIVAL>: Heh!"
+	line "Your @"
 	text_ram wNameBuffer
 	text "?"
-	cont "Then I want a"
-	cont "@"
+	cont "My @"
 	text_ram wStringBuffer
-	text "!"
-
-	para "Gramps! I'm going"
-	line "to swap my EEVEE!"
+	text_start
+	cont "can handle that!"
 	prompt
-
-; after one of the comments above
-_PickStarterRivalAlsoSwapText::
-	text "<RIVAL>: But I"
-	line "know what beats"
-	cont "it: a @"
-	text_ram wStringBuffer
-	text "!"
-
-	para "Gramps! I'm going"
-	line "to swap my EEVEE!"
-	prompt
-
-_PickStarterRivalSwappedText::
-	text "<RIVAL> got a"
-	line "@"
-	text_ram wStringBuffer
-	text "!@"
-	text_end

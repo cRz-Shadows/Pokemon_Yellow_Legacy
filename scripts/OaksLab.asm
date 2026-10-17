@@ -232,11 +232,19 @@ OaksLabRivalTakesPokeballScript:
 	ldh [hSpriteFacingDirection], a
 	call SetSpriteFacingDirectionAndDelay
 	; The rival takes EEVEE (JOLTEON line) here, in his scene. In Pick Starter mode
-	; PickStarterSetRivalStarter later overwrites this with the counter starter, so
-	; this scene must keep running before the player's own text script (it does: the
-	; player only gets to pick after the rival has taken his ball).
+	; the player picked in the intro, so the ball already holds his counter
+	; (PickStarterSetRivalStarter). A save from before the picker moved to the
+	; intro has no pick yet: he takes EEVEE, and OaksLabPlayerReceivedMonText
+	; sets his counter after the player picks.
 	ld a, RIVAL_STARTER_JOLTEON
 	ld [wRivalStarter], a
+	test_pick_starter
+	jr z, .gotRivalStarter
+	ld a, [wPlayerStarter]
+	and a
+	jr z, .gotRivalStarter
+	callfar PickStarterSetRivalStarter
+.gotRivalStarter
 	ld a, EEVEE
 	ld [wNamedObjectIndex], a
 	call GetMonName
@@ -1080,11 +1088,11 @@ OaksLabPlayerReceivedMonText:
 	ld hl, OaksLabOakPickStarterText
 	call PrintText
 	callfar PickStarterMenu ; sets [wPlayerStarter]
-	callfar PickStarterSetRivalStarter ; overwrites wRivalStarter set when the rival took his ball
+	callfar PickStarterSetRivalStarter ; overwrites the EEVEE the rival took
 	call .getStarterName
 	jr .receivedStarter
 .pickedStarter
-	callfar PickStarterSetRivalStarter ; overwrites wRivalStarter set when the rival took his ball
+	; the rival's counter was set when he took his ball (OaksLabRivalTakesPokeballScript)
 	; Oak caught the picked Pokémon in Pallet Town (PalletTownPikachuBattleScript)
 	jr .oakGivesStarter
 .giveStarterPikachu

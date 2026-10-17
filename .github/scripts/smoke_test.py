@@ -14,7 +14,7 @@ first rival battle -> rival leaves -> talk to Oak.
 Two more Pick Starter cases cover the picker's list wrap (UP from the top
 gives MEW) and paging (RIGHT moves a page).
 Before the rival battle, the rival must comment on a picked starter and say
-nothing extra about a PIKACHU. He swaps his EEVEE for the Pokémon that counters
+nothing extra about a PIKACHU. The ball he takes holds the Pokémon that counters
 the pick (tools/rival_counters.py): SQUIRTLE against CHARMANDER and BULBASAUR
 against SQUIRTLE, as in Red/Blue (#106), and type counters for other picks
 (#137), which he then uses in the battle.
@@ -54,9 +54,9 @@ OLD_SAVE_CASE = ('Pick Starter: old save, picker in the lab', 2, ['down'] * 3, '
 
 # The rival's comments on a picked starter (text() drops punctuation). The
 # EEVEE and "can't attack" comments are covered by the scenario tests.
-RIVAL_COMMENTS = {'CHARMANDER': ['Then I want a SQUIRTLE'], 'SQUIRTLE': ['Then I want a BULBASAUR'],
-                  'MEW': ['legendary', 'what beats', 'GASTLY'], 'PIDGEY': ['Then I want a GEODUDE']}
-RIVAL_COMMENT_MARKERS = ('type  eh', 'legendary', 'Copycat', 'even attack', 'I want a', 'what beats')
+RIVAL_COMMENTS = {'CHARMANDER': ['Your CHARMANDER', 'My SQUIRTLE', 'handle that'], 'SQUIRTLE': ['My BULBASAUR'],
+                  'MEW': ['legendary'], 'PIDGEY': ['My GEODUDE']}
+RIVAL_COMMENT_MARKERS = ('type  eh', 'legendary', 'Copycat', 'even attack', 'handle that', 'swap')
 # The rival's Pokémon in the lab battle (#106, #137: he counters the pick)
 RIVAL_LAB_MON = {'CHARMANDER': 'SQUIRTLE', 'SQUIRTLE': 'BULBASAUR', 'MEW': 'GASTLY', 'PIDGEY': 'GEODUDE'}
 

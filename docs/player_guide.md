@@ -75,15 +75,15 @@ The picture of the highlighted Pokémon appears once you stop scrolling.
 
 ## Your rival
 
-Your rival takes his Eevee before you take your Pokémon. Once he sees yours, he picks a Pokémon that beats it, and keeps that Pokémon's line for every rival battle.
+The ball your rival snatches holds a Pokémon that beats yours, and he keeps that Pokémon's line for every rival battle.
 
 - **Pikachu:** he keeps his Eevee, exactly as in Normal mode.
 - **Bulbasaur, Charmander or Squirtle line:** the starter that beats it, as in Red and Blue. Charmander against the Bulbasaur line, Squirtle against the Charmander line, Bulbasaur against the Squirtle line.
 - **Anything else:** the Pokémon from his list whose type hits yours hardest. On a tie he takes the one your Pokémon hits least.
 
-![The rival swaps his Eevee](guide/rival.png)
+![The rival names his counter](guide/rival.png)
 
-Before your first battle he comments on your choice. An Eevee like his ("Copycat!"), a legendary, or a Pokémon that can't attack yet gets its own remark. Then he says what he wants instead, and swaps his Eevee.
+Before your first battle he comments on your choice. A legendary or a Pokémon that can't attack yet gets its own remark. Otherwise he names the Pokémon he got ("Your PIDGEY? My GEODUDE can handle that!").
 
 His Pokémon evolves as you'd expect: Machop becomes Machoke at Lv28 and Machamp at Lv38, Geodude Graveler at Lv25 and Golem at Lv38, Magnemite Magneton at Lv30, Drowzee Hypno at Lv26, Gastly Haunter at Lv25 and Gengar at Lv42, Clefairy Clefable from Lv30, and the starters at their usual levels. His other Pokémon come from his usual Legacy teams.
 

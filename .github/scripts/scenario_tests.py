@@ -15,9 +15,9 @@ the result.
   starter PIKACHU (the Surfin' Dude names it); Normal mode still needs a
   PIKACHU that knows SURF. The posters and the printer follow the same rule
   and must print their own text (issue #53).
-- Oak's lab: the rival comments on a picked EEVEE ("Copycat") and on a pick
-  that can't attack yet (MAGIKARP) before his first battle, then swaps his
-  EEVEE for his counter (MACHOP, BULBASAUR; issue #137). The type and
+- Oak's lab: the rival comments on a picked EEVEE by naming the counter he
+  took from his ball (MACHOP; issue #137), and on a pick that can't attack
+  yet (MAGIKARP) before his first battle, with no swap. The type and
   legendary comments are covered by the smoke test.
 - Rival battles: with a CHARMANDER pick (Pick Starter mode) the rival's ace in
   Cerulean City is WARTORTLE, his counter starter's line (issue #106); in
@@ -405,9 +405,9 @@ def main():
     p = prefix
     tests = [
         ('Rival comment: Pick Starter, EEVEE',
-         lambda: rival_comment(p, eevee, 'Rival eevee', ['Copycat', 'what beats it a MACHOP'])),
+         lambda: rival_comment(p, eevee, 'Rival eevee', ['Your EEVEE', 'My MACHOP', 'handle that'])),
         ('Rival comment: Pick Starter, MAGIKARP',
-         lambda: rival_comment(p, magikarp, 'Rival magikarp', ['even attack', 'what beats it a BULBASAUR'])),
+         lambda: rival_comment(p, magikarp, 'Rival magikarp', ['even attack'])),
         ('Rival: Cerulean City, Pick Starter CHARMANDER',
          lambda: rival_battle(p, pick, 'Rival Cerulean pick', 'Cerulean City', 'WARTORTLE')),
         ('Rival: Cerulean City, Normal',

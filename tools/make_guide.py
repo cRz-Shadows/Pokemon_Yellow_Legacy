@@ -214,12 +214,15 @@ def screenshots(prefix):
             g.press('b' if 'nickname' in g.text() else 'a', 25)
         for _ in range(60):
             t = g.text()
-            if 'want a' in t and 'SQUIRTLE' in t[t.find('want a'):]:  # his counter to CHARMANDER
+            if 'SQUIRTLE' in t and 'handle that' in t:  # his counter to CHARMANDER
                 save(g, 'rival.png')
                 return
+            if 'My SQUIRTLE' in t:
+                g.press('a', 40)  # scroll to the comment's last line
+                continue
             g.press('down', 10, hold=12)
             g.press('a', 25)
-        g.fail('the rival never asked for his counter')
+        g.fail('the rival never named his counter')
     finally:
         g.stop()
 

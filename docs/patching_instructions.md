@@ -48,8 +48,8 @@ Pokémon Yellow ROM to get the game. The ROM itself isn't included.
   UP/DOWN to look, LEFT/RIGHT to page, SELECT to see its base stats or
   level-5 moves, A to choose. You can't leave without choosing. Oak gives it
   to you in his lab.
-- Your rival swaps his EEVEE for a Pokémon that beats yours by type (except
-  against a PIKACHU) and keeps it all game.
+- Your rival's ball holds a Pokémon that beats yours by type (EEVEE against a
+  PIKACHU) and he keeps it all game.
 - Everything else uses Normal rules.
 - Only a **PIKACHU** starter follows you around and gets the Pikachu scenes.
   With any other starter, Melanie in Cerulean City still gives you BULBASAUR,

@@ -31,8 +31,8 @@ Saves made in Pick Starter mode before this change, before getting a starter, ha
 - **If you pick anything else:**
   - Nothing follows you.
   - The Pikachu-only scenes are skipped. They check for the starter Pikachu, as they do in Normal mode when Pikachu is in the PC.
-  - Your rival counters your pick: he swaps his Eevee for a Pokémon that beats yours (see [The rival's counter](#the-rivals-counter)).
-  - In Oak's lab, your rival comments on your pick before your first battle. An Eevee like his ("Copycat!"), a legendary or Mew, or a Pokémon that can't attack yet gets its own comment, followed by "But I know what beats it: a …!". Otherwise he names the Pokémon he wants ("Your PIDGEY? Then I want a GEODUDE!"). Both end with "Gramps! I'm going to swap my EEVEE!".
+  - Your rival counters your pick: the ball he snatches holds a Pokémon that beats yours instead of an Eevee (see [The rival's counter](#the-rivals-counter)).
+  - In Oak's lab, your rival comments on your pick before your first battle. A legendary or Mew, or a Pokémon that can't attack yet, gets its own comment. Otherwise he names his counter ("Your PIDGEY? My GEODUDE can handle that!"). He doesn't swap anything: his ball already held it.
   - In Oak's lab, the "Pikachu escapes its Poké Ball" scene is skipped. Oak then gives his usual battle advice instead of "talk to it and see how it feels".
   - **Melanie** (Cerulean City) gives you **Bulbasaur** without needing a happy Pikachu.
   - **Charmander** (Route 24) and **Squirtle** (Officer Jenny, Vermilion City) are available as usual, so all three classic starters can be obtained.
@@ -40,7 +40,7 @@ Saves made in Pick Starter mode before this change, before getting a starter, ha
 
 ## The rival's counter
 
-When you take your Pokémon in Oak's lab, your rival (who has just taken his Eevee) picks the Pokémon that beats it, and keeps that Pokémon's line in every rival battle.
+Since you pick in the intro, the ball your rival snatches in Oak's lab already holds the Pokémon that beats yours. He keeps that Pokémon's line in every rival battle.
 
 - **Bulbasaur, Charmander or Squirtle line:** the starter that beats it, as in Red/Blue. Charmander against the Bulbasaur line, Squirtle against the Charmander line, Bulbasaur against the Squirtle line.
 - **Pikachu:** none. He keeps his Eevee, exactly as in Normal mode.
@@ -267,8 +267,8 @@ Story with a non-Pikachu starter:
 - [ ] Picker: opens right after the mode is confirmed, before the boy/girl choice; SELECT cycles types, base stats and level-5 moves; the prompt still names the right Pokémon; the intro continues normally afterwards
 - [ ] Pallet Town grass: Oak catches the picked Pokémon (its cry plays; Pikachu: its voice clip as usual)
 - [ ] Oak's lab: Oak gives the picked Pokémon with his usual words ("the #MON I caught earlier")
-- [ ] Oak's lab: the rival comments on the pick and swaps his Eevee (try an Eevee, a legendary, a weak pick and a regular pick)
-- [ ] Bulbasaur/Charmander/Squirtle-line pick: the rival swaps for the counter starter, uses it in every rival battle (lab, Route 22, Cerulean, S.S. Anne, Pokémon Tower, Silph Co., Route 22, Champion) and evolves it
+- [ ] Oak's lab: the rival comments on the pick and names his counter, with no swap (try an Eevee, a legendary, a weak pick and a regular pick)
+- [ ] Bulbasaur/Charmander/Squirtle-line pick: the rival has the counter starter, uses it in every rival battle (lab, Route 22, Cerulean, S.S. Anne, Pokémon Tower, Silph Co., Route 22, Champion) and evolves it
 - [ ] Other picks: the rival's counter (see the table) is in every rival battle and evolves (try a Rattata: Machop, Machoke from the Pokémon Tower, Machamp at Silph Co.; and a Clefairy-countered pick such as Dratini: Clefable from the Pokémon Tower)
 - [ ] Oak's lab: first rival battle, rival leaves, no Pikachu scene, Oak's advice line
 - [ ] Viridian City parcel and Pokédex
@@ -337,8 +337,7 @@ Pick Starter and the Normal and Hard rules, and existing saves, are otherwise un
 **Unreleased**
 
 - Pick Starter mode: you pick your starter right after choosing the mode, before the intro, and Oak catches it in the tall grass north of Pallet Town instead of a Pikachu. In his lab he gives it to you as the Pokémon he caught earlier.
-- Pick Starter mode: the rival counters every pick except Pikachu. Besides the Red/Blue counters for the Bulbasaur, Charmander and Squirtle lines, he picks a Pokémon that beats yours by type: Squirtle, Charmander, Bulbasaur, Machop, Geodude, Magnemite, Drowzee, Gastly, Jynx or Clefairy. He keeps its line in every rival battle and evolves it by level. He still comments on an Eevee, a legendary or a Pokémon that can't attack yet, then says what he wants instead.
+- Pick Starter mode: the rival counters every pick except Pikachu. Besides the Red/Blue counters for the Bulbasaur, Charmander and Squirtle lines, he picks a Pokémon that beats yours by type: Squirtle, Charmander, Bulbasaur, Machop, Geodude, Magnemite, Drowzee, Gastly, Jynx or Clefairy. The ball he snatches in Oak's lab already holds it, so there's no Eevee swap. He keeps its line in every rival battle and evolves it by level. Before the lab battle he comments on a legendary or a Pokémon that can't attack yet, or names his counter.
 - Pick Starter saves made before getting a starter in an earlier version open the list in Oak's lab.
-- The rival's "swapping my EEVEE" line no longer has its "!" covered by the ▼ arrow.
 - New player guide: [player_guide.pdf](player_guide.pdf).
 - New types for nine Pokémon: Charizard Fire/Dragon, Blastoise Water/Steel, Gyarados Water/Dragon, Poliwhirl Water/Fighting, Growlithe Fire/Dark, Psyduck and Golduck Water/Psychic, and Jigglypuff and Wigglytuff Fairy/Normal (Fairy is now their first type).

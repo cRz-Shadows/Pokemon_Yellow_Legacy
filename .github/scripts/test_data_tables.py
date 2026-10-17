@@ -125,7 +125,7 @@ class RivalCounterTest(unittest.TestCase):
         lines = [s for s, _, line in self.picks if line]
         num = int(re.search(r'DEF NUM_RIVAL_COUNTER_LINES EQU (\d+)', read('constants/pokemon_constants.asm')).group(1))
         self.assertEqual(len(lines), num)
-        # the rival says "I want a <name>"
+        # names start with a consonant (PickStarterRivalCounterPicks)
         self.assertEqual([s for s, _, _ in self.picks if self.name[s][0] in 'AEIOU'], [])
 
     def test_docs_table_up_to_date(self):

@@ -751,7 +751,6 @@ PickStarterRivalCounters: ; player's pick, rival's starter
 ; rival_counter_line uses that starter's teams (rival_team_fixed), chosen to
 ; avoid duplicates: no MACHOP with the Vaporeon team's MACHAMP, no MAGNEMITE
 ; with the Flareon team's MAGNETON, no GEODUDE with the Jolteon team's RHYDON.
-; The names must start with a consonant ("I want a ...").
 PickStarterRivalCounterPicks:
 	db SQUIRTLE,   RIVAL_STARTER_SQUIRTLE   ; WATER
 	db CHARMANDER, RIVAL_STARTER_CHARMANDER ; FIRE
@@ -768,10 +767,10 @@ PickStarterRivalCounterPicks:
 	ASSERT RIVAL_COUNTER_LINES == NUM_RIVAL_COUNTER_LINES
 
 ; Pick Starter mode: the rival's comment on the player's starter (not PIKACHU)
-; before his first battle in Oak's lab. An EEVEE like his, a legendary or a
-; mon that can't attack yet gets its own comment. Then, if he counters it
-; (PickStarterSetRivalStarter), he swaps his EEVEE; if not, and there was no
-; comment, he talks about its (first) type.
+; before his first battle in Oak's lab. A legendary or a mon that can't attack
+; yet gets its own comment, and so does an EEVEE like his (if he kept his).
+; Otherwise he boasts about the counter he took (PickStarterSetRivalStarter),
+; or, if he has none, talks about its (first) type.
 PickStarterRivalComment::
 	ld a, [wPlayerStarter]
 	ld [wCurPartySpecies], a
@@ -779,9 +778,14 @@ PickStarterRivalComment::
 	ld [wNamedObjectIndex], a
 	call GetMonName
 	ld a, [wPlayerStarter]
-	ld hl, PickStarterRivalCopycatText
 	cp EEVEE
-	jr z, .comment
+	jr nz, .notCopycat
+	ld a, [wRivalStarter]
+	cp FIRST_RIVAL_COUNTER_STARTER
+	ld hl, PickStarterRivalCopycatText
+	jr c, .comment
+	ld a, [wPlayerStarter]
+.notCopycat
 	ld hl, PickStarterLegendaries
 	ld de, 1
 	call IsInArray
@@ -793,20 +797,9 @@ PickStarterRivalComment::
 	ld a, [wRivalStarter]
 	cp FIRST_RIVAL_COUNTER_STARTER
 	jr c, .type
-	ld hl, PickStarterRivalSwapText
-	jr .swap
-
-.comment
-	call PrintText
-	ld a, [wRivalStarter]
-	cp FIRST_RIVAL_COUNTER_STARTER
-	ret c
-	ld hl, PickStarterRivalAlsoSwapText
-.swap
 	; the counter's name goes to wStringBuffer, the starter's stays in wNameBuffer
-	push hl
 	call PickStarter_GetRivalCounter
-	jr c, .noCounter ; only from a damaged save (SanitizeModeBytes allows unused values)
+	ret c ; only from a damaged save (SanitizeModeBytes allows unused values)
 	ld [wNamedObjectIndex], a
 	call GetMonName
 	ld hl, wNameBuffer
@@ -816,13 +809,9 @@ PickStarterRivalComment::
 	ld a, [wPlayerStarter]
 	ld [wNamedObjectIndex], a
 	call GetMonName
-	pop hl
-	call PrintText
-	ld hl, PickStarterRivalSwappedText
+	ld hl, PickStarterRivalCounterText
+.comment
 	jp PrintText
-.noCounter
-	pop hl
-	ret
 
 .type
 	; copy the name of its first type to wStringBuffer
@@ -871,15 +860,6 @@ PickStarterRivalTypeText:
 	text_far _PickStarterRivalTypeText
 	text_end
 
-PickStarterRivalSwapText:
-	text_far _PickStarterRivalSwapText
-	text_end
-
-PickStarterRivalAlsoSwapText:
-	text_far _PickStarterRivalAlsoSwapText
-	text_end
-
-PickStarterRivalSwappedText:
-	text_far _PickStarterRivalSwappedText
-	sound_get_key_item
+PickStarterRivalCounterText:
+	text_far _PickStarterRivalCounterText
 	text_end
